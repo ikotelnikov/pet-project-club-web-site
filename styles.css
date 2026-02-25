@@ -1,0 +1,64 @@
+:root {
+  --bg: #f4f7fb;
+  --text: #172033;
+  --accent: #1f7a8c;
+  --card: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 45%, #ecfff7 100%);
+  color: var(--text);
+}
+
+.hero {
+  text-align: center;
+  padding: 4rem 1rem 2.5rem;
+}
+
+.hero h1 {
+  margin: 0 0 0.75rem;
+  font-size: 2.2rem;
+}
+
+.hero p {
+  margin: 0 0 1.2rem;
+  opacity: 0.9;
+}
+
+.cta {
+  display: inline-block;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1rem 2.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 8px 24px rgba(12, 31, 56, 0.08);
+}
+
+footer {
+  text-align: center;
+  padding: 1.25rem 1rem 2rem;
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
