@@ -28,7 +28,21 @@
       "label": "Telegram",
       "href": "https://t.me/PetProjectClubMNE"
     },
-    "footer": "Контент хранится в репозитории и может обновляться ботом через `content/`."
+    "footer": {
+      "mark": "® Pet Project Club",
+      "links": [
+        {
+          "label": "Address: MONTECO Coworking, Budva",
+          "href": "https://maps.google.com/?q=Monteco+Coworking+Budva",
+          "external": true
+        },
+        {
+          "label": "Contact: @ikotelnikov",
+          "href": "https://t.me/ikotelnikov",
+          "external": true
+        }
+      ]
+    }
   },
   "hero": {
     "eyebrow": "BUDVA / MONTENEGRO",

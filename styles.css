@@ -508,6 +508,202 @@ a {
   border-color: rgba(141, 246, 198, 0.24);
 }
 
+.meeting-collection,
+.meeting-feed {
+  display: grid;
+  gap: 18px;
+}
+
+.meeting-preview,
+.meeting-detail-shell,
+.detail-list-shell {
+  position: relative;
+  z-index: 1;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: rgba(10, 16, 24, 0.46);
+}
+
+.meeting-preview {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+  gap: 18px;
+  overflow: hidden;
+}
+
+.meeting-preview.no-photo {
+  grid-template-columns: 1fr;
+}
+
+.meeting-preview-media {
+  display: block;
+  min-height: 100%;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.meeting-preview-media img,
+.meeting-detail-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.meeting-preview-body,
+.meeting-detail-copy,
+.meeting-detail-head {
+  padding: 22px;
+}
+
+.meeting-date {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.meeting-title {
+  margin: 0 0 12px;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.08;
+}
+
+.meeting-title a,
+.detail-back-link {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.meeting-title a:hover,
+.detail-back-link:hover,
+.read-more-link:hover {
+  color: var(--accent);
+}
+
+.meeting-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.meeting-id-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.meeting-id-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(141, 246, 198, 0.22);
+  background: rgba(141, 246, 198, 0.08);
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  text-decoration: none;
+}
+
+.meeting-copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.read-more-link {
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.pagination-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.pagination-link,
+.pagination-status {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-link {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.pagination-link.is-disabled {
+  color: var(--muted);
+  opacity: 0.55;
+}
+
+.pagination-status {
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.meeting-detail-shell {
+  overflow: hidden;
+}
+
+.meeting-detail-head {
+  padding-bottom: 0;
+}
+
+.meeting-detail-title {
+  max-width: 14ch;
+  margin: 0 0 16px;
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+}
+
+.meeting-detail-media {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.meeting-detail-media img {
+  height: min(60vw, 560px);
+}
+
+.meeting-detail-copy {
+  display: grid;
+  gap: 16px;
+}
+
+.detail-back-link {
+  display: inline-flex;
+  margin-bottom: 18px;
+  color: var(--muted);
+}
+
+.detail-list-shell {
+  padding: 22px;
+}
+
+.detail-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
 .hero-shell,
 .section-shell,
 .status-shell {
@@ -941,11 +1137,35 @@ a {
 }
 
 .site-footer {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 12px;
   margin-top: 18px;
   padding: 20px 24px;
   color: var(--muted);
+}
+
+.footer-inline {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.footer-mark {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.footer-inline a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.footer-inline a:hover {
+  color: var(--text);
+  border-color: rgba(141, 246, 198, 0.35);
 }
 
 .site-footer p:last-child {
@@ -1108,6 +1328,26 @@ a {
 
   .gallery-slide img {
     height: 280px;
+  }
+
+  .meeting-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .meeting-preview-media img {
+    height: 260px;
+  }
+
+  .pagination-nav {
+    flex-wrap: wrap;
+  }
+
+  .pagination-status {
+    width: 100%;
+  }
+
+  .footer-inline {
+    flex-wrap: wrap;
   }
 
   .stage-core {

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meetings | Pet Project Club Budva</title>
+  <title>Meeting | Pet Project Club Budva</title>
   <meta
     name="description"
-    content="Встречи Pet Project Club: форматы, актуальные анонсы и архив последних оффлайн-сессий клуба."
+    content="Подробная страница встречи или анонса Pet Project Club."
   >
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,11 +14,11 @@
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet"
   >
-  <link rel="stylesheet" href="../styles.css">
-  <script defer src="./fallbacks.js"></script>
-  <script defer src="../script.js"></script>
+  <link rel="stylesheet" href="../../styles.css">
+  <script defer src="../fallbacks.js"></script>
+  <script defer src="../../script.js"></script>
 </head>
-<body data-page="meetings" data-site-root=".." data-content-root="../content">
+<body data-page="meeting-detail" data-nav-page="meetings" data-site-root="../.." data-content-root="../../content">
   <div class="site-noise" aria-hidden="true"></div>
   <div class="site-grid" aria-hidden="true"></div>
   <div class="site-glow glow-a" aria-hidden="true"></div>
@@ -26,9 +26,9 @@
 
   <main class="page-shell">
     <header class="topbar reveal">
-      <a class="brand" href="../">
+      <a class="brand" href="../../">
         <span class="brand-mark">
-          <img src="../assets/images/PetProjectClubMonenegroLogo.jpg" alt="Pet Project Club logo">
+          <img src="../../assets/images/PetProjectClubMonenegroLogo.jpg" alt="Pet Project Club logo">
         </span>
         <span class="brand-copy">
           <strong>Pet Project Club</strong>
@@ -37,10 +37,10 @@
       </a>
 
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="../" data-nav="main">Main</a>
-        <a href="../meetings/" data-nav="meetings">Meetings</a>
-        <a href="../projects/" data-nav="projects">Projects and Participants</a>
-        <a href="../links/" data-nav="links">Useful links</a>
+        <a href="../../" data-nav="main">Main</a>
+        <a href="../../meetings/" data-nav="meetings">Meetings</a>
+        <a href="../../projects/" data-nav="projects">Projects and Participants</a>
+        <a href="../../links/" data-nav="links">Useful links</a>
       </nav>
 
       <a class="nav-cta" href="https://t.me/PetProjectClubMNE" target="_blank" rel="noopener noreferrer">
@@ -51,7 +51,7 @@
     <section id="page-content" class="page-stack" aria-live="polite"></section>
 
     <footer class="site-footer reveal">
-      <p>Архив встреч и анонсы лежат отдельно в <code>content/meetings/</code> и готовы для синка из Telegram.</p>
+      <p>Полный текст встречи хранится в отдельном JSON-файле внутри <code>content/meetings/items/</code>.</p>
       <p>Обновлено <span id="updated-at"></span></p>
     </footer>
   </main>

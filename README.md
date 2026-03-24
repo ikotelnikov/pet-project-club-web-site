@@ -15,6 +15,9 @@ Page content lives under `content/` and is loaded in the browser via `fetch()`.
 
 - `content/main/page.json`
 - `content/meetings/page.json`
+- `content/meetings/announcements/index.json`
+- `content/meetings/archive/index.json`
+- `content/meetings/items/*.json`
 - `content/projects/page.json`
 - `content/participants/page.json`
 - `content/links/page.json`

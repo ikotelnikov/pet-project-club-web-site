@@ -10,6 +10,7 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const pageLoaders = {
   main: renderMainPage,
   meetings: renderMeetingsPage,
+  "meeting-detail": renderMeetingDetailPage,
   projects: renderProjectsPage,
   links: renderLinksPage,
 };
@@ -57,8 +58,9 @@ async function renderPage() {
 }
 
 function setActiveNav() {
+  const activePage = body.dataset.navPage || page;
   document.querySelectorAll("[data-nav]").forEach((link) => {
-    if (link.dataset.nav === page) {
+    if (link.dataset.nav === activePage) {
       link.classList.add("is-active");
     }
   });
@@ -97,6 +99,22 @@ async function readJson(path) {
 
     if (fallbackNode) {
       return JSON.parse(fallbackNode.textContent);
+    }
+
+    if (window.__contentFallbackBundle?.[path]) {
+      return window.__contentFallbackBundle[path];
+    }
+
+    const bundleNode = document.getElementById("content-fallback-bundle");
+
+    if (bundleNode) {
+      if (!window.__contentFallbackBundle) {
+        window.__contentFallbackBundle = JSON.parse(bundleNode.textContent);
+      }
+
+      if (window.__contentFallbackBundle[path]) {
+        return window.__contentFallbackBundle[path];
+      }
     }
 
     throw error;
@@ -242,20 +260,78 @@ function applyMainChrome(shell) {
   }
 
   if (footer) {
-    footer.textContent = shell.footer || "";
+    if (typeof shell.footer === "string") {
+      footer.textContent = shell.footer;
+    } else if (shell.footer) {
+      const mark = shell.footer.mark ? `<span class="footer-mark">${shell.footer.mark}</span>` : "";
+      const links = Array.isArray(shell.footer.links)
+        ? shell.footer.links
+            .map((item) => `<a href="${item.href}"${item.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${item.label}</a>`)
+            .join("")
+        : "";
+
+      footer.innerHTML = `
+        <div class="footer-inline">
+          ${mark}
+          ${links}
+        </div>
+      `;
+    } else {
+      footer.textContent = "";
+    }
   }
 }
 
 async function renderMeetingsPage() {
-  const data = await readJson("meetings/page.json");
+  const [data, announcementsIndex, archiveIndex] = await Promise.all([
+    readJson("meetings/page.json"),
+    readJson("meetings/announcements/index.json"),
+    readJson("meetings/archive/index.json"),
+  ]);
+
+  const announcementItems = await Promise.all(
+    (announcementsIndex.items || [])
+      .slice(0, data.announcements?.limit || 2)
+      .map((slug) => readJson(`meetings/items/${slug}.json`))
+  );
+
+  const pageSize = data.archive?.pageSize || archiveIndex.pageSize || 10;
+  const pageParam = Number.parseInt(new URLSearchParams(window.location.search).get("page") || "1", 10);
+  const currentPage = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
+  const totalPages = Math.max(1, Math.ceil((archiveIndex.items || []).length / pageSize));
+  const safePage = Math.min(currentPage, totalPages);
+  const start = (safePage - 1) * pageSize;
+  const currentSlugs = (archiveIndex.items || []).slice(start, start + pageSize);
+  const archiveItems = await Promise.all(currentSlugs.map((slug) => readJson(`meetings/items/${slug}.json`)));
 
   pageContent.innerHTML = `
-    ${renderHero(data.hero, data.signals, "meetings")}
-    ${renderMetrics(data.metrics)}
-    ${renderTimelineSection(data.flow)}
-    ${renderCardSection(data.sessions, "two-up")}
-    ${renderStatusSection(data.notes)}
+    ${renderTimelineSection(data.formats)}
+    ${renderMeetingCollection(data.announcements, announcementItems, "announcements")}
+    ${renderMeetingsFeed(data.archive, archiveItems, safePage, totalPages)}
   `;
+}
+
+async function renderMeetingDetailPage() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+
+  if (!slug) {
+    pageContent.innerHTML = `
+      <section class="empty-state reveal">
+        <p>Не удалось открыть встречу: в адресе отсутствует параметр <code>slug</code>.</p>
+      </section>
+    `;
+    return;
+  }
+
+  const [item, pageData] = await Promise.all([
+    readJson(`meetings/items/${slug}.json`),
+    readJson("meetings/page.json"),
+  ]);
+
+  document.title = `${item.title} | Meetings | Pet Project Club Budva`;
+
+  pageContent.innerHTML = renderMeetingDetail(item, pageData);
 }
 
 async function renderProjectsPage() {
@@ -630,6 +706,153 @@ function renderStatusSection(section) {
           .join("")}
       </div>
     </section>
+  `;
+}
+
+function renderMeetingCollection(section, items, kind = "archive") {
+  return `
+    <section class="section-shell reveal">
+      <div class="section-heading">
+        <p class="section-kicker">${section.tag}</p>
+        <h2>${section.title}</h2>
+        ${section.description ? `<p class="card-copy">${section.description}</p>` : ""}
+      </div>
+      <div class="meeting-collection">
+        ${items.map((item) => renderMeetingPreviewCard(item)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderMeetingsFeed(section, items, currentPage, totalPages) {
+  return `
+    <section class="section-shell reveal">
+      <div class="section-heading">
+        <p class="section-kicker">${section.tag}</p>
+        <h2>${section.title}</h2>
+        <p class="card-copy">${section.description}</p>
+      </div>
+      <div class="meeting-feed">
+        ${items.length ? items.map((item) => renderMeetingPreviewCard(item)).join("") : `<p class="card-copy">${section.empty || "Пока здесь нет встреч."}</p>`}
+      </div>
+      ${totalPages > 1 ? renderMeetingsPagination(section.pagination, currentPage, totalPages) : ""}
+    </section>
+  `;
+}
+
+function renderMeetingsPagination(copy = {}, currentPage, totalPages) {
+  const prevHref = currentPage > 1 ? `?page=${currentPage - 1}` : "";
+  const nextHref = currentPage < totalPages ? `?page=${currentPage + 1}` : "";
+
+  return `
+    <nav class="pagination-nav" aria-label="Meetings pagination">
+      ${prevHref
+        ? `<a class="pagination-link" href="${prevHref}">${copy.prev || "← Previous"}</a>`
+        : `<span class="pagination-link is-disabled">${copy.prev || "← Previous"}</span>`}
+      <span class="pagination-status">${copy.page || "Page"} ${currentPage} / ${totalPages}</span>
+      ${nextHref
+        ? `<a class="pagination-link" href="${nextHref}">${copy.next || "Next →"}</a>`
+        : `<span class="pagination-link is-disabled">${copy.next || "Next →"}</span>`}
+    </nav>
+  `;
+}
+
+function renderMeetingPreviewCard(item) {
+  const href = resolveHref(`meetings/item/?slug=${item.slug}`);
+  const meta = renderMeetingMeta(item);
+  const photo = item.photo?.src
+    ? `
+      <a class="meeting-preview-media" href="${href}">
+        <img src="${resolveHref(item.photo.src)}" alt="${item.photo.alt || item.title}">
+      </a>
+    `
+    : "";
+  const paragraphs = Array.isArray(item.paragraphs) ? item.paragraphs : [];
+  const lead = paragraphs[0] || "";
+  const hasMore = paragraphs.length > 1;
+
+  return `
+    <article class="meeting-preview reveal${photo ? "" : " no-photo"}" id="${item.slug}">
+      ${photo}
+      <div class="meeting-preview-body">
+        ${item.date ? `<p class="meeting-date">${item.date}</p>` : ""}
+        <h3 class="meeting-title"><a href="${href}">${item.title}</a></h3>
+        <div class="meeting-id-row">
+          <a class="meeting-id-pill" href="${href}">id: ${item.slug}</a>
+        </div>
+        ${meta ? `<div class="meeting-meta">${meta}</div>` : ""}
+        ${lead ? `<p class="meeting-copy">${lead}${hasMore ? ` <a class="read-more-link" href="${href}">read more --&gt;</a>` : ""}</p>` : ""}
+      </div>
+    </article>
+  `;
+}
+
+function renderMeetingMeta(item) {
+  const entries = [];
+
+  if (item.place) {
+    entries.push(item.placeUrl
+      ? `<a class="meta-pill" href="${item.placeUrl}" target="_blank" rel="noopener noreferrer">${item.place}</a>`
+      : `<span class="meta-pill">${item.place}</span>`);
+  }
+
+  if (item.format) {
+    entries.push(`<span class="meta-pill">${item.format}</span>`);
+  }
+
+  return entries.join("");
+}
+
+function renderMeetingDetail(item, pageData) {
+  const meta = renderMeetingMeta(item);
+  const detailSections = (item.sections || [])
+    .map((section) => {
+      if (!section.items || !section.items.length) {
+        return "";
+      }
+
+      return `
+        <section class="section-shell reveal">
+          <div class="section-heading">
+            <p class="section-kicker">${section.tag || item.type}</p>
+            <h2>${section.title}</h2>
+          </div>
+          <div class="detail-list-shell">
+            <ul class="detail-list">
+              ${section.items.map((entry) => `<li>${entry}</li>`).join("")}
+            </ul>
+          </div>
+        </section>
+      `;
+    })
+    .join("");
+  const links = (item.links || [])
+    .map((link) => `<a class="secondary-link" href="${link.href}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${link.label}</a>`)
+    .join("");
+  const backHref = resolveHref("meetings/");
+
+  return `
+    <section class="meeting-detail-shell reveal">
+      <div class="meeting-detail-head">
+        <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Back to meetings"}</a>
+        ${item.date ? `<p class="meeting-date">${item.date}</p>` : ""}
+        <h1 class="hero-title meeting-detail-title">${item.title}</h1>
+        <div class="meeting-id-row">
+          <span class="meeting-id-pill">id: ${item.slug}</span>
+        </div>
+        ${meta ? `<div class="meeting-meta">${meta}</div>` : ""}
+      </div>
+      ${item.photo?.src ? `
+        <div class="meeting-detail-media">
+          <img src="${resolveHref(item.photo.src)}" alt="${item.photo.alt || item.title}">
+        </div>
+      ` : ""}
+      <div class="meeting-detail-copy">
+        ${(item.paragraphs || []).map((paragraph) => `<p class="meeting-copy">${paragraph}</p>`).join("")}
+      </div>
+      ${links ? `<div class="hero-actions">${links}</div>` : ""}
+    </section>
+    ${detailSections}
   `;
 }
 

@@ -5,7 +5,10 @@ This folder is the content source for the static site.
 ## Files
 
 - `main/page.json`: homepage content
-- `meetings/page.json`: meetings page content
+- `meetings/page.json`: meetings page layout copy and section settings
+- `meetings/announcements/index.json`: current announcement order
+- `meetings/archive/index.json`: archived meeting order and paging
+- `meetings/items/*.json`: one file per meeting or announcement
 - `projects/page.json`: projects page content
 - `participants/page.json`: participants block for the projects page
 - `links/page.json`: useful links page content
@@ -18,8 +21,9 @@ That also makes the structure suitable for a Telegram bot later:
 
 1. receive selected messages from Telegram
 2. transform them into JSON entries
-3. write or append them into the relevant file under `content/`
-4. commit and push
+3. write or update the relevant file under `content/meetings/items/`
+4. update the matching index file under `content/meetings/`
+5. commit and push
 
 ## Local preview
 
