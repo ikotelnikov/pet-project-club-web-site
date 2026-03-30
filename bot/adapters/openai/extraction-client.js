@@ -509,31 +509,68 @@ function resolveEntityFields(entityRecord) {
 function normalizeFieldAliases(entity, fields) {
   const normalized = { ...fields };
 
+  stripAttachmentTransportFields(normalized);
+
   switch (entity) {
     case "participant":
       if (normalized.description && !normalized.bio) {
         normalized.bio = normalized.description;
       }
+      if (normalized.details && !normalized.bio) {
+        normalized.bio = normalized.details;
+      }
       delete normalized.description;
+      delete normalized.details;
       break;
     case "project":
       if (normalized.description && !normalized.summary) {
         normalized.summary = normalized.description;
       }
+      if (normalized.details && !normalized.summary) {
+        normalized.summary = normalized.details;
+      }
       delete normalized.description;
+      delete normalized.details;
       break;
     case "meeting":
     case "announcement":
       if (normalized.description && !normalized.paragraphs) {
         normalized.paragraphs = [normalized.description];
       }
+      if (normalized.details && !normalized.paragraphs) {
+        normalized.paragraphs = [normalized.details];
+      }
       delete normalized.description;
+      delete normalized.details;
       break;
     default:
       break;
   }
 
   return normalized;
+}
+
+function stripAttachmentTransportFields(fields) {
+  const transportKeys = [
+    "photoFileId",
+    "photoFileName",
+    "videoFileId",
+    "videoFileName",
+    "documentFileId",
+    "documentFileName",
+    "fileId",
+    "fileName",
+    "fileIds",
+    "fileNames",
+    "attachmentId",
+    "attachmentIds",
+    "attachmentName",
+    "attachmentNames",
+  ];
+
+  for (const key of transportKeys) {
+    delete fields[key];
+  }
 }
 
 function extractInlineEntityFields(entityRecord) {
