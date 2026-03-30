@@ -338,31 +338,42 @@ function expandEntityArrayShape(extraction) {
     return extraction;
   }
 
-  const fields =
-    firstEntity.attributes && typeof firstEntity.attributes === "object" && !Array.isArray(firstEntity.attributes)
-      ? firstEntity.attributes
-      : {};
+  const fields = resolveEntityFields(firstEntity);
+  const entityType = firstEntity.type ?? firstEntity.entityType ?? null;
+  const action = firstEntity.action ?? extraction.action ?? null;
+  const summary =
+    extraction.summary ?? summarizeEntityExpansion(entityType ?? extraction.entity, action, fields);
 
   return {
     ...extraction,
-    entity: extraction.entity ?? firstEntity.type ?? null,
-    action: extraction.action ?? firstEntity.action ?? null,
+    entity: extraction.entity ?? entityType,
+    action,
     confidence: extraction.confidence ?? firstEntity.confidence ?? null,
     slug: extraction.slug ?? fields.slug ?? null,
     fields: extraction.fields ?? fields,
-    summary:
-      extraction.summary ??
-      summarizeEntityExpansion(firstEntity.type ?? extraction.entity, firstEntity.action ?? extraction.action, fields),
+    summary,
   };
 }
 
 function summarizeEntityExpansion(entity, action, fields) {
   if (!entity || !action) {
-    return "";
+    return null;
   }
 
   const label = fields.name || fields.title || fields.handle || fields.slug || entity;
   return `${action} ${entity} ${label}`.trim();
+}
+
+function resolveEntityFields(entityRecord) {
+  const candidates = [entityRecord.attributes, entityRecord.data, entityRecord.fields];
+
+  for (const candidate of candidates) {
+    if (candidate && typeof candidate === "object" && !Array.isArray(candidate)) {
+      return candidate;
+    }
+  }
+
+  return {};
 }
 
 function deriveSlug(entity, fields) {
