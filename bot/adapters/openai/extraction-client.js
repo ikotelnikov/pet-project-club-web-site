@@ -347,7 +347,7 @@ function expandFlatEntityPayloadShape(extraction) {
   return {
     ...extraction,
     entity: entityType,
-    slug: extraction.slug ?? fieldObject.slug ?? null,
+    slug: extraction.slug ?? fieldObject.slug ?? extraction.entityId ?? null,
     fields: extraction.fields ?? fieldObject,
     summary:
       extraction.summary ??
@@ -377,7 +377,7 @@ function expandEntityArrayShape(extraction) {
     entity: extraction.entity ?? entityType,
     action,
     confidence: extraction.confidence ?? firstEntity.confidence ?? null,
-    slug: extraction.slug ?? fields.slug ?? null,
+    slug: extraction.slug ?? fields.slug ?? firstEntity.entityId ?? firstEntity.id ?? null,
     fields: extraction.fields ?? fields,
     summary,
   };
