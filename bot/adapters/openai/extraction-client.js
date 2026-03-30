@@ -465,6 +465,9 @@ function expandEntityArrayShape(extraction) {
       extraction.targetRef ??
       firstEntity.entityId ??
       firstEntity.entityName ??
+      firstEntity.name ??
+      firstEntity.handle ??
+      firstEntity.title ??
       fields.handle ??
       fields.name ??
       fields.title ??
@@ -492,7 +495,7 @@ function resolveEntityFields(entityRecord) {
     }
   }
 
-  return {};
+  return extractInlineEntityFields(entityRecord);
 }
 
 function normalizeFieldAliases(entity, fields) {
@@ -523,6 +526,39 @@ function normalizeFieldAliases(entity, fields) {
   }
 
   return normalized;
+}
+
+function extractInlineEntityFields(entityRecord) {
+  const reservedKeys = new Set([
+    "type",
+    "entityType",
+    "entity",
+    "entityId",
+    "entityName",
+    "action",
+    "confidence",
+    "attributes",
+    "data",
+    "fields",
+    "slug",
+    "summary",
+    "question",
+    "questions",
+    "warning",
+    "warnings",
+    "matchedSlug",
+  ]);
+  const inlineFields = {};
+
+  for (const [key, value] of Object.entries(entityRecord)) {
+    if (reservedKeys.has(key)) {
+      continue;
+    }
+
+    inlineFields[key] = value;
+  }
+
+  return inlineFields;
 }
 
 function deriveSlug(entity, fields) {
