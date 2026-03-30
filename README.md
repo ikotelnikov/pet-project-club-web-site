@@ -59,6 +59,7 @@ The GitHub write policy is documented in `bot/GITHUB_WRITE_STRATEGY.md`.
 The OpenAI runtime contract is documented in `bot/OPENAI_RUNTIME.md`.
 The webhook/runtime implementation plan is documented in `bot/RUNTIME_PLAN.md`.
 The deployment path is documented in `bot/DEPLOYMENT.md`.
+The staged machine-oriented bot schemas live in `bot/schemas/`.
 
 Current local scripts:
 

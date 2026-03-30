@@ -1,5 +1,6 @@
 import { BotConfigError } from "../../shared/errors.js";
 import { validateExtraction } from "../../core/extraction-validator.js";
+import { buildEntitySchemaSnippet, buildStageSchemaSnippet } from "../../schemas/prompt-schemas.js";
 
 export class ExtractionClient {
   constructor({ apiKey, model = "gpt-4.1-mini", fetchImpl = globalThis.fetch } = {}) {
@@ -154,13 +155,19 @@ function buildSystemPrompt() {
     "You are a structured extraction component for a private Telegram bot.",
     "Return JSON only.",
     "Do not include markdown, explanations, or prose outside the JSON object.",
-    "Follow the extraction schema exactly.",
+    "Follow the intent-stage schema exactly.",
     "Allowed intents: content_operation, clarification_response, confirmation_response, non_actionable.",
     "Allowed entities: announcement, meeting, participant, project.",
     "Allowed actions: create, update, delete.",
     "Confidence must be exactly one of: high, medium, low.",
     "Never indicate that confirmation can be skipped.",
+    "For update/delete, prefer targetRef over inventing a final slug.",
     "If the request is unclear, prefer one focused clarification question over guessing.",
+    `Intent stage schema: ${buildStageSchemaSnippet("intent")}`,
+    `Participant schema: ${buildEntitySchemaSnippet("participant")}`,
+    `Project schema: ${buildEntitySchemaSnippet("project")}`,
+    `Meeting schema: ${buildEntitySchemaSnippet("meeting")}`,
+    `Announcement schema: ${buildEntitySchemaSnippet("announcement")}`,
   ].join(" ");
 }
 
@@ -172,7 +179,7 @@ function buildResolverPrompt() {
     "Prefer exact handle, exact name, or exact title matches.",
     "If no confident match exists, return matchedSlug as null and ask one clarification question.",
     "Schema:",
-    '{"matchedSlug": string|null, "confidence": "high"|"medium"|"low", "question": string|null}',
+    buildStageSchemaSnippet("targetResolution"),
   ].join(" ");
 }
 

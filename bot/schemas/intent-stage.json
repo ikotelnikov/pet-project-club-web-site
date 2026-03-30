@@ -1,0 +1,19 @@
+{
+  "stage": "intent",
+  "output": {
+    "intent": "content_operation | clarification_response | confirmation_response | non_actionable",
+    "entity": "announcement | meeting | participant | project | null",
+    "action": "create | update | delete | null",
+    "targetRef": "string | null",
+    "confidence": "high | medium | low",
+    "summary": "string",
+    "needsConfirmation": "boolean",
+    "fields": "object",
+    "questions": "string[]",
+    "warnings": "string[]"
+  },
+  "notes": [
+    "Intent stage may return rough targetRef instead of final slug.",
+    "Intent stage should prefer targetRef over invented slug for updates and deletes."
+  ]
+}

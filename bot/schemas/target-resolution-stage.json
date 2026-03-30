@@ -1,0 +1,17 @@
+{
+  "stage": "target-resolution",
+  "input": {
+    "entity": "participant | project | meeting | announcement",
+    "targetRef": "string",
+    "candidates": "Candidate[]"
+  },
+  "output": {
+    "matchedSlug": "string | null",
+    "confidence": "high | medium | low",
+    "question": "string | null"
+  },
+  "notes": [
+    "Choose at most one candidate.",
+    "If no confident match exists, return matchedSlug null and ask one clarification question."
+  ]
+}

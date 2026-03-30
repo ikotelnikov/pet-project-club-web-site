@@ -11,6 +11,7 @@ The GitHub write policy is documented in `bot/GITHUB_WRITE_STRATEGY.md`.
 The OpenAI runtime contract is documented in `bot/OPENAI_RUNTIME.md`.
 The webhook/runtime implementation plan is documented in `bot/RUNTIME_PLAN.md`.
 The deployment path is documented in `bot/DEPLOYMENT.md`.
+The machine-oriented staged schemas are documented in `bot/schemas/`.
 
 Current scope:
 
@@ -46,6 +47,7 @@ Not implemented yet:
 - `services/telegram-update-processor.js`: authorization and update processing
 - `core/`: reusable runtime/domain logic for the redesign
 - `adapters/`: transport, storage, and provider adapters for the redesign
+- `schemas/`: machine-oriented entity and staged LLM contracts
 - `adapters/openai/prototype-extraction-client.js`: temporary extraction bridge during migration
 - `adapters/github/repository.js`: GitHub API-backed repository for hosted writes
 - `adapters/storage/pending-kv-store.js`: Cloudflare KV-style pending state store

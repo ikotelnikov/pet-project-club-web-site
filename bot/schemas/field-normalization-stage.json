@@ -1,0 +1,20 @@
+{
+  "stage": "field-normalization",
+  "input": {
+    "entity": "announcement | meeting | participant | project",
+    "action": "create | update | delete",
+    "messageText": "string",
+    "currentItem": "object | null",
+    "entitySchema": "EntitySchema"
+  },
+  "output": {
+    "fields": "object",
+    "confidence": "high | medium | low",
+    "question": "string | null",
+    "warnings": "string[]"
+  },
+  "notes": [
+    "Only emit canonical field names from the entity schema.",
+    "Map aliases like description/details/about to canonical fields."
+  ]
+}

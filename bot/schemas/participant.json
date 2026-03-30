@@ -1,0 +1,23 @@
+{
+  "entity": "participant",
+  "required": ["slug", "handle", "name", "role", "bio"],
+  "optional": ["points", "location", "tags", "links", "photoAlt"],
+  "fieldTypes": {
+    "slug": "string",
+    "handle": "string",
+    "name": "string",
+    "role": "string",
+    "bio": "string",
+    "points": "string[]",
+    "location": "string",
+    "tags": "string[]",
+    "links": "Link[]",
+    "photoAlt": "string"
+  },
+  "aliases": {
+    "description": "bio",
+    "details": "bio",
+    "about": "bio"
+  },
+  "matchingKeys": ["slug", "handle", "name"]
+}

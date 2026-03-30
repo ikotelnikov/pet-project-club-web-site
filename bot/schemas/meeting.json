@@ -1,0 +1,23 @@
+{
+  "entity": "meeting",
+  "required": ["slug", "date", "title", "place", "format"],
+  "optional": ["placeUrl", "paragraphs", "sections", "links", "photoAlt"],
+  "fieldTypes": {
+    "slug": "string",
+    "date": "string",
+    "title": "string",
+    "place": "string",
+    "placeUrl": "string",
+    "format": "string",
+    "paragraphs": "string[]",
+    "sections": "Section[]",
+    "links": "Link[]",
+    "photoAlt": "string"
+  },
+  "aliases": {
+    "description": "paragraphs",
+    "details": "paragraphs",
+    "agenda": "sections"
+  },
+  "matchingKeys": ["slug", "title", "date"]
+}

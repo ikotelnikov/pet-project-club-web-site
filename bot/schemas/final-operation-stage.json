@@ -1,0 +1,15 @@
+{
+  "stage": "final-operation",
+  "output": {
+    "entity": "announce | meeting | participant | project",
+    "action": "create | update | delete",
+    "fields": {
+      "slug": "string",
+      "otherCanonicalFields": "..."
+    }
+  },
+  "notes": [
+    "This is the first fully canonical operation shape.",
+    "Strict validation should happen at or after this stage, not before target resolution and alias mapping."
+  ]
+}
