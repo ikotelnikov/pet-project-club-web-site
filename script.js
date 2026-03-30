@@ -661,15 +661,23 @@ function renderPeopleSection(section) {
 }
 
 function renderPersonCard(item) {
+  const points = Array.isArray(item.points) ? item.points : [];
+  const handle = item.handle || item.slug || "participant";
+  const name = item.name || item.slug || "Untitled participant";
+  const role = item.role || "Role not specified";
+  const bio = item.bio || "";
+
   return `
     <article class="person-card reveal">
-      <span class="card-tag">${item.handle}</span>
-      <h3>${item.name}</h3>
-      <p class="person-role">${item.role}</p>
-      <p class="person-copy">${item.bio}</p>
-      <ul class="person-list">
-        ${item.points.map((point) => `<li>${point}</li>`).join("")}
-      </ul>
+      <span class="card-tag">${handle}</span>
+      <h3>${name}</h3>
+      <p class="person-role">${role}</p>
+      ${bio ? `<p class="person-copy">${bio}</p>` : ""}
+      ${points.length ? `
+        <ul class="person-list">
+          ${points.map((point) => `<li>${point}</li>`).join("")}
+        </ul>
+      ` : ""}
     </article>
   `;
 }
