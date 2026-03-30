@@ -214,7 +214,7 @@ export class GitHubContentRepository {
       return null;
     }
 
-    const payload = await parseApiResponse(response);
+    const payload = await parseApiResponse(response, filePath);
 
     if (!payload || Array.isArray(payload) || payload.type !== "file") {
       throw new ContentRepositoryError(`Unexpected GitHub contents response for '${filePath}'.`);
@@ -228,7 +228,7 @@ export class GitHubContentRepository {
 
   async request(method, pathname, body = null) {
     const response = await this.rawRequest(method, pathname, body);
-    return parseApiResponse(response);
+    return parseApiResponse(response, pathname);
   }
 
   rawRequest(method, pathname, body = null) {
@@ -237,6 +237,7 @@ export class GitHubContentRepository {
       headers: {
         accept: "application/vnd.github+json",
         authorization: `Bearer ${this.token}`,
+        "user-agent": "pet-project-club-bot",
         "x-github-api-version": "2022-11-28",
         ...(body ? { "content-type": "application/json" } : {}),
       },
@@ -312,13 +313,18 @@ function decodeGitHubContent(content, encoding) {
   throw new ContentRepositoryError("No base64 decoder is available in this runtime.");
 }
 
-async function parseApiResponse(response) {
+async function parseApiResponse(response, context = "") {
   let payload = null;
+  let rawText = null;
 
   try {
     payload = await response.json();
   } catch {
-    payload = null;
+    try {
+      rawText = await response.text();
+    } catch {
+      rawText = null;
+    }
   }
 
   if (!response.ok) {
@@ -330,12 +336,20 @@ async function parseApiResponse(response) {
       messageParts.push(`GitHub API request failed with ${response.status}.`);
     }
 
+    if (context) {
+      messageParts.push(`context=${context}`);
+    }
+
     if (payload && typeof payload.documentation_url === "string") {
       messageParts.push(payload.documentation_url);
     }
 
     if (payload && typeof payload.error === "string") {
       messageParts.push(payload.error);
+    }
+
+    if (rawText && rawText.trim() !== "") {
+      messageParts.push(rawText.trim());
     }
 
     throw new ContentRepositoryError(messageParts.join(" | "));
