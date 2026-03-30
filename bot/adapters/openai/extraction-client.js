@@ -294,7 +294,7 @@ function normalizeNonOperationFields(intent, fields) {
 }
 
 function expandExtractionShape(extraction) {
-  return expandEntityArrayShape(expandEntityObjectShape(extraction));
+  return expandFlatEntityPayloadShape(expandEntityArrayShape(expandEntityObjectShape(extraction)));
 }
 
 function expandEntityObjectShape(extraction) {
@@ -324,6 +324,31 @@ function expandEntityObjectShape(extraction) {
     summary:
       extraction.summary ??
       summarizeEntityExpansion(entityType ?? extraction.entity, extraction.action, normalizedAttributes),
+  };
+}
+
+function expandFlatEntityPayloadShape(extraction) {
+  const fieldObject =
+    extraction.entity && typeof extraction.entity === "object" && !Array.isArray(extraction.entity)
+      ? extraction.entity
+      : null;
+  const entityType =
+    typeof extraction.entityType === "string" && extraction.entityType.trim() !== ""
+      ? extraction.entityType
+      : null;
+
+  if (!fieldObject || !entityType) {
+    return extraction;
+  }
+
+  return {
+    ...extraction,
+    entity: entityType,
+    slug: extraction.slug ?? fieldObject.slug ?? null,
+    fields: extraction.fields ?? fieldObject,
+    summary:
+      extraction.summary ??
+      summarizeEntityExpansion(entityType, extraction.action ?? null, fieldObject),
   };
 }
 
