@@ -1,0 +1,11 @@
+{
+  "slug": "project-slot-1",
+  "title": "Project slot #1",
+  "status": "idea in motion",
+  "stack": "frontend / backend / product",
+  "points": [
+    "Что это за проект и какую проблему он решает.",
+    "Какой у него текущий статус: идея, MVP, тест, релиз.",
+    "Кто сейчас нужен команде, чтобы двинуться дальше."
+  ]
+}

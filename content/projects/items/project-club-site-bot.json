@@ -1,0 +1,10 @@
+{
+  "slug": "project-club-site-bot",
+  "title": "Club site content bot",
+  "status": "prototype in progress",
+  "stack": "telegram / github actions / static site",
+  "points": [
+    "Parses Telegram commands into structured operations.",
+    "Commits JSON into the repo."
+  ]
+}

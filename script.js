@@ -335,18 +335,35 @@ async function renderMeetingDetailPage() {
 }
 
 async function renderProjectsPage() {
-  const [projectsData, participantsData] = await Promise.all([
+  const [projectsData, projectItems, participantsData, participantItems] = await Promise.all([
     readJson("projects/page.json"),
+    readIndexedItems("projects"),
     readJson("participants/page.json"),
+    readIndexedItems("participants"),
   ]);
+  const projectsSection = {
+    ...projectsData.projects,
+    items: projectItems,
+  };
+  const participantsSection = {
+    ...participantsData,
+    items: participantItems,
+  };
 
   pageContent.innerHTML = `
     ${renderHero(projectsData.hero, projectsData.signals, "projects")}
     ${renderMetrics(projectsData.metrics)}
-    ${renderCardSection(projectsData.projects, "two-up", "project")}
-    ${renderPeopleSection(participantsData)}
+    ${renderCardSection(projectsSection, "two-up", "project")}
+    ${renderPeopleSection(participantsSection)}
     ${renderStatusSection(projectsData.notes)}
   `;
+}
+
+async function readIndexedItems(sectionPath) {
+  const index = await readJson(`${sectionPath}/index.json`);
+  return Promise.all(
+    (index.items || []).map((slug) => readJson(`${sectionPath}/items/${slug}.json`))
+  );
 }
 
 async function renderLinksPage() {

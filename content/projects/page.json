@@ -49,29 +49,7 @@
   "projects": {
     "tag": "Active builds",
     "title": "Стартовые карточки проектов.",
-    "description": "Это пример структуры, в которую позже можно складывать реальные проектные апдейты из Telegram.",
-    "items": [
-      {
-        "title": "Project slot #1",
-        "status": "idea in motion",
-        "stack": "frontend / backend / product",
-        "points": [
-          "Что это за проект и какую проблему он решает.",
-          "Какой у него текущий статус: идея, MVP, тест, релиз.",
-          "Кто сейчас нужен команде, чтобы двинуться дальше."
-        ]
-      },
-      {
-        "title": "Project slot #2",
-        "status": "needs contributors",
-        "stack": "design / no-code / marketing",
-        "points": [
-          "Короткий one-liner о продукте.",
-          "Последний апдейт или достигнутый milestone.",
-          "Четкий ask для участников клуба."
-        ]
-      }
-    ]
+    "description": "Это пример структуры, в которую позже можно складывать реальные проектные апдейты из Telegram."
   },
   "notes": {
     "tag": "Team matching",

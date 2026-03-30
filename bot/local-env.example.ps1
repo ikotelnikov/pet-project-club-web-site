@@ -1,0 +1,16 @@
+$env:TELEGRAM_BOT_TOKEN='PASTE_YOUR_BOT_TOKEN_HERE'
+$env:TELEGRAM_ALLOWED_USER_ID='272981189'
+$env:OPENAI_API_KEY='PASTE_YOUR_OPENAI_API_KEY_HERE'
+$env:EXTRACTION_BACKEND='prototype'
+$env:GITHUB_REPO_OWNER='ikotelnikov'
+$env:GITHUB_REPO_NAME='pet-project-club-web-site'
+$env:GITHUB_BRANCH='main'
+$env:GITHUB_WRITE_TOKEN='PASTE_YOUR_GITHUB_WRITE_TOKEN_HERE'
+
+# Optional overrides:
+# $env:OPENAI_MODEL='...'
+# $env:TELEGRAM_WEBHOOK_SECRET='...'
+# $env:TELEGRAM_OFFSET_STATE_PATH="$PWD\\bot\\state\\telegram-offset.json"
+# $env:BOT_REPO_ROOT="$PWD"
+# $env:BOT_CONTENT_ROOT="$PWD\\content"
+# $env:BOT_ASSETS_ROOT="$PWD\\assets"

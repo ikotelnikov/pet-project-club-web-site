@@ -1,3 +1,5 @@
 # Optional ignores
 .DS_Store
 Thumbs.db
+node_modules
+bot/local-env.ps1

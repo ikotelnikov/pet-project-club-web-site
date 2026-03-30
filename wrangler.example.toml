@@ -1,0 +1,21 @@
+name = "pet-project-club-bot"
+main = "bot/worker/index.js"
+compatibility_date = "2026-03-30"
+
+kv_namespaces = [
+  { binding = "PENDING_STATE_KV", id = "REPLACE_WITH_KV_NAMESPACE_ID" }
+]
+
+[vars]
+TELEGRAM_ALLOWED_USER_ID = "272981189"
+GITHUB_REPO_OWNER = "ikotelnikov"
+GITHUB_REPO_NAME = "pet-project-club-web-site"
+GITHUB_BRANCH = "main"
+EXTRACTION_BACKEND = "openai"
+# OPENAI_MODEL = "gpt-4.1-mini"
+
+# Store these with `wrangler secret put`, not here:
+# TELEGRAM_BOT_TOKEN
+# TELEGRAM_WEBHOOK_SECRET
+# OPENAI_API_KEY
+# GITHUB_WRITE_TOKEN

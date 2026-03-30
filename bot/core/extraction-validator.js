@@ -1,0 +1,190 @@
+import { ContentValidationError } from "../shared/errors.js";
+import { SLUG_PATTERN } from "../shared/constants.js";
+
+const INTENTS = new Set([
+  "content_operation",
+  "clarification_response",
+  "confirmation_response",
+  "non_actionable",
+]);
+
+const ENTITIES = new Set([
+  "announcement",
+  "meeting",
+  "participant",
+  "project",
+]);
+
+const ACTIONS = new Set([
+  "create",
+  "update",
+  "delete",
+]);
+
+const CONFIDENCE_VALUES = new Set([
+  "high",
+  "medium",
+  "low",
+]);
+
+const ENTITY_FIELD_RULES = {
+  announcement: new Set(["date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt"]),
+  meeting: new Set(["date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt"]),
+  participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "photoAlt"]),
+  project: new Set(["title", "status", "stack", "summary", "points", "location", "tags", "ownerSlugs", "links", "photoAlt"]),
+};
+
+export function validateExtraction(extraction) {
+  if (!extraction || typeof extraction !== "object") {
+    throw new ContentValidationError("Extraction must be an object.");
+  }
+
+  requireStringEnum(extraction.intent, INTENTS, "intent");
+  requireStringEnum(extraction.confidence, CONFIDENCE_VALUES, "confidence");
+
+  if (!Array.isArray(extraction.questions) || !extraction.questions.every(isNonEmptyString)) {
+    throw new ContentValidationError("Extraction field 'questions' must be an array of non-empty strings.");
+  }
+
+  if (!Array.isArray(extraction.warnings) || !extraction.warnings.every(isNonEmptyString)) {
+    throw new ContentValidationError("Extraction field 'warnings' must be an array of non-empty strings.");
+  }
+
+  if (typeof extraction.summary !== "string" || extraction.summary.trim() === "") {
+    throw new ContentValidationError("Extraction field 'summary' must be a non-empty string.");
+  }
+
+  if (typeof extraction.needsConfirmation !== "boolean") {
+    throw new ContentValidationError("Extraction field 'needsConfirmation' must be a boolean.");
+  }
+
+  if (extraction.intent === "content_operation") {
+    validateContentOperationExtraction(extraction);
+  } else {
+    validateNonOperationExtraction(extraction);
+  }
+
+  return extraction;
+}
+
+function validateContentOperationExtraction(extraction) {
+  requireStringEnum(extraction.entity, ENTITIES, "entity");
+  requireStringEnum(extraction.action, ACTIONS, "action");
+
+  if (extraction.slug != null) {
+    requireSlug(extraction.slug);
+  }
+
+  if (!extraction.fields || typeof extraction.fields !== "object" || Array.isArray(extraction.fields)) {
+    throw new ContentValidationError("Extraction field 'fields' must be an object.");
+  }
+
+  if (extraction.needsConfirmation !== true) {
+    throw new ContentValidationError("Content operations must require confirmation.");
+  }
+
+  if (extraction.confidence === "low" && extraction.questions.length === 0) {
+    throw new ContentValidationError("Low-confidence content operations must include at least one clarification question.");
+  }
+
+  const allowedFields = ENTITY_FIELD_RULES[extraction.entity];
+
+  for (const fieldName of Object.keys(extraction.fields)) {
+    if (!allowedFields.has(fieldName)) {
+      throw new ContentValidationError(`Extraction field '${fieldName}' is not allowed for entity '${extraction.entity}'.`);
+    }
+  }
+
+  validateFieldShapes(extraction.entity, extraction.fields);
+
+  if ((extraction.action === "update" || extraction.action === "delete") && typeof extraction.slug !== "string") {
+    throw new ContentValidationError(`Extraction action '${extraction.action}' requires a slug.`);
+  }
+}
+
+function validateNonOperationExtraction(extraction) {
+  if (extraction.entity !== null || extraction.action !== null) {
+    throw new ContentValidationError("Non-content intents must set 'entity' and 'action' to null.");
+  }
+
+  if (extraction.slug !== null) {
+    throw new ContentValidationError("Non-content intents must set 'slug' to null.");
+  }
+
+  if (!extraction.fields || typeof extraction.fields !== "object" || Array.isArray(extraction.fields)) {
+    throw new ContentValidationError("Extraction field 'fields' must be an object.");
+  }
+
+  if (extraction.intent === "confirmation_response") {
+    const decision = extraction.fields.decision;
+    if (decision !== "confirm" && decision !== "cancel") {
+      throw new ContentValidationError("Confirmation responses must include fields.decision = 'confirm' or 'cancel'.");
+    }
+  }
+}
+
+function validateFieldShapes(entity, fields) {
+  if (fields.paragraphs && !isStringArray(fields.paragraphs)) {
+    throw new ContentValidationError("Extraction field 'paragraphs' must be an array of non-empty strings.");
+  }
+
+  if (fields.points && !isStringArray(fields.points)) {
+    throw new ContentValidationError("Extraction field 'points' must be an array of non-empty strings.");
+  }
+
+  if (fields.tags && !isStringArray(fields.tags)) {
+    throw new ContentValidationError("Extraction field 'tags' must be an array of non-empty strings.");
+  }
+
+  if (fields.ownerSlugs && !isStringArray(fields.ownerSlugs)) {
+    throw new ContentValidationError("Extraction field 'ownerSlugs' must be an array of non-empty strings.");
+  }
+
+  if (fields.sections) {
+    if (!Array.isArray(fields.sections)) {
+      throw new ContentValidationError("Extraction field 'sections' must be an array.");
+    }
+
+    for (const section of fields.sections) {
+      if (!section || typeof section.title !== "string" || !isStringArray(section.items)) {
+        throw new ContentValidationError("Each section must include a non-empty title and items array.");
+      }
+    }
+  }
+
+  if (fields.links) {
+    if (!Array.isArray(fields.links)) {
+      throw new ContentValidationError("Extraction field 'links' must be an array.");
+    }
+
+    for (const link of fields.links) {
+      if (!link || typeof link.label !== "string" || link.label.trim() === "" || typeof link.href !== "string" || link.href.trim() === "") {
+        throw new ContentValidationError("Each link must include non-empty 'label' and 'href'.");
+      }
+    }
+  }
+
+  if (entity === "participant" && fields.handle && typeof fields.handle !== "string") {
+    throw new ContentValidationError("Extraction field 'handle' must be a string.");
+  }
+}
+
+function requireStringEnum(value, allowed, fieldName) {
+  if (typeof value !== "string" || !allowed.has(value)) {
+    throw new ContentValidationError(`Extraction field '${fieldName}' has an unsupported value.`);
+  }
+}
+
+function requireSlug(value) {
+  if (typeof value !== "string" || !SLUG_PATTERN.test(value)) {
+    throw new ContentValidationError("Extraction field 'slug' must use lowercase letters, numbers, and hyphens only.");
+  }
+}
+
+function isNonEmptyString(value) {
+  return typeof value === "string" && value.trim() !== "";
+}
+
+function isStringArray(value) {
+  return Array.isArray(value) && value.every(isNonEmptyString);
+}

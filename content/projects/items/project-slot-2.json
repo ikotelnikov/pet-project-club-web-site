@@ -1,0 +1,11 @@
+{
+  "slug": "project-slot-2",
+  "title": "Project slot #2",
+  "status": "needs contributors",
+  "stack": "design / no-code / marketing",
+  "points": [
+    "Короткий one-liner о продукте.",
+    "Последний апдейт или достигнутый milestone.",
+    "Четкий ask для участников клуба."
+  ]
+}
