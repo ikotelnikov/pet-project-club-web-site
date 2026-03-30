@@ -42,6 +42,22 @@ export class LocalPhotoStore {
 
     return plan;
   }
+
+  async planStagedPhoto(entity, slug, stagedPath) {
+    if (typeof this.contentRepository.planStagedPhoto === "function") {
+      return this.contentRepository.planStagedPhoto(entity, slug, stagedPath);
+    }
+
+    return this.planPhoto(entity, slug, stagedPath);
+  }
+
+  async applyStagedPhoto(entity, slug, stagedPath) {
+    if (typeof this.contentRepository.applyStagedPhoto === "function") {
+      return this.contentRepository.applyStagedPhoto(entity, slug, stagedPath);
+    }
+
+    return this.applyPhoto(entity, slug, stagedPath);
+  }
 }
 
 async function resolveExtension(filePath) {

@@ -1,7 +1,7 @@
 {
   "entity": "project",
   "required": ["slug", "title", "status", "stack"],
-  "optional": ["summary", "points", "location", "tags", "ownerSlugs", "links", "photoAlt"],
+  "optional": ["summary", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"],
   "fieldTypes": {
     "slug": "string",
     "title": "string",
@@ -13,7 +13,8 @@
     "tags": "string[]",
     "ownerSlugs": "string[]",
     "links": "Link[]",
-    "photoAlt": "string"
+    "photoAlt": "string",
+    "photoStagedPath": "string"
   },
   "aliases": {
     "description": "summary",

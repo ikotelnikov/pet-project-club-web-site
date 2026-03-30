@@ -92,7 +92,7 @@ export function mapCommandToContent(parsedCommand, options = {}) {
 }
 
 function buildPhoto(entity, fields, photoFilename) {
-  const photoAlt = fields.photoalt ?? fields.photoAlt;
+  const photoAlt = fields.photoalt ?? fields.photoAlt ?? buildFallbackPhotoAlt(fields);
 
   if (!photoFilename && !photoAlt) {
     return undefined;
@@ -110,6 +110,10 @@ function buildPhoto(entity, fields, photoFilename) {
     src: `assets/${resolveAssetFolder(entity)}/${photoFilename}`,
     alt: photoAlt,
   };
+}
+
+function buildFallbackPhotoAlt(fields) {
+  return fields.name || fields.title || fields.slug || undefined;
 }
 
 function buildLinks(linkEntries) {

@@ -20,6 +20,9 @@ export function loadBotConfig(env = process.env) {
   const pendingStateRoot = env.PENDING_STATE_ROOT
     ? path.resolve(env.PENDING_STATE_ROOT)
     : path.join(repoRoot, "bot", "state", "pending");
+  const attachmentStageRoot = env.ATTACHMENT_STAGE_ROOT
+    ? path.resolve(env.ATTACHMENT_STAGE_ROOT)
+    : path.join(repoRoot, "bot", "state", "attachments");
 
   const allowedUserId = env.TELEGRAM_ALLOWED_USER_ID
     ? Number.parseInt(env.TELEGRAM_ALLOWED_USER_ID, 10)
@@ -34,6 +37,7 @@ export function loadBotConfig(env = process.env) {
     contentRoot,
     assetsRoot,
     pendingStateRoot,
+    attachmentStageRoot,
     telegramOffsetStatePath,
     telegramBotToken: env.TELEGRAM_BOT_TOKEN || null,
     telegramAllowedUserId: allowedUserId,

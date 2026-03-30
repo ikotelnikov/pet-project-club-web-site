@@ -162,7 +162,9 @@ function buildSystemPrompt() {
     "Confidence must be exactly one of: high, medium, low.",
     "Never indicate that confirmation can be skipped.",
     "For update/delete, prefer targetRef over inventing a final slug.",
-    "The input may include attachments. Use their kind and file names as evidence when deciding whether media should be associated with the entity.",
+    "The input may include attachments. Use their kind, file names, and stagedPath values as evidence when deciding whether media should be associated with the entity.",
+    "If an attached photo should become the main photo, set fields.photoStagedPath to one of the provided stagedPath values and optionally set fields.photoAlt.",
+    "Do not emit raw transport objects such as photo, video, document, fileId, fileName, or mimeType inside fields.",
     "If the request is unclear, prefer one focused clarification question over guessing.",
     `Intent stage schema: ${buildStageSchemaSnippet("intent")}`,
     `Participant schema: ${buildEntitySchemaSnippet("participant")}`,
@@ -509,6 +511,20 @@ function resolveEntityFields(entityRecord) {
 function normalizeFieldAliases(entity, fields) {
   const normalized = { ...fields };
 
+  if (typeof normalized.mainPhotoPath === "string" && !normalized.photoStagedPath) {
+    normalized.photoStagedPath = normalized.mainPhotoPath;
+  }
+
+  if (normalized.photo && typeof normalized.photo === "object" && !Array.isArray(normalized.photo)) {
+    if (typeof normalized.photo.stagedPath === "string" && !normalized.photoStagedPath) {
+      normalized.photoStagedPath = normalized.photo.stagedPath;
+    }
+
+    if (typeof normalized.photo.alt === "string" && !normalized.photoAlt) {
+      normalized.photoAlt = normalized.photo.alt;
+    }
+  }
+
   stripAttachmentTransportFields(normalized);
 
   switch (entity) {
@@ -551,7 +567,20 @@ function normalizeFieldAliases(entity, fields) {
 }
 
 function stripAttachmentTransportFields(fields) {
+  if (fields.photo && typeof fields.photo === "object" && !Array.isArray(fields.photo)) {
+    delete fields.photo;
+  }
+
+  if (fields.video && typeof fields.video === "object" && !Array.isArray(fields.video)) {
+    delete fields.video;
+  }
+
+  if (fields.document && typeof fields.document === "object" && !Array.isArray(fields.document)) {
+    delete fields.document;
+  }
+
   const transportKeys = [
+    "mainPhotoPath",
     "photoFileId",
     "photoFileName",
     "videoFileId",

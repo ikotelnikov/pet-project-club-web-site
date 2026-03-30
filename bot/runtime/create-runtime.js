@@ -15,12 +15,14 @@ export function createBotRuntime(config, overrides = {}) {
   const extractionClient = overrides.extractionClient || createExtractionClient(config, {
     fetchImpl: overrides.fetchImpl,
   });
+  const telegramClient = overrides.telegramClient || null;
 
   return {
     repository,
     photoStore,
     pendingStore,
     extractionClient,
+    telegramClient,
     async handleTelegramUpdate(update, options = {}) {
       return handleTelegramMessage({
         message: update.message,
@@ -30,6 +32,7 @@ export function createBotRuntime(config, overrides = {}) {
         pendingStore,
         photoStore,
         extractionClient,
+        telegramClient,
         dryRun: options.dryRun ?? true,
       });
     },

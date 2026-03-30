@@ -4,9 +4,10 @@ import path from "node:path";
 import { ContentRepositoryError } from "../domain/errors.js";
 
 export class FilesystemContentRepository {
-  constructor({ contentRoot, assetsRoot }) {
+  constructor({ contentRoot, assetsRoot, attachmentStageRoot }) {
     this.contentRoot = contentRoot;
     this.assetsRoot = assetsRoot;
+    this.attachmentStageRoot = attachmentStageRoot;
   }
 
   getEntityPaths(entity, slug = null) {
@@ -85,6 +86,55 @@ export class FilesystemContentRepository {
     );
 
     return items;
+  }
+
+  async stageAttachment({ chatId, messageId, attachment, bytes }) {
+    const directory = path.join(this.attachmentStageRoot, String(chatId));
+    const fileName = `${messageId}-${attachment.fileName}`;
+    const stagedPath = path.join(directory, fileName);
+    await fs.mkdir(directory, { recursive: true });
+    await fs.writeFile(stagedPath, Buffer.from(bytes));
+
+    return {
+      ...attachment,
+      stagedPath: normalizeRepoRelativePath(path.relative(process.cwd(), stagedPath)),
+      localPath: stagedPath,
+    };
+  }
+
+  async planStagedPhoto(entity, slug, stagedPath) {
+    if (!stagedPath) {
+      return null;
+    }
+
+    const resolvedSourcePath = path.resolve(stagedPath);
+    const extension = await resolveExtension(resolvedSourcePath);
+    const filename = `${slug}-01${extension}`;
+    const directory = this.resolveAssetDirectory(entity);
+    const destinationPath = path.join(directory, filename);
+
+    return {
+      entity,
+      slug,
+      stagedPath,
+      sourcePath: resolvedSourcePath,
+      filename,
+      destinationPath,
+    };
+  }
+
+  async applyStagedPhoto(entity, slug, stagedPath) {
+    const plan = await this.planStagedPhoto(entity, slug, stagedPath);
+
+    if (!plan) {
+      return null;
+    }
+
+    await fs.mkdir(path.dirname(plan.destinationPath), { recursive: true });
+    await fs.copyFile(plan.sourcePath, plan.destinationPath);
+    await fs.rm(plan.sourcePath, { force: true });
+
+    return plan;
   }
 
   async itemExists(entity, slug) {
@@ -238,4 +288,8 @@ function buildCandidate(entity, slug, item) {
         title: null,
       };
   }
+}
+
+function normalizeRepoRelativePath(value) {
+  return value.split(path.sep).join("/");
 }

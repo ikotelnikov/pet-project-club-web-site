@@ -30,14 +30,7 @@ export function createWorkerRuntime(env = {}, options = {}) {
           namespace: env.PENDING_STATE_KV,
         })
       : new PendingMemoryStore());
-  const photoStore = options.photoStore || {
-    async planPhoto() {
-      return null;
-    },
-    async applyPhoto() {
-      return null;
-    },
-  };
+  const photoStore = options.photoStore || createWorkerPhotoStore(repository);
   const telegramClient =
     options.telegramClient ||
     (env.TELEGRAM_BOT_TOKEN
@@ -64,6 +57,7 @@ export function createWorkerRuntime(env = {}, options = {}) {
         pendingStore,
         photoStore,
         extractionClient,
+        telegramClient,
         dryRun: runtimeOptions.dryRun ?? true,
       });
     },
@@ -73,4 +67,29 @@ export function createWorkerRuntime(env = {}, options = {}) {
 function normalizeFetchImpl(fetchImpl) {
   const candidate = fetchImpl || fetch;
   return (...args) => candidate(...args);
+}
+
+function createWorkerPhotoStore(repository) {
+  return {
+    async planPhoto() {
+      return null;
+    },
+    async applyPhoto() {
+      return null;
+    },
+    async planStagedPhoto(entity, slug, stagedPath) {
+      if (typeof repository.planStagedPhoto !== "function") {
+        return null;
+      }
+
+      return repository.planStagedPhoto(entity, slug, stagedPath);
+    },
+    async applyStagedPhoto(entity, slug, stagedPath) {
+      if (typeof repository.applyStagedPhoto !== "function") {
+        return null;
+      }
+
+      return repository.applyStagedPhoto(entity, slug, stagedPath);
+    },
+  };
 }

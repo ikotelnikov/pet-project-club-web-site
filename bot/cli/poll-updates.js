@@ -38,6 +38,7 @@ try {
     allowedUserId: config.telegramAllowedUserId,
     repository,
     photoStore,
+    telegramClient,
     offsetStore,
     pendingStore,
     extractionClient,

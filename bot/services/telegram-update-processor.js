@@ -8,6 +8,7 @@ export async function processTelegramUpdates({
   offsetStore,
   pendingStore,
   extractionClient,
+  telegramClient,
   dryRun = true,
 }) {
   const results = [];
@@ -36,6 +37,7 @@ export async function processTelegramUpdates({
         pendingStore,
         photoStore,
         extractionClient,
+        telegramClient,
         dryRun,
       });
       nextOffset = Math.max(nextOffset, updateId + 1);

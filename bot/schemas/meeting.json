@@ -1,7 +1,7 @@
 {
   "entity": "meeting",
   "required": ["slug", "date", "title", "place", "format"],
-  "optional": ["placeUrl", "paragraphs", "sections", "links", "photoAlt"],
+  "optional": ["placeUrl", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"],
   "fieldTypes": {
     "slug": "string",
     "date": "string",
@@ -12,7 +12,8 @@
     "paragraphs": "string[]",
     "sections": "Section[]",
     "links": "Link[]",
-    "photoAlt": "string"
+    "photoAlt": "string",
+    "photoStagedPath": "string"
   },
   "aliases": {
     "description": "paragraphs",

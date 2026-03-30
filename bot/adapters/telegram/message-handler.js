@@ -17,11 +17,12 @@ export async function handleTelegramMessage({
   pendingStore,
   photoStore,
   extractionClient,
+  telegramClient,
   dryRun = true,
 }) {
   const fromUserId = message.from?.id || null;
   const chatId = message.chat?.id || fromUserId;
-  const attachments = extractTelegramAttachments(message);
+  const rawAttachments = extractTelegramAttachments(message);
 
   if (allowedUserId != null && fromUserId !== allowedUserId) {
     return {
@@ -61,6 +62,14 @@ export async function handleTelegramMessage({
       dryRun,
     });
   }
+
+  const attachments = await stageTelegramAttachments({
+    attachments: rawAttachments,
+    chatId,
+    messageId: message.message_id ?? updateId,
+    repository,
+    telegramClient,
+  });
 
   const extractionResult = await extractionClient.extractIntent({
     messageText: text,
@@ -116,9 +125,13 @@ export async function handleTelegramMessage({
 
   const normalizedOperation = normalizedOperationResult.operation;
   const validated = validateOperation(normalizedOperation);
-  const photo = await (dryRun
-    ? photoStore.planPhoto(validated.entity, validated.fields.slug, null)
-    : photoStore.applyPhoto(validated.entity, validated.fields.slug, null));
+  const photo = await planOrApplyStagedPhoto({
+    photoStore,
+    entity: validated.entity,
+    slug: validated.fields.slug,
+    stagedPath: validated.fields.photoStagedPath ?? null,
+    dryRun,
+  });
   const mapped = mapOperationToContent(validated, {
     photoFilename: photo?.filename || null,
   });
@@ -145,7 +158,7 @@ export async function handleTelegramMessage({
       attachments,
       photo: {
         hasPhoto: Boolean(photo) || attachments.some((attachment) => attachment.kind === "photo"),
-        telegramFileIds: attachments.map((attachment) => attachment.fileId),
+        telegramFileIds: attachments.map((attachment) => attachment.fileId).filter(Boolean),
       },
       preview,
     },
@@ -228,9 +241,13 @@ async function handleConfirmationDecision({
     action: pending.operation.action,
     fields: pending.operation.fields,
   };
-  const photo = await (dryRun
-    ? photoStore.planPhoto(operation.entity, operation.fields.slug, null)
-    : photoStore.applyPhoto(operation.entity, operation.fields.slug, null));
+  const photo = await planOrApplyStagedPhoto({
+    photoStore,
+    entity: operation.entity,
+    slug: operation.fields.slug,
+    stagedPath: operation.fields.photoStagedPath ?? null,
+    dryRun,
+  });
   const mapped = mapOperationToContent(operation, {
     photoFilename: photo?.filename || null,
   });
@@ -259,6 +276,7 @@ function normalizeExtractionToOperation(extraction) {
     action: extraction.action,
     fields: {
       ...extraction.fields,
+      photoStagedPath: extraction.fields?.photoStagedPath ?? null,
       slug:
         derivedSlug ||
         normalizeSlug(extraction.fields?.handle) ||
@@ -396,6 +414,7 @@ function mergeExistingFields(entity, currentItem, newFields) {
         tags: currentItem.tags,
         links: currentItem.links,
         photoAlt: currentItem.photo?.alt,
+        photoStagedPath: undefined,
         ...newFields,
       };
     case "project":
@@ -410,6 +429,7 @@ function mergeExistingFields(entity, currentItem, newFields) {
         ownerSlugs: currentItem.ownerSlugs,
         links: currentItem.links,
         photoAlt: currentItem.photo?.alt,
+        photoStagedPath: undefined,
         ...newFields,
       };
     case "meeting":
@@ -424,6 +444,7 @@ function mergeExistingFields(entity, currentItem, newFields) {
         sections: currentItem.sections,
         links: currentItem.links,
         photoAlt: currentItem.photo?.alt,
+        photoStagedPath: undefined,
         ...newFields,
       };
     default:
@@ -432,6 +453,81 @@ function mergeExistingFields(entity, currentItem, newFields) {
         ...newFields,
       };
   }
+}
+
+async function stageTelegramAttachments({
+  attachments,
+  chatId,
+  messageId,
+  repository,
+  telegramClient,
+}) {
+  if (!Array.isArray(attachments) || attachments.length === 0) {
+    return [];
+  }
+
+  if (!telegramClient || typeof repository.stageAttachment !== "function") {
+    return attachments;
+  }
+
+  const stagedAttachments = [];
+
+  for (const attachment of attachments) {
+    if (!attachment.fileId) {
+      stagedAttachments.push(attachment);
+      continue;
+    }
+
+    const download = await telegramClient.downloadFileBytes(attachment.fileId);
+    const stagedAttachment = await repository.stageAttachment({
+      chatId,
+      messageId,
+      attachment: {
+        ...attachment,
+        fileName: attachment.fileName || deriveAttachmentName(attachment, download.filePath),
+      },
+      bytes: download.bytes,
+    });
+
+    stagedAttachments.push({
+      ...stagedAttachment,
+      sourceFilePath: download.filePath,
+    });
+  }
+
+  return stagedAttachments;
+}
+
+async function planOrApplyStagedPhoto({
+  photoStore,
+  entity,
+  slug,
+  stagedPath,
+  dryRun,
+}) {
+  if (!stagedPath) {
+    return null;
+  }
+
+  if (dryRun) {
+    if (typeof photoStore.planStagedPhoto === "function") {
+      return photoStore.planStagedPhoto(entity, slug, stagedPath);
+    }
+
+    return photoStore.planPhoto(entity, slug, stagedPath);
+  }
+
+  if (typeof photoStore.applyStagedPhoto === "function") {
+    return photoStore.applyStagedPhoto(entity, slug, stagedPath);
+  }
+
+  return photoStore.applyPhoto(entity, slug, stagedPath);
+}
+
+function deriveAttachmentName(attachment, filePath) {
+  const extensionMatch = typeof filePath === "string" ? filePath.match(/(\.[a-zA-Z0-9]+)$/) : null;
+  const extension = extensionMatch ? extensionMatch[1].toLowerCase() : "";
+  return `${attachment.kind}-${attachment.fileUniqueId || attachment.fileId || "file"}${extension}`;
 }
 
 function normalizeSlug(value) {

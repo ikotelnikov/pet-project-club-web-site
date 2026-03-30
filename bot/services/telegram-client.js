@@ -31,6 +31,33 @@ export class TelegramClient {
     });
   }
 
+  async getFile(fileId) {
+    return this.call("getFile", {
+      file_id: fileId,
+    });
+  }
+
+  async downloadFileBytes(fileId) {
+    const file = await this.getFile(fileId);
+
+    if (!file?.file_path) {
+      throw new TelegramBotError("Telegram file_path is missing.");
+    }
+
+    const response = await this.fetchImpl(`https://api.telegram.org/file/bot${this.botToken}/${file.file_path}`, {
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      throw new TelegramBotError(`Telegram file download failed with status ${response.status}.`);
+    }
+
+    return {
+      filePath: file.file_path,
+      bytes: new Uint8Array(await response.arrayBuffer()),
+    };
+  }
+
   async call(method, payload) {
     const response = await this.fetchImpl(`${this.baseUrl}/${method}`, {
       method: "POST",

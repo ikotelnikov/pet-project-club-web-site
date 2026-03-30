@@ -8,6 +8,7 @@ export class GitHubContentRepository {
     repo,
     branch,
     token,
+    attachmentStageRoot = "bot/state/attachments",
     fetchImpl = fetch,
   }) {
     if (!owner || !repo || !branch || !token) {
@@ -20,6 +21,7 @@ export class GitHubContentRepository {
     this.repo = repo;
     this.branch = branch;
     this.token = token;
+    this.attachmentStageRoot = attachmentStageRoot;
     this.fetchImpl = fetchImpl;
   }
 
@@ -101,6 +103,53 @@ export class GitHubContentRepository {
     );
 
     return items;
+  }
+
+  async stageAttachment({ chatId, messageId, attachment, bytes }) {
+    const fileName = `${messageId}-${attachment.fileName}`;
+    const stagedPath = `${this.attachmentStageRoot}/${chatId}/${fileName}`;
+    await this.putFileFromBytes(stagedPath, bytes, `bot: stage attachment ${fileName}`);
+
+    return {
+      ...attachment,
+      stagedPath,
+    };
+  }
+
+  async planStagedPhoto(entity, slug, stagedPath) {
+    if (!stagedPath) {
+      return null;
+    }
+
+    const extension = resolveExtensionFromPath(stagedPath);
+    const filename = `${slug}-01${extension}`;
+    const destinationPath = `${this.resolveAssetDirectory(entity)}/${filename}`;
+
+    return {
+      entity,
+      slug,
+      stagedPath,
+      filename,
+      destinationPath,
+    };
+  }
+
+  async applyStagedPhoto(entity, slug, stagedPath) {
+    const plan = await this.planStagedPhoto(entity, slug, stagedPath);
+
+    if (!plan) {
+      return null;
+    }
+
+    const stagedFile = await this.getRawFile(stagedPath);
+    await this.putFileFromBase64(
+      plan.destinationPath,
+      stagedFile.rawContent,
+      `bot: promote photo ${plan.filename}`
+    );
+    await this.deleteFile(stagedPath, stagedFile.sha, `bot: remove staged attachment ${plan.filename}`);
+
+    return plan;
   }
 
   async itemExists(entity, slug) {
@@ -236,7 +285,19 @@ export class GitHubContentRepository {
     return {
       sha: payload.sha,
       content: decodeGitHubContent(payload.content, payload.encoding),
+      rawContent: payload.content.replace(/\n/g, ""),
+      encoding: payload.encoding,
     };
+  }
+
+  async getRawFile(filePath) {
+    const file = await this.getFileOrNull(filePath);
+
+    if (!file) {
+      throw new ContentRepositoryError(`File '${filePath}' does not exist in GitHub.`);
+    }
+
+    return file;
   }
 
   async request(method, pathname, body = null) {
@@ -255,6 +316,32 @@ export class GitHubContentRepository {
         ...(body ? { "content-type": "application/json" } : {}),
       },
       body: body ? JSON.stringify(body) : undefined,
+    });
+  }
+
+  async putFileFromBytes(filePath, bytes, message) {
+    await this.putFileFromBase64(filePath, bytesToBase64(bytes), message);
+  }
+
+  async putFileFromBase64(filePath, base64Content, message) {
+    const current = await this.getFileOrNull(filePath);
+    const encodedPath = encodeRepoPath(filePath);
+
+    await this.request("PUT", `/repos/${this.owner}/${this.repo}/contents/${encodedPath}`, {
+      message,
+      branch: this.branch,
+      content: base64Content,
+      ...(current?.sha ? { sha: current.sha } : {}),
+    });
+  }
+
+  async deleteFile(filePath, sha, message) {
+    const encodedPath = encodeRepoPath(filePath);
+
+    await this.request("DELETE", `/repos/${this.owner}/${this.repo}/contents/${encodedPath}`, {
+      message,
+      branch: this.branch,
+      sha,
     });
   }
 }
@@ -384,6 +471,23 @@ function decodeUtf8Bytes(bytes) {
   }
 
   return String.fromCharCode(...bytes);
+}
+
+function resolveExtensionFromPath(filePath) {
+  const match = filePath.match(/(\.[a-zA-Z0-9]+)$/);
+  return match ? match[1].toLowerCase() : ".jpg";
+}
+
+function bytesToBase64(bytes) {
+  if (typeof Buffer !== "undefined") {
+    return Buffer.from(bytes).toString("base64");
+  }
+
+  let binary = "";
+  for (const byte of bytes) {
+    binary += String.fromCharCode(byte);
+  }
+  return btoa(binary);
 }
 
 function buildCandidate(entity, slug, item) {

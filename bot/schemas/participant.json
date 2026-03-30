@@ -1,7 +1,7 @@
 {
   "entity": "participant",
   "required": ["slug", "handle", "name", "role", "bio"],
-  "optional": ["points", "location", "tags", "links", "photoAlt"],
+  "optional": ["points", "location", "tags", "links", "photoAlt", "photoStagedPath"],
   "fieldTypes": {
     "slug": "string",
     "handle": "string",
@@ -12,7 +12,8 @@
     "location": "string",
     "tags": "string[]",
     "links": "Link[]",
-    "photoAlt": "string"
+    "photoAlt": "string",
+    "photoStagedPath": "string"
   },
   "aliases": {
     "description": "bio",

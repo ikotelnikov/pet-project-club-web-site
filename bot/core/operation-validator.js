@@ -2,11 +2,11 @@ import { ContentValidationError } from "../shared/errors.js";
 import { SLUG_PATTERN } from "../shared/constants.js";
 
 const ENTITY_FIELD_RULES = {
-  announcement: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "slug"]),
-  announce: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "slug"]),
-  meeting: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "slug"]),
-  participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "slug"]),
-  project: new Set(["title", "status", "stack", "summary", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "slug"]),
+  announcement: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
+  announce: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
+  meeting: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
+  participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
+  project: new Set(["title", "status", "stack", "summary", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
 };
 
 export function validateOperation(operation) {
