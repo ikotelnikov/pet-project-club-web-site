@@ -94,7 +94,7 @@ export async function handleTelegramMessage({
     };
   }
 
-  const normalizedOperation = normalizeExtractionToOperation(extraction);
+  const normalizedOperation = await buildOperationFromExtraction(extraction, repository);
   const validated = validateOperation(normalizedOperation);
   const photo = await (dryRun
     ? photoStore.planPhoto(validated.entity, validated.fields.slug, null)
@@ -243,6 +243,140 @@ function normalizeExtractionToOperation(extraction) {
         normalizeSlug(extraction.fields?.title),
     },
   };
+}
+
+async function buildOperationFromExtraction(extraction, repository) {
+  const baseOperation = normalizeExtractionToOperation(extraction);
+
+  if (baseOperation.action === "create") {
+    return baseOperation;
+  }
+
+  const resolvedSlug =
+    baseOperation.fields.slug || (await resolveExistingSlug(repository, baseOperation.entity, extraction.fields));
+
+  const operationWithSlug = {
+    ...baseOperation,
+    fields: {
+      ...baseOperation.fields,
+      slug: resolvedSlug,
+    },
+  };
+
+  if (baseOperation.action !== "update") {
+    return operationWithSlug;
+  }
+
+  const currentItem = await repository.readItem(operationWithSlug.entity, operationWithSlug.fields.slug);
+  const mergedFields = mergeExistingFields(operationWithSlug.entity, currentItem, extraction.fields);
+
+  return {
+    ...operationWithSlug,
+    fields: {
+      ...mergedFields,
+      slug: operationWithSlug.fields.slug,
+    },
+  };
+}
+
+async function resolveExistingSlug(repository, entity, fields) {
+  const index = await repository.readIndex(entity);
+  const slugs = Array.isArray(index.items) ? index.items : [];
+
+  if (slugs.length === 0) {
+    return null;
+  }
+
+  const normalizedCandidates = new Set(
+    [
+      fields?.slug,
+      fields?.handle,
+      fields?.name,
+      fields?.title,
+    ]
+      .map((value) => normalizeSlug(value))
+      .filter(Boolean)
+  );
+
+  if (normalizedCandidates.size === 0) {
+    return null;
+  }
+
+  for (const slug of slugs) {
+    if (normalizedCandidates.has(normalizeSlug(slug))) {
+      return slug;
+    }
+  }
+
+  for (const slug of slugs) {
+    const item = await repository.readItem(entity, slug);
+    const itemCandidates = [
+      slug,
+      item.slug,
+      item.handle,
+      item.name,
+      item.title,
+    ]
+      .map((value) => normalizeSlug(value))
+      .filter(Boolean);
+
+    if (itemCandidates.some((candidate) => normalizedCandidates.has(candidate))) {
+      return slug;
+    }
+  }
+
+  return null;
+}
+
+function mergeExistingFields(entity, currentItem, newFields) {
+  switch (entity) {
+    case "participant":
+      return {
+        handle: currentItem.handle,
+        name: currentItem.name,
+        role: currentItem.role,
+        bio: currentItem.bio,
+        points: currentItem.points,
+        location: currentItem.location,
+        tags: currentItem.tags,
+        links: currentItem.links,
+        photoAlt: currentItem.photo?.alt,
+        ...newFields,
+      };
+    case "project":
+      return {
+        title: currentItem.title,
+        status: currentItem.status,
+        stack: currentItem.stack,
+        summary: currentItem.summary,
+        points: currentItem.points,
+        location: currentItem.location,
+        tags: currentItem.tags,
+        ownerSlugs: currentItem.ownerSlugs,
+        links: currentItem.links,
+        photoAlt: currentItem.photo?.alt,
+        ...newFields,
+      };
+    case "meeting":
+    case "announce":
+      return {
+        date: currentItem.date,
+        title: currentItem.title,
+        place: currentItem.place,
+        placeUrl: currentItem.placeUrl,
+        format: currentItem.format,
+        paragraphs: currentItem.paragraphs,
+        sections: currentItem.sections,
+        links: currentItem.links,
+        photoAlt: currentItem.photo?.alt,
+        ...newFields,
+      };
+    default:
+      return {
+        ...currentItem,
+        ...newFields,
+      };
+  }
 }
 
 function normalizeSlug(value) {
