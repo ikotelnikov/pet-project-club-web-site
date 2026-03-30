@@ -20,5 +20,10 @@
     "details": "summary",
     "owners": "ownerSlugs"
   },
-  "matchingKeys": ["slug", "title"]
+  "matchingKeys": ["slug", "title"],
+  "attachmentHints": {
+    "photo": "A photo attachment may become project screenshot or cover media.",
+    "video": "A video attachment may become demo media if the user asks to attach it.",
+    "document": "A document may become project material or linked artifact."
+  }
 }

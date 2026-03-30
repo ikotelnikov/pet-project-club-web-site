@@ -1,5 +1,6 @@
-export function buildOperationPreview(operation, repositoryPreview = null) {
+export function buildOperationPreview(operation, repositoryPreview = null, options = {}) {
   const files = resolvePreviewFiles(repositoryPreview);
+  const attachments = Array.isArray(options.attachments) ? options.attachments : [];
 
   return {
     entity: operation.entity,
@@ -8,6 +9,11 @@ export function buildOperationPreview(operation, repositoryPreview = null) {
     fields: summarizeFields(operation.fields),
     files,
     hasPhoto: Boolean(operation.fields.photoAlt || operation.fields.photoalt),
+    attachments: attachments.map((attachment) => ({
+      kind: attachment.kind,
+      fileName: attachment.fileName,
+      mimeType: attachment.mimeType,
+    })),
   };
 }
 

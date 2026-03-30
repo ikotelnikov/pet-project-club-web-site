@@ -26,6 +26,7 @@ Current scope:
 - transitional extraction adapter scaffolding
 - Worker-safe webhook runtime scaffold
 - GitHub API-backed content repository scaffold
+- attachment metadata capture from Telegram messages
 - local CLI for parsing commands
 
 Not implemented yet:
@@ -48,6 +49,7 @@ Not implemented yet:
 - `core/`: reusable runtime/domain logic for the redesign
 - `adapters/`: transport, storage, and provider adapters for the redesign
 - `schemas/`: machine-oriented entity and staged LLM contracts
+- `adapters/telegram/attachments.js`: extracts Telegram attachment metadata for prompt input and preview
 - `adapters/openai/prototype-extraction-client.js`: temporary extraction bridge during migration
 - `adapters/github/repository.js`: GitHub API-backed repository for hosted writes
 - `adapters/storage/pending-kv-store.js`: Cloudflare KV-style pending state store

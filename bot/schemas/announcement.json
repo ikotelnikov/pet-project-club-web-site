@@ -19,5 +19,10 @@
     "details": "paragraphs",
     "agenda": "sections"
   },
-  "matchingKeys": ["slug", "title", "date"]
+  "matchingKeys": ["slug", "title", "date"],
+  "attachmentHints": {
+    "photo": "A photo attachment may become announcement cover media.",
+    "video": "A video attachment may become announcement media if the message asks to attach it.",
+    "document": "A document may become linked material if explicitly requested."
+  }
 }

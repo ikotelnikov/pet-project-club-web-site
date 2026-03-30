@@ -48,14 +48,20 @@ function buildPreviewText(result, dryRun) {
   const slug = preview?.slug || result.parsed?.fields?.slug || "unknown-slug";
   const fields = preview?.fields || {};
   const files = Array.isArray(preview?.files) ? preview.files : [];
+  const attachments = Array.isArray(preview?.attachments) ? preview.attachments : [];
   const fieldLines = Object.entries(fields)
+    .filter(([, value]) => value !== undefined && value !== null)
     .slice(0, 8)
     .map(([key, value]) => `- ${key}: ${formatValue(value)}`);
   const fileLines = files.slice(0, 4).map((file) => `- ${file}`);
+  const attachmentLines = attachments
+    .slice(0, 4)
+    .map((attachment) => `- ${attachment.kind}: ${attachment.fileName}${attachment.mimeType ? ` (${attachment.mimeType})` : ""}`);
 
   return [
     `${dryRun ? "Dry-run preview" : "Preview"}: ${action} ${entity} ${slug}`,
     fieldLines.length > 0 ? `Fields:\n${fieldLines.join("\n")}` : null,
+    attachmentLines.length > 0 ? `Attachments:\n${attachmentLines.join("\n")}` : null,
     fileLines.length > 0 ? `Files:\n${fileLines.join("\n")}` : null,
     "Reply with confirm or cancel.",
   ]

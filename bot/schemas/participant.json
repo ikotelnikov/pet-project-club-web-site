@@ -19,5 +19,10 @@
     "details": "bio",
     "about": "bio"
   },
-  "matchingKeys": ["slug", "handle", "name"]
+  "matchingKeys": ["slug", "handle", "name"],
+  "attachmentHints": {
+    "photo": "A photo attachment may become participant photo media when the user message implies profile/portrait/photo update.",
+    "video": "A video attachment may become a participant media asset if explicitly requested later.",
+    "document": "A document attachment may be referenced as supporting material if the user asks for it."
+  }
 }

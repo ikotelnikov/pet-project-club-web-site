@@ -7,6 +7,7 @@ import {
 import { validateOperation } from "../../core/operation-validator.js";
 import { buildOperationPreview } from "../../core/preview-builder.js";
 import { mapOperationToContent } from "../../core/content-mapper.js";
+import { extractTelegramAttachments } from "./attachments.js";
 
 export async function handleTelegramMessage({
   message,
@@ -20,6 +21,7 @@ export async function handleTelegramMessage({
 }) {
   const fromUserId = message.from?.id || null;
   const chatId = message.chat?.id || fromUserId;
+  const attachments = extractTelegramAttachments(message);
 
   if (allowedUserId != null && fromUserId !== allowedUserId) {
     return {
@@ -64,6 +66,7 @@ export async function handleTelegramMessage({
     messageText: text,
     hasPhoto: Boolean(message.photo?.length),
     photoCount: Array.isArray(message.photo) ? message.photo.length : 0,
+    attachments,
     pendingState: existingPending ? existingPending.state : null,
     allowedEntityTypes: ["announcement", "meeting", "participant", "project"],
     allowedActions: ["create", "update", "delete"],
@@ -122,7 +125,9 @@ export async function handleTelegramMessage({
   const repositoryPreview = dryRun
     ? await repository.previewCommand(validated, mapped)
     : await repository.previewCommand(validated, mapped);
-  const preview = buildOperationPreview(validated, repositoryPreview);
+  const preview = buildOperationPreview(validated, repositoryPreview, {
+    attachments,
+  });
   const newPending = createPendingRecord({
     chatId,
     userId: fromUserId,
@@ -137,9 +142,10 @@ export async function handleTelegramMessage({
       summary: extraction.summary,
       fields: validated.fields,
       warnings: extraction.warnings,
+      attachments,
       photo: {
-        hasPhoto: Boolean(photo),
-        telegramFileIds: [],
+        hasPhoto: Boolean(photo) || attachments.some((attachment) => attachment.kind === "photo"),
+        telegramFileIds: attachments.map((attachment) => attachment.fileId),
       },
       preview,
     },

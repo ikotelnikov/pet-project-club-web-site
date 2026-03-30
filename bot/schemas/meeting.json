@@ -19,5 +19,10 @@
     "details": "paragraphs",
     "agenda": "sections"
   },
-  "matchingKeys": ["slug", "title", "date"]
+  "matchingKeys": ["slug", "title", "date"],
+  "attachmentHints": {
+    "photo": "A photo attachment may become meeting photo media.",
+    "video": "A video attachment may become meeting recap media.",
+    "document": "A document may become agenda or meeting material if explicitly requested."
+  }
 }

@@ -162,6 +162,7 @@ function buildSystemPrompt() {
     "Confidence must be exactly one of: high, medium, low.",
     "Never indicate that confirmation can be skipped.",
     "For update/delete, prefer targetRef over inventing a final slug.",
+    "The input may include attachments. Use their kind and file names as evidence when deciding whether media should be associated with the entity.",
     "If the request is unclear, prefer one focused clarification question over guessing.",
     `Intent stage schema: ${buildStageSchemaSnippet("intent")}`,
     `Participant schema: ${buildEntitySchemaSnippet("participant")}`,
