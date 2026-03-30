@@ -94,7 +94,24 @@ export async function handleTelegramMessage({
     };
   }
 
-  const normalizedOperation = await buildOperationFromExtraction(extraction, repository);
+  const normalizedOperationResult = await buildOperationFromExtraction({
+    extraction,
+    repository,
+    extractionClient,
+    messageText: text,
+  });
+
+  if (!normalizedOperationResult.ok) {
+    return {
+      status: "clarification",
+      chatId,
+      fromUserId,
+      question: normalizedOperationResult.question,
+      extraction,
+    };
+  }
+
+  const normalizedOperation = normalizedOperationResult.operation;
   const validated = validateOperation(normalizedOperation);
   const photo = await (dryRun
     ? photoStore.planPhoto(validated.entity, validated.fields.slug, null)
@@ -245,15 +262,33 @@ function normalizeExtractionToOperation(extraction) {
   };
 }
 
-async function buildOperationFromExtraction(extraction, repository) {
+async function buildOperationFromExtraction({ extraction, repository, extractionClient, messageText }) {
   const baseOperation = normalizeExtractionToOperation(extraction);
 
   if (baseOperation.action === "create") {
-    return baseOperation;
+    return {
+      ok: true,
+      operation: baseOperation,
+    };
   }
 
   const resolvedSlug =
-    baseOperation.fields.slug || (await resolveExistingSlug(repository, baseOperation.entity, extraction.fields));
+    baseOperation.fields.slug ||
+    (await resolveExistingSlug({
+      repository,
+      entity: baseOperation.entity,
+      fields: extraction.fields,
+      targetRef: extraction.targetRef,
+      extractionClient,
+      messageText,
+    }));
+
+  if (!resolvedSlug) {
+    return {
+      ok: false,
+      question: `I couldn't find which ${baseOperation.entity} you want to ${baseOperation.action}. Tell me the exact name, handle, or slug.`,
+    };
+  }
 
   const operationWithSlug = {
     ...baseOperation,
@@ -264,31 +299,44 @@ async function buildOperationFromExtraction(extraction, repository) {
   };
 
   if (baseOperation.action !== "update") {
-    return operationWithSlug;
+    return {
+      ok: true,
+      operation: operationWithSlug,
+    };
   }
 
   const currentItem = await repository.readItem(operationWithSlug.entity, operationWithSlug.fields.slug);
   const mergedFields = mergeExistingFields(operationWithSlug.entity, currentItem, extraction.fields);
 
   return {
-    ...operationWithSlug,
-    fields: {
-      ...mergedFields,
-      slug: operationWithSlug.fields.slug,
+    ok: true,
+    operation: {
+      ...operationWithSlug,
+      fields: {
+        ...mergedFields,
+        slug: operationWithSlug.fields.slug,
+      },
     },
   };
 }
 
-async function resolveExistingSlug(repository, entity, fields) {
-  const index = await repository.readIndex(entity);
-  const slugs = Array.isArray(index.items) ? index.items : [];
+async function resolveExistingSlug({
+  repository,
+  entity,
+  fields,
+  targetRef,
+  extractionClient,
+  messageText,
+}) {
+  const candidates = await repository.listEntityCandidates(entity);
 
-  if (slugs.length === 0) {
+  if (candidates.length === 0) {
     return null;
   }
 
   const normalizedCandidates = new Set(
     [
+      targetRef,
       fields?.slug,
       fields?.handle,
       fields?.name,
@@ -298,30 +346,31 @@ async function resolveExistingSlug(repository, entity, fields) {
       .filter(Boolean)
   );
 
-  if (normalizedCandidates.size === 0) {
-    return null;
-  }
-
-  for (const slug of slugs) {
-    if (normalizedCandidates.has(normalizeSlug(slug))) {
-      return slug;
-    }
-  }
-
-  for (const slug of slugs) {
-    const item = await repository.readItem(entity, slug);
-    const itemCandidates = [
-      slug,
-      item.slug,
-      item.handle,
-      item.name,
-      item.title,
-    ]
+  for (const candidate of candidates) {
+    const candidateKeys = [candidate.slug, candidate.label, candidate.handle, candidate.title]
       .map((value) => normalizeSlug(value))
       .filter(Boolean);
 
-    if (itemCandidates.some((candidate) => normalizedCandidates.has(candidate))) {
-      return slug;
+    if (candidateKeys.some((candidateKey) => normalizedCandidates.has(candidateKey))) {
+      return candidate.slug;
+    }
+  }
+
+  if (extractionClient && typeof extractionClient.resolveTarget === "function") {
+    const resolutionResult = await extractionClient.resolveTarget({
+      entity,
+      targetRef:
+        targetRef ||
+        fields?.handle ||
+        fields?.name ||
+        fields?.title ||
+        messageText,
+      candidates,
+      messageText,
+    });
+
+    if (resolutionResult.ok && resolutionResult.resolution?.matchedSlug) {
+      return resolutionResult.resolution.matchedSlug;
     }
   }
 

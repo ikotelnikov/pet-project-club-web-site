@@ -97,8 +97,17 @@ function validateContentOperationExtraction(extraction) {
 
   validateFieldShapes(extraction.entity, extraction.fields);
 
-  if ((extraction.action === "update" || extraction.action === "delete") && typeof extraction.slug !== "string") {
-    throw new ContentValidationError(`Extraction action '${extraction.action}' requires a slug.`);
+  const hasResolvableTarget =
+    typeof extraction.slug === "string" ||
+    typeof extraction.targetRef === "string" ||
+    typeof extraction.fields?.handle === "string" ||
+    typeof extraction.fields?.name === "string" ||
+    typeof extraction.fields?.title === "string";
+
+  if ((extraction.action === "update" || extraction.action === "delete") && !hasResolvableTarget) {
+    throw new ContentValidationError(
+      `Extraction action '${extraction.action}' requires a slug or target reference.`
+    );
   }
 }
 

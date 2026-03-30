@@ -74,6 +74,19 @@ export class FilesystemContentRepository {
     return readJsonFile(itemPath);
   }
 
+  async listEntityCandidates(entity) {
+    const index = await this.readIndex(entity);
+    const slugs = Array.isArray(index.items) ? index.items : [];
+    const items = await Promise.all(
+      slugs.map(async (slug) => {
+        const item = await this.readItem(entity, slug);
+        return buildCandidate(entity, slug, item);
+      })
+    );
+
+    return items;
+  }
+
   async itemExists(entity, slug) {
     const { itemPath } = this.getEntityPaths(entity, slug);
 
@@ -191,4 +204,38 @@ function updateIndexItems(indexData, slug, action) {
 
   nextIndex.items = items;
   return nextIndex;
+}
+
+function buildCandidate(entity, slug, item) {
+  switch (entity) {
+    case "participant":
+      return {
+        slug,
+        label: item.name || slug,
+        handle: item.handle || null,
+        title: item.role || null,
+      };
+    case "project":
+      return {
+        slug,
+        label: item.title || slug,
+        handle: null,
+        title: item.status || null,
+      };
+    case "meeting":
+    case "announce":
+      return {
+        slug,
+        label: item.title || slug,
+        handle: null,
+        title: item.date || null,
+      };
+    default:
+      return {
+        slug,
+        label: slug,
+        handle: null,
+        title: null,
+      };
+  }
 }

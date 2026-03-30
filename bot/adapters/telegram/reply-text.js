@@ -12,6 +12,8 @@ export function buildTelegramReplyText(result, options = {}) {
       return buildConfirmedText(result, dryRun);
     case "cancelled":
       return "Cancelled. No website changes were applied.";
+    case "clarification":
+      return result.question || "I need one more detail before I can continue.";
     case "control":
       if (result.hasPending) {
         return "There is a pending interaction, but it is not ready for confirmation yet.";

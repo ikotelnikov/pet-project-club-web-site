@@ -18,29 +18,7 @@ export class ExtractionClient {
   }
 
   async extractIntent(input) {
-    const body = {
-      model: this.model,
-      input: [
-        {
-          role: "system",
-          content: [
-            {
-              type: "input_text",
-              text: buildSystemPrompt(),
-            },
-          ],
-        },
-        {
-          role: "user",
-          content: [
-            {
-              type: "input_text",
-              text: JSON.stringify(input, null, 2),
-            },
-          ],
-        },
-      ],
-    };
+    const body = buildResponsesRequest(buildSystemPrompt(), input, this.model);
 
     let attempts = 0;
     let lastError = null;
@@ -101,6 +79,74 @@ export class ExtractionClient {
       rawText: typeof lastError?.rawText === "string" ? lastError.rawText : null,
     };
   }
+
+  async resolveTarget(input) {
+    const body = buildResponsesRequest(buildResolverPrompt(), input, this.model);
+
+    let rawText = null;
+
+    try {
+      const response = await this.fetchImpl("https://api.openai.com/v1/responses", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        throw new Error(`OpenAI API returned status ${response.status}.`);
+      }
+
+      const data = await response.json();
+      rawText = extractTextOutput(data);
+      const resolution = normalizeResolution(JSON.parse(rawText));
+
+      validateResolution(resolution);
+
+      return {
+        ok: true,
+        usedModel: this.model,
+        resolution,
+      };
+    } catch (error) {
+      const enriched = rawText ? attachRawText(error, rawText) : error;
+      return {
+        ok: false,
+        usedModel: this.model,
+        reason: "resolution_failed",
+        error: enriched instanceof Error ? enriched.message : String(enriched),
+        rawText: typeof enriched?.rawText === "string" ? enriched.rawText : null,
+      };
+    }
+  }
+}
+
+function buildResponsesRequest(systemPrompt, input, model) {
+  return {
+    model,
+    input: [
+      {
+        role: "system",
+        content: [
+          {
+            type: "input_text",
+            text: systemPrompt,
+          },
+        ],
+      },
+      {
+        role: "user",
+        content: [
+          {
+            type: "input_text",
+            text: JSON.stringify(input, null, 2),
+          },
+        ],
+      },
+    ],
+  };
 }
 
 function buildSystemPrompt() {
@@ -115,6 +161,18 @@ function buildSystemPrompt() {
     "Confidence must be exactly one of: high, medium, low.",
     "Never indicate that confirmation can be skipped.",
     "If the request is unclear, prefer one focused clarification question over guessing.",
+  ].join(" ");
+}
+
+function buildResolverPrompt() {
+  return [
+    "You resolve an update/delete target for a private Telegram content bot.",
+    "Return JSON only.",
+    "Choose at most one candidate from the provided list.",
+    "Prefer exact handle, exact name, or exact title matches.",
+    "If no confident match exists, return matchedSlug as null and ask one clarification question.",
+    "Schema:",
+    '{"matchedSlug": string|null, "confidence": "high"|"medium"|"low", "question": string|null}',
   ].join(" ");
 }
 
@@ -176,6 +234,7 @@ function normalizeExtraction(extraction) {
     entity: normalizeNullableScalar(expandedExtraction.entity),
     action: normalizeNullableScalar(expandedExtraction.action),
     slug: normalizeNullableScalar(expandedExtraction.slug),
+    targetRef: normalizeNullableScalar(expandedExtraction.targetRef),
     confidence: normalizeConfidence(expandedExtraction.confidence),
     questions: Array.isArray(expandedExtraction.questions) ? expandedExtraction.questions : [],
     warnings: Array.isArray(expandedExtraction.warnings) ? expandedExtraction.warnings : [],
@@ -200,6 +259,7 @@ function normalizeExtraction(extraction) {
       entity: normalized.entity ?? null,
       action: normalized.action ?? null,
       slug: normalized.slug ?? null,
+      targetRef: normalized.targetRef ?? null,
       summary: normalizeSummary(expandedExtraction.summary, normalized.intent),
       needsConfirmation:
         typeof expandedExtraction.needsConfirmation === "boolean"
@@ -212,6 +272,13 @@ function normalizeExtraction(extraction) {
   return {
     ...normalized,
     slug: normalized.slug ?? deriveSlug(normalized.entity, normalized.fields),
+    targetRef:
+      normalized.targetRef ??
+      normalized.slug ??
+      normalized.fields.handle ??
+      normalized.fields.name ??
+      normalized.fields.title ??
+      null,
     summary:
       normalizeSummary(expandedExtraction.summary, normalized.intent) ||
       summarizeEntityExpansion(normalized.entity, normalized.action, normalized.fields),
@@ -323,6 +390,14 @@ function expandEntityObjectShape(extraction) {
     ...extraction,
     entity: extraction.entity ?? entityType ?? null,
     slug: extraction.slug ?? normalizedAttributes.slug ?? null,
+    targetRef:
+      extraction.targetRef ??
+      extraction.entityId ??
+      extraction.entityName ??
+      normalizedAttributes.handle ??
+      normalizedAttributes.name ??
+      normalizedAttributes.title ??
+      null,
     fields: extraction.fields ?? normalizedAttributes,
     summary:
       extraction.summary ??
@@ -348,6 +423,14 @@ function expandFlatEntityPayloadShape(extraction) {
     ...extraction,
     entity: entityType,
     slug: extraction.slug ?? fieldObject.slug ?? extraction.entityId ?? null,
+    targetRef:
+      extraction.targetRef ??
+      extraction.entityId ??
+      extraction.entityName ??
+      fieldObject.handle ??
+      fieldObject.name ??
+      fieldObject.title ??
+      null,
     fields: extraction.fields ?? fieldObject,
     summary:
       extraction.summary ??
@@ -378,6 +461,14 @@ function expandEntityArrayShape(extraction) {
     action,
     confidence: extraction.confidence ?? firstEntity.confidence ?? null,
     slug: extraction.slug ?? fields.slug ?? firstEntity.entityId ?? firstEntity.id ?? null,
+    targetRef:
+      extraction.targetRef ??
+      firstEntity.entityId ??
+      firstEntity.entityName ??
+      fields.handle ??
+      fields.name ??
+      fields.title ??
+      null,
     fields: extraction.fields ?? fields,
     summary,
   };
@@ -474,4 +565,44 @@ function slugify(value) {
     .replace(/^-+|-+$/g, "");
 
   return slug || null;
+}
+
+function normalizeResolution(value) {
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+
+  return {
+    matchedSlug: typeof value.matchedSlug === "string" && value.matchedSlug.trim() !== ""
+      ? value.matchedSlug.trim()
+      : null,
+    confidence: normalizeConfidence(value.confidence),
+    question: typeof value.question === "string" && value.question.trim() !== ""
+      ? value.question.trim()
+      : null,
+  };
+}
+
+function validateResolution(value) {
+  if (!value || typeof value !== "object") {
+    throw new BotConfigError("Resolution must be an object.");
+  }
+
+  if (
+    value.confidence !== "high" &&
+    value.confidence !== "medium" &&
+    value.confidence !== "low"
+  ) {
+    throw new BotConfigError("Resolution confidence must be high, medium, or low.");
+  }
+
+  if (value.matchedSlug !== null && typeof value.matchedSlug !== "string") {
+    throw new BotConfigError("Resolution matchedSlug must be a string or null.");
+  }
+
+  if (value.question !== null && typeof value.question !== "string") {
+    throw new BotConfigError("Resolution question must be a string or null.");
+  }
+
+  return value;
 }

@@ -71,6 +71,38 @@ export class PrototypeExtractionClient {
       },
     });
   }
+
+  async resolveTarget({ targetRef, candidates = [] }) {
+    const normalizedTarget = typeof targetRef === "string" ? targetRef.trim().toLowerCase() : "";
+
+    if (!normalizedTarget) {
+      return {
+        ok: true,
+        usedModel: this.kind,
+        resolution: {
+          matchedSlug: null,
+          confidence: "low",
+          question: "Which existing item do you want to change?",
+        },
+      };
+    }
+
+    const exact = candidates.find((candidate) =>
+      [candidate.slug, candidate.label, candidate.handle, candidate.title]
+        .filter(Boolean)
+        .some((value) => String(value).trim().toLowerCase() === normalizedTarget)
+    );
+
+    return {
+      ok: true,
+      usedModel: this.kind,
+      resolution: {
+        matchedSlug: exact?.slug ?? null,
+        confidence: exact ? "high" : "low",
+        question: exact ? null : `I could not find an exact match for '${targetRef}'. Which item did you mean?`,
+      },
+    };
+  }
 }
 
 function validateResult(result) {
