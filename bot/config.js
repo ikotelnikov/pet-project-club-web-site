@@ -22,7 +22,7 @@ export function loadBotConfig(env = process.env) {
     : path.join(repoRoot, "bot", "state", "pending");
   const attachmentStageRoot = env.ATTACHMENT_STAGE_ROOT
     ? path.resolve(env.ATTACHMENT_STAGE_ROOT)
-    : path.join(repoRoot, "bot", "state", "attachments");
+    : path.join(repoRoot, "assets", "uploads");
 
   const allowedUserId = env.TELEGRAM_ALLOWED_USER_ID
     ? Number.parseInt(env.TELEGRAM_ALLOWED_USER_ID, 10)

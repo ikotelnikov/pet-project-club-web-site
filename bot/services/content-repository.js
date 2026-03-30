@@ -103,38 +103,26 @@ export class FilesystemContentRepository {
   }
 
   async planStagedPhoto(entity, slug, stagedPath) {
-    if (!stagedPath) {
-      return null;
-    }
-
-    const resolvedSourcePath = path.resolve(stagedPath);
-    const extension = await resolveExtension(resolvedSourcePath);
-    const filename = `${slug}-01${extension}`;
-    const directory = this.resolveAssetDirectory(entity);
-    const destinationPath = path.join(directory, filename);
-
-    return {
-      entity,
-      slug,
-      stagedPath,
-      sourcePath: resolvedSourcePath,
-      filename,
-      destinationPath,
-    };
+    return stagedPath
+      ? {
+          entity,
+          slug,
+          stagedPath,
+          srcPath: normalizeRepoRelativePath(path.relative(process.cwd(), path.resolve(stagedPath))),
+        }
+      : null;
   }
 
   async applyStagedPhoto(entity, slug, stagedPath) {
-    const plan = await this.planStagedPhoto(entity, slug, stagedPath);
+    return this.planStagedPhoto(entity, slug, stagedPath);
+  }
 
-    if (!plan) {
-      return null;
+  async deleteStagedAttachment(stagedPath) {
+    if (!stagedPath) {
+      return;
     }
 
-    await fs.mkdir(path.dirname(plan.destinationPath), { recursive: true });
-    await fs.copyFile(plan.sourcePath, plan.destinationPath);
-    await fs.rm(plan.sourcePath, { force: true });
-
-    return plan;
+    await fs.rm(path.resolve(stagedPath), { force: true });
   }
 
   async itemExists(entity, slug) {

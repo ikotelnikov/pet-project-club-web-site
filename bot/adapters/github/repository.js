@@ -8,7 +8,7 @@ export class GitHubContentRepository {
     repo,
     branch,
     token,
-    attachmentStageRoot = "bot/state/attachments",
+    attachmentStageRoot = "assets/uploads",
     fetchImpl = fetch,
   }) {
     if (!owner || !repo || !branch || !token) {
@@ -117,39 +117,32 @@ export class GitHubContentRepository {
   }
 
   async planStagedPhoto(entity, slug, stagedPath) {
-    if (!stagedPath) {
-      return null;
-    }
-
-    const extension = resolveExtensionFromPath(stagedPath);
-    const filename = `${slug}-01${extension}`;
-    const destinationPath = `${this.resolveAssetDirectory(entity)}/${filename}`;
-
-    return {
-      entity,
-      slug,
-      stagedPath,
-      filename,
-      destinationPath,
-    };
+    return stagedPath
+      ? {
+          entity,
+          slug,
+          stagedPath,
+          srcPath: stagedPath,
+        }
+      : null;
   }
 
   async applyStagedPhoto(entity, slug, stagedPath) {
-    const plan = await this.planStagedPhoto(entity, slug, stagedPath);
+    return this.planStagedPhoto(entity, slug, stagedPath);
+  }
 
-    if (!plan) {
-      return null;
+  async deleteStagedAttachment(stagedPath) {
+    if (!stagedPath) {
+      return;
     }
 
-    const stagedFile = await this.getRawFile(stagedPath);
-    await this.putFileFromBase64(
-      plan.destinationPath,
-      stagedFile.rawContent,
-      `bot: promote photo ${plan.filename}`
-    );
-    await this.deleteFile(stagedPath, stagedFile.sha, `bot: remove staged attachment ${plan.filename}`);
+    const stagedFile = await this.getFileOrNull(stagedPath);
 
-    return plan;
+    if (!stagedFile) {
+      return;
+    }
+
+    await this.deleteFile(stagedPath, stagedFile.sha, `bot: remove staged attachment ${stagedPath}`);
   }
 
   async itemExists(entity, slug) {
@@ -471,11 +464,6 @@ function decodeUtf8Bytes(bytes) {
   }
 
   return String.fromCharCode(...bytes);
-}
-
-function resolveExtensionFromPath(filePath) {
-  const match = filePath.match(/(\.[a-zA-Z0-9]+)$/);
-  return match ? match[1].toLowerCase() : ".jpg";
 }
 
 function bytesToBase64(bytes) {

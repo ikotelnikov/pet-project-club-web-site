@@ -215,6 +215,7 @@ async function handleConfirmationDecision({
   }
 
   if (decision === "cancel") {
+    await cleanupStagedAttachments(repository, pending.operation?.attachments ?? []);
     await pendingStore.deletePending(chatId);
     return {
       status: "cancelled",
@@ -241,16 +242,7 @@ async function handleConfirmationDecision({
     action: pending.operation.action,
     fields: pending.operation.fields,
   };
-  const photo = await planOrApplyStagedPhoto({
-    photoStore,
-    entity: operation.entity,
-    slug: operation.fields.slug,
-    stagedPath: operation.fields.photoStagedPath ?? null,
-    dryRun,
-  });
-  const mapped = mapOperationToContent(operation, {
-    photoFilename: photo?.filename || null,
-  });
+  const mapped = mapOperationToContent(operation);
   const writeResult = dryRun
     ? await repository.previewCommand(operation, mapped)
     : await repository.applyCommand(operation, mapped);
@@ -414,7 +406,7 @@ function mergeExistingFields(entity, currentItem, newFields) {
         tags: currentItem.tags,
         links: currentItem.links,
         photoAlt: currentItem.photo?.alt,
-        photoStagedPath: undefined,
+        photoStagedPath: currentItem.photo?.src,
         ...newFields,
       };
     case "project":
@@ -429,7 +421,7 @@ function mergeExistingFields(entity, currentItem, newFields) {
         ownerSlugs: currentItem.ownerSlugs,
         links: currentItem.links,
         photoAlt: currentItem.photo?.alt,
-        photoStagedPath: undefined,
+        photoStagedPath: currentItem.photo?.src,
         ...newFields,
       };
     case "meeting":
@@ -444,7 +436,7 @@ function mergeExistingFields(entity, currentItem, newFields) {
         sections: currentItem.sections,
         links: currentItem.links,
         photoAlt: currentItem.photo?.alt,
-        photoStagedPath: undefined,
+        photoStagedPath: currentItem.photo?.src,
         ...newFields,
       };
     default:
@@ -528,6 +520,18 @@ function deriveAttachmentName(attachment, filePath) {
   const extensionMatch = typeof filePath === "string" ? filePath.match(/(\.[a-zA-Z0-9]+)$/) : null;
   const extension = extensionMatch ? extensionMatch[1].toLowerCase() : "";
   return `${attachment.kind}-${attachment.fileUniqueId || attachment.fileId || "file"}${extension}`;
+}
+
+async function cleanupStagedAttachments(repository, attachments) {
+  if (!repository || typeof repository.deleteStagedAttachment !== "function") {
+    return;
+  }
+
+  for (const attachment of attachments) {
+    if (attachment?.stagedPath) {
+      await repository.deleteStagedAttachment(attachment.stagedPath);
+    }
+  }
 }
 
 function normalizeSlug(value) {

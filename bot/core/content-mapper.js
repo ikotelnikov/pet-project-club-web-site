@@ -92,22 +92,23 @@ export function mapCommandToContent(parsedCommand, options = {}) {
 }
 
 function buildPhoto(entity, fields, photoFilename) {
+  const photoSrcPath = fields.photoStagedPath ?? null;
   const photoAlt = fields.photoalt ?? fields.photoAlt ?? buildFallbackPhotoAlt(fields);
 
-  if (!photoFilename && !photoAlt) {
+  if (!photoFilename && !photoSrcPath && !photoAlt) {
     return undefined;
   }
 
-  if (!photoFilename && photoAlt) {
+  if (!photoFilename && !photoSrcPath && photoAlt) {
     throw new ContentValidationError("Photo alt text is present, but no photo file has been provided.");
   }
 
-  if (photoFilename && !photoAlt) {
+  if ((photoFilename || photoSrcPath) && !photoAlt) {
     throw new ContentValidationError("Photo file is present, but 'photoalt' is missing.");
   }
 
   return {
-    src: `assets/${resolveAssetFolder(entity)}/${photoFilename}`,
+    src: photoSrcPath || `assets/${resolveAssetFolder(entity)}/${photoFilename}`,
     alt: photoAlt,
   };
 }
