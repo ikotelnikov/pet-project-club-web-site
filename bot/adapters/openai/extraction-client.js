@@ -183,7 +183,10 @@ function normalizeExtraction(extraction) {
       expandedExtraction.fields &&
       typeof expandedExtraction.fields === "object" &&
       !Array.isArray(expandedExtraction.fields)
-        ? expandedExtraction.fields
+        ? normalizeFieldAliases(
+            normalizeNullableScalar(expandedExtraction.entity),
+            expandedExtraction.fields
+          )
         : {},
   };
 
@@ -399,6 +402,36 @@ function resolveEntityFields(entityRecord) {
   }
 
   return {};
+}
+
+function normalizeFieldAliases(entity, fields) {
+  const normalized = { ...fields };
+
+  switch (entity) {
+    case "participant":
+      if (normalized.description && !normalized.bio) {
+        normalized.bio = normalized.description;
+      }
+      delete normalized.description;
+      break;
+    case "project":
+      if (normalized.description && !normalized.summary) {
+        normalized.summary = normalized.description;
+      }
+      delete normalized.description;
+      break;
+    case "meeting":
+    case "announcement":
+      if (normalized.description && !normalized.paragraphs) {
+        normalized.paragraphs = [normalized.description];
+      }
+      delete normalized.description;
+      break;
+    default:
+      break;
+  }
+
+  return normalized;
 }
 
 function deriveSlug(entity, fields) {
