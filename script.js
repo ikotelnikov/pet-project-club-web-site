@@ -666,9 +666,17 @@ function renderPersonCard(item) {
   const name = item.name || item.slug || "Untitled participant";
   const role = item.role || "Role not specified";
   const bio = item.bio || "";
+  const photo = item.photo?.src
+    ? `
+      <figure class="person-photo">
+        <img src="${resolveHref(item.photo.src)}" alt="${item.photo.alt || name}">
+      </figure>
+    `
+    : "";
 
   return `
     <article class="person-card reveal">
+      ${photo}
       <span class="card-tag">${handle}</span>
       <h3>${name}</h3>
       <p class="person-role">${role}</p>

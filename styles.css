@@ -1121,6 +1121,21 @@ a {
   min-height: 100%;
 }
 
+.person-photo {
+  margin: -18px -18px 16px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 22px 22px 18px 18px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.person-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .status-shell {
   display: grid;
   gap: 18px;
