@@ -64,6 +64,17 @@ export async function handleTelegramMessage({
     });
   }
 
+  if (isUndoRequest(text)) {
+    return handleUndoRequest({
+      chatId,
+      fromUserId,
+      updateId,
+      messageId: message.message_id ?? null,
+      pendingStore,
+      repository,
+    });
+  }
+
   const attachments = await stageTelegramAttachments({
     attachments: rawAttachments,
     chatId,
@@ -246,6 +257,24 @@ async function handleConfirmationDecision({
     };
   }
 
+  if (pending.operation?.type === "undo") {
+    const writeResult = dryRun
+      ? await repository.previewUndoLastChange(pending.operation.undoTarget)
+      : await repository.applyUndoLastChange(pending.operation.undoTarget);
+
+    await pendingStore.deletePending(chatId);
+
+    return {
+      status: "confirmed",
+      decision,
+      hasPending: true,
+      chatId,
+      fromUserId,
+      dryRun,
+      writeResult,
+    };
+  }
+
   const operation = {
     entity: pending.operation.entity,
     action: pending.operation.action,
@@ -266,6 +295,72 @@ async function handleConfirmationDecision({
     fromUserId,
     dryRun,
     writeResult,
+  };
+}
+
+async function handleUndoRequest({
+  chatId,
+  fromUserId,
+  updateId,
+  messageId,
+  pendingStore,
+  repository,
+}) {
+  if (
+    !repository ||
+    typeof repository.previewUndoLastChange !== "function" ||
+    typeof repository.applyUndoLastChange !== "function"
+  ) {
+    return {
+      status: "failed",
+      reason: "undo_not_supported",
+      error: "Undo is not supported in this runtime.",
+      chatId,
+      fromUserId,
+    };
+  }
+
+  const undoPreview = await repository.previewUndoLastChange();
+  const preview = {
+    entity: "content",
+    action: "undo",
+    slug: undoPreview.target.commitSha.slice(0, 7),
+    fields: {
+      commitSha: undoPreview.target.commitSha,
+      message: undoPreview.target.message,
+    },
+    files: undoPreview.paths.files,
+    hasPhoto: false,
+    attachments: [],
+  };
+
+  const newPending = createPendingRecord({
+    chatId,
+    userId: fromUserId,
+    state: "awaiting_confirmation",
+    sourceMessageId: messageId,
+    sourceUpdateId: updateId,
+    operation: {
+      type: "undo",
+      entity: "content",
+      action: "undo",
+      slug: preview.slug,
+      fields: {
+        commitSha: undoPreview.target.commitSha,
+      },
+      preview,
+      undoTarget: undoPreview.target,
+      attachments: [],
+    },
+  });
+
+  await pendingStore.setPending(chatId, newPending);
+
+  return {
+    status: "processed",
+    fromUserId,
+    chatId,
+    pendingState: newPending,
   };
 }
 
@@ -556,4 +651,8 @@ function normalizeSlug(value) {
     .replace(/^-+|-+$/g, "");
 
   return normalized || null;
+}
+
+function isUndoRequest(text) {
+  return typeof text === "string" && text.trim().toLowerCase() === "undo";
 }

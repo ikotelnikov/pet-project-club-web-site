@@ -254,6 +254,68 @@ export class GitHubContentRepository {
     };
   }
 
+  async previewUndoLastChange(target = null) {
+    const undoTarget = target || (await this.findLatestContentCommit());
+    const files = await this.buildUndoFiles(undoTarget);
+
+    return {
+      action: "undo",
+      entity: "content",
+      slug: undoTarget.commitSha.slice(0, 7),
+      target: undoTarget,
+      paths: {
+        files: files.map((file) => file.path),
+      },
+    };
+  }
+
+  async applyUndoLastChange(target = null) {
+    const undoTarget = target || (await this.findLatestContentCommit());
+    const files = await this.buildUndoFiles(undoTarget);
+    const head = await this.getBranchHead();
+    const treeEntries = files.map((file) =>
+      file.parentContent == null
+        ? {
+            path: file.path,
+            mode: "100644",
+            type: "blob",
+            sha: null,
+          }
+        : {
+            path: file.path,
+            mode: "100644",
+            type: "blob",
+            content: file.parentContent,
+          }
+    );
+
+    const tree = await this.request("POST", `/repos/${this.owner}/${this.repo}/git/trees`, {
+      base_tree: head.treeSha,
+      tree: treeEntries,
+    });
+    const commit = await this.request("POST", `/repos/${this.owner}/${this.repo}/git/commits`, {
+      message: `bot: undo ${undoTarget.commitSha.slice(0, 7)}`,
+      tree: tree.sha,
+      parents: [head.commitSha],
+    });
+
+    await this.request("PATCH", `/repos/${this.owner}/${this.repo}/git/refs/heads/${this.branch}`, {
+      sha: commit.sha,
+      force: false,
+    });
+
+    return {
+      action: "undo",
+      entity: "content",
+      slug: undoTarget.commitSha.slice(0, 7),
+      commitSha: commit.sha,
+      commitMessage: `bot: undo ${undoTarget.commitSha.slice(0, 7)}`,
+      paths: {
+        files: files.map((file) => file.path),
+      },
+    };
+  }
+
   async getBranchHead() {
     const ref = await this.request(
       "GET",
@@ -270,6 +332,28 @@ export class GitHubContentRepository {
     };
   }
 
+  async findLatestContentCommit() {
+    const commits = await this.request(
+      "GET",
+      `/repos/${this.owner}/${this.repo}/commits?sha=${encodeURIComponent(this.branch)}&per_page=10`
+    );
+
+    for (const commit of commits) {
+      const details = await this.request("GET", `/repos/${this.owner}/${this.repo}/commits/${commit.sha}`);
+      const relevantFiles = (details.files || []).filter((file) => isUndoManagedPath(file.filename));
+
+      if (relevantFiles.length > 0 && details.parents?.[0]?.sha) {
+        return {
+          commitSha: details.sha,
+          parentSha: details.parents[0].sha,
+          message: details.commit?.message || "",
+        };
+      }
+    }
+
+    throw new ContentRepositoryError("No previous content commit is available to undo.");
+  }
+
   async getFile(filePath) {
     const file = await this.getFileOrNull(filePath);
 
@@ -278,6 +362,29 @@ export class GitHubContentRepository {
     }
 
     return file;
+  }
+
+  async getFileAtRefOrNull(filePath, ref) {
+    const encodedPath = encodeRepoPath(filePath);
+    const response = await this.rawRequest(
+      "GET",
+      `/repos/${this.owner}/${this.repo}/contents/${encodedPath}?ref=${encodeURIComponent(ref)}`
+    );
+
+    if (response.status === 404) {
+      return null;
+    }
+
+    const payload = await parseApiResponse(response, `${filePath}@${ref}`);
+
+    if (!payload || Array.isArray(payload) || payload.type !== "file") {
+      throw new ContentRepositoryError(`Unexpected GitHub contents response for '${filePath}' at ref '${ref}'.`);
+    }
+
+    return {
+      sha: payload.sha,
+      content: decodeGitHubContent(payload.content, payload.encoding),
+    };
   }
 
   async getFileOrNull(filePath) {
@@ -358,6 +465,21 @@ export class GitHubContentRepository {
       branch: this.branch,
       sha,
     });
+  }
+
+  async buildUndoFiles(target) {
+    const details = await this.request("GET", `/repos/${this.owner}/${this.repo}/commits/${target.commitSha}`);
+    const relevantFiles = (details.files || []).filter((file) => isUndoManagedPath(file.filename));
+
+    return Promise.all(
+      relevantFiles.map(async (file) => {
+        const parentFile = await this.getFileAtRefOrNull(file.filename, target.parentSha);
+        return {
+          path: file.filename,
+          parentContent: parentFile?.content ?? null,
+        };
+      })
+    );
   }
 }
 
@@ -542,4 +664,8 @@ function resolveManagedAssetPaths(item) {
   }
 
   return paths;
+}
+
+function isUndoManagedPath(filePath) {
+  return typeof filePath === "string" && (filePath.startsWith("content/") || filePath.startsWith("assets/"));
 }
