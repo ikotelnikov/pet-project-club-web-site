@@ -267,7 +267,13 @@ function applyMainChrome(shell) {
       const mark = shell.footer.mark ? `<span class="footer-mark">${shell.footer.mark}</span>` : "";
       const links = Array.isArray(shell.footer.links)
         ? shell.footer.links
-            .map((item) => `<a href="${item.href}"${item.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${item.label}</a>`)
+            .map((item) => {
+              const organizerId =
+                /t\.me\/ikotelnikov/i.test(item.href || "") || /contact:/i.test(item.label || "")
+                  ? ' id="footer-contact-organizer"'
+                  : "";
+              return `<a${organizerId} href="${item.href}"${item.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${item.label}</a>`;
+            })
             .join("")
         : "";
 

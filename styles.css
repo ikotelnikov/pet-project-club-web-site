@@ -660,6 +660,7 @@ a {
 
 .meeting-detail-shell {
   overflow: hidden;
+  background: rgba(10, 16, 24, 0.58);
 }
 
 .meeting-detail-head {
@@ -667,9 +668,10 @@ a {
 }
 
 .meeting-detail-title {
-  max-width: 14ch;
-  margin: 0 0 16px;
-  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  max-width: none;
+  margin: 0 0 12px;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  line-height: 1.08;
 }
 
 .meeting-detail-media {
