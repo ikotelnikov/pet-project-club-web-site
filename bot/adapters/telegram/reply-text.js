@@ -30,12 +30,18 @@ export function buildTelegramReplyText(result, options = {}) {
 }
 
 function buildFailedText(result) {
-  if (typeof result.error === "string" && result.error.includes("GitHub API request failed with 403")) {
+  const safeError = sanitizeErrorMessage(result.error);
+
+  if (typeof safeError === "string" && safeError.includes("GitHub API request failed with 403")) {
     return "I reached GitHub but was not allowed to read or write the repository. Check the GitHub token permissions in Cloudflare secrets.";
   }
 
-  if (typeof result.error === "string" && result.error.includes("Operation field 'slug'")) {
+  if (typeof safeError === "string" && safeError.includes("Operation field 'slug'")) {
     return "I understood the request, but could not derive a valid slug. Try giving a simple latin title or handle.";
+  }
+
+  if (safeError) {
+    return `I couldn't complete that safely.\nReason: ${safeError}`;
   }
 
   return "I couldn't interpret that safely. Rephrase it as a content change request.";
@@ -103,4 +109,47 @@ function formatValue(value) {
   }
 
   return String(value);
+}
+
+function sanitizeErrorMessage(error) {
+  if (typeof error !== "string" || error.trim() === "") {
+    return null;
+  }
+
+  const normalized = error.trim();
+
+  if (!isUserSafeError(normalized)) {
+    return null;
+  }
+
+  return normalized
+    .replace(/[A-Za-z]:\\[^|:\n]+/g, "[local-path]")
+    .replace(/https?:\/\/\S+/g, "[url]")
+    .replace(/Bearer\s+[A-Za-z0-9._-]+/gi, "Bearer [redacted]")
+    .replace(/bot\d+:[A-Za-z0-9_-]+/gi, "bot[redacted]")
+    .replace(/\bsk-[A-Za-z0-9_-]+\b/g, "sk-[redacted]");
+}
+
+function isUserSafeError(error) {
+  const safePatterns = [
+    "Extraction field",
+    "Operation field",
+    "Field '",
+    "Cannot create '",
+    "Cannot update '",
+    "Cannot delete '",
+    "requires a slug",
+    "requires a slug or target reference",
+    "does not exist in GitHub",
+    "does not exist",
+    "already exists",
+    "Failed to parse JSON file",
+    "Failed to read JSON file",
+    "Unsupported entity",
+    "GitHub API request failed with 403",
+    "OpenAI API returned status 429",
+    "insufficient_quota",
+  ];
+
+  return safePatterns.some((pattern) => error.includes(pattern));
 }
