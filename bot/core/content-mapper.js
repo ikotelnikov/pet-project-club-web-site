@@ -95,12 +95,8 @@ function buildPhoto(entity, fields, photoFilename) {
   const photoSrcPath = fields.photoStagedPath ?? null;
   const photoAlt = fields.photoalt ?? fields.photoAlt ?? buildFallbackPhotoAlt(fields);
 
-  if (!photoFilename && !photoSrcPath && !photoAlt) {
+  if (!photoFilename && !photoSrcPath) {
     return undefined;
-  }
-
-  if (!photoFilename && !photoSrcPath && photoAlt) {
-    throw new ContentValidationError("Photo alt text is present, but no photo file has been provided.");
   }
 
   if ((photoFilename || photoSrcPath) && !photoAlt) {
