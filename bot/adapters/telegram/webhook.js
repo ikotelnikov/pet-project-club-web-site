@@ -1,4 +1,4 @@
-import { buildTelegramReplyText } from "./reply-text.js";
+import { buildTelegramReply } from "./reply-text.js";
 
 export async function handleTelegramWebhookRequest({
   request,
@@ -55,32 +55,54 @@ export async function handleTelegramWebhookRequest({
     });
   }
 
-  if (!update || typeof update !== "object" || !update.message || typeof update.update_id !== "number") {
+  if (
+    !update ||
+    typeof update !== "object" ||
+    typeof update.update_id !== "number" ||
+    (!update.message && !update.callback_query)
+  ) {
     return jsonResponse(400, {
       ok: false,
       error: "Unsupported Telegram update payload.",
     });
   }
 
+  const incomingMessage = update.message ?? update.callback_query?.message ?? null;
+  const callbackData =
+    typeof update.callback_query?.data === "string" ? update.callback_query.data : null;
+  const normalizedUpdate =
+    callbackData && incomingMessage
+      ? {
+          ...update,
+          message: {
+            ...incomingMessage,
+            text: callbackData,
+          },
+        }
+      : update;
+
   try {
     console.log(
       JSON.stringify({
         event: "telegram_webhook_received",
         updateId: update.update_id,
-        messageId: update.message?.message_id ?? null,
-        chatId: update.message?.chat?.id ?? null,
-        fromUserId: update.message?.from?.id ?? null,
-        hasText: typeof update.message?.text === "string",
-        hasCaption: typeof update.message?.caption === "string",
-        hasPhoto: Array.isArray(update.message?.photo) && update.message.photo.length > 0,
+        messageId: normalizedUpdate.message?.message_id ?? null,
+        chatId: normalizedUpdate.message?.chat?.id ?? null,
+        fromUserId: normalizedUpdate.message?.from?.id ?? update.callback_query?.from?.id ?? null,
+        hasText: typeof normalizedUpdate.message?.text === "string",
+        hasCaption: typeof normalizedUpdate.message?.caption === "string",
+        hasPhoto: Array.isArray(normalizedUpdate.message?.photo) && normalizedUpdate.message.photo.length > 0,
+        hasCallbackQuery: Boolean(update.callback_query),
+        callbackData,
       })
     );
 
-    const result = await runtime.handleTelegramUpdate(update, { dryRun });
-    const replyText = buildTelegramReplyText(result, {
+    const result = await runtime.handleTelegramUpdate(normalizedUpdate, { dryRun });
+    const reply = buildTelegramReply(result, {
       dryRun,
       devMode: Boolean(runtime.devMode),
     });
+    const replyText = reply.text;
 
     console.log(
       JSON.stringify({
@@ -99,17 +121,25 @@ export async function handleTelegramWebhookRequest({
       })
     );
 
-    if (replyText && runtime.telegramClient && update.message?.chat?.id != null) {
+    if (runtime.telegramClient && update.callback_query?.id) {
+      await runtime.telegramClient.answerCallbackQuery({
+        callbackQueryId: update.callback_query.id,
+        text: callbackData === "edit" ? "Now send: edit <changes>" : null,
+      });
+    }
+
+    if (replyText && runtime.telegramClient && normalizedUpdate.message?.chat?.id != null) {
       await runtime.telegramClient.sendMessage({
-        chatId: update.message.chat.id,
+        chatId: normalizedUpdate.message.chat.id,
         text: replyText,
+        replyMarkup: reply.replyMarkup,
       });
 
       console.log(
         JSON.stringify({
           event: "telegram_reply_sent",
           updateId: update.update_id,
-          chatId: update.message.chat.id,
+          chatId: normalizedUpdate.message.chat.id,
           replyLength: replyText.length,
         })
       );
@@ -131,8 +161,16 @@ export async function handleTelegramWebhookRequest({
       })
     );
 
-    if (runtime.telegramClient && update.message?.chat?.id != null) {
-      const failureReplyText = buildTelegramReplyText(
+    if (runtime.telegramClient && update.callback_query?.id) {
+      try {
+        await runtime.telegramClient.answerCallbackQuery({
+          callbackQueryId: update.callback_query.id,
+        });
+      } catch {}
+    }
+
+    if (runtime.telegramClient && incomingMessage?.chat?.id != null) {
+      const failureReply = buildTelegramReply(
         {
           status: "failed",
           reason: "runtime_error",
@@ -144,11 +182,12 @@ export async function handleTelegramWebhookRequest({
         }
       );
 
-      if (failureReplyText) {
+      if (failureReply.text) {
         try {
           await runtime.telegramClient.sendMessage({
-            chatId: update.message.chat.id,
-            text: failureReplyText,
+            chatId: incomingMessage.chat.id,
+            text: failureReply.text,
+            replyMarkup: failureReply.replyMarkup,
           });
         } catch (replyError) {
           console.error(

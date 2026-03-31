@@ -1,11 +1,15 @@
-export function buildTelegramReplyText(result, options = {}) {
+export function buildTelegramReply(result, options = {}) {
   const dryRun = options.dryRun ?? true;
   const devMode = options.devMode ?? false;
 
   if (!result || !result.status) {
-    return "Unknown bot result.";
+    return {
+      text: "Unknown bot result.",
+      replyMarkup: null,
+    };
   }
 
+  const text = (() => {
   switch (result.status) {
     case "processed":
       return buildPreviewText(result, dryRun);
@@ -28,6 +32,16 @@ export function buildTelegramReplyText(result, options = {}) {
     default:
       return "Request received, but no reply formatter exists for this result yet.";
   }
+  })();
+
+  return {
+    text,
+    replyMarkup: buildReplyMarkup(result),
+  };
+}
+
+export function buildTelegramReplyText(result, options = {}) {
+  return buildTelegramReply(result, options).text;
 }
 
 function buildFailedText(result, devMode = false) {
@@ -102,6 +116,22 @@ function buildIgnoredText(result) {
     default:
       return null;
   }
+}
+
+function buildReplyMarkup(result) {
+  if (result?.status === "processed" && result?.pendingState?.state === "awaiting_confirmation") {
+    return {
+      inline_keyboard: [
+        [
+          { text: "Confirm", callback_data: "confirm" },
+          { text: "Edit", callback_data: "edit" },
+          { text: "Cancel", callback_data: "cancel" },
+        ],
+      ],
+    };
+  }
+
+  return null;
 }
 
 function formatValue(value) {

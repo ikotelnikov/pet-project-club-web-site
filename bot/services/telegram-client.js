@@ -20,14 +20,22 @@ export class TelegramClient {
       offset,
       limit,
       timeout,
-      allowed_updates: ["message"],
+      allowed_updates: ["message", "callback_query"],
     });
   }
 
-  async sendMessage({ chatId, text }) {
+  async sendMessage({ chatId, text, replyMarkup = null }) {
     return this.call("sendMessage", {
       chat_id: chatId,
       text,
+      reply_markup: replyMarkup ?? undefined,
+    });
+  }
+
+  async answerCallbackQuery({ callbackQueryId, text = null }) {
+    return this.call("answerCallbackQuery", {
+      callback_query_id: callbackQueryId,
+      text: text ?? undefined,
     });
   }
 
