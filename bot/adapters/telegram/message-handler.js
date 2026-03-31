@@ -8,6 +8,7 @@ import { validateOperation } from "../../core/operation-validator.js";
 import { buildOperationPreview } from "../../core/preview-builder.js";
 import { mapOperationToContent } from "../../core/content-mapper.js";
 import { extractTelegramAttachments } from "./attachments.js";
+import { inferHeuristicExtraction } from "./heuristic-intent.js";
 
 export async function handleTelegramMessage({
   message,
@@ -71,15 +72,23 @@ export async function handleTelegramMessage({
     telegramClient,
   });
 
-  const extractionResult = await extractionClient.extractIntent({
-    messageText: text,
-    hasPhoto: Boolean(message.photo?.length),
-    photoCount: Array.isArray(message.photo) ? message.photo.length : 0,
-    attachments,
-    pendingState: existingPending ? existingPending.state : null,
-    allowedEntityTypes: ["announcement", "meeting", "participant", "project"],
-    allowedActions: ["create", "update", "delete"],
-  });
+  const heuristicExtraction = inferHeuristicExtraction(text);
+  const extractionResult = heuristicExtraction
+    ? {
+        ok: true,
+        usedModel: "heuristic",
+        attempts: 0,
+        extraction: heuristicExtraction,
+      }
+    : await extractionClient.extractIntent({
+        messageText: text,
+        hasPhoto: Boolean(message.photo?.length),
+        photoCount: Array.isArray(message.photo) ? message.photo.length : 0,
+        attachments,
+        pendingState: existingPending ? existingPending.state : null,
+        allowedEntityTypes: ["announcement", "meeting", "participant", "project"],
+        allowedActions: ["create", "update", "delete"],
+      });
 
   if (!extractionResult.ok) {
     return {
