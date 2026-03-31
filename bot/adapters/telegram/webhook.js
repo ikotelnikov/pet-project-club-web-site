@@ -77,7 +77,10 @@ export async function handleTelegramWebhookRequest({
     );
 
     const result = await runtime.handleTelegramUpdate(update, { dryRun });
-    const replyText = buildTelegramReplyText(result, { dryRun });
+    const replyText = buildTelegramReplyText(result, {
+      dryRun,
+      devMode: Boolean(runtime.devMode),
+    });
 
     console.log(
       JSON.stringify({
@@ -135,7 +138,10 @@ export async function handleTelegramWebhookRequest({
           reason: "runtime_error",
           error: errorMessage,
         },
-        { dryRun }
+        {
+          dryRun,
+          devMode: Boolean(runtime.devMode),
+        }
       );
 
       if (failureReplyText) {

@@ -1,5 +1,6 @@
 export function buildTelegramReplyText(result, options = {}) {
   const dryRun = options.dryRun ?? true;
+  const devMode = options.devMode ?? false;
 
   if (!result || !result.status) {
     return "Unknown bot result.";
@@ -21,7 +22,7 @@ export function buildTelegramReplyText(result, options = {}) {
 
       return "There is no pending action to confirm or cancel.";
     case "failed":
-      return buildFailedText(result);
+      return buildFailedText(result, devMode);
     case "ignored":
       return buildIgnoredText(result);
     default:
@@ -29,8 +30,8 @@ export function buildTelegramReplyText(result, options = {}) {
   }
 }
 
-function buildFailedText(result) {
-  const safeError = sanitizeErrorMessage(result.error);
+function buildFailedText(result, devMode = false) {
+  const safeError = sanitizeErrorMessage(result.error, devMode);
 
   if (typeof safeError === "string" && safeError.includes("GitHub API request failed with 403")) {
     return "I reached GitHub but was not allowed to read or write the repository. Check the GitHub token permissions in Cloudflare secrets.";
@@ -111,14 +112,14 @@ function formatValue(value) {
   return String(value);
 }
 
-function sanitizeErrorMessage(error) {
+function sanitizeErrorMessage(error, devMode = false) {
   if (typeof error !== "string" || error.trim() === "") {
     return null;
   }
 
   const normalized = error.trim();
 
-  if (!isUserSafeError(normalized)) {
+  if (!devMode && !isUserSafeError(normalized)) {
     return null;
   }
 

@@ -49,5 +49,6 @@ export function loadBotConfig(env = process.env) {
     githubRepoName: env.GITHUB_REPO_NAME || null,
     githubBranch: env.GITHUB_BRANCH || null,
     githubWriteToken: env.GITHUB_WRITE_TOKEN || null,
+    devMode: env.DEV_MODE === "true",
   };
 }

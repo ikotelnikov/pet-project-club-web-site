@@ -46,6 +46,7 @@ export function createWorkerRuntime(env = {}, options = {}) {
     pendingStore,
     photoStore,
     telegramClient,
+    devMode: env.DEV_MODE === "true",
     async handleTelegramUpdate(update, runtimeOptions = {}) {
       return handleTelegramMessage({
         message: update.message,

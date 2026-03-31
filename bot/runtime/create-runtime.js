@@ -23,6 +23,7 @@ export function createBotRuntime(config, overrides = {}) {
     pendingStore,
     extractionClient,
     telegramClient,
+    devMode: Boolean(config.devMode),
     async handleTelegramUpdate(update, options = {}) {
       return handleTelegramMessage({
         message: update.message,
