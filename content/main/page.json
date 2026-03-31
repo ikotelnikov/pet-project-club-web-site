@@ -15,8 +15,13 @@
       },
       {
         "key": "projects",
-        "label": "Projects and Participants",
+        "label": "Projects",
         "href": "./projects/"
+      },
+      {
+        "key": "participants",
+        "label": "Participants",
+        "href": "./participants/"
       },
       {
         "key": "links",
@@ -59,6 +64,10 @@
       {
         "label": "Projects and Participants",
         "href": "projects/"
+      },
+      {
+        "label": "Participants",
+        "href": "participants/"
       },
       {
         "label": "Useful links",

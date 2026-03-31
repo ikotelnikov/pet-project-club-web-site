@@ -12,6 +12,7 @@ const pageLoaders = {
   meetings: renderMeetingsPage,
   "meeting-detail": renderMeetingDetailPage,
   projects: renderProjectsPage,
+  participants: renderParticipantsPage,
   links: renderLinksPage,
 };
 
@@ -335,28 +336,97 @@ async function renderMeetingDetailPage() {
 }
 
 async function renderProjectsPage() {
-  const [projectsData, projectItems, participantsData, participantItems] = await Promise.all([
+  const [projectsData, projectItems] = await Promise.all([
     readJson("projects/page.json"),
     readIndexedItems("projects"),
-    readJson("participants/page.json"),
-    readIndexedItems("participants"),
   ]);
   const projectsSection = {
     ...projectsData.projects,
     items: projectItems,
-  };
-  const participantsSection = {
-    ...participantsData,
-    items: participantItems,
   };
 
   pageContent.innerHTML = `
     ${renderHero(projectsData.hero, projectsData.signals, "projects")}
     ${renderMetrics(projectsData.metrics)}
     ${renderCardSection(projectsSection, "two-up", "project")}
-    ${renderPeopleSection(participantsSection)}
     ${renderStatusSection(projectsData.notes)}
   `;
+}
+
+async function renderParticipantsPage() {
+  const [participantsData, participantItems] = await Promise.all([
+    readJson("participants/page.json"),
+    readIndexedItems("participants"),
+  ]);
+  const pageSize = Number(participantsData.pageSize || 9);
+  const title = participantsData.title || "Участники Pet Project Club";
+  const description = participantsData.description || `Для включения в список учасников, редактирования данных или удаления из него напишите <a href="#footer-contact-organizer">организатору</a>.`;
+
+  document.title = `${title} | Pet Project Club Budva`;
+
+  pageContent.innerHTML = `
+    <section class="section-shell reveal participants-page-shell">
+      <div class="section-heading">
+        <p class="section-kicker">${participantsData.tag || "Participants"}</p>
+        <h1>${title}</h1>
+        <p class="card-copy">${description}</p>
+      </div>
+      <div class="people-grid" id="participants-grid"></div>
+      <div class="list-sentinel" id="participants-sentinel" aria-hidden="true"></div>
+    </section>
+  `;
+
+  const grid = document.getElementById("participants-grid");
+  const sentinel = document.getElementById("participants-sentinel");
+
+  if (!grid || !sentinel) {
+    return;
+  }
+
+  let renderedCount = 0;
+
+  const renderNextBatch = () => {
+    const nextItems = participantItems.slice(renderedCount, renderedCount + pageSize);
+
+    if (!nextItems.length) {
+      sentinel.remove();
+      return false;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = nextItems.map(renderPersonCard).join("");
+    const cards = [...wrapper.children];
+    cards.forEach((card) => {
+      card.classList.add("visible");
+      grid.appendChild(card);
+    });
+    renderedCount += nextItems.length;
+
+    if (renderedCount >= participantItems.length) {
+      sentinel.remove();
+    }
+
+    return true;
+  };
+
+  renderNextBatch();
+
+  if (!sentinel.isConnected) {
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) {
+      return;
+    }
+
+    const hasMore = renderNextBatch();
+    if (!hasMore || !sentinel.isConnected) {
+      observer.disconnect();
+    }
+  }, { rootMargin: "200px 0px" });
+
+  observer.observe(sentinel);
 }
 
 async function readIndexedItems(sectionPath) {
@@ -662,6 +732,8 @@ function renderPeopleSection(section) {
 
 function renderPersonCard(item) {
   const points = Array.isArray(item.points) ? item.points : [];
+  const tags = Array.isArray(item.tags) ? item.tags : [];
+  const links = Array.isArray(item.links) ? item.links : [];
   const handle = item.handle || item.slug || "participant";
   const name = item.name || item.slug || "Untitled participant";
   const role = item.role || "Role not specified";
@@ -673,11 +745,15 @@ function renderPersonCard(item) {
       </figure>
     `
     : "";
+  const footerBits = [
+    renderPersonHandle(item.handle),
+    ...tags.map((tag) => `<span class="meta-pill">${tag}</span>`),
+    ...links.map((link) => `<a class="meta-pill meta-pill-link" href="${resolveHref(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${link.label}</a>`),
+  ].filter(Boolean).join("");
 
   return `
     <article class="person-card reveal">
       ${photo}
-      <span class="card-tag">${handle}</span>
       <h3>${name}</h3>
       <p class="person-role">${role}</p>
       ${bio ? `<p class="person-copy">${bio}</p>` : ""}
@@ -686,8 +762,22 @@ function renderPersonCard(item) {
           ${points.map((point) => `<li>${point}</li>`).join("")}
         </ul>
       ` : ""}
+      ${footerBits ? `<div class="person-footer">${footerBits}</div>` : ""}
     </article>
   `;
+}
+
+function renderPersonHandle(handle) {
+  if (!handle) {
+    return "";
+  }
+
+  if (handle.startsWith("@")) {
+    const username = handle.replace(/^@+/, "");
+    return `<a class="card-tag card-tag-link" href="https://t.me/${username}" target="_blank" rel="noopener noreferrer">${handle}</a>`;
+  }
+
+  return `<span class="card-tag">${handle}</span>`;
 }
 
 function renderLinksSection(section) {
