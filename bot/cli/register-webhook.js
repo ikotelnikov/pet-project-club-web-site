@@ -30,7 +30,7 @@ const response = await fetch(
       url: webhookUrl,
       secret_token: config.telegramWebhookSecret || undefined,
       drop_pending_updates: dropPendingUpdates,
-      allowed_updates: ["message"],
+      allowed_updates: ["message", "callback_query"],
     }),
   }
 );
