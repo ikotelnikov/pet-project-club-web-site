@@ -1,6 +1,6 @@
 import { BotConfigError } from "../../shared/errors.js";
 import { validateExtraction } from "../../core/extraction-validator.js";
-import { buildEntitySchemaSnippet, buildStageSchemaSnippet } from "../../schemas/prompt-schemas.js";
+import { ENTITY_SCHEMAS, buildEntitySchemaSnippet, buildStageSchemaSnippet } from "../../schemas/prompt-schemas.js";
 
 export class ExtractionClient {
   constructor({ apiKey, model = "gpt-4.1-mini", fetchImpl = globalThis.fetch } = {}) {
@@ -564,7 +564,7 @@ function normalizeFieldAliases(entity, fields) {
       break;
   }
 
-  return normalized;
+  return pruneUnknownFields(entity, normalized);
 }
 
 function stripAttachmentTransportFields(fields) {
@@ -662,6 +662,23 @@ function deriveSlug(entity, fields) {
     default:
       return slugify(titleCandidate);
   }
+}
+
+function pruneUnknownFields(entity, fields) {
+  const schema = ENTITY_SCHEMAS[entity];
+
+  if (!schema) {
+    return fields;
+  }
+
+  const allowedFields = new Set([
+    ...(schema.required || []),
+    ...(schema.optional || []),
+  ]);
+
+  return Object.fromEntries(
+    Object.entries(fields).filter(([key]) => allowedFields.has(key))
+  );
 }
 
 function slugify(value) {
