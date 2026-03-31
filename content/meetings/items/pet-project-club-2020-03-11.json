@@ -1,10 +1,14 @@
 {
   "slug": "pet-project-club-2020-03-11",
-  "type": "meeting",
+  "type": "announce",
   "date": "2020-03-11T18:30:00",
   "title": "Pet Project Club Meeting",
   "place": "Monteco coworking",
   "format": "offline",
+  "photo": {
+    "src": "assets/uploads/272981189/171-photo-171-AQADuxNrG5XqYUp-.jpg",
+    "alt": "Pet Project Club Meeting"
+  },
   "paragraphs": [
     "В среду 11.03 в 18:30 встречались офлайн в коворкинге Monteco на очередной встрече Pet Project Club.",
     "В этот раз у нас была презентация нового AI-сервиса HelpMeMatch.ai для прокачки резюме и подготовки к собеседованиям, разработанного моим другом и одним из удаленных участников нашего сообщества.",
