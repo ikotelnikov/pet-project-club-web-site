@@ -1,17 +1,4 @@
 {
   "pageSize": 10,
-  "items": [
-    "meeting-2026-03-open-circle",
-    "meeting-2026-02-demo-night",
-    "meeting-2026-01-ai-tools-roundtable",
-    "meeting-2025-12-holiday-coffee",
-    "meeting-2025-11-ship-review",
-    "meeting-2025-10-builder-intros",
-    "meeting-2025-09-productivity-sprint",
-    "meeting-2025-08-llm-lab",
-    "meeting-2025-07-open-feedback",
-    "meeting-2025-06-launch-clinic",
-    "meeting-2025-05-first-circle",
-    "meeting-2025-04-kickoff"
-  ]
+  "items": []
 }
