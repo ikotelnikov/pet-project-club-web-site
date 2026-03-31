@@ -962,7 +962,7 @@ function renderMeetingDetail(item, pageData) {
       <div class="meeting-detail-head">
         <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Back to meetings"}</a>
         ${item.date ? `<p class="meeting-date">${item.date}</p>` : ""}
-        <h1 class="hero-title meeting-detail-title">${item.title}</h1>
+        <h1 class="meeting-detail-title">${item.title}</h1>
         ${meta ? `<div class="meeting-meta">${meta}</div>` : ""}
       </div>
       ${item.photo?.src ? `
