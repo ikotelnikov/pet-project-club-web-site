@@ -66,6 +66,20 @@ export async function handleTelegramMessage({
     });
   }
 
+  if (existingPending?.state === "awaiting_edit") {
+    return handleEditInstruction({
+      instruction: text,
+      chatId,
+      fromUserId,
+      updateId,
+      messageId: message.message_id ?? null,
+      pendingStore,
+      pending: existingPending,
+      repository,
+      extractionClient,
+    });
+  }
+
   if (isEditRequest(text)) {
     return handleEditRequest({
       text,
@@ -190,6 +204,7 @@ export async function handleTelegramMessage({
       slug: validated.fields.slug,
       confidence: extraction.confidence,
       summary: extraction.summary,
+      requestText: text,
       fields: validated.fields,
       warnings: extraction.warnings,
       attachments,
@@ -418,14 +433,50 @@ async function handleEditRequest({
   const instruction = extractEditInstruction(text);
 
   if (!instruction) {
+    const editPending = createPendingRecord({
+      chatId,
+      userId: fromUserId,
+      state: "awaiting_edit",
+      sourceMessageId: messageId,
+      sourceUpdateId: updateId,
+      operation: pending.operation,
+      question: "Specify which field(s) should be edited.",
+    });
+
+    await pendingStore.setPending(chatId, editPending);
+
     return {
       status: "clarification",
       chatId,
       fromUserId,
-      question: "After edit, tell me what to change. For example: edit place to MONTECO Coworking, Budva",
+      question: "Specify which field(s) should be edited.",
     };
   }
 
+  return handleEditInstruction({
+    instruction,
+    chatId,
+    fromUserId,
+    updateId,
+    messageId,
+    pendingStore,
+    pending,
+    repository,
+    extractionClient,
+  });
+}
+
+async function handleEditInstruction({
+  instruction,
+  chatId,
+  fromUserId,
+  updateId,
+  messageId,
+  pendingStore,
+  pending,
+  repository,
+  extractionClient,
+}) {
   const extractionResult = await extractionClient.extractIntent({
     messageText: instruction,
     pendingState: "editing_pending_preview",
@@ -435,6 +486,7 @@ async function handleEditRequest({
       slug: pending.operation.slug,
       fields: pending.operation.fields,
       summary: pending.operation.summary ?? null,
+      requestText: pending.operation.requestText ?? null,
     },
     allowedEntityTypes: ["announcement", "meeting", "participant", "project"],
     allowedActions: ["create", "update", "delete"],
@@ -497,6 +549,7 @@ async function handleEditRequest({
       action: editedOperation.action,
       slug: editedOperation.fields.slug,
       summary: extraction.summary || pending.operation.summary || null,
+      requestText: pending.operation.requestText ?? null,
       fields: editedOperation.fields,
       preview,
     },
