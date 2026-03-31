@@ -28,10 +28,10 @@ const CONFIDENCE_VALUES = new Set([
 ]);
 
 const ENTITY_FIELD_RULES = {
-  announcement: new Set(["date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"]),
-  meeting: new Set(["date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"]),
-  participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "photoAlt", "photoStagedPath"]),
-  project: new Set(["title", "status", "stack", "summary", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"]),
+  announcement: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"]),
+  meeting: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"]),
+  participant: new Set(["slug", "handle", "name", "role", "bio", "points", "location", "tags", "links", "photoAlt", "photoStagedPath"]),
+  project: new Set(["slug", "title", "status", "stack", "summary", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"]),
 };
 
 export function validateExtraction(extraction) {
@@ -73,6 +73,10 @@ function validateContentOperationExtraction(extraction) {
 
   if (extraction.slug != null) {
     requireSlug(extraction.slug);
+  }
+
+  if (extraction.fields?.slug != null) {
+    requireSlug(extraction.fields.slug);
   }
 
   if (!extraction.fields || typeof extraction.fields !== "object" || Array.isArray(extraction.fields)) {

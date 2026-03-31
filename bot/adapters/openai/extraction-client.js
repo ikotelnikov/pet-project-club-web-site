@@ -162,6 +162,7 @@ function buildSystemPrompt() {
     "Confidence must be exactly one of: high, medium, low.",
     "Never indicate that confirmation can be skipped.",
     "For update/delete, prefer targetRef over inventing a final slug.",
+    "Slug may be provided either as top-level slug or as fields.slug. Both are valid.",
     "The input may include attachments. Use their kind, file names, and stagedPath values as evidence when deciding whether media should be associated with the entity.",
     "If an attached photo should become the main photo, set fields.photoStagedPath to one of the provided stagedPath values and optionally set fields.photoAlt.",
     "Do not emit raw transport objects such as photo, video, document, fileId, fileName, or mimeType inside fields.",
