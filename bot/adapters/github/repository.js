@@ -105,6 +105,16 @@ export class GitHubContentRepository {
     return items;
   }
 
+  async findEntityBySlug(slug) {
+    for (const entity of ["announce", "meeting", "participant", "project"]) {
+      if (await this.itemExists(entity, slug)) {
+        return entity;
+      }
+    }
+
+    return null;
+  }
+
   async stageAttachment({ chatId, messageId, attachment, bytes }) {
     const fileName = `${messageId}-${attachment.fileName}`;
     const stagedPath = `${this.attachmentStageRoot}/${chatId}/${fileName}`;

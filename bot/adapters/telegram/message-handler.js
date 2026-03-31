@@ -587,7 +587,23 @@ function normalizeExtractionToOperation(extraction) {
 }
 
 async function buildOperationFromExtraction({ extraction, repository, extractionClient, messageText }) {
-  const baseOperation = normalizeExtractionToOperation(extraction);
+  let baseOperation = normalizeExtractionToOperation(extraction);
+
+  if (
+    repository &&
+    typeof repository.findEntityBySlug === "function" &&
+    baseOperation.action !== "create" &&
+    baseOperation.fields.slug
+  ) {
+    const actualEntity = await repository.findEntityBySlug(baseOperation.fields.slug);
+
+    if (actualEntity && actualEntity !== baseOperation.entity) {
+      baseOperation = {
+        ...baseOperation,
+        entity: actualEntity,
+      };
+    }
+  }
 
   if (baseOperation.action === "create") {
     return {
