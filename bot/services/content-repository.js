@@ -152,9 +152,12 @@ export class FilesystemContentRepository {
     const currentIndex = await this.readIndex(entity);
     const nextIndex = updateIndexItems(currentIndex, slug, action);
     const { itemPath, indexPath } = this.getEntityPaths(entity, slug);
+    const existingItem = action === "delete" ? await this.readItem(entity, slug) : null;
+    const assetPaths = action === "delete" ? resolveManagedAssetPaths(existingItem) : [];
 
     if (action === "delete") {
       await fs.rm(itemPath, { force: true });
+      await Promise.all(assetPaths.map((assetPath) => fs.rm(path.resolve(assetPath), { force: true })));
     } else {
       await fs.mkdir(path.dirname(itemPath), { recursive: true });
       await writeJsonFile(itemPath, item);
@@ -170,6 +173,7 @@ export class FilesystemContentRepository {
       paths: {
         itemPath,
         indexPath,
+        assetPaths,
       },
       indexChanged: JSON.stringify(currentIndex) !== JSON.stringify(nextIndex),
     };
@@ -180,6 +184,8 @@ export class FilesystemContentRepository {
     const slug = parsedCommand.fields.slug;
     const exists = await this.itemExists(entity, slug);
     const currentIndex = await this.readIndex(entity);
+    const existingItem = action === "delete" && exists ? await this.readItem(entity, slug) : null;
+    const assetPaths = action === "delete" ? resolveManagedAssetPaths(existingItem) : [];
 
     if (action === "create" && exists) {
       throw new ContentRepositoryError(`Cannot create '${slug}' because it already exists.`);
@@ -197,7 +203,10 @@ export class FilesystemContentRepository {
       currentIndex,
       nextIndex: updateIndexItems(currentIndex, slug, action),
       nextItem: item,
-      paths: this.getEntityPaths(entity, slug),
+      paths: {
+        ...this.getEntityPaths(entity, slug),
+        assetPaths,
+      },
     };
   }
 }
@@ -280,4 +289,14 @@ function buildCandidate(entity, slug, item) {
 
 function normalizeRepoRelativePath(value) {
   return value.split(path.sep).join("/");
+}
+
+function resolveManagedAssetPaths(item) {
+  const paths = [];
+
+  if (item?.photo?.src && typeof item.photo.src === "string" && item.photo.src.startsWith("assets/")) {
+    paths.push(item.photo.src);
+  }
+
+  return paths;
 }

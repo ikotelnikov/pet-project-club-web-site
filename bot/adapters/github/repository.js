@@ -156,6 +156,8 @@ export class GitHubContentRepository {
     const slug = parsedCommand.fields.slug;
     const exists = await this.itemExists(entity, slug);
     const currentIndex = await this.readIndex(entity);
+    const existingItem = action === "delete" && exists ? await this.readItem(entity, slug) : null;
+    const assetPaths = action === "delete" ? resolveManagedAssetPaths(existingItem) : [];
 
     validateCommandPreconditions(action, slug, exists);
 
@@ -167,7 +169,10 @@ export class GitHubContentRepository {
       currentIndex,
       nextIndex: updateIndexItems(currentIndex, slug, action),
       nextItem: item,
-      paths: this.getEntityPaths(entity, slug),
+      paths: {
+        ...this.getEntityPaths(entity, slug),
+        assetPaths,
+      },
     };
   }
 
@@ -175,6 +180,7 @@ export class GitHubContentRepository {
     const preview = await this.previewCommand(parsedCommand, { item });
     const slug = parsedCommand.fields.slug;
     const { itemPath, indexPath } = preview.paths;
+    const assetPaths = Array.isArray(preview.paths.assetPaths) ? preview.paths.assetPaths : [];
     const commitMessage = buildCommitMessage(parsedCommand);
     const head = await this.getBranchHead();
     const treeEntries = [
@@ -193,6 +199,21 @@ export class GitHubContentRepository {
         type: "blob",
         sha: null,
       });
+
+      for (const assetPath of assetPaths) {
+        const currentAsset = await this.getFileOrNull(assetPath);
+
+        if (!currentAsset) {
+          continue;
+        }
+
+        treeEntries.push({
+          path: assetPath,
+          mode: "100644",
+          type: "blob",
+          sha: null,
+        });
+      }
     } else {
       treeEntries.push({
         path: itemPath,
@@ -224,6 +245,7 @@ export class GitHubContentRepository {
       paths: {
         itemPath,
         indexPath,
+        assetPaths,
       },
       indexChanged:
         JSON.stringify(preview.currentIndex) !== JSON.stringify(preview.nextIndex),
@@ -510,4 +532,14 @@ function buildCandidate(entity, slug, item) {
         title: null,
       };
   }
+}
+
+function resolveManagedAssetPaths(item) {
+  const paths = [];
+
+  if (item?.photo?.src && typeof item.photo.src === "string" && item.photo.src.startsWith("assets/")) {
+    paths.push(item.photo.src);
+  }
+
+  return paths;
 }
