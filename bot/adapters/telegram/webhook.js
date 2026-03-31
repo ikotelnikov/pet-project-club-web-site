@@ -76,6 +76,7 @@ export async function handleTelegramWebhookRequest({
           ...update,
           message: {
             ...incomingMessage,
+            from: update.callback_query?.from ?? incomingMessage.from,
             text: callbackData,
           },
         }
@@ -124,7 +125,6 @@ export async function handleTelegramWebhookRequest({
     if (runtime.telegramClient && update.callback_query?.id) {
       await runtime.telegramClient.answerCallbackQuery({
         callbackQueryId: update.callback_query.id,
-        text: callbackData === "edit" ? "Now send: edit <changes>" : null,
       });
     }
 
