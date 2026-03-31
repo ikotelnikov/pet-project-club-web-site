@@ -3,12 +3,8 @@
   "type": "meeting",
   "date": "2023-02-25",
   "title": "Практика создания сайта с помощью AI — создаем сайт от и до",
-  "place": "Клуб",
-  "format": "offline",
-  "photo": {
-    "src": "assets/uploads/272981189/134-photo-134-AQADrBNrG5XqYUp-.jpg",
-    "alt": "Отчет о встрече клуба 25.02"
-  },
+  "place": "Коворкинг Monteco в Будве",
+  "format": "in-person",
   "paragraphs": [
     "Посмотрели Lovable и Codex CLI + GitHub Pages. Постарались посвятить максимум времени именно практическим вопросам.",
     "Главные моменты:",
