@@ -70,7 +70,7 @@ function buildPreviewText(result, dryRun) {
     fieldLines.length > 0 ? `Fields:\n${fieldLines.join("\n")}` : null,
     attachmentLines.length > 0 ? `Attachments:\n${attachmentLines.join("\n")}` : null,
     fileLines.length > 0 ? `Files:\n${fileLines.join("\n")}` : null,
-    "Reply with confirm or cancel.",
+    "Reply with confirm, edit <changes>, or cancel.",
   ]
     .filter(Boolean)
     .join("\n\n");

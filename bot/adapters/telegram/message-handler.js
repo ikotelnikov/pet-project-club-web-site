@@ -1,6 +1,8 @@
 import {
   createPendingRecord,
+  extractEditInstruction,
   isConfirmationDecision,
+  isEditRequest,
   isPendingExpired,
   normalizeConfirmationDecision,
 } from "../../core/confirmation-flow.js";
@@ -60,6 +62,21 @@ export async function handleTelegramMessage({
       pending: existingPending,
       repository,
       photoStore,
+      dryRun,
+    });
+  }
+
+  if (isEditRequest(text)) {
+    return handleEditRequest({
+      text,
+      chatId,
+      fromUserId,
+      updateId,
+      messageId: message.message_id ?? null,
+      pendingStore,
+      pending: existingPending,
+      repository,
+      extractionClient,
       dryRun,
     });
   }
@@ -360,6 +377,140 @@ async function handleUndoRequest({
     status: "processed",
     fromUserId,
     chatId,
+    pendingState: newPending,
+  };
+}
+
+async function handleEditRequest({
+  text,
+  chatId,
+  fromUserId,
+  updateId,
+  messageId,
+  pendingStore,
+  pending,
+  repository,
+  extractionClient,
+  dryRun,
+}) {
+  if (!pending || isPendingExpired(pending)) {
+    if (pending && isPendingExpired(pending)) {
+      await pendingStore.deletePending(chatId);
+    }
+
+    return {
+      status: "clarification",
+      chatId,
+      fromUserId,
+      question: "There is no active preview to edit. Start with a content change request first.",
+    };
+  }
+
+  if (pending.state !== "awaiting_confirmation" || pending.operation?.type === "undo") {
+    return {
+      status: "clarification",
+      chatId,
+      fromUserId,
+      question: "This preview cannot be edited. Reply with confirm or cancel, or send a new content change request.",
+    };
+  }
+
+  const instruction = extractEditInstruction(text);
+
+  if (!instruction) {
+    return {
+      status: "clarification",
+      chatId,
+      fromUserId,
+      question: "After edit, tell me what to change. For example: edit place to MONTECO Coworking, Budva",
+    };
+  }
+
+  const extractionResult = await extractionClient.extractIntent({
+    messageText: instruction,
+    pendingState: "editing_pending_preview",
+    pendingOperation: {
+      entity: pending.operation.entity,
+      action: pending.operation.action,
+      slug: pending.operation.slug,
+      fields: pending.operation.fields,
+      summary: pending.operation.summary ?? null,
+    },
+    allowedEntityTypes: ["announcement", "meeting", "participant", "project"],
+    allowedActions: ["create", "update", "delete"],
+  });
+
+  if (!extractionResult.ok) {
+    return {
+      status: "failed",
+      reason: extractionResult.reason,
+      error: extractionResult.error ?? null,
+      rawText: extractionResult.rawText ?? null,
+      usedModel: extractionResult.usedModel ?? null,
+      attempts: extractionResult.attempts ?? null,
+      chatId,
+      fromUserId,
+    };
+  }
+
+  const extraction = extractionResult.extraction;
+
+  if (extraction.intent !== "content_operation") {
+    return {
+      status: "clarification",
+      chatId,
+      fromUserId,
+      question: "I couldn't understand what to edit. Name the fields and new values you want to change.",
+    };
+  }
+
+  const pendingFields = pending.operation.fields || {};
+  const editFields = normalizeExtractionToOperation(extraction).fields || {};
+  const mergedFields = {
+    ...pendingFields,
+    ...editFields,
+    slug:
+      normalizeSlug(editFields.slug) ||
+      normalizeSlug(pendingFields.slug) ||
+      normalizeSlug(pending.operation.slug),
+  };
+
+  const editedOperation = validateOperation({
+    entity: pending.operation.entity,
+    action: pending.operation.action,
+    fields: mergedFields,
+  });
+  const mapped = mapOperationToContent(editedOperation);
+  const repositoryPreview = await repository.previewCommand(editedOperation, mapped);
+  const preview = buildOperationPreview(editedOperation, repositoryPreview, {
+    attachments: pending.operation.attachments ?? [],
+  });
+  const newPending = createPendingRecord({
+    chatId,
+    userId: fromUserId,
+    state: "awaiting_confirmation",
+    sourceMessageId: messageId,
+    sourceUpdateId: updateId,
+    operation: {
+      ...pending.operation,
+      entity: editedOperation.entity,
+      action: editedOperation.action,
+      slug: editedOperation.fields.slug,
+      summary: extraction.summary || pending.operation.summary || null,
+      fields: editedOperation.fields,
+      preview,
+    },
+  });
+
+  await pendingStore.setPending(chatId, newPending);
+
+  return {
+    status: "processed",
+    fromUserId,
+    chatId,
+    parsed: editedOperation,
+    extraction,
+    operation: repositoryPreview,
     pendingState: newPending,
   };
 }
