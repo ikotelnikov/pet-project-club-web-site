@@ -20,12 +20,5 @@
         "Обмен ссылками и короткий follow-up в Telegram после встречи."
       ]
     }
-  ],
-  "links": [
-    {
-      "label": "Следить за анонсом в Telegram",
-      "href": "https://t.me/PetProjectClubMNE",
-      "external": true
-    }
   ]
 }
