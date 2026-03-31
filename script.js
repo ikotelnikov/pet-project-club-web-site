@@ -810,9 +810,6 @@ function renderMeetingPreviewCard(item) {
       <div class="meeting-preview-body">
         ${item.date ? `<p class="meeting-date">${item.date}</p>` : ""}
         <h3 class="meeting-title"><a href="${href}">${item.title}</a></h3>
-        <div class="meeting-id-row">
-          <a class="meeting-id-pill" href="${href}">id: ${item.slug}</a>
-        </div>
         ${meta ? `<div class="meeting-meta">${meta}</div>` : ""}
         ${lead ? `<p class="meeting-copy">${lead}${hasMore ? ` <a class="read-more-link" href="${href}">read more --&gt;</a>` : ""}</p>` : ""}
       </div>
@@ -870,9 +867,6 @@ function renderMeetingDetail(item, pageData) {
         <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Back to meetings"}</a>
         ${item.date ? `<p class="meeting-date">${item.date}</p>` : ""}
         <h1 class="hero-title meeting-detail-title">${item.title}</h1>
-        <div class="meeting-id-row">
-          <span class="meeting-id-pill">id: ${item.slug}</span>
-        </div>
         ${meta ? `<div class="meeting-meta">${meta}</div>` : ""}
       </div>
       ${item.photo?.src ? `
