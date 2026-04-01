@@ -32,6 +32,7 @@ if (!prefersReducedMotion) {
 }
 
 setActiveNav();
+initTopbarMenu();
 renderPage().finally(() => {
   initReveal();
   initCounters();
@@ -63,6 +64,40 @@ function setActiveNav() {
   document.querySelectorAll("[data-nav]").forEach((link) => {
     if (link.dataset.nav === activePage) {
       link.classList.add("is-active");
+    }
+  });
+}
+
+function initTopbarMenu() {
+  const toggle = document.querySelector("[data-menu-toggle]");
+  const nav = document.getElementById("main-nav");
+
+  if (!toggle || !nav) {
+    return;
+  }
+
+  const closeMenu = () => {
+    toggle.setAttribute("aria-expanded", "false");
+    nav.classList.remove("is-open");
+  };
+
+  toggle.addEventListener("click", () => {
+    const nextExpanded = toggle.getAttribute("aria-expanded") !== "true";
+    toggle.setAttribute("aria-expanded", String(nextExpanded));
+    nav.classList.toggle("is-open", nextExpanded);
+  });
+
+  nav.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 720px)").matches) {
+        closeMenu();
+      }
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (!window.matchMedia("(max-width: 720px)").matches) {
+      closeMenu();
     }
   });
 }
