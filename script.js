@@ -296,26 +296,38 @@ async function renderMeetingsPage() {
     readJson("meetings/archive/index.json"),
   ]);
 
-  const announcementItems = await Promise.all(
+  const allAnnouncementItems = await Promise.all(
     (announcementsIndex.items || [])
-      .slice(0, data.announcements?.limit || 2)
       .map((slug) => readJson(`meetings/items/${slug}.json`))
   );
+  const sortedAnnouncementItems = sortMeetingsByDateDesc(allAnnouncementItems);
+  const announcementItems = sortedAnnouncementItems.slice(0, data.announcements?.limit || 2);
 
+  const allArchiveItems = await Promise.all(
+    (archiveIndex.items || []).map((slug) => readJson(`meetings/items/${slug}.json`))
+  );
+  const sortedArchiveItems = sortMeetingsByDateDesc(allArchiveItems);
   const pageSize = data.archive?.pageSize || archiveIndex.pageSize || 10;
   const pageParam = Number.parseInt(new URLSearchParams(window.location.search).get("page") || "1", 10);
   const currentPage = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
-  const totalPages = Math.max(1, Math.ceil((archiveIndex.items || []).length / pageSize));
+  const totalPages = Math.max(1, Math.ceil(sortedArchiveItems.length / pageSize));
   const safePage = Math.min(currentPage, totalPages);
   const start = (safePage - 1) * pageSize;
-  const currentSlugs = (archiveIndex.items || []).slice(start, start + pageSize);
-  const archiveItems = await Promise.all(currentSlugs.map((slug) => readJson(`meetings/items/${slug}.json`)));
+  const archiveItems = sortedArchiveItems.slice(start, start + pageSize);
 
   pageContent.innerHTML = `
-    ${renderTimelineSection(data.formats)}
     ${renderMeetingCollection(data.announcements, announcementItems, "announcements")}
+    ${renderTimelineSection(data.formats)}
     ${renderMeetingsFeed(data.archive, archiveItems, safePage, totalPages)}
   `;
+}
+
+function sortMeetingsByDateDesc(items = []) {
+  return [...items].sort((left, right) => {
+    const leftDate = typeof left?.date === "string" ? left.date : "";
+    const rightDate = typeof right?.date === "string" ? right.date : "";
+    return rightDate.localeCompare(leftDate);
+  });
 }
 
 async function renderMeetingDetailPage() {
