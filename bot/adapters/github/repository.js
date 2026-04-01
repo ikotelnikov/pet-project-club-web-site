@@ -107,12 +107,17 @@ export class GitHubContentRepository {
 
   async findEntityBySlug(slug) {
     for (const entity of ["announce", "meeting", "participant", "project"]) {
-      if (await this.itemExists(entity, slug)) {
+      if (await this.indexContainsSlug(entity, slug)) {
         return entity;
       }
     }
 
     return null;
+  }
+
+  async indexContainsSlug(entity, slug) {
+    const index = await this.readIndex(entity);
+    return Array.isArray(index.items) && index.items.includes(slug);
   }
 
   async stageAttachment({ chatId, messageId, attachment, bytes }) {
