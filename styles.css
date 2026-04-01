@@ -1226,6 +1226,21 @@ a {
   border-color: rgba(141, 246, 198, 0.35);
 }
 
+#footer-contact-organizer {
+  color: #dffeff;
+  border-color: rgba(141, 246, 198, 0.42);
+  text-shadow:
+    0 0 6px rgba(141, 246, 198, 0.55),
+    0 0 14px rgba(80, 198, 255, 0.42),
+    0 0 28px rgba(80, 198, 255, 0.22);
+  animation: broken-neon-flicker 5.8s linear infinite;
+}
+
+#footer-contact-organizer:hover {
+  color: #f4ffff;
+  border-color: rgba(141, 246, 198, 0.68);
+}
+
 .site-footer p:last-child {
   text-align: right;
 }
@@ -1262,6 +1277,39 @@ a {
 @keyframes blink {
   50% {
     opacity: 0;
+  }
+}
+
+@keyframes broken-neon-flicker {
+  0%, 18%, 22%, 24%, 53%, 57%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 6px rgba(141, 246, 198, 0.55),
+      0 0 14px rgba(80, 198, 255, 0.42),
+      0 0 28px rgba(80, 198, 255, 0.22);
+  }
+  19%, 21% {
+    opacity: 0.45;
+    text-shadow:
+      0 0 3px rgba(141, 246, 198, 0.24),
+      0 0 8px rgba(80, 198, 255, 0.18);
+  }
+  23% {
+    opacity: 0.2;
+    text-shadow: none;
+  }
+  54% {
+    opacity: 0.35;
+    text-shadow:
+      0 0 2px rgba(141, 246, 198, 0.18),
+      0 0 6px rgba(80, 198, 255, 0.14);
+  }
+  55% {
+    opacity: 0.9;
+  }
+  56% {
+    opacity: 0.15;
+    text-shadow: none;
   }
 }
 
