@@ -498,6 +498,10 @@ async function renderProjectsPage() {
       ? pageItems.map((item) => renderProjectPreviewCard(item, ownerMap)).join("")
       : `<article class="item-card reveal"><h3>${listCopy.emptyTitle || "Ничего не найдено"}</h3><p class="item-copy">${emptyText}</p></article>`;
 
+    feed.querySelectorAll(".reveal").forEach((node) => {
+      node.classList.add("visible");
+    });
+
     pagination.innerHTML = totalPages > 1
       ? renderGenericPagination(
           {
