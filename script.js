@@ -13,6 +13,7 @@ const pageLoaders = {
   "meeting-detail": renderMeetingDetailPage,
   projects: renderProjectsPage,
   participants: renderParticipantsPage,
+  "participant-detail": renderParticipantDetailPage,
   links: renderLinksPage,
 };
 
@@ -482,6 +483,33 @@ async function renderParticipantsPage() {
   observer.observe(sentinel);
 }
 
+async function renderParticipantDetailPage() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+
+  if (!slug) {
+    pageContent.innerHTML = `
+      <section class="empty-state reveal">
+        <p>Не удалось открыть участника: в адресе отсутствует параметр <code>slug</code>.</p>
+      </section>
+    `;
+    return;
+  }
+
+  const [participant, participantsData, projectItems] = await Promise.all([
+    readJson(`participants/items/${slug}.json`),
+    readJson("participants/page.json"),
+    readIndexedItems("projects"),
+  ]);
+  const relatedProjects = projectItems.filter((project) =>
+    Array.isArray(project.ownerSlugs) && project.ownerSlugs.includes(slug)
+  );
+
+  document.title = `${participant.name || slug} | Participants | Pet Project Club Budva`;
+
+  pageContent.innerHTML = renderParticipantDetail(participant, participantsData, relatedProjects);
+}
+
 async function readIndexedItems(sectionPath) {
   const index = await readJson(`${sectionPath}/index.json`);
   return Promise.all(
@@ -791,11 +819,13 @@ function renderPersonCard(item) {
   const name = item.name || item.slug || "Untitled participant";
   const role = item.role || "Role not specified";
   const bio = item.bio || "";
+  const href = resolveHref(`participants/item/?slug=${item.slug}`);
+  const previewBio = truncateText(bio, 170);
   const photo = item.photo?.src
     ? `
-      <figure class="person-photo">
+      <a class="person-photo" href="${href}">
         <img src="${resolveHref(item.photo.src)}" alt="${item.photo.alt || name}">
-      </figure>
+      </a>
     `
     : "";
   const footerBits = [
@@ -807,9 +837,9 @@ function renderPersonCard(item) {
   return `
     <article class="person-card reveal">
       ${photo}
-      <h3>${name}</h3>
+      <h3><a class="person-name-link" href="${href}">${name}</a></h3>
       <p class="person-role">${role}</p>
-      ${bio ? `<p class="person-copy">${bio}</p>` : ""}
+      ${previewBio ? `<p class="person-copy">${previewBio}${bio.length > previewBio.length ? ` <a class="read-more-link" href="${href}">more --&gt;</a>` : ""}</p>` : ""}
       ${points.length ? `
         <ul class="person-list">
           ${points.map((point) => `<li>${point}</li>`).join("")}
@@ -817,6 +847,56 @@ function renderPersonCard(item) {
       ` : ""}
       ${footerBits ? `<div class="person-footer">${footerBits}</div>` : ""}
     </article>
+  `;
+}
+
+function renderParticipantDetail(item, pageData, relatedProjects) {
+  const backHref = resolveHref("participants/");
+  const handle = item.handle || item.slug;
+  const photo = item.photo?.src
+    ? `
+      <div class="participant-detail-media">
+        <img src="${resolveHref(item.photo.src)}" alt="${item.photo.alt || item.name || item.slug}">
+      </div>
+    `
+    : "";
+  const footerBits = [
+    renderPersonHandle(item.handle),
+    ...(Array.isArray(item.tags) ? item.tags.map((tag) => `<span class="meta-pill">${tag}</span>`) : []),
+    ...(Array.isArray(item.links)
+      ? item.links.map((link) => `<a class="meta-pill meta-pill-link" href="${resolveHref(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${link.label}</a>`)
+      : []),
+  ].filter(Boolean).join("");
+
+  return `
+    <section class="participant-detail-shell reveal">
+      <div class="participant-detail-head">
+        <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Ко всем участникам"}</a>
+        ${handle ? `<div class="participant-detail-meta">${renderPersonHandle(handle)}</div>` : ""}
+        <h1 class="participant-detail-title">${item.name || item.slug}</h1>
+        ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
+        ${footerBits ? `<div class="participant-detail-meta">${footerBits}</div>` : ""}
+      </div>
+      ${photo}
+      ${item.bio ? `<div class="participant-detail-copy"><p class="person-copy">${item.bio}</p></div>` : ""}
+      ${Array.isArray(item.points) && item.points.length ? `
+        <div class="detail-list-shell">
+          <ul class="detail-list">
+            ${item.points.map((point) => `<li>${point}</li>`).join("")}
+          </ul>
+        </div>
+      ` : ""}
+    </section>
+    <section class="section-shell reveal">
+      <div class="section-heading">
+        <p class="section-kicker">Projects</p>
+        <h2>Проекты участника</h2>
+        <p class="card-copy">Проекты, в которых этот участник указан как владелец или основной contributor.</p>
+      </div>
+      <div class="card-grid two-up">
+        ${relatedProjects.length ? relatedProjects.map((project, index) => renderItemCard(project, index, "project")).join("") : `<article class="item-card reveal"><h3>Пока пусто</h3><p class="item-copy">Для этого участника пока не привязаны проекты.</p></article>`}
+      </div>
+    </section>
   `;
 }
 
@@ -831,6 +911,18 @@ function renderPersonHandle(handle) {
   }
 
   return `<span class="card-tag">${handle}</span>`;
+}
+
+function truncateText(text, maxLength = 170) {
+  if (typeof text !== "string") {
+    return "";
+  }
+
+  if (text.length <= maxLength) {
+    return text;
+  }
+
+  return `${text.slice(0, maxLength).trimEnd()}…`;
 }
 
 function renderLinksSection(section) {

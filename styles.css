@@ -1170,6 +1170,15 @@ a {
   flex-direction: column;
 }
 
+.person-name-link {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.person-name-link:hover {
+  color: var(--accent);
+}
+
 .person-photo {
   margin: -18px -18px 16px;
   aspect-ratio: 4 / 3;
@@ -1213,6 +1222,51 @@ a {
 
 .participants-page-shell .card-copy a:hover {
   color: var(--text);
+}
+
+.participant-detail-shell {
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: linear-gradient(180deg, rgba(14, 21, 31, 0.72), rgba(8, 12, 18, 0.58));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.participant-detail-head,
+.participant-detail-copy {
+  padding: 22px;
+}
+
+.participant-detail-title {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.participant-detail-role {
+  margin: 0 0 16px;
+}
+
+.participant-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.participant-detail-media {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.participant-detail-media img {
+  display: block;
+  width: 100%;
+  height: min(60vw, 560px);
+  object-fit: cover;
 }
 
 .list-sentinel {
