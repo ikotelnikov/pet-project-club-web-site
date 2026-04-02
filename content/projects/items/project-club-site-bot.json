@@ -1,10 +1,39 @@
 {
   "slug": "project-club-site-bot",
   "title": "Club site content bot",
-  "status": "prototype in progress",
-  "stack": "telegram / github actions / static site",
+  "status": "active build",
+  "stack": "telegram / openai / cloudflare worker / github pages",
+  "summary": "Бот, который принимает сообщения в Telegram, превращает их в структуру контента и обновляет сайт клуба без ручной правки HTML.",
+  "ownerSlugs": [
+    "ikotelnikov"
+  ],
+  "url": "https://t.me/PetProjectClubMNE",
+  "urlLabel": "Открыть Telegram канала",
+  "links": [
+    {
+      "label": "GitHub repo",
+      "href": "https://github.com/ikotelnikov/pet-project-club-web-site",
+      "external": true
+    }
+  ],
+  "photo": {
+    "src": "assets/images/PetProjectClubMonenegroLogo.jpg",
+    "alt": "Pet Project Club content bot"
+  },
+  "gallery": [
+    {
+      "src": "assets/images/PetProjectClubMonenegroLogo.jpg",
+      "alt": "Pet Project Club logo"
+    },
+    {
+      "src": "assets/uploads/272981189/192-photo-192-AQAD6BVrGzxmeUp9.jpg",
+      "alt": "Project screenshot"
+    }
+  ],
+  "detailsHtml": "<p><strong>Club site content bot</strong> собирает изменения для сайта прямо из Telegram: создает и редактирует участников, встречи, проекты и связанные медиа.</p><p>Внутри уже есть workflow <em>preview → confirm → commit</em>, привязка фото, Cloudflare Worker runtime и публикация через GitHub Pages.</p><ul><li>естественный текст вместо жестких slash-команд</li><li>предпросмотр изменений перед записью</li><li>связь между проектами, участниками и встречами</li></ul><p>Следующий фокус: сделать проектные апдейты и news items такими же простыми, как редактирование meeting-заметок.</p>",
   "points": [
     "Parses Telegram commands into structured operations.",
-    "Commits JSON into the repo."
+    "Commits JSON into the repo.",
+    "Publishes changes into GitHub Pages after confirmation."
   ]
 }

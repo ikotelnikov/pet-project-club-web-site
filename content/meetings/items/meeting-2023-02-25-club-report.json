@@ -5,6 +5,12 @@
   "title": "Практика создания сайта с помощью AI — создаем сайт от и до",
   "place": "Коворкинг Monteco в Будве",
   "format": "in-person",
+  "projectSlugs": [
+    "project-club-site-bot"
+  ],
+  "participantSlugs": [
+    "ikotelnikov"
+  ],
   "photo": {
     "src": "assets/uploads/272981189/156-photo-156-AQADsRNrG5XqYUp-.jpg",
     "alt": "Практика создания сайта с помощью AI — создаем сайт от и до"

@@ -686,6 +686,8 @@ a {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text);
   text-decoration: none;
+  cursor: pointer;
+  font: inherit;
 }
 
 .pagination-link.is-disabled {
@@ -1223,6 +1225,180 @@ a {
   color: var(--text);
 }
 
+.project-page-shell .section-heading h1,
+.project-detail-title {
+  margin: 0;
+  letter-spacing: -0.05em;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1;
+}
+
+.project-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.project-search-shell {
+  display: grid;
+  gap: 10px;
+  width: min(480px, 100%);
+}
+
+.project-search-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.project-search-input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(5, 10, 15, 0.58);
+  color: var(--text);
+  font: inherit;
+  outline: none;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.project-search-input:focus {
+  border-color: rgba(141, 246, 198, 0.32);
+  box-shadow: 0 0 0 4px rgba(141, 246, 198, 0.08);
+}
+
+.project-results-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: var(--muted);
+}
+
+.project-feed,
+.project-owner-list {
+  display: grid;
+  gap: 18px;
+}
+
+.project-preview,
+.project-detail-shell,
+.project-detail-media {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: rgba(10, 16, 24, 0.46);
+}
+
+.project-preview {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.project-preview.no-photo {
+  grid-template-columns: 1fr;
+}
+
+.project-preview-media {
+  display: block;
+  min-height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.project-preview-media img,
+.project-detail-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-preview-media img {
+  min-height: 100%;
+}
+
+.project-preview-body {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 22px;
+}
+
+.project-detail-shell {
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: linear-gradient(180deg, rgba(14, 21, 31, 0.72), rgba(8, 12, 18, 0.58));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.project-detail-head {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+.project-detail-summary {
+  margin: 0;
+  max-width: 70ch;
+}
+
+.project-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.project-detail-media {
+  margin-bottom: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.project-detail-media img {
+  height: min(62vw, 560px);
+}
+
+.project-detail-gallery {
+  margin-bottom: 18px;
+}
+
+.project-richtext {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.project-richtext > *:first-child {
+  margin-top: 0;
+}
+
+.project-richtext > *:last-child {
+  margin-bottom: 0;
+}
+
+.project-richtext a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(141, 246, 198, 0.35);
+}
+
+.project-richtext strong,
+.project-richtext b {
+  color: var(--text);
+}
+
+.project-richtext ul,
+.project-richtext ol {
+  padding-left: 22px;
+}
+
 .participant-detail-shell {
   overflow: hidden;
   border-radius: 24px;
@@ -1559,7 +1735,21 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .project-preview {
+    grid-template-columns: 1fr;
+  }
+
   .meeting-preview-media img {
+    height: 260px;
+  }
+
+  .project-preview-media {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .project-preview-media img,
+  .project-detail-media img {
     height: 260px;
   }
 
@@ -1573,6 +1763,12 @@ a {
 
   .footer-inline {
     flex-wrap: wrap;
+  }
+
+  .project-toolbar,
+  .project-results-meta {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .stage-core {

@@ -12,6 +12,7 @@ const pageLoaders = {
   meetings: renderMeetingsPage,
   "meeting-detail": renderMeetingDetailPage,
   projects: renderProjectsPage,
+  "project-detail": renderProjectDetailPage,
   participants: renderParticipantsPage,
   "participant-detail": renderParticipantDetailPage,
   links: renderLinksPage,
@@ -390,21 +391,143 @@ async function renderMeetingDetailPage() {
 }
 
 async function renderProjectsPage() {
-  const [projectsData, projectItems] = await Promise.all([
+  const [projectsData, projectItems, participantItems] = await Promise.all([
     readJson("projects/page.json"),
     readIndexedItems("projects"),
+    readIndexedItems("participants"),
   ]);
-  const projectsSection = {
-    ...projectsData.projects,
-    items: projectItems,
-  };
+  const ownerMap = new Map(participantItems.map((item) => [item.slug, item]));
+  const listCopy = projectsData.list || {};
+  const pageSize = Number(listCopy.pageSize || 6);
+  const searchPlaceholder = listCopy.searchPlaceholder || "Найти проект, стек, автора или запрос";
+  const emptyText = listCopy.empty || "Пока нет проектов, подходящих под этот запрос.";
+  const query = new URLSearchParams(window.location.search);
+  const initialPage = Number(query.get("page") || "1");
+  let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? Math.floor(initialPage) : 1;
+  let currentSearch = (query.get("q") || "").trim();
+
+  document.title = `${listCopy.title || "Проекты клуба"} | Pet Project Club Budva`;
 
   pageContent.innerHTML = `
-    ${renderHero(projectsData.hero, projectsData.signals, "projects")}
-    ${renderMetrics(projectsData.metrics)}
-    ${renderCardSection(projectsSection, "two-up", "project")}
+    <section class="section-shell reveal project-page-shell">
+      <div class="section-heading">
+        <p class="section-kicker">${listCopy.tag || "Projects"}</p>
+        <h1>${listCopy.title || "Проекты клуба"}</h1>
+        <p class="card-copy">${listCopy.description || "Здесь собраны активные проекты клуба, их статус, владельцы и последние апдейты."}</p>
+      </div>
+      <div class="project-toolbar">
+        <label class="project-search-shell" for="project-search">
+          <span class="project-search-label">${listCopy.searchLabel || "Search"}</span>
+          <input id="project-search" class="project-search-input" type="search" placeholder="${searchPlaceholder}" value="${escapeHtml(currentSearch)}">
+        </label>
+      </div>
+      <div class="project-results-meta" id="project-results-meta"></div>
+      <div class="project-feed" id="project-feed"></div>
+      <div class="pagination-nav" id="project-pagination" aria-label="Projects pagination"></div>
+    </section>
     ${renderStatusSection(projectsData.notes)}
   `;
+
+  const searchInput = document.getElementById("project-search");
+  const feed = document.getElementById("project-feed");
+  const pagination = document.getElementById("project-pagination");
+  const resultsMeta = document.getElementById("project-results-meta");
+
+  if (!searchInput || !feed || !pagination || !resultsMeta) {
+    return;
+  }
+
+  const updateUrl = () => {
+    const nextQuery = new URLSearchParams();
+
+    if (currentSearch) {
+      nextQuery.set("q", currentSearch);
+    }
+
+    if (currentPage > 1) {
+      nextQuery.set("page", String(currentPage));
+    }
+
+    const nextUrl = nextQuery.toString()
+      ? `${window.location.pathname}?${nextQuery.toString()}`
+      : window.location.pathname;
+    window.history.replaceState({}, "", nextUrl);
+  };
+
+  const getFilteredProjects = () => {
+    const normalizedSearch = currentSearch.toLowerCase();
+
+    if (!normalizedSearch) {
+      return projectItems.slice();
+    }
+
+    return projectItems.filter((item) => {
+      const ownerNames = (item.ownerSlugs || [])
+        .map((slug) => ownerMap.get(slug)?.name || ownerMap.get(slug)?.handle || slug)
+        .join(" ");
+      const haystack = [
+        item.title,
+        item.summary,
+        item.status,
+        item.stack,
+        item.detailsHtml,
+        ...(item.points || []),
+        ...(item.tags || []),
+        ownerNames,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return haystack.includes(normalizedSearch);
+    });
+  };
+
+  const renderProjectPageState = () => {
+    const filteredProjects = getFilteredProjects();
+    const totalPages = Math.max(1, Math.ceil(filteredProjects.length / pageSize));
+    currentPage = Math.min(currentPage, totalPages);
+    const pageItems = filteredProjects.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+    resultsMeta.innerHTML = `
+      <span>${listCopy.resultsLabel || "Проектов найдено"}: <strong>${filteredProjects.length}</strong></span>
+      ${currentSearch ? `<span>${listCopy.filterLabel || "Фильтр"}: <strong>${escapeHtml(currentSearch)}</strong></span>` : ""}
+    `;
+
+    feed.innerHTML = pageItems.length
+      ? pageItems.map((item) => renderProjectPreviewCard(item, ownerMap)).join("")
+      : `<article class="item-card reveal"><h3>${listCopy.emptyTitle || "Ничего не найдено"}</h3><p class="item-copy">${emptyText}</p></article>`;
+
+    pagination.innerHTML = totalPages > 1
+      ? renderGenericPagination(
+          {
+            prev: listCopy.pagination?.prev || "← Previous",
+            next: listCopy.pagination?.next || "Next →",
+            page: listCopy.pagination?.page || "Page",
+          },
+          currentPage,
+          totalPages
+        )
+      : "";
+
+    pagination.querySelectorAll("[data-project-page]").forEach((button) => {
+      button.addEventListener("click", () => {
+        currentPage = Number(button.dataset.projectPage);
+        updateUrl();
+        renderProjectPageState();
+      });
+    });
+
+    updateUrl();
+  };
+
+  searchInput.addEventListener("input", () => {
+    currentSearch = searchInput.value.trim();
+    currentPage = 1;
+    renderProjectPageState();
+  });
+
+  renderProjectPageState();
 }
 
 async function renderParticipantsPage() {
@@ -510,10 +633,47 @@ async function renderParticipantDetailPage() {
   pageContent.innerHTML = renderParticipantDetail(participant, participantsData, relatedProjects);
 }
 
+async function renderProjectDetailPage() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+
+  if (!slug) {
+    pageContent.innerHTML = `
+      <section class="empty-state reveal">
+        <p>Не удалось открыть проект: в адресе отсутствует параметр <code>slug</code>.</p>
+      </section>
+    `;
+    return;
+  }
+
+  const [project, projectsData, participantItems, announcementItems, archiveItems] = await Promise.all([
+    readJson(`projects/items/${slug}.json`),
+    readJson("projects/page.json"),
+    readIndexedItems("participants"),
+    readMeetingIndexItems("meetings/announcements/index.json"),
+    readMeetingIndexItems("meetings/archive/index.json"),
+  ]);
+  const participantsBySlug = new Map(participantItems.map((item) => [item.slug, item]));
+  const relatedMeetings = [...announcementItems, ...archiveItems]
+    .filter((item) => Array.isArray(item.projectSlugs) && item.projectSlugs.includes(slug))
+    .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+
+  document.title = `${project.title || slug} | Projects | Pet Project Club Budva`;
+
+  pageContent.innerHTML = renderProjectDetail(project, projectsData, participantsBySlug, relatedMeetings);
+}
+
 async function readIndexedItems(sectionPath) {
   const index = await readJson(`${sectionPath}/index.json`);
   return Promise.all(
     (index.items || []).map((slug) => readJson(`${sectionPath}/items/${slug}.json`))
+  );
+}
+
+async function readMeetingIndexItems(indexPath) {
+  const index = await readJson(indexPath);
+  return Promise.all(
+    (index.items || []).map((slug) => readJson(`meetings/items/${slug}.json`))
   );
 }
 
@@ -850,6 +1010,41 @@ function renderPersonCard(item) {
   `;
 }
 
+function renderProjectPreviewCard(item, ownerMap = new Map()) {
+  const href = resolveHref(`projects/item/?slug=${item.slug}`);
+  const summary = item.summary || (Array.isArray(item.points) ? item.points[0] : "") || "";
+  const previewSummary = truncateText(summary, 190);
+  const hasMore = summary.length > previewSummary.length;
+  const photo = getProjectGallery(item)[0];
+  const owners = (item.ownerSlugs || [])
+    .map((slug) => ownerMap.get(slug))
+    .filter(Boolean);
+  const ownerLinks = owners
+    .map((owner) => `<a class="meta-pill" href="${resolveHref(`participants/item/?slug=${owner.slug}`)}">${owner.name || owner.slug}</a>`)
+    .join("");
+  const primaryUrl = getProjectPrimaryUrl(item);
+
+  return `
+    <article class="project-preview reveal${photo ? "" : " no-photo"}" id="${item.slug}">
+      ${photo ? `
+        <a class="project-preview-media" href="${href}">
+          <img src="${resolveHref(photo.src)}" alt="${photo.alt || item.title}">
+        </a>
+      ` : ""}
+      <div class="project-preview-body">
+        ${item.status ? `<p class="meeting-date">${item.status}</p>` : ""}
+        <h3 class="meeting-title"><a href="${href}">${item.title}</a></h3>
+        <div class="meeting-meta">
+          ${item.stack ? `<span class="meta-pill">${item.stack}</span>` : ""}
+          ${ownerLinks}
+          ${primaryUrl ? `<a class="meta-pill" href="${resolveHref(primaryUrl.href)}"${primaryUrl.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${primaryUrl.label}</a>` : ""}
+        </div>
+        ${previewSummary ? `<p class="meeting-copy">${escapeHtml(previewSummary)}${hasMore ? ` <a class="read-more-link" href="${href}">more --&gt;</a>` : ""}</p>` : ""}
+      </div>
+    </article>
+  `;
+}
+
 function renderParticipantDetail(item, pageData, relatedProjects) {
   const backHref = resolveHref("participants/");
   const handle = item.handle || item.slug;
@@ -893,9 +1088,85 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
         <h2>Проекты участника</h2>
         <p class="card-copy">Проекты, в которых этот участник указан как владелец или основной contributor.</p>
       </div>
-      <div class="card-grid two-up">
-        ${relatedProjects.length ? relatedProjects.map((project, index) => renderItemCard(project, index, "project")).join("") : `<article class="item-card reveal"><h3>Пока пусто</h3><p class="item-copy">Для этого участника пока не привязаны проекты.</p></article>`}
+      <div class="project-feed">
+        ${relatedProjects.length ? relatedProjects.map((project) => renderProjectPreviewCard(project, new Map([[item.slug, item]]))).join("") : `<article class="item-card reveal"><h3>Пока пусто</h3><p class="item-copy">Для этого участника пока не привязаны проекты.</p></article>`}
       </div>
+    </section>
+  `;
+}
+
+function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings) {
+  const gallery = getProjectGallery(item);
+  const owners = (item.ownerSlugs || [])
+    .map((slug) => participantsBySlug.get(slug))
+    .filter(Boolean);
+  const relatedParticipants = owners.length
+    ? owners.map((owner) => `
+      <a class="meta-pill" href="${resolveHref(`participants/item/?slug=${owner.slug}`)}">${owner.name || owner.slug}</a>
+    `).join("")
+    : "";
+  const externalLinks = getProjectLinks(item)
+    .map((link) => `<a class="meta-pill meta-pill-link" href="${resolveHref(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${link.label}</a>`)
+    .join("");
+  const detailsHtml = item.detailsHtml
+    ? `<div class="project-richtext">${item.detailsHtml}</div>`
+    : (Array.isArray(item.points) && item.points.length
+      ? `
+        <div class="detail-list-shell">
+          <ul class="detail-list">
+            ${item.points.map((point) => `<li>${point}</li>`).join("")}
+          </ul>
+        </div>
+      `
+      : "");
+
+  return `
+    <section class="project-detail-shell reveal">
+      <div class="project-detail-head">
+        <a class="detail-back-link" href="${resolveHref("projects/")}">${pageData.detail?.backLabel || "← Ко всем проектам"}</a>
+        <h1 class="project-detail-title">${item.title || item.slug}</h1>
+        ${item.summary ? `<p class="card-copy project-detail-summary">${item.summary}</p>` : ""}
+        <div class="project-detail-meta">
+          ${item.status ? `<span class="meta-pill">${item.status}</span>` : ""}
+          ${item.stack ? `<span class="meta-pill">${item.stack}</span>` : ""}
+          ${relatedParticipants}
+          ${externalLinks}
+        </div>
+      </div>
+      ${renderProjectGallery(gallery, item.title || item.slug)}
+      ${detailsHtml ? `
+        <section class="section-shell reveal">
+          <div class="section-heading">
+            <p class="section-kicker">${pageData.detail?.detailsTag || "Details"}</p>
+            <h2>${pageData.detail?.detailsTitle || "Подробности проекта"}</h2>
+          </div>
+          ${detailsHtml}
+        </section>
+      ` : ""}
+      <section class="section-shell reveal">
+        <div class="section-heading">
+          <p class="section-kicker">${pageData.detail?.ownersTag || "Creators"}</p>
+          <h2>${pageData.detail?.ownersTitle || "Создатели проекта"}</h2>
+          <p class="card-copy">${pageData.detail?.ownersDescription || "Участники клуба, которые сейчас ведут этот проект или отвечают за его развитие."}</p>
+        </div>
+        <div class="project-owner-list">
+          ${owners.length
+            ? owners.map((owner) => renderPersonCard(owner)).join("")
+            : `<article class="item-card reveal"><h3>Пока не указано</h3><p class="item-copy">Для этого проекта пока не указаны создатели в ownerSlugs.</p></article>`}
+        </div>
+      </section>
+      <section class="section-shell reveal">
+        <div class="section-heading">
+          <p class="section-kicker">${pageData.detail?.newsTag || "Project news"}</p>
+          <h2>${pageData.detail?.newsTitle || "Новости и связанные встречи"}</h2>
+          <p class="card-copy">${pageData.detail?.newsDescription || "Анонсы и архивные встречи, где этот проект показывали, обсуждали или обновляли."}</p>
+        </div>
+        <div class="meeting-feed">
+          ${relatedMeetings.length
+            ? relatedMeetings.map((meeting) => renderMeetingPreviewCard(meeting)).join("")
+            : `<article class="item-card reveal"><h3>Пока пусто</h3><p class="item-copy">Связанные встречи появятся здесь, как только у meeting/announce записи будет указан projectSlugs.</p></article>`}
+        </div>
+      </section>
     </section>
   `;
 }
@@ -923,6 +1194,81 @@ function truncateText(text, maxLength = 170) {
   }
 
   return `${text.slice(0, maxLength).trimEnd()}…`;
+}
+
+function renderProjectGallery(gallery, fallbackTitle) {
+  if (!gallery.length) {
+    return "";
+  }
+
+  if (gallery.length === 1) {
+    return `
+      <section class="project-detail-media reveal">
+        <img src="${resolveHref(gallery[0].src)}" alt="${gallery[0].alt || fallbackTitle}">
+      </section>
+    `;
+  }
+
+  return `
+    <section class="project-detail-gallery reveal">
+      <div class="gallery-shell">
+        <button class="gallery-nav prev" type="button" aria-label="Previous photo">‹</button>
+        <div class="gallery-viewport">
+          <div class="gallery-track">
+            ${gallery.map((item) => `
+              <figure class="gallery-slide reveal">
+                <img src="${resolveHref(item.src)}" alt="${item.alt || fallbackTitle}">
+              </figure>
+            `).join("")}
+          </div>
+        </div>
+        <button class="gallery-nav next" type="button" aria-label="Next photo">›</button>
+      </div>
+    </section>
+  `;
+}
+
+function getProjectGallery(item) {
+  const gallery = Array.isArray(item.gallery) ? item.gallery.filter((entry) => entry?.src) : [];
+
+  if (gallery.length) {
+    return gallery;
+  }
+
+  return item.photo?.src ? [item.photo] : [];
+}
+
+function getProjectLinks(item) {
+  const links = Array.isArray(item.links) ? item.links.filter((entry) => entry?.href && entry?.label) : [];
+
+  if (item.url) {
+    links.unshift({
+      label: item.urlLabel || "Open project",
+      href: item.url,
+      external: true,
+    });
+  }
+
+  return links;
+}
+
+function getProjectPrimaryUrl(item) {
+  return getProjectLinks(item)[0] || null;
+}
+
+function renderGenericPagination(copy = {}, currentPage, totalPages) {
+  const prevPage = currentPage > 1 ? currentPage - 1 : null;
+  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+
+  return `
+    ${prevPage
+      ? `<button class="pagination-link" type="button" data-project-page="${prevPage}">${copy.prev || "← Previous"}</button>`
+      : `<span class="pagination-link is-disabled">${copy.prev || "← Previous"}</span>`}
+    <span class="pagination-status">${copy.page || "Page"} ${currentPage} / ${totalPages}</span>
+    ${nextPage
+      ? `<button class="pagination-link" type="button" data-project-page="${nextPage}">${copy.next || "Next →"}</button>`
+      : `<span class="pagination-link is-disabled">${copy.next || "Next →"}</span>`}
+  `;
 }
 
 function renderLinksSection(section) {
@@ -1221,42 +1567,52 @@ function initTerminal() {
 }
 
 function initGallery() {
-  const shell = document.querySelector(".gallery-shell");
+  document.querySelectorAll(".gallery-shell").forEach((shell) => {
+    if (shell.dataset.galleryReady === "true") {
+      return;
+    }
 
-  if (!shell) {
-    return;
-  }
+    const viewport = shell.querySelector(".gallery-viewport");
+    const prev = shell.querySelector(".gallery-nav.prev");
+    const next = shell.querySelector(".gallery-nav.next");
 
-  const viewport = shell.querySelector(".gallery-viewport");
-  const prev = shell.querySelector(".gallery-nav.prev");
-  const next = shell.querySelector(".gallery-nav.next");
+    if (!viewport || !prev || !next) {
+      return;
+    }
 
-  if (!viewport || !prev || !next) {
-    return;
-  }
+    const scrollBySlide = (direction) => {
+      const slide = viewport.querySelector(".gallery-slide");
+      const slideWidth = slide ? slide.getBoundingClientRect().width : viewport.clientWidth;
+      const gap = 16;
+      viewport.scrollBy({
+        left: direction * (slideWidth + gap),
+        behavior: "smooth",
+      });
+    };
 
-  const scrollBySlide = (direction) => {
-    const slide = viewport.querySelector(".gallery-slide");
-    const slideWidth = slide ? slide.getBoundingClientRect().width : viewport.clientWidth;
-    const gap = 16;
-    viewport.scrollBy({
-      left: direction * (slideWidth + gap),
-      behavior: "smooth",
-    });
-  };
+    prev.addEventListener("click", () => scrollBySlide(-1));
+    next.addEventListener("click", () => scrollBySlide(1));
 
-  prev.addEventListener("click", () => scrollBySlide(-1));
-  next.addEventListener("click", () => scrollBySlide(1));
+    viewport.addEventListener(
+      "wheel",
+      (event) => {
+        if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+          return;
+        }
 
-  viewport.addEventListener(
-    "wheel",
-    (event) => {
-      if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
-        return;
-      }
+        event.preventDefault();
+      },
+      { passive: false }
+    );
 
-      event.preventDefault();
-    },
-    { passive: false }
-  );
+    shell.dataset.galleryReady = "true";
+  });
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }
