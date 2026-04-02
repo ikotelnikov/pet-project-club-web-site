@@ -1,6 +1,7 @@
 import { ContentRepositoryError } from "../../domain/errors.js";
 
 const GITHUB_API_ROOT = "https://api.github.com";
+const RETRYABLE_GITHUB_STATUSES = new Set([502, 503, 504]);
 
 export class GitHubContentRepository {
   constructor({
@@ -443,17 +444,19 @@ export class GitHubContentRepository {
   }
 
   rawRequest(method, pathname, body = null) {
-    return this.fetchImpl(`${GITHUB_API_ROOT}${pathname}`, {
-      method,
-      headers: {
-        accept: "application/vnd.github+json",
-        authorization: `Bearer ${this.token}`,
-        "user-agent": "pet-project-club-bot",
-        "x-github-api-version": "2022-11-28",
-        ...(body ? { "content-type": "application/json" } : {}),
-      },
-      body: body ? JSON.stringify(body) : undefined,
-    });
+    return requestWithRetry(async () =>
+      this.fetchImpl(`${GITHUB_API_ROOT}${pathname}`, {
+        method,
+        headers: {
+          accept: "application/vnd.github+json",
+          authorization: `Bearer ${this.token}`,
+          "user-agent": "pet-project-club-bot",
+          "x-github-api-version": "2022-11-28",
+          ...(body ? { "content-type": "application/json" } : {}),
+        },
+        body: body ? JSON.stringify(body) : undefined,
+      })
+    );
   }
 
   async putFileFromBytes(filePath, bytes, message) {
@@ -608,6 +611,27 @@ async function parseApiResponse(response, context = "") {
   }
 
   return payload;
+}
+
+async function requestWithRetry(requestFn, maxAttempts = 3) {
+  let lastResponse = null;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const response = await requestFn();
+    lastResponse = response;
+
+    if (!RETRYABLE_GITHUB_STATUSES.has(response.status) || attempt === maxAttempts) {
+      return response;
+    }
+
+    await delay(attempt * 400);
+  }
+
+  return lastResponse;
+}
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function encodeRepoPath(filePath) {
