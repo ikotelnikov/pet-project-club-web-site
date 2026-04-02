@@ -251,7 +251,6 @@ a {
   min-height: 46px;
   padding: 0 16px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
   text-decoration: none;
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
 }
@@ -259,7 +258,7 @@ a {
 .main-nav a {
   color: #dffeff;
   background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(141, 246, 198, 0.16);
+  border: none;
   text-shadow:
     0 0 6px rgba(141, 246, 198, 0.22),
     0 0 14px rgba(80, 198, 255, 0.16);
@@ -270,7 +269,7 @@ a {
 
 .main-nav a.is-active {
   color: #f3fffb;
-  border-color: rgba(141, 246, 198, 0.54);
+  border: none;
   background: rgba(141, 246, 198, 0.08);
   text-shadow:
     0 0 8px rgba(141, 246, 198, 0.55),
