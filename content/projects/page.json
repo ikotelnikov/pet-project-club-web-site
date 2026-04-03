@@ -18,14 +18,9 @@
   },
   "detail": {
     "backLabel": "← Ко всем проектам",
-    "detailsTag": "Project details",
     "detailsTitle": "Подробности проекта",
-    "ownersTag": "Creators",
     "ownersTitle": "Кто ведет проект",
-    "ownersDescription": "Участники клуба, которые сейчас двигают этот проект и могут рассказать о его следующем шаге.",
-    "newsTag": "Project news",
-    "newsTitle": "Новости, демо и встречи",
-    "newsDescription": "Записи встреч и анонсов, где проект показывали, обсуждали или обновляли."
+    "newsTitle": "Новости проекта, демо и релизы"
   },
   "notes": {
     "tag": "Team matching",

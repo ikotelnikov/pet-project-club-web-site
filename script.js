@@ -1074,9 +1074,7 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
     </section>
     <section class="section-shell reveal">
       <div class="section-heading">
-        <p class="section-kicker">Projects</p>
         <h2>Проекты участника</h2>
-        <p class="card-copy">Проекты, в которых этот участник указан как владелец или основной contributor.</p>
       </div>
       <div class="project-feed">
         ${relatedProjects.length ? relatedProjects.map((project) => renderProjectPreviewCard(project, new Map([[item.slug, item]]))).join("") : `<article class="item-card reveal"><h3>Пока пусто</h3><p class="item-copy">Для этого участника пока не привязаны проекты.</p></article>`}
@@ -1128,7 +1126,7 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
       ${detailsHtml ? `
         <section class="section-shell reveal">
           <div class="section-heading">
-            <p class="section-kicker">${pageData.detail?.detailsTag || "Details"}</p>
+            ${pageData.detail?.detailsTag ? `<p class="section-kicker">${pageData.detail.detailsTag}</p>` : ""}
             <h2>${pageData.detail?.detailsTitle || "Подробности проекта"}</h2>
           </div>
           ${detailsHtml}
@@ -1136,9 +1134,9 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
       ` : ""}
       <section class="section-shell reveal">
         <div class="section-heading">
-          <p class="section-kicker">${pageData.detail?.ownersTag || "Creators"}</p>
+          ${pageData.detail?.ownersTag ? `<p class="section-kicker">${pageData.detail.ownersTag}</p>` : ""}
           <h2>${pageData.detail?.ownersTitle || "Создатели проекта"}</h2>
-          <p class="card-copy">${pageData.detail?.ownersDescription || "Участники клуба, которые сейчас ведут этот проект или отвечают за его развитие."}</p>
+          ${pageData.detail?.ownersDescription ? `<p class="card-copy">${pageData.detail.ownersDescription}</p>` : ""}
         </div>
         <div class="project-owner-list">
           ${owners.length
@@ -1148,9 +1146,9 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
       </section>
       <section class="section-shell reveal">
         <div class="section-heading">
-          <p class="section-kicker">${pageData.detail?.newsTag || "Project news"}</p>
+          ${pageData.detail?.newsTag ? `<p class="section-kicker">${pageData.detail.newsTag}</p>` : ""}
           <h2>${pageData.detail?.newsTitle || "Новости и связанные встречи"}</h2>
-          <p class="card-copy">${pageData.detail?.newsDescription || "Анонсы и архивные встречи, где этот проект показывали, обсуждали или обновляли."}</p>
+          ${pageData.detail?.newsDescription ? `<p class="card-copy">${pageData.detail.newsDescription}</p>` : ""}
         </div>
         <div class="meeting-feed">
           ${relatedMeetings.length
