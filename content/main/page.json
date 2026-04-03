@@ -24,9 +24,9 @@
         "href": "./participants/"
       },
       {
-        "key": "links",
-        "label": "Useful links",
-        "href": "./links/"
+        "key": "news",
+        "label": "News",
+        "href": "./news/"
       }
     ],
     "telegram": {
@@ -70,8 +70,8 @@
         "href": "participants/"
       },
       {
-        "label": "Useful links",
-        "href": "links/"
+        "label": "News",
+        "href": "news/"
       }
     ],
     "primaryCta": {

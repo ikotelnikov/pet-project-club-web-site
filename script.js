@@ -15,7 +15,7 @@ const pageLoaders = {
   "project-detail": renderProjectDetailPage,
   participants: renderParticipantsPage,
   "participant-detail": renderParticipantDetailPage,
-  links: renderLinksPage,
+  news: renderNewsPage,
 };
 
 if (updatedAt) {
@@ -681,15 +681,151 @@ async function readMeetingIndexItems(indexPath) {
   );
 }
 
-async function renderLinksPage() {
-  const data = await readJson("links/page.json");
+async function renderNewsPage() {
+  const [pageData, projectItems, announcementItems, archiveItems] = await Promise.all([
+    readJson("news/page.json"),
+    readIndexedItems("projects"),
+    readMeetingIndexItems("meetings/announcements/index.json"),
+    readMeetingIndexItems("meetings/archive/index.json"),
+  ]);
+  const projectTitleBySlug = new Map(projectItems.map((item) => [item.slug, item.title || item.slug]));
+  const listCopy = pageData.list || {};
+  const pageSize = Number(listCopy.pageSize || 8);
+  const query = new URLSearchParams(window.location.search);
+  const initialPage = Number(query.get("page") || "1");
+  let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? Math.floor(initialPage) : 1;
+  let currentSearch = (query.get("q") || "").trim();
+  const allItems = sortMeetingsByDateDesc(
+    [...announcementItems, ...archiveItems].filter(
+      (item) => Array.isArray(item.projectSlugs) && item.projectSlugs.length > 0
+    )
+  );
+
+  document.title = `${listCopy.title || "Новости проектов"} | Pet Project Club Budva`;
 
   pageContent.innerHTML = `
-    ${renderHero(data.hero, data.signals, "links")}
-    ${renderMetrics(data.metrics)}
-    ${renderLinksSection(data.groups)}
-    ${renderStatusSection(data.notes)}
+    <section class="section-shell reveal project-page-shell">
+      <div class="section-heading">
+        <p class="section-kicker">${listCopy.tag || "News"}</p>
+        <h1>${listCopy.title || "Новости проектов"}</h1>
+        <p class="card-copy">${listCopy.description || "Все новости, демо, анонсы и релизы, связанные с проектами клуба."}</p>
+      </div>
+      <div class="project-toolbar">
+        <label class="project-search-shell" for="news-search">
+          <span class="project-search-label">${listCopy.searchLabel || "Search news"}</span>
+          <input id="news-search" class="project-search-input" type="search" placeholder="${listCopy.searchPlaceholder || "Название, проект, место, формат"}" value="${escapeHtml(currentSearch)}">
+        </label>
+      </div>
+      <div class="project-results-meta" id="news-results-meta"></div>
+      <div class="meeting-feed" id="news-feed"></div>
+      <div class="pagination-nav" id="news-pagination" aria-label="News pagination"></div>
+    </section>
+    ${pageData.notes ? renderStatusSection(pageData.notes) : ""}
   `;
+
+  const searchInput = document.getElementById("news-search");
+  const feed = document.getElementById("news-feed");
+  const pagination = document.getElementById("news-pagination");
+  const resultsMeta = document.getElementById("news-results-meta");
+
+  if (!searchInput || !feed || !pagination || !resultsMeta) {
+    return;
+  }
+
+  const updateUrl = () => {
+    const nextQuery = new URLSearchParams();
+
+    if (currentSearch) {
+      nextQuery.set("q", currentSearch);
+    }
+
+    if (currentPage > 1) {
+      nextQuery.set("page", String(currentPage));
+    }
+
+    const nextUrl = nextQuery.toString()
+      ? `${window.location.pathname}?${nextQuery.toString()}`
+      : window.location.pathname;
+    window.history.replaceState({}, "", nextUrl);
+  };
+
+  const getFilteredItems = () => {
+    const normalizedSearch = currentSearch.toLowerCase();
+
+    if (!normalizedSearch) {
+      return allItems.slice();
+    }
+
+    return allItems.filter((item) => {
+      const relatedProjectTitles = (item.projectSlugs || [])
+        .map((slug) => projectTitleBySlug.get(slug) || slug)
+        .join(" ");
+      const haystack = [
+        item.title,
+        item.place,
+        item.format,
+        item.date,
+        ...(item.paragraphs || []),
+        ...(item.sections || []).flatMap((section) => [section.title, ...(section.paragraphs || [])]),
+        relatedProjectTitles,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return haystack.includes(normalizedSearch);
+    });
+  };
+
+  const renderNewsState = () => {
+    const filteredItems = getFilteredItems();
+    const totalPages = Math.max(1, Math.ceil(filteredItems.length / pageSize));
+    currentPage = Math.min(currentPage, totalPages);
+    const pageItems = filteredItems.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
+    resultsMeta.innerHTML = `
+      <span>${listCopy.resultsLabel || "Новостей найдено"}: <strong>${filteredItems.length}</strong></span>
+      ${currentSearch ? `<span>${listCopy.filterLabel || "Поиск"}: <strong>${escapeHtml(currentSearch)}</strong></span>` : ""}
+    `;
+
+    feed.innerHTML = pageItems.length
+      ? pageItems.map((item) => renderMeetingPreviewCard(item)).join("")
+      : `<article class="item-card reveal"><h3>${listCopy.emptyTitle || "Ничего не найдено"}</h3><p class="item-copy">${listCopy.empty || "Попробуйте изменить поисковый запрос."}</p></article>`;
+
+    feed.querySelectorAll(".reveal").forEach((node) => {
+      node.classList.add("visible");
+    });
+
+    pagination.innerHTML = totalPages > 1
+      ? renderGenericPagination(
+          {
+            prev: listCopy.pagination?.prev || "← Previous",
+            next: listCopy.pagination?.next || "Next →",
+            page: listCopy.pagination?.page || "Page",
+          },
+          currentPage,
+          totalPages
+        )
+      : "";
+
+    pagination.querySelectorAll("[data-project-page]").forEach((button) => {
+      button.addEventListener("click", () => {
+        currentPage = Number(button.dataset.projectPage);
+        updateUrl();
+        renderNewsState();
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+      });
+    });
+  };
+
+  searchInput.addEventListener("input", () => {
+    currentSearch = searchInput.value.trim();
+    currentPage = 1;
+    updateUrl();
+    renderNewsState();
+  });
+
+  renderNewsState();
 }
 
 function renderHero(hero, signals = [], visualKind = "main") {
@@ -787,37 +923,6 @@ function renderVisual(kind) {
             <li>Показывайте текущий статус проекта, а не только идею.</li>
             <li>Фиксируйте, кто нужен: design, frontend, backend, product.</li>
             <li>Держите маленький, понятный next step.</li>
-          </ul>
-        </div>
-      </div>
-    `;
-  }
-
-  if (kind === "links") {
-    return `
-      <div class="visual-panel">
-        <div class="visual-frame"></div>
-        <div class="visual-dots"><span></span><span></span><span></span></div>
-        <div class="hero-visual-main">
-          <div class="link-cloud">
-            <div class="cloud-node c1">telegram</div>
-            <div class="cloud-node c2">docs</div>
-            <div class="cloud-node c3">forms</div>
-            <div class="cloud-node c4">tools</div>
-            <div class="cloud-node c5">launch</div>
-          </div>
-        </div>
-      </div>
-      <div class="terminal-card">
-        <div class="terminal-topline">
-          <span>links.map</span>
-          <span class="terminal-status">shared access</span>
-        </div>
-        <div class="terminal-body">
-          <ul class="terminal-list">
-            <li>Собирайте входные точки и повторяющиеся ресурсы.</li>
-            <li>Храните ссылки в контенте, а не в шаблоне страницы.</li>
-            <li>Бот сможет обновлять этот список без правки HTML.</li>
           </ul>
         </div>
       </div>
@@ -1376,36 +1481,6 @@ function renderGenericPagination(copy = {}, currentPage, totalPages) {
     ${nextPage
       ? `<button class="pagination-link" type="button" data-project-page="${nextPage}">${copy.next || "Next →"}</button>`
       : `<span class="pagination-link is-disabled">${copy.next || "Next →"}</span>`}
-  `;
-}
-
-function renderLinksSection(section) {
-  return `
-    <section class="section-shell reveal">
-      <div class="section-heading">
-        <p class="section-kicker">${section.tag}</p>
-        <h2>${section.title}</h2>
-        <p class="card-copy">${section.description}</p>
-      </div>
-      <div class="link-grid">
-        ${section.items.map(renderLinkGroup).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderLinkGroup(group) {
-  return `
-    <article class="link-card reveal">
-      <span class="card-tag">${group.label}</span>
-      <h3>${group.title}</h3>
-      <p class="item-copy">${group.text}</p>
-      <ul class="link-list">
-        ${group.links
-          .map((link) => `<li><a href="${resolveHref(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${link.label}</a></li>`)
-          .join("")}
-      </ul>
-    </article>
   `;
 }
 
