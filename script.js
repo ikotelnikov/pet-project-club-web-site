@@ -1691,6 +1691,12 @@ function initGallery() {
       return;
     }
 
+    if (slides.length <= 1) {
+      shell.classList.add("gallery-shell-single");
+      prev.hidden = true;
+      next.hidden = true;
+    }
+
     const scrollBySlide = (direction) => {
       const slide = viewport.querySelector(".gallery-slide");
       const slideWidth = slide ? slide.getBoundingClientRect().width : viewport.clientWidth;
@@ -1705,7 +1711,50 @@ function initGallery() {
     next.addEventListener("click", () => scrollBySlide(1));
 
     slides.forEach((slide, index) => {
-      slide.addEventListener("click", () => openGalleryLightbox(slides, index));
+      let touchStartX = null;
+      let touchStartY = null;
+      let lastTouchOpenAt = 0;
+
+      slide.addEventListener("click", () => {
+        if (Date.now() - lastTouchOpenAt < 500) {
+          return;
+        }
+
+        openGalleryLightbox(slides, index);
+      });
+      slide.addEventListener(
+        "touchstart",
+        (event) => {
+          touchStartX = event.changedTouches[0]?.clientX ?? null;
+          touchStartY = event.changedTouches[0]?.clientY ?? null;
+        },
+        { passive: true }
+      );
+      slide.addEventListener(
+        "touchend",
+        (event) => {
+          const touchEndX = event.changedTouches[0]?.clientX ?? null;
+          const touchEndY = event.changedTouches[0]?.clientY ?? null;
+          if (
+            touchStartX == null ||
+            touchStartY == null ||
+            touchEndX == null ||
+            touchEndY == null
+          ) {
+            return;
+          }
+
+          const deltaX = touchEndX - touchStartX;
+          const deltaY = touchEndY - touchStartY;
+          if (Math.abs(deltaX) > 12 || Math.abs(deltaY) > 12) {
+            return;
+          }
+
+          lastTouchOpenAt = Date.now();
+          openGalleryLightbox(slides, index);
+        },
+        { passive: true }
+      );
     });
 
     viewport.addEventListener(
@@ -1749,6 +1798,9 @@ function openGalleryLightbox(slides, startIndex) {
     counter.textContent = `${currentIndex + 1} / ${slides.length}`;
     prev.disabled = slides.length <= 1;
     next.disabled = slides.length <= 1;
+    prev.hidden = slides.length <= 1;
+    next.hidden = slides.length <= 1;
+    counter.hidden = slides.length <= 1;
   };
 
   const step = (direction) => {
