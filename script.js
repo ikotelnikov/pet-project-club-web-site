@@ -706,14 +706,11 @@ async function renderNewsPage() {
   pageContent.innerHTML = `
     <section class="section-shell reveal project-page-shell">
       <div class="section-heading">
-        <p class="section-kicker">${listCopy.tag || "News"}</p>
         <h1>${listCopy.title || "Новости проектов"}</h1>
-        <p class="card-copy">${listCopy.description || "Все новости, демо, анонсы и релизы, связанные с проектами клуба."}</p>
       </div>
       <div class="project-toolbar">
         <label class="project-search-shell" for="news-search">
-          <span class="project-search-label">${listCopy.searchLabel || "Search news"}</span>
-          <input id="news-search" class="project-search-input" type="search" placeholder="${listCopy.searchPlaceholder || "Название, проект, место, формат"}" value="${escapeHtml(currentSearch)}">
+          <input id="news-search" class="project-search-input" type="search" placeholder="${listCopy.searchPlaceholder || "Поиск: проект, технология, название..."}" value="${escapeHtml(currentSearch)}">
         </label>
       </div>
       <div class="project-results-meta" id="news-results-meta"></div>
@@ -783,10 +780,11 @@ async function renderNewsPage() {
     currentPage = Math.min(currentPage, totalPages);
     const pageItems = filteredItems.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
-    resultsMeta.innerHTML = `
-      <span>${listCopy.resultsLabel || "Новостей найдено"}: <strong>${filteredItems.length}</strong></span>
-      ${currentSearch ? `<span>${listCopy.filterLabel || "Поиск"}: <strong>${escapeHtml(currentSearch)}</strong></span>` : ""}
-    `;
+    resultsMeta.innerHTML = currentSearch
+      ? `
+        <span>${listCopy.resultsLabel || "Новостей найдено"}: <strong>${filteredItems.length}</strong></span>
+      `
+      : "";
 
     feed.innerHTML = pageItems.length
       ? pageItems.map((item) => renderMeetingPreviewCard(item)).join("")

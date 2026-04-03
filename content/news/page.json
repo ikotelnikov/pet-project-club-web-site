@@ -1,13 +1,9 @@
 {
   "list": {
-    "tag": "News",
     "title": "Новости проектов",
-    "description": "Общий поток анонсов, релизов, демо и встреч, связанных с проектами Pet Project Club.",
     "pageSize": 8,
-    "searchLabel": "Search news",
-    "searchPlaceholder": "Название, проект, место, формат",
+    "searchPlaceholder": "Поиск: проект, технология, название...",
     "resultsLabel": "Новостей найдено",
-    "filterLabel": "Поиск",
     "emptyTitle": "Подходящих новостей пока нет",
     "empty": "Попробуйте изменить формулировку запроса или добавьте новую запись через Telegram-бота.",
     "pagination": {
