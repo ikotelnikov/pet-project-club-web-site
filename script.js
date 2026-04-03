@@ -1058,10 +1058,10 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
     <section class="participant-detail-shell reveal">
       <div class="participant-detail-head">
         <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Ко всем участникам"}</a>
+        ${photo}
         <h1 class="participant-detail-title">${item.name || item.slug}</h1>
         ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
         ${footerBits ? `<div class="participant-detail-meta">${footerBits}</div>` : ""}
-        ${photo}
         ${item.bio ? `<p class="person-copy participant-detail-bio">${item.bio}</p>` : ""}
       </div>
       ${Array.isArray(item.points) && item.points.length ? `

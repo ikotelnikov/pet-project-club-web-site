@@ -1429,6 +1429,7 @@ a {
   display: grid;
   align-content: start;
   gap: 14px;
+  overflow: hidden;
 }
 
 .participant-detail-head::after {
@@ -1456,8 +1457,8 @@ a {
 
 .participant-detail-media {
   float: right;
-  width: min(34vw, 440px);
-  margin: 4px 0 18px 24px;
+  width: min(30vw, 360px);
+  margin: 0 0 18px 24px;
   padding: 0;
   overflow: hidden;
   border-radius: 24px;
@@ -1470,12 +1471,13 @@ a {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 420px;
+  max-height: 360px;
   object-fit: cover;
 }
 
 .participant-detail-bio {
   margin: 0;
+  max-width: 78ch;
 }
 
 .list-sentinel {
