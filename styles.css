@@ -1420,13 +1420,6 @@ a {
   backdrop-filter: blur(16px);
 }
 
-.participant-detail-top {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 420px);
-  gap: 0;
-  align-items: stretch;
-}
-
 .participant-detail-head,
 .participant-detail-copy {
   padding: 22px;
@@ -1456,16 +1449,22 @@ a {
 }
 
 .participant-detail-media {
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  float: right;
+  width: min(34vw, 440px);
+  margin: 2px 0 18px 24px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
 }
 
 .participant-detail-media img {
   display: block;
   width: 100%;
-  height: 100%;
-  min-height: 320px;
-  max-height: 460px;
+  height: auto;
+  max-height: 420px;
   object-fit: cover;
 }
 
@@ -1764,10 +1763,6 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .participant-detail-top {
-    grid-template-columns: 1fr;
-  }
-
   .project-owner-list {
     grid-template-columns: 1fr;
   }
@@ -1788,8 +1783,9 @@ a {
   }
 
   .participant-detail-media {
-    border-left: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    float: none;
+    width: 100%;
+    margin: 0 0 18px;
   }
 
   .pagination-nav {

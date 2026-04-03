@@ -1047,27 +1047,27 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
   const backHref = resolveHref("participants/");
   const photo = item.photo?.src
     ? `
-      <div class="participant-detail-media">
+      <figure class="participant-detail-media">
         <img src="${resolveHref(item.photo.src)}" alt="${item.photo.alt || item.name || item.slug}">
-      </div>
+      </figure>
     `
     : "";
   const footerBits = renderEntityContactTags(item, { includeTags: true });
 
   return `
     <section class="participant-detail-shell reveal">
-      <div class="participant-detail-top">
-        <div class="participant-detail-main">
-          <div class="participant-detail-head">
-            <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Ко всем участникам"}</a>
-            <h1 class="participant-detail-title">${item.name || item.slug}</h1>
-            ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
-            ${footerBits ? `<div class="participant-detail-meta">${footerBits}</div>` : ""}
-          </div>
-        </div>
-        ${photo}
+      <div class="participant-detail-head">
+        <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Ко всем участникам"}</a>
+        <h1 class="participant-detail-title">${item.name || item.slug}</h1>
+        ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
+        ${footerBits ? `<div class="participant-detail-meta">${footerBits}</div>` : ""}
       </div>
-      ${item.bio ? `<div class="participant-detail-copy"><p class="person-copy">${item.bio}</p></div>` : ""}
+      ${(item.bio || photo) ? `
+        <div class="participant-detail-copy">
+          ${photo}
+          ${item.bio ? `<p class="person-copy">${item.bio}</p>` : ""}
+        </div>
+      ` : ""}
       ${Array.isArray(item.points) && item.points.length ? `
         <div class="detail-list-shell">
           <ul class="detail-list">
