@@ -6,7 +6,7 @@ const ENTITY_FIELD_RULES = {
   announce: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
   meeting: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
   participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
-  project: new Set(["title", "status", "stack", "summary", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
+  project: new Set(["title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
 };
 
 export function validateOperation(operation) {

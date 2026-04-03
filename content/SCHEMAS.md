@@ -326,6 +326,7 @@ Required fields:
 Optional fields:
 
 - `summary`
+- `detailsHtml`
 - `photo`
 - `links`
 - `ownerSlugs`
@@ -335,6 +336,8 @@ Optional fields:
 Rules:
 
 - `status` should be a short current-state label, not a long description
+- `summary` should stay short and work as a 1 to 3 sentence intro, not as the full body text
+- `detailsHtml`, when present, is the main rich details block for the project page and may contain paragraphs, links, emphasis, and lists
 - `points` should contain 2 to 5 short bullets
 - `ownerSlugs`, if present, should reference participant slugs
 - `photo` is part of the canonical schema even though the current frontend does not render it yet
@@ -349,6 +352,7 @@ Canonical example:
   "status": "prototype in progress",
   "stack": "telegram / github actions / static site",
   "summary": "Bot that syncs approved Telegram messages into website content files.",
+  "detailsHtml": "<p>Longer story about how the bot works, what changed recently, and what help it needs next.</p>",
   "points": [
     "Parses Telegram commands into structured content operations.",
     "Commits JSON and assets into the repo.",

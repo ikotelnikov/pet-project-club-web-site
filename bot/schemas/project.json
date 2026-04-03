@@ -1,13 +1,14 @@
 {
   "entity": "project",
   "required": ["slug", "title", "status", "stack"],
-  "optional": ["summary", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"],
+  "optional": ["summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"],
   "fieldTypes": {
     "slug": "string",
     "title": "string",
     "status": "string",
     "stack": "string",
     "summary": "string",
+    "detailsHtml": "string",
     "points": "string[]",
     "location": "string",
     "tags": "string[]",
@@ -17,8 +18,8 @@
     "photoStagedPath": "string"
   },
   "aliases": {
-    "description": "summary",
-    "details": "summary",
+    "description": "detailsHtml",
+    "details": "detailsHtml",
     "owners": "ownerSlugs"
   },
   "matchingKeys": ["slug", "title"],

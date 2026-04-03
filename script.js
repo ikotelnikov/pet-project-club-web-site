@@ -1098,8 +1098,9 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
   const externalLinks = getProjectLinks(item)
     .map((link) => `<a class="meta-pill meta-pill-link" href="${resolveHref(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${link.label}</a>`)
     .join("");
-  const detailsHtml = item.detailsHtml
-    ? `<div class="project-richtext">${item.detailsHtml}</div>`
+  const projectText = normalizeProjectDetailText(item);
+  const detailsHtml = projectText.detailsHtml
+    ? `<div class="project-richtext">${projectText.detailsHtml}</div>`
     : (Array.isArray(item.points) && item.points.length
       ? `
         <div class="detail-list-shell">
@@ -1116,7 +1117,7 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
         <a class="detail-back-link" href="${resolveHref("projects/")}">${pageData.detail?.backLabel || "← Ко всем проектам"}</a>
         ${item.status ? `<p class="meeting-date project-state-label">${item.status}</p>` : ""}
         <h1 class="project-detail-title">${item.title || item.slug}</h1>
-        ${item.summary ? `<p class="card-copy project-detail-summary">${item.summary}</p>` : ""}
+        ${projectText.summary ? `<p class="card-copy project-detail-summary">${projectText.summary}</p>` : ""}
         <div class="project-detail-meta">
           ${item.stack ? `<span class="meta-pill">${item.stack}</span>` : ""}
           ${relatedParticipants}
@@ -1307,6 +1308,62 @@ function getProjectLinks(item) {
 
 function getProjectPrimaryUrl(item) {
   return getProjectLinks(item)[0] || null;
+}
+
+function normalizeProjectDetailText(item) {
+  const rawSummary = typeof item.summary === "string" ? item.summary.trim() : "";
+  const rawDetailsHtml = typeof item.detailsHtml === "string" ? item.detailsHtml.trim() : "";
+
+  if (rawDetailsHtml) {
+    return {
+      summary: rawSummary || summarizePlainText(stripHtml(rawDetailsHtml), 220),
+      detailsHtml: rawDetailsHtml,
+    };
+  }
+
+  if (rawSummary.length > 320) {
+    return {
+      summary: summarizePlainText(rawSummary, 220),
+      detailsHtml: plainTextToHtml(rawSummary),
+    };
+  }
+
+  return {
+    summary: rawSummary || "",
+    detailsHtml: "",
+  };
+}
+
+function stripHtml(value) {
+  return String(value).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function summarizePlainText(value, maxLength = 220) {
+  if (typeof value !== "string" || value.trim() === "") {
+    return "";
+  }
+
+  const normalized = value.trim().replace(/\s+/g, " ");
+  const firstSentenceMatch = normalized.match(new RegExp(`^(.{1,${maxLength}}?[.!?])(\\s|$)`));
+
+  if (firstSentenceMatch) {
+    return firstSentenceMatch[1].trim();
+  }
+
+  if (normalized.length <= maxLength) {
+    return normalized;
+  }
+
+  return `${normalized.slice(0, maxLength - 3).trimEnd()}...`;
+}
+
+function plainTextToHtml(value) {
+  return value
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .map((part) => `<p>${escapeHtml(part).replace(/\n/g, "<br>")}</p>`)
+    .join("");
 }
 
 function renderGenericPagination(copy = {}, currentPage, totalPages) {

@@ -31,13 +31,14 @@ export const ENTITY_SCHEMAS = {
   project: {
     entity: "project",
     required: ["slug", "title", "status", "stack"],
-    optional: ["slug", "summary", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"],
+    optional: ["slug", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"],
     fieldTypes: {
       slug: "string",
       title: "string",
       status: "string",
       stack: "string",
       summary: "string",
+      detailsHtml: "string",
       points: "string[]",
       location: "string",
       tags: "string[]",
@@ -47,8 +48,8 @@ export const ENTITY_SCHEMAS = {
       photoStagedPath: "string",
     },
     aliases: {
-      description: "summary",
-      details: "summary",
+      description: "detailsHtml",
+      details: "detailsHtml",
       owners: "ownerSlugs",
     },
     matchingKeys: ["slug", "title"],

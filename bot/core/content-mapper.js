@@ -66,6 +66,7 @@ export function mapOperationToContent(operation, options = {}) {
         }),
       };
     case "project":
+      const normalizedProjectText = normalizeProjectTextFields(fields);
       return {
         slug: fields.slug,
         item: pruneEmpty({
@@ -73,7 +74,8 @@ export function mapOperationToContent(operation, options = {}) {
           title: fields.title,
           status: fields.status,
           stack: fields.stack,
-          summary: fields.summary,
+          summary: normalizedProjectText.summary,
+          detailsHtml: normalizedProjectText.detailsHtml,
           points: fields.points,
           photo,
           links,
@@ -85,6 +87,71 @@ export function mapOperationToContent(operation, options = {}) {
     default:
       throw new ContentValidationError(`Unsupported entity '${entity}'.`);
   }
+}
+
+function normalizeProjectTextFields(fields) {
+  const rawSummary = typeof fields.summary === "string" ? fields.summary.trim() : "";
+  const rawDetailsHtml = typeof fields.detailsHtml === "string" ? fields.detailsHtml.trim() : "";
+
+  if (rawDetailsHtml) {
+    return {
+      summary: rawSummary || summarizeRichText(rawDetailsHtml),
+      detailsHtml: rawDetailsHtml,
+    };
+  }
+
+  if (rawSummary.length > 320) {
+    return {
+      summary: summarizePlainText(rawSummary),
+      detailsHtml: textToHtmlParagraphs(rawSummary),
+    };
+  }
+
+  return {
+    summary: rawSummary || undefined,
+    detailsHtml: undefined,
+  };
+}
+
+function summarizeRichText(html) {
+  const plainText = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  return summarizePlainText(plainText);
+}
+
+function summarizePlainText(text) {
+  if (typeof text !== "string" || text.trim() === "") {
+    return undefined;
+  }
+
+  const normalized = text.trim().replace(/\s+/g, " ");
+  const firstSentenceMatch = normalized.match(/^(.{1,220}?[.!?])(\s|$)/);
+
+  if (firstSentenceMatch) {
+    return firstSentenceMatch[1].trim();
+  }
+
+  if (normalized.length <= 220) {
+    return normalized;
+  }
+
+  return `${normalized.slice(0, 217).trimEnd()}...`;
+}
+
+function textToHtmlParagraphs(text) {
+  return text
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .map((part) => `<p>${escapeHtml(part).replace(/\n/g, "<br>")}</p>`)
+    .join("");
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }
 
 export function mapCommandToContent(parsedCommand, options = {}) {

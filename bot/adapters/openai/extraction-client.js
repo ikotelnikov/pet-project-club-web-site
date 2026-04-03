@@ -543,11 +543,11 @@ function normalizeFieldAliases(entity, fields) {
       delete normalized.details;
       break;
     case "project":
-      if (normalized.description && !normalized.summary) {
-        normalized.summary = normalized.description;
+      if (normalized.description && !normalized.detailsHtml) {
+        normalized.detailsHtml = normalized.description;
       }
-      if (normalized.details && !normalized.summary) {
-        normalized.summary = normalized.details;
+      if (normalized.details && !normalized.detailsHtml) {
+        normalized.detailsHtml = normalized.details;
       }
       delete normalized.description;
       delete normalized.details;

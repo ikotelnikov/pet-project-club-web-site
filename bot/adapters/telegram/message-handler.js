@@ -865,6 +865,7 @@ function mergeExistingFields(entity, currentItem, newFields) {
         status: currentItem.status,
         stack: currentItem.stack,
         summary: currentItem.summary,
+        detailsHtml: currentItem.detailsHtml,
         points: currentItem.points,
         location: currentItem.location,
         tags: currentItem.tags,
