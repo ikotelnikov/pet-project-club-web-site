@@ -1426,9 +1426,6 @@ a {
 }
 
 .participant-detail-head {
-  display: grid;
-  align-content: start;
-  gap: 14px;
   overflow: hidden;
 }
 
@@ -1439,20 +1436,21 @@ a {
 }
 
 .participant-detail-title {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   font-size: clamp(2rem, 4vw, 3.4rem);
   line-height: 1;
   letter-spacing: -0.05em;
 }
 
 .participant-detail-role {
-  margin: 0 0 16px;
+  margin: 0 0 14px;
 }
 
 .participant-detail-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 18px;
 }
 
 .participant-detail-media {
