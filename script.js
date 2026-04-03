@@ -1255,14 +1255,6 @@ function renderProjectGallery(gallery, fallbackTitle) {
     return "";
   }
 
-  if (gallery.length === 1) {
-    return `
-      <section class="project-detail-media reveal">
-        <img src="${resolveHref(gallery[0].src)}" alt="${gallery[0].alt || fallbackTitle}">
-      </section>
-    `;
-  }
-
   return `
     <section class="project-detail-gallery reveal">
       <div class="gallery-shell">
@@ -1693,6 +1685,7 @@ function initGallery() {
     const viewport = shell.querySelector(".gallery-viewport");
     const prev = shell.querySelector(".gallery-nav.prev");
     const next = shell.querySelector(".gallery-nav.next");
+    const slides = [...shell.querySelectorAll(".gallery-slide img")];
 
     if (!viewport || !prev || !next) {
       return;
@@ -1711,6 +1704,10 @@ function initGallery() {
     prev.addEventListener("click", () => scrollBySlide(-1));
     next.addEventListener("click", () => scrollBySlide(1));
 
+    slides.forEach((slide, index) => {
+      slide.addEventListener("click", () => openGalleryLightbox(slides, index));
+    });
+
     viewport.addEventListener(
       "wheel",
       (event) => {
@@ -1725,6 +1722,131 @@ function initGallery() {
 
     shell.dataset.galleryReady = "true";
   });
+}
+
+function openGalleryLightbox(slides, startIndex) {
+  if (!Array.isArray(slides) || slides.length === 0) {
+    return;
+  }
+
+  const lightbox = ensureGalleryLightbox();
+  const backdrop = lightbox.querySelector(".gallery-lightbox-backdrop");
+  const image = lightbox.querySelector(".gallery-lightbox-image");
+  const caption = lightbox.querySelector(".gallery-lightbox-caption");
+  const counter = lightbox.querySelector(".gallery-lightbox-counter");
+  const prev = lightbox.querySelector(".gallery-lightbox-prev");
+  const next = lightbox.querySelector(".gallery-lightbox-next");
+  const close = lightbox.querySelector(".gallery-lightbox-close");
+
+  let currentIndex = startIndex;
+  let touchStartX = null;
+
+  const render = () => {
+    const currentSlide = slides[currentIndex];
+    image.src = currentSlide.currentSrc || currentSlide.src;
+    image.alt = currentSlide.alt || "";
+    caption.textContent = currentSlide.alt || "";
+    counter.textContent = `${currentIndex + 1} / ${slides.length}`;
+    prev.disabled = slides.length <= 1;
+    next.disabled = slides.length <= 1;
+  };
+
+  const step = (direction) => {
+    if (slides.length <= 1) {
+      return;
+    }
+
+    currentIndex = (currentIndex + direction + slides.length) % slides.length;
+    render();
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove("is-open");
+    document.body.classList.remove("lightbox-open");
+    close.removeEventListener("click", closeLightbox);
+    backdrop.removeEventListener("click", closeLightbox);
+    prev.removeEventListener("click", handlePrev);
+    next.removeEventListener("click", handleNext);
+    document.removeEventListener("keydown", handleKeydown);
+    image.removeEventListener("touchstart", handleTouchStart);
+    image.removeEventListener("touchend", handleTouchEnd);
+  };
+
+  const handlePrev = () => step(-1);
+  const handleNext = () => step(1);
+  const handleKeydown = (event) => {
+    if (event.key === "Escape") {
+      closeLightbox();
+      return;
+    }
+
+    if (event.key === "ArrowLeft") {
+      step(-1);
+      return;
+    }
+
+    if (event.key === "ArrowRight") {
+      step(1);
+    }
+  };
+  const handleTouchStart = (event) => {
+    touchStartX = event.changedTouches[0]?.clientX ?? null;
+  };
+  const handleTouchEnd = (event) => {
+    const touchEndX = event.changedTouches[0]?.clientX ?? null;
+    if (touchStartX == null || touchEndX == null) {
+      return;
+    }
+
+    const delta = touchEndX - touchStartX;
+    if (Math.abs(delta) < 40) {
+      return;
+    }
+
+    step(delta < 0 ? 1 : -1);
+  };
+
+  render();
+  lightbox.classList.add("is-open");
+  document.body.classList.add("lightbox-open");
+
+  close.addEventListener("click", closeLightbox);
+  backdrop.addEventListener("click", closeLightbox);
+  prev.addEventListener("click", handlePrev);
+  next.addEventListener("click", handleNext);
+  document.addEventListener("keydown", handleKeydown);
+  image.addEventListener("touchstart", handleTouchStart, { passive: true });
+  image.addEventListener("touchend", handleTouchEnd, { passive: true });
+}
+
+function ensureGalleryLightbox() {
+  let lightbox = document.getElementById("gallery-lightbox");
+
+  if (lightbox) {
+    return lightbox;
+  }
+
+  lightbox = document.createElement("div");
+  lightbox.id = "gallery-lightbox";
+  lightbox.className = "gallery-lightbox";
+  lightbox.innerHTML = `
+    <div class="gallery-lightbox-backdrop"></div>
+    <div class="gallery-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <button class="gallery-lightbox-close" type="button" aria-label="Close gallery">×</button>
+      <button class="gallery-lightbox-prev" type="button" aria-label="Previous image">‹</button>
+      <div class="gallery-lightbox-media">
+        <img class="gallery-lightbox-image" alt="">
+        <div class="gallery-lightbox-meta">
+          <span class="gallery-lightbox-counter"></span>
+          <p class="gallery-lightbox-caption"></p>
+        </div>
+      </div>
+      <button class="gallery-lightbox-next" type="button" aria-label="Next image">›</button>
+    </div>
+  `;
+
+  document.body.appendChild(lightbox);
+  return lightbox;
 }
 
 function escapeHtml(value) {
