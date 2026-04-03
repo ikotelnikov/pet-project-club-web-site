@@ -1061,13 +1061,9 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
         <h1 class="participant-detail-title">${item.name || item.slug}</h1>
         ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
         ${footerBits ? `<div class="participant-detail-meta">${footerBits}</div>` : ""}
+        ${photo}
+        ${item.bio ? `<p class="person-copy participant-detail-bio">${item.bio}</p>` : ""}
       </div>
-      ${(item.bio || photo) ? `
-        <div class="participant-detail-copy">
-          ${photo}
-          ${item.bio ? `<p class="person-copy">${item.bio}</p>` : ""}
-        </div>
-      ` : ""}
       ${Array.isArray(item.points) && item.points.length ? `
         <div class="detail-list-shell">
           <ul class="detail-list">
