@@ -411,13 +411,10 @@ async function renderProjectsPage() {
   pageContent.innerHTML = `
     <section class="section-shell reveal project-page-shell">
       <div class="section-heading">
-        <p class="section-kicker">${listCopy.tag || "Projects"}</p>
         <h1>${listCopy.title || "Проекты клуба"}</h1>
-        <p class="card-copy">${listCopy.description || "Здесь собраны активные проекты клуба, их статус, владельцы и последние апдейты."}</p>
       </div>
       <div class="project-toolbar">
         <label class="project-search-shell" for="project-search">
-          <span class="project-search-label">${listCopy.searchLabel || "Search"}</span>
           <input id="project-search" class="project-search-input" type="search" placeholder="${searchPlaceholder}" value="${escapeHtml(currentSearch)}">
         </label>
       </div>
@@ -489,10 +486,11 @@ async function renderProjectsPage() {
     currentPage = Math.min(currentPage, totalPages);
     const pageItems = filteredProjects.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
-    resultsMeta.innerHTML = `
-      <span>${listCopy.resultsLabel || "Проектов найдено"}: <strong>${filteredProjects.length}</strong></span>
-      ${currentSearch ? `<span>${listCopy.filterLabel || "Фильтр"}: <strong>${escapeHtml(currentSearch)}</strong></span>` : ""}
-    `;
+    resultsMeta.innerHTML = currentSearch
+      ? `
+        <span>${listCopy.resultsLabel || "Проектов найдено"}: <strong>${filteredProjects.length}</strong></span>
+      `
+      : "";
 
     feed.innerHTML = pageItems.length
       ? pageItems.map((item) => renderProjectPreviewCard(item, ownerMap)).join("")

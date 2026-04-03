@@ -1,13 +1,9 @@
 {
   "list": {
-    "tag": "Projects",
     "title": "Проекты Pet Project Club",
-    "description": "Отдельный список проектов клуба с поиском, владельцами, публичными ссылками и связанными апдейтами.",
     "pageSize": 6,
-    "searchLabel": "Search projects",
-    "searchPlaceholder": "Название, стек, автор, ask, статус",
+    "searchPlaceholder": "Поиск: проект, технология, автор...",
     "resultsLabel": "Проектов найдено",
-    "filterLabel": "Поиск",
     "emptyTitle": "Подходящих проектов пока нет",
     "empty": "Попробуйте изменить формулировку запроса или добавьте новый проект через Telegram-бота.",
     "pagination": {
