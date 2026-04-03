@@ -94,9 +94,13 @@ function normalizeProjectTextFields(fields) {
   const rawDetailsHtml = typeof fields.detailsHtml === "string" ? fields.detailsHtml.trim() : "";
 
   if (rawDetailsHtml) {
+    const normalizedDetailsHtml = looksLikeHtml(rawDetailsHtml)
+      ? rawDetailsHtml
+      : textToHtmlParagraphs(rawDetailsHtml);
+
     return {
       summary: rawSummary || summarizeRichText(rawDetailsHtml),
-      detailsHtml: rawDetailsHtml,
+      detailsHtml: normalizedDetailsHtml,
     };
   }
 
@@ -152,6 +156,10 @@ function escapeHtml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+function looksLikeHtml(value) {
+  return /<[^>]+>/.test(value);
 }
 
 export function mapCommandToContent(parsedCommand, options = {}) {

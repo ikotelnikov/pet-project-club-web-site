@@ -1315,9 +1315,13 @@ function normalizeProjectDetailText(item) {
   const rawDetailsHtml = typeof item.detailsHtml === "string" ? item.detailsHtml.trim() : "";
 
   if (rawDetailsHtml) {
+    const normalizedDetailsHtml = looksLikeHtml(rawDetailsHtml)
+      ? rawDetailsHtml
+      : plainTextToHtml(rawDetailsHtml);
+
     return {
       summary: rawSummary || summarizePlainText(stripHtml(rawDetailsHtml), 220),
-      detailsHtml: rawDetailsHtml,
+      detailsHtml: normalizedDetailsHtml,
     };
   }
 
@@ -1364,6 +1368,10 @@ function plainTextToHtml(value) {
     .filter(Boolean)
     .map((part) => `<p>${escapeHtml(part).replace(/\n/g, "<br>")}</p>`)
     .join("");
+}
+
+function looksLikeHtml(value) {
+  return /<[^>]+>/.test(value);
 }
 
 function renderGenericPagination(copy = {}, currentPage, totalPages) {
