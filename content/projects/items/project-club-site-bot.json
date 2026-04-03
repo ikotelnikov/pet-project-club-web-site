@@ -1,14 +1,14 @@
 {
   "slug": "project-club-site-bot",
-  "title": "Club site content bot",
+  "title": "Пет Проджект Клуб (сообщество, группа, сайт, бот)",
   "status": "active build",
   "stack": "telegram / openai / cloudflare worker / github pages",
-  "summary": "Бот, который принимает сообщения в Telegram, превращает их в структуру контента и обновляет сайт клуба без ручной правки HTML.",
-  "ownerSlugs": [
-    "ikotelnikov"
+  "summary": "Клуб пет проектов — это сообщество активных людей, создающих проекты за рамками основной работы и учебы. Оффлайн часть сообщества живет и встречается в Будве (Черногория) и окрестностях. Онлайн участники живут в Швеции, Латвии, Испании, Израиле, Украине и других странах.\n\nКроме самого сообщества (то есть людей и их проектов) в границы проекта \"Pet Project Club\" входят группа в Telegram, сайт с информацией о проектах, участниках и новостями, и Telegram бот, через который участники могут самостоятельно размещать/редактировать информацию о своих проектах, публиковать новости и изображения.\n\nСайт и бот работают в связке: сайт хостится на GitHub Pages (включая контент), бот работает на CloudFlare Workers — в обоих случаях используются бесплатные тарифы.\n\nБот использует OpenAI для обработки пользовательских запросов: определения намерений, поиска сущностей, форматирования вводимой информации, перевода на разные языки. Чтобы попробовать бот в работе и добавить информацию о своем проекте в сайт достаточно попросить у автора проекта добавить себя в список участников.",
+  "points": [
+    "Parses Telegram commands into structured operations.",
+    "Commits JSON into the repo.",
+    "Publishes changes into GitHub Pages after confirmation."
   ],
-  "url": "https://t.me/PetProjectClubMNE",
-  "urlLabel": "Открыть Telegram канала",
   "links": [
     {
       "label": "GitHub repo",
@@ -16,24 +16,7 @@
       "external": true
     }
   ],
-  "photo": {
-    "src": "assets/images/PetProjectClubMonenegroLogo.jpg",
-    "alt": "Pet Project Club content bot"
-  },
-  "gallery": [
-    {
-      "src": "assets/images/PetProjectClubMonenegroLogo.jpg",
-      "alt": "Pet Project Club logo"
-    },
-    {
-      "src": "assets/uploads/272981189/192-photo-192-AQAD6BVrGzxmeUp9.jpg",
-      "alt": "Project screenshot"
-    }
-  ],
-  "detailsHtml": "<p><strong>Club site content bot</strong> собирает изменения для сайта прямо из Telegram: создает и редактирует участников, встречи, проекты и связанные медиа.</p><p>Внутри уже есть workflow <em>preview → confirm → commit</em>, привязка фото, Cloudflare Worker runtime и публикация через GitHub Pages.</p><ul><li>естественный текст вместо жестких slash-команд</li><li>предпросмотр изменений перед записью</li><li>связь между проектами, участниками и встречами</li></ul><p>Следующий фокус: сделать проектные апдейты и news items такими же простыми, как редактирование meeting-заметок.</p>",
-  "points": [
-    "Parses Telegram commands into structured operations.",
-    "Commits JSON into the repo.",
-    "Publishes changes into GitHub Pages after confirmation."
+  "ownerSlugs": [
+    "ikotelnikov"
   ]
 }
