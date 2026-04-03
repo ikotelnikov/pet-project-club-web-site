@@ -40,6 +40,7 @@ renderPage().finally(() => {
   initCounters();
   initTerminal();
   initGallery();
+  initStoryDeck();
 });
 
 async function renderPage() {
@@ -211,10 +212,10 @@ async function renderMainPage() {
         <h2>${data.story.title}</h2>
         <p class="card-copy">${data.story.description}</p>
       </div>
-      <div class="home-bento-grid">
+      <div class="home-bento-grid story-deck" data-story-deck>
         ${(data.story.items || []).map((item, index) => `
-          <article class="item-card ${index === 0 ? "home-wide-card" : ""} reveal">
-            <span class="card-tag">${String(index + 1).padStart(2, "0")}</span>
+          <article class="item-card home-story-card ${index === 0 ? "home-wide-card" : ""} reveal">
+            <span class="step-index">${String(index + 1).padStart(2, "0")}</span>
             <h3>${item.title}</h3>
             <p class="item-copy">${item.text}</p>
           </article>
@@ -1938,6 +1939,81 @@ function openGalleryLightbox(slides, startIndex) {
   document.addEventListener("keydown", handleKeydown);
   image.addEventListener("touchstart", handleTouchStart, { passive: true });
   image.addEventListener("touchend", handleTouchEnd, { passive: true });
+}
+
+function initStoryDeck() {
+  const narrowScreen = window.matchMedia("(max-width: 640px)");
+
+  document.querySelectorAll("[data-story-deck]").forEach((deck) => {
+    if (deck.dataset.storyDeckReady !== "true") {
+      deck.addEventListener("click", (event) => {
+        if (!deck.classList.contains("is-mobile-deck")) {
+          return;
+        }
+
+        const topCard = deck.querySelector('.home-story-card[data-deck-order="0"]');
+        if (!topCard || !topCard.contains(event.target)) {
+          return;
+        }
+
+        deck.appendChild(topCard);
+        syncStoryDeck(deck, narrowScreen.matches);
+      });
+
+      deck.dataset.storyDeckReady = "true";
+    }
+
+    syncStoryDeck(deck, narrowScreen.matches);
+  });
+
+  if (window.__storyDeckResizeBound) {
+    return;
+  }
+
+  const handleResize = () => {
+    document.querySelectorAll("[data-story-deck]").forEach((deck) => {
+      syncStoryDeck(deck, narrowScreen.matches);
+    });
+  };
+
+  if (typeof narrowScreen.addEventListener === "function") {
+    narrowScreen.addEventListener("change", handleResize);
+  } else if (typeof narrowScreen.addListener === "function") {
+    narrowScreen.addListener(handleResize);
+  }
+
+  window.addEventListener("resize", handleResize);
+  window.__storyDeckResizeBound = true;
+}
+
+function syncStoryDeck(deck, useDeckLayout) {
+  const cards = [...deck.querySelectorAll(".home-story-card")];
+  if (!cards.length) {
+    return;
+  }
+
+  if (!useDeckLayout) {
+    deck.classList.remove("is-mobile-deck");
+    deck.style.removeProperty("--story-deck-height");
+    cards.forEach((card) => {
+      card.style.removeProperty("z-index");
+      card.removeAttribute("data-deck-order");
+      card.removeAttribute("aria-hidden");
+    });
+    return;
+  }
+
+  deck.classList.add("is-mobile-deck");
+
+  let tallestCard = 0;
+  cards.forEach((card, index) => {
+    card.dataset.deckOrder = String(index);
+    card.style.zIndex = String(cards.length - index);
+    card.setAttribute("aria-hidden", index === 0 ? "false" : "true");
+    tallestCard = Math.max(tallestCard, card.offsetHeight);
+  });
+
+  deck.style.setProperty("--story-deck-height", `${tallestCard + 42}px`);
 }
 
 function ensureGalleryLightbox() {
