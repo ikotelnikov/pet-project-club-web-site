@@ -1128,10 +1128,10 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
     <section class="project-detail-shell reveal">
       <div class="project-detail-head">
         <a class="detail-back-link" href="${resolveHref("projects/")}">${pageData.detail?.backLabel || "← Ко всем проектам"}</a>
+        ${item.status ? `<p class="meeting-date project-state-label">${item.status}</p>` : ""}
         <h1 class="project-detail-title">${item.title || item.slug}</h1>
         ${item.summary ? `<p class="card-copy project-detail-summary">${item.summary}</p>` : ""}
         <div class="project-detail-meta">
-          ${item.status ? `<span class="meta-pill">${item.status}</span>` : ""}
           ${item.stack ? `<span class="meta-pill">${item.stack}</span>` : ""}
           ${relatedParticipants}
           ${externalLinks}

@@ -1285,6 +1285,10 @@ a {
   gap: 18px;
 }
 
+.project-owner-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .project-preview,
 .project-detail-shell,
 .project-detail-media {
@@ -1346,6 +1350,10 @@ a {
   padding: 22px;
 }
 
+.project-state-label {
+  margin: 0;
+}
+
 .project-detail-summary {
   margin: 0;
   max-width: 70ch;
@@ -1368,6 +1376,10 @@ a {
 
 .project-detail-gallery {
   margin-bottom: 18px;
+}
+
+.project-detail-shell > .section-shell {
+  margin: 0 18px 18px;
 }
 
 .project-richtext {
@@ -1736,6 +1748,10 @@ a {
   }
 
   .project-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .project-owner-list {
     grid-template-columns: 1fr;
   }
 
