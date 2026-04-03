@@ -1909,12 +1909,12 @@ body.lightbox-open {
     display: block;
     min-height: var(--story-deck-height, 440px);
     padding-top: 8px;
-    padding-right: 34px;
+    padding-right: 52px;
   }
 
   .story-deck.is-mobile-deck .home-story-card {
     position: absolute;
-    inset: 0 34px 0 0;
+    inset: 0 18px 0 0;
     grid-column: auto;
     overflow: hidden;
     background: rgba(10, 16, 24, 0.96);
@@ -1937,20 +1937,20 @@ body.lightbox-open {
   }
 
   .story-deck.is-mobile-deck .home-story-card[data-deck-order="1"] {
-    transform: translate3d(10px, -10px, 0) scale(1);
+    transform: translate3d(12px, -10px, 0) scale(1);
     opacity: 1;
     pointer-events: none;
   }
 
   .story-deck.is-mobile-deck .home-story-card[data-deck-order="2"] {
-    transform: translate3d(20px, -20px, 0) scale(1);
+    transform: translate3d(24px, -20px, 0) scale(1);
     opacity: 1;
     pointer-events: none;
   }
 
   .story-deck.is-mobile-deck .home-story-card[data-deck-order="3"],
   .story-deck.is-mobile-deck .home-story-card[data-deck-order="4"] {
-    transform: translate3d(30px, -30px, 0) scale(1);
+    transform: translate3d(36px, -30px, 0) scale(1);
     opacity: 1;
     pointer-events: none;
   }

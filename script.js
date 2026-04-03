@@ -2005,13 +2005,16 @@ function syncStoryDeck(deck, useDeckLayout) {
 
   deck.classList.add("is-mobile-deck");
 
-  let tallestCard = 0;
   cards.forEach((card, index) => {
     card.dataset.deckOrder = String(index);
     card.style.zIndex = String(cards.length - index);
     card.setAttribute("aria-hidden", index === 0 ? "false" : "true");
-    tallestCard = Math.max(tallestCard, card.offsetHeight);
   });
+
+  const tallestCard = cards.reduce((maxHeight, card) => {
+    const naturalHeight = card.scrollHeight;
+    return Math.max(maxHeight, naturalHeight);
+  }, 0);
 
   deck.style.setProperty("--story-deck-height", `${tallestCard + 42}px`);
 }
