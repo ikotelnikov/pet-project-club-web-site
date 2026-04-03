@@ -1483,6 +1483,7 @@ body.lightbox-open {
 
 .project-detail-gallery {
   margin-bottom: 18px;
+  padding-inline: 22px;
 }
 
 .project-detail-shell > .section-shell {
@@ -1858,7 +1859,7 @@ body.lightbox-open {
 
   .gallery-shell {
     grid-template-columns: 1fr;
-    padding-inline: 0;
+    padding-inline: 12px;
   }
 
   .gallery-nav {
@@ -1867,6 +1868,10 @@ body.lightbox-open {
 
   .gallery-track {
     gap: 12px;
+  }
+
+  .project-detail-gallery {
+    padding-inline: 14px;
   }
 
   .gallery-slide img {
