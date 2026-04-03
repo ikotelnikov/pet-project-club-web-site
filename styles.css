@@ -1420,9 +1420,22 @@ a {
   backdrop-filter: blur(16px);
 }
 
+.participant-detail-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 420px);
+  gap: 0;
+  align-items: stretch;
+}
+
 .participant-detail-head,
 .participant-detail-copy {
   padding: 22px;
+}
+
+.participant-detail-head {
+  display: grid;
+  align-content: start;
+  gap: 14px;
 }
 
 .participant-detail-title {
@@ -1440,19 +1453,19 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 14px;
 }
 
 .participant-detail-media {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
 }
 
 .participant-detail-media img {
   display: block;
   width: 100%;
-  height: min(60vw, 560px);
+  height: 100%;
+  min-height: 320px;
+  max-height: 460px;
   object-fit: cover;
 }
 
@@ -1751,6 +1764,10 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .participant-detail-top {
+    grid-template-columns: 1fr;
+  }
+
   .project-owner-list {
     grid-template-columns: 1fr;
   }
@@ -1765,8 +1782,14 @@ a {
   }
 
   .project-preview-media img,
-  .project-detail-media img {
+  .project-detail-media img,
+  .participant-detail-media img {
     height: 260px;
+  }
+
+  .participant-detail-media {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .pagination-nav {

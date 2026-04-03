@@ -977,8 +977,6 @@ function renderPeopleSection(section) {
 
 function renderPersonCard(item) {
   const points = Array.isArray(item.points) ? item.points : [];
-  const tags = Array.isArray(item.tags) ? item.tags : [];
-  const links = Array.isArray(item.links) ? item.links : [];
   const handle = item.handle || item.slug || "participant";
   const name = item.name || item.slug || "Untitled participant";
   const role = item.role || "Role not specified";
@@ -992,11 +990,7 @@ function renderPersonCard(item) {
       </a>
     `
     : "";
-  const footerBits = [
-    renderPersonHandle(item.handle),
-    ...tags.map((tag) => `<span class="meta-pill">${tag}</span>`),
-    ...links.map((link) => `<a class="meta-pill meta-pill-link" href="${resolveHref(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${link.label}</a>`),
-  ].filter(Boolean).join("");
+  const footerBits = renderEntityContactTags(item, { includeTags: true });
 
   return `
     <article class="person-card reveal">
@@ -1051,7 +1045,6 @@ function renderProjectPreviewCard(item, ownerMap = new Map()) {
 
 function renderParticipantDetail(item, pageData, relatedProjects) {
   const backHref = resolveHref("participants/");
-  const handle = item.handle || item.slug;
   const photo = item.photo?.src
     ? `
       <div class="participant-detail-media">
@@ -1059,24 +1052,21 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
       </div>
     `
     : "";
-  const footerBits = [
-    renderPersonHandle(item.handle),
-    ...(Array.isArray(item.tags) ? item.tags.map((tag) => `<span class="meta-pill">${tag}</span>`) : []),
-    ...(Array.isArray(item.links)
-      ? item.links.map((link) => `<a class="meta-pill meta-pill-link" href="${resolveHref(link.href)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${link.label}</a>`)
-      : []),
-  ].filter(Boolean).join("");
+  const footerBits = renderEntityContactTags(item, { includeTags: true });
 
   return `
     <section class="participant-detail-shell reveal">
-      <div class="participant-detail-head">
-        <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Ко всем участникам"}</a>
-        ${handle ? `<div class="participant-detail-meta">${renderPersonHandle(handle)}</div>` : ""}
-        <h1 class="participant-detail-title">${item.name || item.slug}</h1>
-        ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
-        ${footerBits ? `<div class="participant-detail-meta">${footerBits}</div>` : ""}
+      <div class="participant-detail-top">
+        <div class="participant-detail-main">
+          <div class="participant-detail-head">
+            <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Ко всем участникам"}</a>
+            <h1 class="participant-detail-title">${item.name || item.slug}</h1>
+            ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
+            ${footerBits ? `<div class="participant-detail-meta">${footerBits}</div>` : ""}
+          </div>
+        </div>
+        ${photo}
       </div>
-      ${photo}
       ${item.bio ? `<div class="participant-detail-copy"><p class="person-copy">${item.bio}</p></div>` : ""}
       ${Array.isArray(item.points) && item.points.length ? `
         <div class="detail-list-shell">
@@ -1180,12 +1170,75 @@ function renderPersonHandle(handle) {
     return "";
   }
 
-  if (handle.startsWith("@")) {
-    const username = handle.replace(/^@+/, "");
-    return `<a class="card-tag card-tag-link" href="https://t.me/${username}" target="_blank" rel="noopener noreferrer">${handle}</a>`;
+  const username = normalizeTelegramHandle(handle);
+
+  if (username) {
+    return `<a class="card-tag card-tag-link" href="https://t.me/${username}" target="_blank" rel="noopener noreferrer">@${username}</a>`;
   }
 
   return `<span class="card-tag">${handle}</span>`;
+}
+
+function renderEntityContactTags(item, options = {}) {
+  const tags = [];
+  const seen = new Set();
+
+  const pushTag = (key, markup) => {
+    if (!markup || seen.has(key)) {
+      return;
+    }
+
+    seen.add(key);
+    tags.push(markup);
+  };
+
+  const telegramHandle = normalizeTelegramHandle(item.handle);
+  if (telegramHandle) {
+    pushTag(
+      `telegram:${telegramHandle}`,
+      `<a class="meta-pill meta-pill-link" href="https://t.me/${telegramHandle}" target="_blank" rel="noopener noreferrer">@${telegramHandle}</a>`
+    );
+  } else if (item.handle) {
+    pushTag(`handle:${item.handle}`, `<span class="meta-pill">${item.handle}</span>`);
+  }
+
+  for (const link of Array.isArray(item.links) ? item.links : []) {
+    if (!link?.href || !link?.label) {
+      continue;
+    }
+
+    const normalizedHref = resolveHref(link.href);
+    if (telegramHandle && normalizedHref === `https://t.me/${telegramHandle}`) {
+      continue;
+    }
+
+    pushTag(
+      `link:${normalizedHref}`,
+      `<a class="meta-pill meta-pill-link" href="${normalizedHref}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${link.label}</a>`
+    );
+  }
+
+  if (options.includeTags) {
+    for (const tag of Array.isArray(item.tags) ? item.tags : []) {
+      pushTag(`tag:${tag}`, `<span class="meta-pill">${tag}</span>`);
+    }
+  }
+
+  return tags.join("");
+}
+
+function normalizeTelegramHandle(value) {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const cleaned = value.trim().replace(/^@+/, "");
+
+  if (/^[A-Za-z0-9_]{4,}$/.test(cleaned)) {
+    return cleaned;
+  }
+
+  return null;
 }
 
 function truncateText(text, maxLength = 170) {

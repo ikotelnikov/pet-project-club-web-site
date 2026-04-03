@@ -140,6 +140,7 @@ Rules:
 - `type` must be `"announce"`
 - `paragraphs` must be a non-empty array of strings
 - `sections`, if present, must be an array of titled bullet groups
+- `links` may contain multiple public URLs such as registration, Telegram chat, related materials, project pages, or organizer contacts
 
 Canonical example:
 
@@ -209,6 +210,7 @@ Rules:
 - `type` must be `"meeting"`
 - structure is intentionally the same as announcements
 - current site detail pages already support all optional fields above
+- `links` may contain multiple public URLs such as registration, Telegram chat, related materials, project pages, or organizer contacts
 
 Canonical example:
 
@@ -269,6 +271,8 @@ Rules:
 - `handle` should be a Telegram-style handle when available, including `@`
 - `points` should contain 2 to 5 short bullets
 - `photo` is part of the canonical schema even though the current frontend does not render it yet
+- `links` may contain multiple public contact tags such as Telegram, LinkedIn, X/Twitter, GitHub, personal site, or other relevant URLs
+- if both `handle` and a Telegram link are present, the frontend may render only one visible Telegram contact tag to avoid duplication
 
 Canonical example:
 
@@ -334,6 +338,7 @@ Rules:
 - `points` should contain 2 to 5 short bullets
 - `ownerSlugs`, if present, should reference participant slugs
 - `photo` is part of the canonical schema even though the current frontend does not render it yet
+- `links` may contain multiple public URLs related to the project, including website, repository, demo, or founder contact pages
 
 Canonical example:
 

@@ -164,6 +164,8 @@ function buildSystemPrompt() {
     "For update/delete, prefer targetRef over inventing a final slug.",
     "Slug may be provided either as top-level slug or as fields.slug. Both are valid.",
     "If pendingOperation is provided, treat the user message as an edit to that pending preview. Keep the same entity, action, and slug unless the user clearly asks to change them. Prefer returning only the changed fields.",
+    "If the user message includes contact data such as Telegram handles, LinkedIn URLs, X/Twitter URLs, GitHub URLs, or other public links, place them into fields.links as {label, href, external}.",
+    "For participants, if a Telegram handle is clearly present, also set fields.handle.",
     "The input may include attachments. Use their kind, file names, and stagedPath values as evidence when deciding whether media should be associated with the entity.",
     "If an attached photo should become the main photo, set fields.photoStagedPath to one of the provided stagedPath values and optionally set fields.photoAlt.",
     "Do not emit raw transport objects such as photo, video, document, fileId, fileName, or mimeType inside fields.",

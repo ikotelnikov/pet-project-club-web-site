@@ -517,7 +517,7 @@ async function handleEditInstruction({
   }
 
   const pendingFields = pending.operation.fields || {};
-  const editFields = normalizeExtractionToOperation(extraction).fields || {};
+  const editFields = normalizeExtractionToOperation(extraction, instruction).fields || {};
   const mergedFields = {
     ...pendingFields,
     ...editFields,
@@ -568,26 +568,152 @@ async function handleEditInstruction({
   };
 }
 
-function normalizeExtractionToOperation(extraction) {
+function normalizeExtractionToOperation(extraction, sourceText = "") {
+  const enrichedFields = enrichContactFields(extraction.entity, extraction.fields ?? {}, sourceText);
   const derivedSlug = normalizeSlug(extraction.slug ?? extraction.fields?.slug ?? null);
 
   return {
     entity: extraction.entity === "announcement" ? "announce" : extraction.entity,
     action: extraction.action,
     fields: {
-      ...extraction.fields,
-      photoStagedPath: extraction.fields?.photoStagedPath ?? null,
+      ...enrichedFields,
+      photoStagedPath: enrichedFields.photoStagedPath ?? null,
       slug:
         derivedSlug ||
-        normalizeSlug(extraction.fields?.handle) ||
-        normalizeSlug(extraction.fields?.name) ||
-        normalizeSlug(extraction.fields?.title),
+        normalizeSlug(enrichedFields.handle) ||
+        normalizeSlug(enrichedFields.name) ||
+        normalizeSlug(enrichedFields.title),
     },
   };
 }
 
+function enrichContactFields(entity, fields, sourceText) {
+  const enriched = { ...fields };
+  const discoveredLinks = extractLinksFromText(sourceText);
+
+  if (entity === "participant" && !enriched.handle) {
+    const telegramLink = discoveredLinks.find((link) => /^https:\/\/t\.me\//i.test(link.href));
+    if (telegramLink?.href) {
+      const username = telegramLink.href.replace(/^https:\/\/t\.me\//i, "").replace(/\/+$/, "");
+      if (username) {
+        enriched.handle = `@${username}`;
+      }
+    }
+  }
+
+  const mergedLinks = mergeLinkEntries(enriched.links, discoveredLinks, enriched.handle);
+  if (mergedLinks.length) {
+    enriched.links = mergedLinks;
+  }
+
+  return enriched;
+}
+
+function extractLinksFromText(text) {
+  if (typeof text !== "string" || text.trim() === "") {
+    return [];
+  }
+
+  const results = [];
+  const urlPattern = /\bhttps?:\/\/[^\s<>()]+/gi;
+
+  for (const match of text.matchAll(urlPattern)) {
+    const href = match[0].replace(/[),.;:!?]+$/, "");
+    results.push({
+      label: inferLinkLabel(href),
+      href,
+      external: true,
+    });
+  }
+
+  const telegramHandlePattern = /(^|[\s(])@([A-Za-z0-9_]{4,})\b/g;
+  for (const match of text.matchAll(telegramHandlePattern)) {
+    const username = match[2];
+    results.push({
+      label: "Telegram",
+      href: `https://t.me/${username}`,
+      external: true,
+    });
+  }
+
+  return dedupeLinks(results);
+}
+
+function inferLinkLabel(href) {
+  const lower = href.toLowerCase();
+
+  if (lower.includes("t.me/")) {
+    return "Telegram";
+  }
+
+  if (lower.includes("linkedin.com/")) {
+    return "LinkedIn";
+  }
+
+  if (lower.includes("x.com/") || lower.includes("twitter.com/")) {
+    return "X / Twitter";
+  }
+
+  if (lower.includes("github.com/")) {
+    return "GitHub";
+  }
+
+  try {
+    const url = new URL(href);
+    return url.hostname.replace(/^www\./, "");
+  } catch {
+    return "Link";
+  }
+}
+
+function mergeLinkEntries(existingLinks, discoveredLinks, handle) {
+  const combined = [];
+
+  if (Array.isArray(existingLinks)) {
+    combined.push(...existingLinks);
+  }
+
+  if (Array.isArray(discoveredLinks)) {
+    combined.push(...discoveredLinks);
+  }
+
+  const username = typeof handle === "string" ? handle.trim().replace(/^@+/, "") : "";
+  const normalizedTelegramHref = username ? `https://t.me/${username}` : null;
+
+  return dedupeLinks(
+    combined.filter((link) => {
+      if (!link?.href || !link?.label) {
+        return false;
+      }
+
+      if (normalizedTelegramHref && link.href === normalizedTelegramHref && /^telegram$/i.test(link.label)) {
+        return false;
+      }
+
+      return true;
+    })
+  );
+}
+
+function dedupeLinks(links) {
+  const seen = new Set();
+  const deduped = [];
+
+  for (const link of links) {
+    const key = `${link.label}::${link.href}`;
+    if (seen.has(key)) {
+      continue;
+    }
+
+    seen.add(key);
+    deduped.push(link);
+  }
+
+  return deduped;
+}
+
 async function buildOperationFromExtraction({ extraction, repository, extractionClient, messageText }) {
-  let baseOperation = normalizeExtractionToOperation(extraction);
+  let baseOperation = normalizeExtractionToOperation(extraction, messageText);
 
   if (
     repository &&
