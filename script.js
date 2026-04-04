@@ -42,6 +42,7 @@ renderPage().finally(() => {
   initGallery();
   initStoryDeck();
   initFlowTabs();
+  initTimelineTabs();
 });
 
 async function renderPage() {
@@ -1043,10 +1044,11 @@ function renderItemCard(item, index, variant) {
 }
 
 function renderTimelineSection(section) {
+  const timelineIcons = ["🤝", "🚀", "🧪", "⏱️"];
   const items = (section.items || [])
-    .map((item) => `
-      <article class="item-card reveal">
-        <span class="step-index">${item.index}</span>
+    .map((item, index) => `
+      <article class="item-card timeline-card reveal">
+        <span class="step-index" aria-hidden="true">${timelineIcons[index] || "•"}</span>
         <h3>${item.title}</h3>
         <p class="item-copy">${item.text}</p>
       </article>
@@ -1060,11 +1062,112 @@ function renderTimelineSection(section) {
         <h2>${section.title}</h2>
         <p class="card-copy">${section.description}</p>
       </div>
-      <div class="timeline-grid">
+      <div class="story-tabs" data-timeline-tabs aria-label="Meeting format cards"></div>
+      <div class="timeline-grid" data-timeline-cards>
         ${items}
       </div>
     </section>
   `;
+}
+
+function initTimelineTabs() {
+  const narrowScreen = window.matchMedia("(max-width: 640px)");
+
+  document.querySelectorAll("[data-timeline-cards]").forEach((grid) => {
+    const tabs = grid.parentElement?.querySelector("[data-timeline-tabs]");
+    const cards = [...grid.querySelectorAll(".timeline-card")];
+    if (!cards.length) {
+      return;
+    }
+
+    if (grid.dataset.timelineTabsReady !== "true") {
+      tabs?.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-timeline-tab]");
+        if (!button || !grid.classList.contains("is-mobile-deck")) {
+          return;
+        }
+
+        setActiveTimelineTab(grid, Number(button.dataset.timelineTab));
+      });
+
+      grid.dataset.timelineTabsReady = "true";
+    }
+
+    syncTimelineTabs(grid, tabs, narrowScreen.matches);
+  });
+
+  if (window.__timelineTabsResizeBound) {
+    return;
+  }
+
+  const handleResize = () => {
+    document.querySelectorAll("[data-timeline-cards]").forEach((grid) => {
+      const tabs = grid.parentElement?.querySelector("[data-timeline-tabs]");
+      syncTimelineTabs(grid, tabs, narrowScreen.matches);
+    });
+  };
+
+  if (typeof narrowScreen.addEventListener === "function") {
+    narrowScreen.addEventListener("change", handleResize);
+  } else if (typeof narrowScreen.addListener === "function") {
+    narrowScreen.addListener(handleResize);
+  }
+
+  window.addEventListener("resize", handleResize);
+  window.__timelineTabsResizeBound = true;
+}
+
+function syncTimelineTabs(grid, tabs, useTabsLayout) {
+  const cards = [...grid.querySelectorAll(".timeline-card")];
+  if (!cards.length) {
+    return;
+  }
+
+  if (!useTabsLayout) {
+    grid.classList.remove("is-mobile-deck");
+    tabs?.classList.remove("is-visible");
+    if (tabs) {
+      tabs.innerHTML = "";
+    }
+    cards.forEach((card) => {
+      card.hidden = false;
+      card.classList.remove("is-active");
+      card.removeAttribute("aria-hidden");
+    });
+    return;
+  }
+
+  const tabIcons = ["🤝", "🚀", "🧪", "⏱️"];
+  grid.classList.add("is-mobile-deck");
+  if (tabs) {
+    tabs.classList.add("is-visible");
+    tabs.innerHTML = cards
+      .map((card, index) => `
+        <button class="story-tab" type="button" data-timeline-tab="${index}" aria-label="Open meeting format card ${index + 1}">
+          <span aria-hidden="true">${tabIcons[index] || "•"}</span>
+        </button>
+      `)
+      .join("");
+  }
+
+  setActiveTimelineTab(grid, 0);
+}
+
+function setActiveTimelineTab(grid, activeIndex) {
+  const cards = [...grid.querySelectorAll(".timeline-card")];
+  const tabs = grid.parentElement?.querySelector("[data-timeline-tabs]");
+
+  cards.forEach((card, index) => {
+    const isActive = index === activeIndex;
+    card.hidden = !isActive;
+    card.classList.toggle("is-active", isActive);
+    card.setAttribute("aria-hidden", String(!isActive));
+  });
+
+  tabs?.querySelectorAll("[data-timeline-tab]").forEach((button, index) => {
+    button.classList.toggle("is-active", index === activeIndex);
+    button.setAttribute("aria-pressed", String(index === activeIndex));
+  });
 }
 
 function renderPeopleSection(section) {

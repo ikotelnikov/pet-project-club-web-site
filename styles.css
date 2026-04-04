@@ -1968,6 +1968,18 @@ body.lightbox-open {
     display: block;
   }
 
+  .timeline-grid.is-mobile-deck {
+    display: block;
+  }
+
+  .timeline-grid.is-mobile-deck .timeline-card:not(.is-active) {
+    display: none;
+  }
+
+  .timeline-grid.is-mobile-deck .timeline-card.is-active {
+    display: block;
+  }
+
   .project-preview {
     grid-template-columns: 1fr;
   }
