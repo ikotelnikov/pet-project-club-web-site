@@ -856,6 +856,13 @@ body.lightbox-open {
   gap: 16px;
 }
 
+.meeting-copy,
+.meeting-detail-copy p,
+.meeting-detail-copy li {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .detail-back-link {
   display: inline-flex;
   margin-bottom: 18px;
