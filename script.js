@@ -212,6 +212,7 @@ async function renderMainPage() {
         <h2>${data.story.title}</h2>
         <p class="card-copy">${data.story.description}</p>
       </div>
+      <div class="story-tabs" data-story-tabs aria-label="Story cards"></div>
       <div class="home-bento-grid story-deck" data-story-deck>
         ${(data.story.items || []).map((item, index) => `
           <article class="item-card home-story-card ${index === 0 ? "home-wide-card" : ""} reveal">
@@ -1945,25 +1946,22 @@ function initStoryDeck() {
   const narrowScreen = window.matchMedia("(max-width: 640px)");
 
   document.querySelectorAll("[data-story-deck]").forEach((deck) => {
+    const tabs = deck.parentElement?.querySelector("[data-story-tabs]");
+
     if (deck.dataset.storyDeckReady !== "true") {
-      deck.addEventListener("click", (event) => {
-        if (!deck.classList.contains("is-mobile-deck")) {
+      tabs?.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-story-tab]");
+        if (!button || !deck.classList.contains("is-mobile-deck")) {
           return;
         }
 
-        const topCard = deck.querySelector('.home-story-card[data-deck-order="0"]');
-        if (!topCard || !topCard.contains(event.target)) {
-          return;
-        }
-
-        deck.appendChild(topCard);
-        syncStoryDeck(deck, narrowScreen.matches);
+        setActiveStoryTab(deck, Number(button.dataset.storyTab));
       });
 
       deck.dataset.storyDeckReady = "true";
     }
 
-    syncStoryDeck(deck, narrowScreen.matches);
+    syncStoryDeck(deck, tabs, narrowScreen.matches);
   });
 
   if (window.__storyDeckResizeBound) {
@@ -1972,7 +1970,8 @@ function initStoryDeck() {
 
   const handleResize = () => {
     document.querySelectorAll("[data-story-deck]").forEach((deck) => {
-      syncStoryDeck(deck, narrowScreen.matches);
+      const tabs = deck.parentElement?.querySelector("[data-story-tabs]");
+      syncStoryDeck(deck, tabs, narrowScreen.matches);
     });
   };
 
@@ -1986,7 +1985,7 @@ function initStoryDeck() {
   window.__storyDeckResizeBound = true;
 }
 
-function syncStoryDeck(deck, useDeckLayout) {
+function syncStoryDeck(deck, tabs, useDeckLayout) {
   const cards = [...deck.querySelectorAll(".home-story-card")];
   if (!cards.length) {
     return;
@@ -1994,29 +1993,48 @@ function syncStoryDeck(deck, useDeckLayout) {
 
   if (!useDeckLayout) {
     deck.classList.remove("is-mobile-deck");
-    deck.style.removeProperty("--story-deck-height");
+    tabs?.classList.remove("is-visible");
+    if (tabs) {
+      tabs.innerHTML = "";
+    }
     cards.forEach((card) => {
-      card.style.removeProperty("z-index");
-      card.removeAttribute("data-deck-order");
+      card.hidden = false;
+      card.classList.remove("is-active");
       card.removeAttribute("aria-hidden");
     });
     return;
   }
 
   deck.classList.add("is-mobile-deck");
+  if (tabs) {
+    tabs.classList.add("is-visible");
+    tabs.innerHTML = cards
+      .map((card, index) => `
+        <button class="story-tab" type="button" data-story-tab="${index}" aria-label="Open story card ${index + 1}">
+          ${String(index + 1).padStart(2, "0")}
+        </button>
+      `)
+      .join("");
+  }
+
+  setActiveStoryTab(deck, 0);
+}
+
+function setActiveStoryTab(deck, activeIndex) {
+  const cards = [...deck.querySelectorAll(".home-story-card")];
+  const tabs = deck.parentElement?.querySelector("[data-story-tabs]");
 
   cards.forEach((card, index) => {
-    card.dataset.deckOrder = String(index);
-    card.style.zIndex = String(cards.length - index);
-    card.setAttribute("aria-hidden", index === 0 ? "false" : "true");
+    const isActive = index === activeIndex;
+    card.hidden = !isActive;
+    card.classList.toggle("is-active", isActive);
+    card.setAttribute("aria-hidden", String(!isActive));
   });
 
-  const tallestCard = cards.reduce((maxHeight, card) => {
-    const naturalHeight = card.scrollHeight;
-    return Math.max(maxHeight, naturalHeight);
-  }, 0);
-
-  deck.style.setProperty("--story-deck-height", `${tallestCard + 42}px`);
+  tabs?.querySelectorAll("[data-story-tab]").forEach((button, index) => {
+    button.classList.toggle("is-active", index === activeIndex);
+    button.setAttribute("aria-pressed", String(index === activeIndex));
+  });
 }
 
 function ensureGalleryLightbox() {
