@@ -2007,11 +2007,12 @@ function syncStoryDeck(deck, tabs, useDeckLayout) {
 
   deck.classList.add("is-mobile-deck");
   if (tabs) {
+    const tabIcons = ["⚡", "💡", "🧠", "🛠"];
     tabs.classList.add("is-visible");
     tabs.innerHTML = cards
       .map((card, index) => `
         <button class="story-tab" type="button" data-story-tab="${index}" aria-label="Open story card ${index + 1}">
-          ${String(index + 1).padStart(2, "0")}
+          <span aria-hidden="true">${tabIcons[index] || "•"}</span>
         </button>
       `)
       .join("");
