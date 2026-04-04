@@ -165,6 +165,7 @@ async function renderMainPage() {
   applyMainChrome(data.shell);
   window.__terminalPhrases = data.hero.stage?.terminal?.phrases || null;
   const terminal = data.hero.stage?.terminal || {};
+  const storyIcons = ["⚡", "💡", "🛠", "🧠"];
 
   pageContent.innerHTML = `
     <section class="home-hero reveal">
@@ -216,7 +217,7 @@ async function renderMainPage() {
       <div class="home-bento-grid story-deck" data-story-deck>
         ${(data.story.items || []).map((item, index) => `
           <article class="item-card home-story-card ${index === 0 ? "home-wide-card" : ""} reveal">
-            <span class="step-index">${String(index + 1).padStart(2, "0")}</span>
+            <span class="step-index" aria-hidden="true">${storyIcons[index] || "•"}</span>
             <h3>${item.title}</h3>
             <p class="item-copy">${item.text}</p>
           </article>
