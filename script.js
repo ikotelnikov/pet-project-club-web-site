@@ -2007,7 +2007,7 @@ function syncStoryDeck(deck, tabs, useDeckLayout) {
 
   deck.classList.add("is-mobile-deck");
   if (tabs) {
-    const tabIcons = ["⚡", "💡", "🧠", "🛠"];
+    const tabIcons = ["⚡", "💡", "🛠", "🧠"];
     tabs.classList.add("is-visible");
     tabs.innerHTML = cards
       .map((card, index) => `
