@@ -41,6 +41,7 @@ renderPage().finally(() => {
   initTerminal();
   initGallery();
   initStoryDeck();
+  initFlowTabs();
 });
 
 async function renderPage() {
@@ -166,6 +167,7 @@ async function renderMainPage() {
   window.__terminalPhrases = data.hero.stage?.terminal?.phrases || null;
   const terminal = data.hero.stage?.terminal || {};
   const storyIcons = ["⚡", "💡", "🛠", "🧠"];
+  const flowIcons = ["🤝", "🚀", "🧪", "⏱️"];
 
   pageContent.innerHTML = `
     <section class="home-hero reveal">
@@ -231,10 +233,11 @@ async function renderMainPage() {
         <h2>${data.flow.title}</h2>
         <p class="card-copy">${data.flow.description}</p>
       </div>
-      <div class="home-flow-grid">
-        ${(data.flow.items || []).map((item) => `
-          <article class="item-card reveal">
-            <span class="step-index">${item.index}</span>
+      <div class="story-tabs" data-flow-tabs aria-label="Flow cards"></div>
+      <div class="home-flow-grid" data-flow-cards>
+        ${(data.flow.items || []).map((item, index) => `
+          <article class="item-card home-flow-card reveal">
+            <span class="step-index" aria-hidden="true">${flowIcons[index] || "•"}</span>
             <h3>${item.title}</h3>
             <p class="item-copy">${item.text}</p>
           </article>
@@ -2034,6 +2037,108 @@ function setActiveStoryTab(deck, activeIndex) {
   });
 
   tabs?.querySelectorAll("[data-story-tab]").forEach((button, index) => {
+    button.classList.toggle("is-active", index === activeIndex);
+    button.setAttribute("aria-pressed", String(index === activeIndex));
+  });
+}
+
+function initFlowTabs() {
+  const narrowScreen = window.matchMedia("(max-width: 640px)");
+
+  document.querySelectorAll("[data-flow-cards]").forEach((grid) => {
+    const tabs = grid.parentElement?.querySelector("[data-flow-tabs]");
+    const cards = [...grid.querySelectorAll(".home-flow-card")];
+    if (!cards.length) {
+      return;
+    }
+
+    if (grid.dataset.flowTabsReady !== "true") {
+      tabs?.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-flow-tab]");
+        if (!button || !grid.classList.contains("is-mobile-tabs")) {
+          return;
+        }
+
+        setActiveFlowTab(grid, Number(button.dataset.flowTab));
+      });
+
+      grid.dataset.flowTabsReady = "true";
+    }
+
+    syncFlowTabs(grid, tabs, narrowScreen.matches);
+  });
+
+  if (window.__flowTabsResizeBound) {
+    return;
+  }
+
+  const handleResize = () => {
+    document.querySelectorAll("[data-flow-cards]").forEach((grid) => {
+      const tabs = grid.parentElement?.querySelector("[data-flow-tabs]");
+      syncFlowTabs(grid, tabs, narrowScreen.matches);
+    });
+  };
+
+  if (typeof narrowScreen.addEventListener === "function") {
+    narrowScreen.addEventListener("change", handleResize);
+  } else if (typeof narrowScreen.addListener === "function") {
+    narrowScreen.addListener(handleResize);
+  }
+
+  window.addEventListener("resize", handleResize);
+  window.__flowTabsResizeBound = true;
+}
+
+function syncFlowTabs(grid, tabs, useTabsLayout) {
+  const cards = [...grid.querySelectorAll(".home-flow-card")];
+  if (!cards.length) {
+    return;
+  }
+
+  if (!useTabsLayout) {
+    grid.classList.remove("is-mobile-tabs");
+    grid.classList.remove("is-mobile-deck");
+    tabs?.classList.remove("is-visible");
+    if (tabs) {
+      tabs.innerHTML = "";
+    }
+    cards.forEach((card) => {
+      card.hidden = false;
+      card.classList.remove("is-active");
+      card.removeAttribute("aria-hidden");
+    });
+    return;
+  }
+
+  const tabIcons = ["🤝", "🚀", "🧪", "⏱️"];
+  grid.classList.add("is-mobile-tabs");
+  grid.classList.add("is-mobile-deck");
+  if (tabs) {
+    tabs.classList.add("is-visible");
+    tabs.innerHTML = cards
+      .map((card, index) => `
+        <button class="story-tab" type="button" data-flow-tab="${index}" aria-label="Open flow card ${index + 1}">
+          <span aria-hidden="true">${tabIcons[index] || "•"}</span>
+        </button>
+      `)
+      .join("");
+  }
+
+  setActiveFlowTab(grid, 0);
+}
+
+function setActiveFlowTab(grid, activeIndex) {
+  const cards = [...grid.querySelectorAll(".home-flow-card")];
+  const tabs = grid.parentElement?.querySelector("[data-flow-tabs]");
+
+  cards.forEach((card, index) => {
+    const isActive = index === activeIndex;
+    card.hidden = !isActive;
+    card.classList.toggle("is-active", isActive);
+    card.setAttribute("aria-hidden", String(!isActive));
+  });
+
+  tabs?.querySelectorAll("[data-flow-tab]").forEach((button, index) => {
     button.classList.toggle("is-active", index === activeIndex);
     button.setAttribute("aria-pressed", String(index === activeIndex));
   });

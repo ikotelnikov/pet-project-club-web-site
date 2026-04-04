@@ -1956,6 +1956,18 @@ body.lightbox-open {
     display: block;
   }
 
+  .home-flow-grid.is-mobile-deck {
+    display: block;
+  }
+
+  .home-flow-grid.is-mobile-deck .home-flow-card:not(.is-active) {
+    display: none;
+  }
+
+  .home-flow-grid.is-mobile-deck .home-flow-card.is-active {
+    display: block;
+  }
+
   .project-preview {
     grid-template-columns: 1fr;
   }
