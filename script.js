@@ -222,7 +222,7 @@ async function loadUiMessages(locale) {
 }
 
 async function loadJsonFile(path) {
-  const response = await fetch(`${contentRoot}/${path}`);
+  const response = await fetch(`${contentRoot}/${path}`, { cache: "no-store" });
 
   if (!response.ok) {
     throw new Error(`Failed to load ${path}: ${response.status}`);
@@ -564,7 +564,7 @@ function resolveHref(href) {
 
 async function readJson(path) {
   try {
-    const response = await fetch(`${contentRoot}/${path}`);
+    const response = await fetch(`${contentRoot}/${path}`, { cache: "no-store" });
 
     if (!response.ok) {
       throw new Error(`Failed to load ${path}: ${response.status}`);
