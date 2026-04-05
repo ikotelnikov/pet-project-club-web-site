@@ -1,4 +1,5 @@
 {
+  "sourceLocale": "ru",
   "formats": {
     "tag": "Темы и форматы встреч",
     "title": "Темы и форматы встреч",
@@ -46,5 +47,195 @@
   },
   "detail": {
     "backLabel": "← Ко всем встречам"
+  },
+  "translations": {
+    "en": {
+      "formats": {
+        "tag": "Meeting themes and formats",
+        "title": "Meeting themes and formats",
+        "description": "We currently run several meetup themes and formats, and we try to rotate them so the club stays useful and engaging for different kinds of builders.",
+        "items": [
+          {
+            "index": "01",
+            "title": "Introductions and project updates",
+            "text": "Every one or two months we gather to meet new members, hear about their projects, and share the current state of our own work, ideas, and updates."
+          },
+          {
+            "index": "02",
+            "title": "New project release review",
+            "text": "When someone launches a new project into beta, we meet to look at how it works, discuss short-term goals and plans, and give grounded feedback."
+          },
+          {
+            "index": "03",
+            "title": "Discussion of new technologies and approaches",
+            "text": "Sometimes we meet to discuss a notable new tool, agent, LLM, app, or approach. These sessions usually combine a short presentation with open discussion."
+          },
+          {
+            "index": "04",
+            "title": "Productivity sprint",
+            "text": "This is a short 90-minute sprint: 15 minutes to discuss goals and blockers, 60 minutes of focused work, and 15 minutes to summarize results and define the next step."
+          }
+        ]
+      },
+      "announcements": {
+        "tag": "Announcements",
+        "title": "Upcoming meetups",
+        "description": "If you want to present your project, share an update, or give a short talk on an interesting topic, message the <a href=\"#footer-contact-organizer\">organizer</a>."
+      },
+      "archive": {
+        "tag": "Meeting archive",
+        "title": "Past meetups",
+        "empty": "There are no meetups in the archive yet.",
+        "pagination": {
+          "prev": "← Newer",
+          "next": "Older →",
+          "page": "Page"
+        }
+      },
+      "detail": {
+        "backLabel": "← Back to all meetups"
+      }
+    },
+    "de": {
+      "formats": {
+        "tag": "Treffenthemen und Formate",
+        "title": "Treffenthemen und Formate",
+        "description": "Zurzeit haben wir mehrere Themen und Formate und wechseln bewusst dazwischen, damit der Club fuer unterschiedliche Builder nuetzlich und interessant bleibt.",
+        "items": [
+          {
+            "index": "01",
+            "title": "Vorstellungsrunde und Projekt-Updates",
+            "text": "Alle ein bis zwei Monate treffen wir uns, um neue Mitglieder und ihre Projekte kennenzulernen und den aktuellen Stand unserer eigenen Arbeit, Ideen und Updates zu teilen."
+          },
+          {
+            "index": "02",
+            "title": "Review eines neuen Projekt-Releases",
+            "text": "Wenn jemand ein neues Projekt in die Beta bringt, schauen wir uns gemeinsam an, wie es funktioniert, besprechen kurzfristige Ziele und geben fundiertes Feedback."
+          },
+          {
+            "index": "03",
+            "title": "Diskussion neuer Technologien und Ansaetze",
+            "text": "Manchmal treffen wir uns, um ueber ein auffaelliges neues Tool, einen Agenten, ein LLM, eine App oder einen Ansatz zu sprechen. Solche Treffen verbinden meist eine kurze Praesentation mit Diskussion."
+          },
+          {
+            "index": "04",
+            "title": "Productivity Sprint",
+            "text": "Das ist ein kurzer 90-Minuten-Sprint: 15 Minuten fuer Ziele und Blocker, 60 Minuten fokussierte Arbeit und 15 Minuten fuer Ergebnisse und naechste Schritte."
+          }
+        ]
+      },
+      "announcements": {
+        "tag": "Ankuendigungen",
+        "title": "Bevorstehende Treffen",
+        "description": "Wenn Sie Ihr Projekt vorstellen, ein Update teilen oder ueber ein interessantes Thema sprechen moechten, schreiben Sie dem <a href=\"#footer-contact-organizer\">Organisator</a>."
+      },
+      "archive": {
+        "tag": "Treffearchiv",
+        "title": "Vergangene Treffen",
+        "empty": "Im Archiv gibt es noch keine Treffen.",
+        "pagination": {
+          "prev": "← Neuer",
+          "next": "Aelter →",
+          "page": "Seite"
+        }
+      },
+      "detail": {
+        "backLabel": "← Zurueck zu allen Treffen"
+      }
+    },
+    "me": {
+      "formats": {
+        "tag": "Teme i formati susreta",
+        "title": "Teme i formati susreta",
+        "description": "Trenutno imamo nekoliko tema i formata i trudimo se da ih smjenjujemo kako bi klub ostao koristan i zanimljiv razlicitim tipovima buildera.",
+        "items": [
+          {
+            "index": "01",
+            "title": "Upoznavanje i novosti o projektima",
+            "text": "Na svakih mjesec ili dva okupljamo se da upoznamo nove clanove i njihove projekte, i da podijelimo trenutno stanje sopstvenog rada, ideja i novosti."
+          },
+          {
+            "index": "02",
+            "title": "Pregled izlaska novog projekta",
+            "text": "Kada neko lansira novi projekat u beta fazu, sastajemo se da pogledamo kako funkcionise, prodjemo kroz bliske ciljeve i damo konkretan feedback."
+          },
+          {
+            "index": "03",
+            "title": "Razgovor o novim tehnologijama i pristupima",
+            "text": "Ponekad se okupljamo da razgovaramo o nekom novom alatu, agentu, LLM-u, aplikaciji ili pristupu koji je privukao paznju. Takvi susreti su obicno kombinacija kratke prezentacije i razgovora."
+          },
+          {
+            "index": "04",
+            "title": "Productivity sprint",
+            "text": "Ovo je kratak sprint od 90 minuta: 15 minuta za ciljeve i blokere, 60 minuta fokusiranog rada i 15 minuta da sumiramo rezultat i sljedeci korak."
+          }
+        ]
+      },
+      "announcements": {
+        "tag": "Najave",
+        "title": "Naredni susreti",
+        "description": "Ako zelite da predstavite svoj projekat, podijelite update ili ispricate nesto zanimljivo, javite se <a href=\"#footer-contact-organizer\">organizatoru</a>."
+      },
+      "archive": {
+        "tag": "Arhiva susreta",
+        "title": "Prosli susreti",
+        "empty": "U arhivi jos nema susreta.",
+        "pagination": {
+          "prev": "← Novije",
+          "next": "Starije →",
+          "page": "Stranica"
+        }
+      },
+      "detail": {
+        "backLabel": "← Nazad na sve susrete"
+      }
+    },
+    "es": {
+      "formats": {
+        "tag": "Temas y formatos de los encuentros",
+        "title": "Temas y formatos de los encuentros",
+        "description": "Actualmente tenemos varios temas y formatos, y tratamos de alternarlos para que el club siga siendo util e interesante para distintos tipos de builders.",
+        "items": [
+          {
+            "index": "01",
+            "title": "Presentaciones y actualizaciones de proyectos",
+            "text": "Cada uno o dos meses nos reunimos para conocer a nuevos miembros y sus proyectos, y para compartir el estado actual de nuestro propio trabajo, ideas y avances."
+          },
+          {
+            "index": "02",
+            "title": "Revision del lanzamiento de un nuevo proyecto",
+            "text": "Cuando alguien lanza un nuevo proyecto en beta, nos reunimos para revisar como funciona, hablar de objetivos cercanos y dar feedback concreto."
+          },
+          {
+            "index": "03",
+            "title": "Conversacion sobre nuevas tecnologias y enfoques",
+            "text": "A veces nos reunimos para hablar de una herramienta nueva, un agente, un LLM, una app o un enfoque que haya llamado la atencion. Estos encuentros suelen combinar una breve presentacion con conversacion."
+          },
+          {
+            "index": "04",
+            "title": "Productivity sprint",
+            "text": "Es un sprint corto de 90 minutos: 15 minutos para objetivos y bloqueos, 60 minutos de trabajo enfocado y 15 minutos para resumir resultados y el siguiente paso."
+          }
+        ]
+      },
+      "announcements": {
+        "tag": "Anuncios",
+        "title": "Proximos encuentros",
+        "description": "Si quieres presentar tu proyecto, compartir una actualizacion o dar una charla breve sobre un tema interesante, escribe al <a href=\"#footer-contact-organizer\">organizador</a>."
+      },
+      "archive": {
+        "tag": "Archivo de encuentros",
+        "title": "Encuentros pasados",
+        "empty": "Todavia no hay encuentros en el archivo.",
+        "pagination": {
+          "prev": "← Mas nuevos",
+          "next": "Mas antiguos →",
+          "page": "Pagina"
+        }
+      },
+      "detail": {
+        "backLabel": "← Volver a todos los encuentros"
+      }
+    }
   }
 }

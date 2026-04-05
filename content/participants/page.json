@@ -1,6 +1,41 @@
 {
+  "sourceLocale": "ru",
   "tag": "Participants",
   "title": "Участники Pet Project Club",
   "description": "Для включения в список учасников, редактирования данных или удаления из него напишите <a href=\"#footer-contact-organizer\">организатору</a>.",
-  "pageSize": 9
+  "pageSize": 9,
+  "translations": {
+    "en": {
+      "tag": "Participants",
+      "title": "Pet Project Club participants",
+      "description": "To be added to the participant list, edit your data, or remove yourself from it, message the <a href=\"#footer-contact-organizer\">organizer</a>.",
+      "detail": {
+        "backLabel": "← Back to participants"
+      }
+    },
+    "de": {
+      "tag": "Teilnehmer",
+      "title": "Teilnehmer des Pet Project Club",
+      "description": "Wenn Sie in die Teilnehmerliste aufgenommen werden, Ihre Daten bearbeiten oder entfernt werden moechten, schreiben Sie dem <a href=\"#footer-contact-organizer\">Organisator</a>.",
+      "detail": {
+        "backLabel": "← Zurueck zu den Teilnehmern"
+      }
+    },
+    "me": {
+      "tag": "Ucesnici",
+      "title": "Ucesnici Pet Project Cluba",
+      "description": "Ako zelite da budete dodati na listu ucesnika, izmijenite svoje podatke ili budete uklonjeni sa nje, javite se <a href=\"#footer-contact-organizer\">organizatoru</a>.",
+      "detail": {
+        "backLabel": "← Nazad na ucesnike"
+      }
+    },
+    "es": {
+      "tag": "Participantes",
+      "title": "Participantes de Pet Project Club",
+      "description": "Para aparecer en la lista de participantes, editar tus datos o eliminarte de ella, escribe al <a href=\"#footer-contact-organizer\">organizador</a>.",
+      "detail": {
+        "backLabel": "← Volver a participantes"
+      }
+    }
+  }
 }

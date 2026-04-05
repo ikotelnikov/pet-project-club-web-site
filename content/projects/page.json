@@ -1,4 +1,5 @@
 {
+  "sourceLocale": "ru",
   "list": {
     "title": "Проекты Pet Project Club",
     "pageSize": 6,
@@ -36,5 +37,163 @@
         "text": "Пет-проекты - это стиль жизни. Обычно у одного участника их несколько. Есть более активные, есть проекты на паузе, а есть такие, которые из пет-проекта превратились в источник основного дохода - то состояние, к которому многие из нас стремятся."
       }
     ]
+  },
+  "translations": {
+    "en": {
+      "list": {
+        "title": "Pet Project Club projects",
+        "searchPlaceholder": "Search: project, technology, author...",
+        "resultsLabel": "Projects found",
+        "emptyTitle": "No matching projects yet",
+        "empty": "Try changing the query or add a new project through the Telegram bot.",
+        "pagination": {
+          "prev": "← Newer",
+          "next": "Older →",
+          "page": "Page"
+        }
+      },
+      "detail": {
+        "backLabel": "← Back to all projects",
+        "detailsTitle": "Project details",
+        "ownersTitle": "Who is building it",
+        "newsTitle": "Project news, demos, and releases"
+      },
+      "notes": {
+        "tag": "Team matching",
+        "title": "The point of this page is not a polished catalog. It is faster collaboration.",
+        "description": "Here you can find projects that look useful or interesting to you, write to their authors, ask for help, or offer your own.",
+        "items": [
+          {
+            "title": "Share information and updates",
+            "text": "Explain what your project is about, what stage it is in, who it helps, and what support it needs now. Share new features, pivot ideas, and user feedback. The more context you share, the more useful help you get."
+          },
+          {
+            "title": "Follow project updates",
+            "text": "Project news helps you stay in the loop even when you miss a meetup. By following updates, you also track how current technologies evolve through real projects."
+          },
+          {
+            "title": "Live long and prosper",
+            "text": "Pet projects are a way of life. Many members have several of them. Some are more active, some are on pause, and some have grown from side projects into a primary source of income."
+          }
+        ]
+      }
+    },
+    "de": {
+      "list": {
+        "title": "Projekte des Pet Project Club",
+        "searchPlaceholder": "Suche: Projekt, Technologie, Autor...",
+        "resultsLabel": "Gefundene Projekte",
+        "emptyTitle": "Noch keine passenden Projekte",
+        "empty": "Versuchen Sie eine andere Suchanfrage oder fuegen Sie ueber den Telegram-Bot ein neues Projekt hinzu.",
+        "pagination": {
+          "prev": "← Neuer",
+          "next": "Aelter →",
+          "page": "Seite"
+        }
+      },
+      "detail": {
+        "backLabel": "← Zurueck zu allen Projekten",
+        "detailsTitle": "Projektdetails",
+        "ownersTitle": "Wer daran arbeitet",
+        "newsTitle": "Projektnews, Demos und Releases"
+      },
+      "notes": {
+        "tag": "Team matching",
+        "title": "Der Sinn dieser Seite ist kein schoener Katalog, sondern schnellere Zusammenarbeit.",
+        "description": "Hier finden Sie Projekte, die fuer Sie interessant oder nuetzlich wirken, koennen den Autoren schreiben, um Hilfe bitten oder eigene Hilfe anbieten.",
+        "items": [
+          {
+            "title": "Teilen Sie Informationen und Updates",
+            "text": "Beschreiben Sie, worum es in Ihrem Projekt geht, in welchem Stadium es ist, wem es nuetzt und welche Unterstuetzung aktuell gebraucht wird. Teilen Sie neue Features, Pivot-Ideen und Nutzerfeedback. Je mehr Kontext Sie geben, desto hilfreicher wird die Unterstuetzung."
+          },
+          {
+            "title": "Lesen Sie Projektnews",
+            "text": "Projektnews helfen dabei, auf dem Laufenden zu bleiben, auch wenn Sie ein Treffen verpassen. Gleichzeitig sehen Sie an realen Projekten, wie sich aktuelle Technologien entwickeln."
+          },
+          {
+            "title": "Live long and prosper",
+            "text": "Pet-Projekte sind eine Lebensweise. Viele Mitglieder haben mehrere davon. Manche sind aktiver, andere pausieren, und einige sind aus Nebenprojekten zu einer wichtigen Einnahmequelle geworden."
+          }
+        ]
+      }
+    },
+    "me": {
+      "list": {
+        "title": "Projekti Pet Project Cluba",
+        "searchPlaceholder": "Pretraga: projekat, tehnologija, autor...",
+        "resultsLabel": "Pronadjeni projekti",
+        "emptyTitle": "Jos nema odgovarajucih projekata",
+        "empty": "Probajte da promijenite upit ili dodajte novi projekat preko Telegram bota.",
+        "pagination": {
+          "prev": "← Novije",
+          "next": "Starije →",
+          "page": "Stranica"
+        }
+      },
+      "detail": {
+        "backLabel": "← Nazad na sve projekte",
+        "detailsTitle": "Detalji projekta",
+        "ownersTitle": "Ko vodi projekat",
+        "newsTitle": "Novosti projekta, demo i izlasci"
+      },
+      "notes": {
+        "tag": "Team matching",
+        "title": "Poenta ove stranice nije lijep katalog, nego brza saradnja.",
+        "description": "Ovdje mozete pronaci projekte koji vam djeluju zanimljivo ili korisno, pisati njihovim autorima, traziti pomoc ili ponuditi svoju.",
+        "items": [
+          {
+            "title": "Dijelite informacije i novosti",
+            "text": "Objasnite o cemu je projekat, u kojoj je fazi, kome je koristan i kakva mu je podrska sada potrebna. Podijelite nove funkcije, ideje za pivot i feedback korisnika. Sto vise konteksta podijelite, to vise korisne pomoci dobijate."
+          },
+          {
+            "title": "Pratite novosti projekata",
+            "text": "Novosti projekata pomazu da ostanete u toku i kada propustite susret. Kroz ta azuriranja mozete i da pratite kako se aktuelne tehnologije razvijaju kroz stvarne projekte."
+          },
+          {
+            "title": "Live long and prosper",
+            "text": "Pet projekti su stil zivota. Mnogi clanovi ih imaju vise. Neki su aktivniji, neki su na pauzi, a neki su od sporednog projekta prerasli u glavni izvor prihoda."
+          }
+        ]
+      }
+    },
+    "es": {
+      "list": {
+        "title": "Proyectos de Pet Project Club",
+        "searchPlaceholder": "Buscar: proyecto, tecnologia, autor...",
+        "resultsLabel": "Proyectos encontrados",
+        "emptyTitle": "Todavia no hay proyectos que coincidan",
+        "empty": "Prueba con otra busqueda o agrega un nuevo proyecto a traves del bot de Telegram.",
+        "pagination": {
+          "prev": "← Mas nuevos",
+          "next": "Mas antiguos →",
+          "page": "Pagina"
+        }
+      },
+      "detail": {
+        "backLabel": "← Volver a todos los proyectos",
+        "detailsTitle": "Detalles del proyecto",
+        "ownersTitle": "Quien lleva el proyecto",
+        "newsTitle": "Noticias, demos y lanzamientos del proyecto"
+      },
+      "notes": {
+        "tag": "Team matching",
+        "title": "La idea de esta pagina no es un catalogo bonito, sino acelerar la colaboracion.",
+        "description": "Aqui puedes encontrar proyectos que te parezcan interesantes o utiles, escribir a sus autores, pedir ayuda o proponer la tuya.",
+        "items": [
+          {
+            "title": "Comparte informacion y novedades",
+            "text": "Cuenta de que trata tu proyecto, en que etapa esta, a quien ayuda y que apoyo necesita ahora. Comparte nuevas funciones, ideas de pivot y feedback de usuarios. Cuanto mas contexto compartes, mas util sera la ayuda que recibas."
+          },
+          {
+            "title": "Sigue las noticias de los proyectos",
+            "text": "Las noticias de proyectos te ayudan a mantenerte al dia incluso cuando te pierdes un encuentro. Ademas, a traves de esas actualizaciones puedes seguir como evolucionan las tecnologias actuales en proyectos reales."
+          },
+          {
+            "title": "Live long and prosper",
+            "text": "Los pet projects son un estilo de vida. Muchos miembros tienen varios. Algunos estan mas activos, otros en pausa, y algunos ya pasaron de proyecto paralelo a fuente principal de ingresos."
+          }
+        ]
+      }
+    }
   }
 }

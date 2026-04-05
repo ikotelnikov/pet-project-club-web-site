@@ -1,4 +1,5 @@
 {
+  "sourceLocale": "ru",
   "list": {
     "title": "Новости проектов",
     "pageSize": 8,
@@ -30,5 +31,139 @@
         "text": "Лента показывает, как проекты клуба проходят через анонсы, демо, апдейты и архивные встречи."
       }
     ]
+  },
+  "translations": {
+    "en": {
+      "list": {
+        "title": "Project news",
+        "searchPlaceholder": "Search: project, technology, title...",
+        "resultsLabel": "News found",
+        "emptyTitle": "No matching news yet",
+        "empty": "Try changing the query or add a new item through the Telegram bot.",
+        "pagination": {
+          "prev": "← Newer",
+          "next": "Older →",
+          "page": "Page"
+        }
+      },
+      "notes": {
+        "tag": "Project pulse",
+        "title": "It is easier to follow projects through a shared news stream.",
+        "description": "One page helps you quickly see what is being released, discussed, and shown at club meetups right now.",
+        "items": [
+          {
+            "title": "Releases and demos in one place",
+            "text": "You do not need to open every project separately to understand where new movement is happening."
+          },
+          {
+            "title": "Search by project and format",
+            "text": "You can quickly find entries by project name, meetup location, format, or keywords from the description."
+          },
+          {
+            "title": "A living history of progress",
+            "text": "The feed shows how club projects move through announcements, demos, updates, and archived meetups."
+          }
+        ]
+      }
+    },
+    "de": {
+      "list": {
+        "title": "Projektnews",
+        "searchPlaceholder": "Suche: Projekt, Technologie, Titel...",
+        "resultsLabel": "Gefundene News",
+        "emptyTitle": "Noch keine passenden News",
+        "empty": "Versuchen Sie eine andere Suchanfrage oder fuegen Sie ueber den Telegram-Bot einen neuen Eintrag hinzu.",
+        "pagination": {
+          "prev": "← Neuer",
+          "next": "Aelter →",
+          "page": "Seite"
+        }
+      },
+      "notes": {
+        "tag": "Project pulse",
+        "title": "Projekte lassen sich ueber einen gemeinsamen News-Stream leichter verfolgen.",
+        "description": "Eine Seite hilft dabei, schnell zu sehen, was im Club gerade veroeffentlicht, diskutiert und bei Treffen gezeigt wird.",
+        "items": [
+          {
+            "title": "Releases und Demos an einem Ort",
+            "text": "Man muss nicht jedes Projekt einzeln oeffnen, um zu verstehen, wo sich gerade etwas bewegt."
+          },
+          {
+            "title": "Suche nach Projekt und Format",
+            "text": "Eintraege lassen sich schnell nach Projektname, Treffpunkt, Format oder Schluesselwoertern aus der Beschreibung finden."
+          },
+          {
+            "title": "Eine lebendige Entwicklungsgeschichte",
+            "text": "Der Feed zeigt, wie sich Club-Projekte durch Ankuendigungen, Demos, Updates und Archivtreffen entwickeln."
+          }
+        ]
+      }
+    },
+    "me": {
+      "list": {
+        "title": "Novosti projekata",
+        "searchPlaceholder": "Pretraga: projekat, tehnologija, naslov...",
+        "resultsLabel": "Pronadjene novosti",
+        "emptyTitle": "Jos nema odgovarajucih novosti",
+        "empty": "Probajte da promijenite upit ili dodajte novi zapis preko Telegram bota.",
+        "pagination": {
+          "prev": "← Novije",
+          "next": "Starije →",
+          "page": "Stranica"
+        }
+      },
+      "notes": {
+        "tag": "Project pulse",
+        "title": "Projekte je lakse pratiti kroz zajednicki tok novosti.",
+        "description": "Jedna stranica pomaze da brzo vidite sta se upravo objavljuje, diskutuje i prikazuje na klupskim susretima.",
+        "items": [
+          {
+            "title": "Releases i demo na jednom mjestu",
+            "text": "Ne morate otvarati svaki projekat posebno da biste shvatili gdje se desava novo pomjeranje."
+          },
+          {
+            "title": "Pretraga po projektu i formatu",
+            "text": "Zapise mozete brzo naci po nazivu projekta, mjestu susreta, formatu ili kljucnim rijecima iz opisa."
+          },
+          {
+            "title": "Ziva istorija razvoja",
+            "text": "Feed pokazuje kako klupski projekti prolaze kroz najave, demo prikaze, update i arhivirane susrete."
+          }
+        ]
+      }
+    },
+    "es": {
+      "list": {
+        "title": "Noticias de proyectos",
+        "searchPlaceholder": "Buscar: proyecto, tecnologia, titulo...",
+        "resultsLabel": "Noticias encontradas",
+        "emptyTitle": "Todavia no hay noticias que coincidan",
+        "empty": "Prueba con otra busqueda o agrega un nuevo registro a traves del bot de Telegram.",
+        "pagination": {
+          "prev": "← Mas nuevas",
+          "next": "Mas antiguas →",
+          "page": "Pagina"
+        }
+      },
+      "notes": {
+        "tag": "Project pulse",
+        "title": "Es mas facil seguir los proyectos a traves de un flujo comun de noticias.",
+        "description": "Una sola pagina ayuda a ver rapidamente que se esta lanzando, discutiendo y mostrando en los encuentros del club.",
+        "items": [
+          {
+            "title": "Lanzamientos y demos en un solo lugar",
+            "text": "No hace falta abrir cada proyecto por separado para entender donde hay movimiento nuevo."
+          },
+          {
+            "title": "Busqueda por proyecto y formato",
+            "text": "Puedes encontrar entradas rapidamente por nombre del proyecto, lugar del encuentro, formato o palabras clave de la descripcion."
+          },
+          {
+            "title": "Una historia viva del progreso",
+            "text": "El feed muestra como los proyectos del club pasan por anuncios, demos, actualizaciones y encuentros archivados."
+          }
+        ]
+      }
+    }
   }
 }
