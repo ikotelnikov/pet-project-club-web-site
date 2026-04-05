@@ -1,4 +1,5 @@
 {
+  "sourceLocale": "ru",
   "slug": "andrey",
   "handle": "andrey",
   "name": "Андрей",
@@ -7,5 +8,35 @@
   "photo": {
     "src": "assets/uploads/272981189/192-photo-192-AQAD6BVrGzxmeUp9.jpg",
     "alt": "Андрей"
+  },
+  "translations": {
+    "en": {
+      "role": "IT Specialist",
+      "bio": "Field of work: administration and maintenance of remote servers, user support, and IT security. He has worked in IT for around 30 years and has been self-employed for the last 15. Pet projects include a VPN service built as a Telegram bot, originally planned as a paid product and now evolving toward apps for markets outside the post-Soviet space, and a Raspberry Pi device for forwarding incoming SMS messages to Telegram, with the software part still in development. His everyday toolkit includes Visual Studio Code with Copilot, Docker, Mikrotik, Python, PowerShell, and ChatGPT. He joined the club for professional communication and exposure to new technologies. A few personal notes: enjoys hookah, can swim freestyle well enough to cross the Bosphorus, dislikes running, loves traveling, has lived in Bali and Georgia, and is a big badminton fan.",
+      "photo": {
+        "alt": "Andrey"
+      }
+    },
+    "de": {
+      "role": "IT-Spezialist",
+      "bio": "Taetigkeitsfeld: Administration und Wartung entfernter Server, User-Support und IT-Sicherheit. Er ist seit rund 30 Jahren in der IT und arbeitet seit den letzten 15 Jahren selbststaendig. Zu seinen Pet-Projekten gehoeren ein VPN-Service als Telegram-Bot, der urspruenglich verkauft werden sollte und sich nun in Richtung Apps fuer Maerkte ausserhalb des postsowjetischen Raums entwickelt, sowie ein Raspberry-Pi-Geraet zum Weiterleiten eingehender SMS an Telegram, dessen Softwareteil noch in Entwicklung ist. Im Alltag nutzt er Visual Studio Code mit Copilot, Docker, Mikrotik, Python, PowerShell und ChatGPT. Im Club sucht er fachlichen Austausch und Kontakt zu neuen Technologien. Persoenlich: Er raucht gern Shisha, kann Kraul schwimmen und hat den Bosporus ueberquert, laeuft nicht gern, reist sehr gern, hat auf Bali und in Georgien gelebt und liebt Badminton.",
+      "photo": {
+        "alt": "Andrey"
+      }
+    },
+    "me": {
+      "role": "IT specijalista",
+      "bio": "Oblast rada: administracija i odrzavanje udaljenih servera, podrska korisnicima i IT bezbjednost. U IT-u je oko 30 godina, a posljednjih 15 godina radi za sebe. Pet projekti ukljucuju VPN servis u obliku Telegram bota, koji je prvobitno planirao da prodaje, a sada ga razvija prema aplikacijama za trzista van postsovjetskog prostora, kao i uredjaj na Raspberry Pi za prosljedjivanje dolaznih SMS poruka u Telegram, pri cemu je softverski dio jos u razvoju. U radu koristi Visual Studio Code sa Copilotom, Docker, Mikrotik, Python, PowerShell i ChatGPT. Ciljevi ucesca u klubu su profesionalna komunikacija i upoznavanje sa novim tehnologijama. Malo i o njemu: voli nargilu, pliva kraul i preplivao je Bosfor, ne voli trcanje, voli putovanja, zivio je na Baliju i u Gruziji i obozava badminton.",
+      "photo": {
+        "alt": "Andrej"
+      }
+    },
+    "es": {
+      "role": "Especialista en IT",
+      "bio": "Area de trabajo: administracion y mantenimiento de servidores remotos, soporte a usuarios y seguridad IT. Lleva alrededor de 30 anos en IT y durante los ultimos 15 ha trabajado por cuenta propia. Entre sus pet projects estan un servicio VPN en forma de bot de Telegram, pensado al principio para venderse y ahora orientado a aplicaciones para mercados fuera del espacio postsovietico, y un dispositivo con Raspberry Pi para reenviar SMS entrantes a Telegram, cuya parte de software sigue en desarrollo. En el trabajo usa Visual Studio Code con Copilot, Docker, Mikrotik, Python, PowerShell y ChatGPT. Se unio al club para tener conversacion profesional y conocer nuevas tecnologias. Un poco mas sobre el: le gusta fumar hookah, nada crol y ha cruzado el Bosforo, no le gusta correr, disfruta viajar, ha vivido en Bali y Georgia, y le encanta el badminton.",
+      "photo": {
+        "alt": "Andrey"
+      }
+    }
   }
 }

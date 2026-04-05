@@ -1,4 +1,5 @@
 {
+  "sourceLocale": "ru",
   "slug": "ikotelnikov",
   "handle": "ikotelnikov",
   "name": "Илья Котельников",
@@ -7,5 +8,39 @@
   "photo": {
     "src": "assets/uploads/272981189/100-photo-100-AQAD9BVrG5XqWUp-.jpg",
     "alt": "Photo of Илья Котельников"
+  },
+  "translations": {
+    "en": {
+      "name": "Ilya Kotelnikov",
+      "role": "Product Manager",
+      "bio": "I am a Product Manager with 17 years of experience in IT, mostly in B2B SaaS and web platforms. My main strengths are product-development process management and technically complex products. I also work with CustDev and UX/UI. I like using and explaining product frameworks such as JTBD, CJM, Lean Canvas, and Personas. I like pet projects and the people who build them.",
+      "photo": {
+        "alt": "Photo of Ilya Kotelnikov"
+      }
+    },
+    "de": {
+      "name": "Ilya Kotelnikov",
+      "role": "Product Manager",
+      "bio": "Ich bin Product Manager mit 17 Jahren Erfahrung in der IT, hauptsaechlich in B2B SaaS und Web-Plattformen. Meine Staerken liegen vor allem im Management von Produktentwicklungsprozessen und in technisch anspruchsvollen Produkten. Zusaetzlich arbeite ich mit CustDev und UX/UI. Ich nutze und erklaere gern Produkt-Frameworks wie JTBD, CJM, Lean Canvas und Personas. Ich mag Pet-Projekte und die Menschen, die sie bauen.",
+      "photo": {
+        "alt": "Foto von Ilya Kotelnikov"
+      }
+    },
+    "me": {
+      "name": "Ilja Koteljnikov",
+      "role": "Product Manager",
+      "bio": "Ja sam Product Manager sa 17 godina iskustva u IT-u, uglavnom u B2B SaaS-u i web platformama. Glavne kompetencije su mi upravljanje procesima razvoja proizvoda i tehnoloski zahtjevni proizvodi. Takodje se bavim CustDev-om i UX/UI-jem. Volim da koristim i objasnjavam produktne frameworke kao sto su JTBD, CJM, Lean Canvas i Personas. Volim pet projekte i ljude koji ih grade.",
+      "photo": {
+        "alt": "Fotografija Ilje Koteljnikova"
+      }
+    },
+    "es": {
+      "name": "Ilya Kotelnikov",
+      "role": "Product Manager",
+      "bio": "Soy Product Manager con 17 anos de experiencia en IT, sobre todo en B2B SaaS y plataformas web. Mis principales competencias estan en la gestion de procesos de desarrollo de producto y en productos tecnologicamente complejos. Tambien trabajo con CustDev y UX/UI. Me gusta usar y explicar frameworks de producto como JTBD, CJM, Lean Canvas y Personas. Me gustan los pet projects y la gente que los construye.",
+      "photo": {
+        "alt": "Foto de Ilya Kotelnikov"
+      }
+    }
   }
 }
