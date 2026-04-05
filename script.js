@@ -6,6 +6,63 @@ const pageContent = document.getElementById("page-content");
 const updatedAt = document.getElementById("updated-at");
 const root = document.documentElement;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const DEFAULT_LOCALE = "ru";
+const LOCALE_STORAGE_KEY = "ppc-preferred-locale";
+const LOCALE_META = {
+  ru: {
+    label: "Русский",
+    shortLabel: "RU",
+    lang: "ru-RU",
+    flag: "🇷🇺",
+  },
+  en: {
+    label: "English",
+    shortLabel: "EN",
+    lang: "en",
+    flag: "🇬🇧",
+  },
+  de: {
+    label: "Deutsch",
+    shortLabel: "DE",
+    lang: "de",
+    flag: "🇩🇪",
+  },
+  me: {
+    label: "Crnogorski",
+    shortLabel: "ME",
+    lang: "sr-Latn-ME",
+    flag: "🇲🇪",
+  },
+  es: {
+    label: "Espanol",
+    shortLabel: "ES",
+    lang: "es",
+    flag: "🇪🇸",
+  },
+};
+const SUPPORTED_LOCALES = Object.keys(LOCALE_META);
+const PAGE_PATHS = {
+  main: "",
+  meetings: "meetings/",
+  "meeting-detail": "meetings/item/",
+  projects: "projects/",
+  "project-detail": "projects/item/",
+  participants: "participants/",
+  "participant-detail": "participants/item/",
+  news: "news/",
+};
+const LOCALE_GROUP_ALIASES = {
+  ru: "ru",
+  en: "en",
+  de: "de",
+  es: "es",
+  sr: "me",
+  bs: "me",
+  hr: "me",
+  mk: "me",
+  cnr: "me",
+};
+const repoRootPath = body.dataset.locale ? getRepoRootFromSiteRoot(siteRoot) : siteRoot;
 
 const pageLoaders = {
   main: renderMainPage,
@@ -18,32 +75,252 @@ const pageLoaders = {
   news: renderNewsPage,
 };
 
-if (updatedAt) {
-  updatedAt.textContent = new Date().toLocaleDateString("ru-RU", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+const localeState = initLocaleState();
+
+if (!localeState.redirecting) {
+  if (updatedAt) {
+    updatedAt.textContent = new Date().toLocaleDateString(localeState.langTag, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+
+  if (!prefersReducedMotion) {
+    window.addEventListener("pointermove", (event) => {
+      root.style.setProperty("--spot-x", `${event.clientX}px`);
+      root.style.setProperty("--spot-y", `${event.clientY}px`);
+    });
+  }
+
+  setActiveNav();
+  initTopbarMenu();
+  initLocaleSwitcher(localeState);
+  renderPage().finally(() => {
+    initReveal();
+    initCounters();
+    initTerminal();
+    initGallery();
+    initStoryDeck();
+    initFlowTabs();
+    initTimelineTabs();
   });
 }
 
-if (!prefersReducedMotion) {
-  window.addEventListener("pointermove", (event) => {
-    root.style.setProperty("--spot-x", `${event.clientX}px`);
-    root.style.setProperty("--spot-y", `${event.clientY}px`);
-  });
+function initLocaleState() {
+  const pagePath = PAGE_PATHS[page] ?? "";
+  const pathLocale = getPathLocale(window.location.pathname);
+  const explicitLocale = body.dataset.locale || pathLocale || null;
+
+  if (!explicitLocale) {
+    const detectedLocale = detectPreferredLocale();
+    const redirectHref = buildLocaleHref(detectedLocale, {
+      pagePath,
+      preserveLocation: true,
+      localizedPage: false,
+    });
+
+    if (redirectHref) {
+      window.location.replace(redirectHref);
+      return {
+        redirecting: true,
+        locale: detectedLocale,
+        langTag: LOCALE_META[detectedLocale]?.lang || detectedLocale,
+        pagePath,
+      };
+    }
+  }
+
+  const locale = normalizeLocale(explicitLocale) || DEFAULT_LOCALE;
+  const langTag = LOCALE_META[locale]?.lang || locale;
+  root.lang = langTag;
+  persistPreferredLocale(locale);
+
+  return {
+    redirecting: false,
+    locale,
+    langTag,
+    pagePath,
+  };
 }
 
-setActiveNav();
-initTopbarMenu();
-renderPage().finally(() => {
-  initReveal();
-  initCounters();
-  initTerminal();
-  initGallery();
-  initStoryDeck();
-  initFlowTabs();
-  initTimelineTabs();
-});
+function initLocaleSwitcher(locale) {
+  const footer = document.querySelector(".site-footer");
+
+  if (!footer) {
+    return;
+  }
+
+  const existing = footer.querySelector(".locale-switcher");
+
+  if (existing) {
+    existing.remove();
+  }
+
+  const switcher = document.createElement("nav");
+  switcher.className = "locale-switcher";
+  switcher.setAttribute("aria-label", "Language switcher");
+
+  const options = SUPPORTED_LOCALES.map((localeKey) => {
+    const meta = LOCALE_META[localeKey];
+    const currentClass = localeKey === locale.locale ? " is-current" : "";
+    const href = buildLocaleHref(localeKey, {
+      pagePath: locale.pagePath,
+      preserveLocation: true,
+      localizedPage: true,
+    });
+
+    return `
+      <a class="locale-link${currentClass}" href="${href}" data-locale-link="${localeKey}">
+        <span aria-hidden="true">${meta.flag}</span>
+        <span>${meta.shortLabel}</span>
+      </a>
+    `;
+  }).join("");
+
+  switcher.innerHTML = `
+    <span class="locale-switcher-label">Language</span>
+    <div class="locale-switcher-links">${options}</div>
+  `;
+
+  switcher.querySelectorAll("[data-locale-link]").forEach((link) => {
+    link.addEventListener("click", () => {
+      const nextLocale = link.dataset.localeLink;
+
+      if (nextLocale) {
+        persistPreferredLocale(nextLocale);
+      }
+    });
+  });
+
+  footer.append(switcher);
+}
+
+function getPathLocale(pathname) {
+  const segments = pathname.split("/").filter(Boolean);
+
+  for (const segment of segments) {
+    const normalized = normalizeLocale(segment);
+
+    if (normalized) {
+      return normalized;
+    }
+  }
+
+  return null;
+}
+
+function detectPreferredLocale() {
+  const storedLocale = readStoredLocale();
+
+  if (storedLocale) {
+    return storedLocale;
+  }
+
+  const browserLocales = Array.isArray(navigator.languages) && navigator.languages.length
+    ? navigator.languages
+    : [navigator.language];
+
+  for (const language of browserLocales) {
+    const normalized = resolveLocaleFromLanguageTag(language);
+
+    if (normalized) {
+      return normalized;
+    }
+  }
+
+  return DEFAULT_LOCALE;
+}
+
+function resolveLocaleFromLanguageTag(languageTag) {
+  if (typeof languageTag !== "string") {
+    return null;
+  }
+
+  const trimmedTag = languageTag.trim();
+
+  if (!trimmedTag) {
+    return null;
+  }
+
+  const directMatch = normalizeLocale(trimmedTag);
+
+  if (directMatch) {
+    return directMatch;
+  }
+
+  const baseLanguage = trimmedTag.split("-")[0]?.toLowerCase();
+  return normalizeLocale(baseLanguage);
+}
+
+function normalizeLocale(value) {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const normalizedValue = value.trim().toLowerCase();
+
+  if (!normalizedValue) {
+    return null;
+  }
+
+  if (SUPPORTED_LOCALES.includes(normalizedValue)) {
+    return normalizedValue;
+  }
+
+  return LOCALE_GROUP_ALIASES[normalizedValue] || null;
+}
+
+function buildLocaleHref(locale, options = {}) {
+  const normalizedLocale = normalizeLocale(locale) || DEFAULT_LOCALE;
+  const {
+    pagePath = "",
+    preserveLocation = false,
+    localizedPage = Boolean(body.dataset.locale || getPathLocale(window.location.pathname)),
+  } = options;
+  const repoRoot = localizedPage
+    ? getRepoRootFromSiteRoot(siteRoot)
+    : siteRoot;
+  const targetPath = `${repoRoot}/${normalizedLocale}/${pagePath}`;
+  const url = new URL(targetPath, window.location.href);
+
+  if (preserveLocation) {
+    url.search = window.location.search;
+    url.hash = window.location.hash;
+  }
+
+  return url.toString();
+}
+
+function getRepoRootFromSiteRoot(rootPath) {
+  if (!rootPath || rootPath === ".") {
+    return "..";
+  }
+
+  return `${rootPath}/..`;
+}
+
+function readStoredLocale() {
+  try {
+    return normalizeLocale(window.localStorage.getItem(LOCALE_STORAGE_KEY));
+  } catch {
+    return null;
+  }
+}
+
+function persistPreferredLocale(locale) {
+  const normalized = normalizeLocale(locale);
+
+  if (!normalized) {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem(LOCALE_STORAGE_KEY, normalized);
+  } catch {
+    // Ignore storage errors and continue with URL-based locale state.
+  }
+}
 
 async function renderPage() {
   if (!pageContent || !pageLoaders[page]) {
@@ -112,16 +389,17 @@ function resolveHref(href) {
     return href;
   }
 
-  const cleanRoot = siteRoot.endsWith("/") ? siteRoot.slice(0, -1) : siteRoot;
-
   if (href === "") {
-    return `${cleanRoot}/`;
+    const cleanSiteRoot = siteRoot.endsWith("/") ? siteRoot.slice(0, -1) : siteRoot;
+    return `${cleanSiteRoot}/`;
   }
 
   if (href.startsWith("http") || href.startsWith("#")) {
     return href;
   }
 
+  const activeRoot = href.startsWith("assets/") ? repoRootPath : siteRoot;
+  const cleanRoot = activeRoot.endsWith("/") ? activeRoot.slice(0, -1) : activeRoot;
   const cleanHref = href.startsWith("/") ? href.slice(1) : href;
   return `${cleanRoot}/${cleanHref}`;
 }

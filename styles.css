@@ -1636,6 +1636,57 @@ body.lightbox-open {
   align-items: center;
 }
 
+.locale-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px 14px;
+  align-items: center;
+}
+
+.locale-switcher-label {
+  color: var(--muted);
+  font-size: 0.84rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.locale-switcher-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.locale-link {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.locale-link:hover {
+  transform: translateY(-2px);
+  color: var(--text);
+  border-color: rgba(141, 246, 198, 0.24);
+}
+
+.locale-link.is-current {
+  color: #f3fffb;
+  background: rgba(141, 246, 198, 0.08);
+  border-color: rgba(141, 246, 198, 0.18);
+  box-shadow:
+    inset 0 0 0 1px rgba(141, 246, 198, 0.12),
+    0 0 18px rgba(141, 246, 198, 0.1);
+}
+
 .footer-mark {
   color: var(--text);
   font-weight: 600;
@@ -2026,6 +2077,11 @@ body.lightbox-open {
 
   .footer-inline {
     flex-wrap: wrap;
+  }
+
+  .locale-switcher,
+  .locale-switcher-links {
+    justify-content: flex-start;
   }
 
   .project-toolbar,

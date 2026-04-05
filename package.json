@@ -10,7 +10,8 @@
     "bot:webhook:info": "node bot/cli/get-webhook-info.js",
     "bot:webhook:register": "node bot/cli/register-webhook.js",
     "bot:webhook:simulate": "node bot/cli/simulate-webhook.js",
-    "bot:test": "node --test bot/**/*.test.js"
+    "bot:test": "node --test bot/**/*.test.js",
+    "build:locales": "node tools/generate-localized-pages.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.78.0"
