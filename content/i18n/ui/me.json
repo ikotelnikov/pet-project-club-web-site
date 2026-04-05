@@ -1,0 +1,156 @@
+{
+  "shell": {
+    "brandTitle": "Pet Project Club",
+    "brandSubtitle": "Budva / Montenegro",
+    "nav": {
+      "main": "Pocetna",
+      "meetings": "Susreti",
+      "projects": "Projekti",
+      "participants": "Ucesnici",
+      "news": "Novosti"
+    },
+    "telegram": "Telegram",
+    "languageSwitcherLabel": "Jezik",
+    "footer": {
+      "mark": "® Pet Project Club",
+      "address": "Adresa: MONTECO Coworking, Budva",
+      "contact": "Kontakt: @ikotelnikov",
+      "updatedAt": "Azurirano"
+    }
+  },
+  "common": {
+    "loadingContent": "Ucitam sadrzaj iz repozitorijuma...",
+    "loadError": "Nije uspjelo ucitavanje sadrzaja iz content/. Provjerite JSON fajlove i pokrenite sajt kroz staticki server.",
+    "emptyTitle": "Nista nije pronadjeno",
+    "pagination": {
+      "prev": "← Nazad",
+      "next": "Naprijed →",
+      "page": "Stranica"
+    }
+  },
+  "aria": {
+    "openNavigation": "Otvori navigaciju",
+    "mainNavigation": "Glavna navigacija",
+    "languageSwitcher": "Prekidac jezika",
+    "storyCards": "Kartice price",
+    "flowCards": "Kartice toka",
+    "projectsPagination": "Paginacija projekata",
+    "newsPagination": "Paginacija novosti",
+    "meetingsPagination": "Paginacija susreta",
+    "previousPhoto": "Prethodna fotografija",
+    "nextPhoto": "Sljedeca fotografija",
+    "previousImage": "Prethodna slika",
+    "nextImage": "Sljedeca slika",
+    "closeGallery": "Zatvori galeriju",
+    "imageViewer": "Pregled slike",
+    "openStoryCard": "Otvori karticu price",
+    "openFlowCard": "Otvori karticu toka"
+  },
+  "errors": {
+    "meetingSlugMissing": "Nije moguce otvoriti susret jer u URL-u nedostaje parametar slug.",
+    "participantSlugMissing": "Nije moguce otvoriti ucesnika jer u URL-u nedostaje parametar slug.",
+    "projectSlugMissing": "Nije moguce otvoriti projekat jer u URL-u nedostaje parametar slug."
+  },
+  "meta": {
+    "siteName": "Pet Project Club Budva",
+    "main": {
+      "title": "Pet Project Club Budva",
+      "description": "Zajednica za ljude koji grade pet projekte u Crnoj Gori."
+    },
+    "meetings": {
+      "title": "Susreti | Pet Project Club Budva",
+      "description": "Formati susreta, aktuelne najave i arhiva klupskih sesija."
+    },
+    "meeting-detail": {
+      "title": "Susret | Pet Project Club Budva",
+      "description": "Detaljna stranica susreta Pet Project Club-a."
+    },
+    "projects": {
+      "title": "Projekti | Pet Project Club Budva",
+      "description": "Projekti zajednice Pet Project Club."
+    },
+    "project-detail": {
+      "title": "Projekat | Pet Project Club Budva",
+      "description": "Detaljna stranica projekta Pet Project Club-a."
+    },
+    "participants": {
+      "title": "Ucesnici | Pet Project Club Budva",
+      "description": "Ucesnici zajednice Pet Project Club."
+    },
+    "participant-detail": {
+      "title": "Ucesnik | Pet Project Club Budva",
+      "description": "Detaljna stranica ucesnika Pet Project Club-a."
+    },
+    "news": {
+      "title": "Novosti | Pet Project Club Budva",
+      "description": "Novosti o projektima, demoi, izdanja i povezani susreti zajednice."
+    }
+  },
+  "visual": {
+    "mainTerminalTitle": "club-session.log",
+    "mainTerminalStatus": "uzivo",
+    "meetingsTerminalStatus": "spremno za Telegram",
+    "projectsTerminalStatus": "saradnici dobrodosli"
+  },
+  "projects": {
+    "title": "Klupski projekti",
+    "searchPlaceholder": "Pronadji projekat, stack, autora ili zahtjev",
+    "resultsLabel": "Pronadjeni projekti",
+    "emptyText": "Jos nema projekata koji odgovaraju ovom upitu.",
+    "openProject": "Otvori projekat",
+    "readMore": "vise -->",
+    "pagination": {
+      "prev": "← Novije",
+      "next": "Starije →",
+      "page": "Stranica"
+    },
+    "detail": {
+      "backLabel": "← Nazad na projekte",
+      "detailsTitle": "Detalji projekta",
+      "ownersTitle": "Autori projekta",
+      "ownersEmptyTitle": "Jos nije navedeno",
+      "ownersEmptyText": "Za ovaj projekat jos nijesu navedeni autori u ownerSlugs.",
+      "newsTitle": "Novosti i povezani susreti",
+      "relatedEmptyTitle": "Jos nema sadrzaja",
+      "relatedEmptyText": "Povezani susreti ce se pojaviti ovdje cim sastanak ili najava budu imali projectSlugs."
+    }
+  },
+  "participants": {
+    "tag": "Ucesnici",
+    "title": "Ucesnici Pet Project Club-a",
+    "description": "Da biste usli na listu ucesnika, uredili podatke ili bili uklonjeni, javite se <a href=\"#footer-contact-organizer\">organizatoru</a>.",
+    "card": {
+      "untitled": "Ucesnik bez imena",
+      "roleFallback": "Uloga nije navedena",
+      "readMore": "vise -->"
+    },
+    "detail": {
+      "backLabel": "← Nazad na ucesnike",
+      "projectsTitle": "Projekti ucesnika",
+      "emptyTitle": "Jos nema sadrzaja",
+      "emptyText": "Za ovog ucesnika jos nijesu vezani projekti."
+    }
+  },
+  "news": {
+    "title": "Novosti o projektima",
+    "searchPlaceholder": "Pretraga: projekat, tehnologija, naziv...",
+    "resultsLabel": "Pronadjene novosti",
+    "emptyText": "Pokusajte da promijenite upit za pretragu.",
+    "pagination": {
+      "prev": "← Novije",
+      "next": "Starije →",
+      "page": "Stranica"
+    }
+  },
+  "meetings": {
+    "readMore": "procitaj vise -->",
+    "emptyText": "Ovdje jos nema susreta.",
+    "types": {
+      "announcement": "Najava",
+      "meeting": "Susret"
+    },
+    "detail": {
+      "backLabel": "← Nazad na susrete"
+    }
+  }
+}

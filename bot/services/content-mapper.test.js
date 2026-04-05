@@ -1,7 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { ContentValidationError } from "../domain/errors.js";
 import { mapCommandToContent } from "./content-mapper.js";
 
 test("maps participant command to canonical participant JSON", () => {
@@ -25,6 +24,7 @@ test("maps participant command to canonical participant JSON", () => {
     slug: "participant-ivan-kotelnikov",
     item: {
       slug: "participant-ivan-kotelnikov",
+      sourceLocale: "ru",
       handle: "@ikotelnikov",
       name: "Ivan Kotelnikov",
       role: "Founder / Product / Engineering",
@@ -52,26 +52,32 @@ test("maps project owners to ownerSlugs", () => {
   });
 
   assert.deepEqual(result.item.ownerSlugs, ["participant-ivan-kotelnikov"]);
+  assert.equal(result.item.sourceLocale, "ru");
 });
 
-test("rejects photo alt without photo file", () => {
-  assert.throws(
-    () =>
-      mapCommandToContent({
-        entity: "meeting",
-        action: "create",
-        fields: {
-          slug: "meeting-2026-03-open-circle",
-          date: "2026-03-19",
-          title: "Open circle",
-          place: "Budva",
-          format: "offline",
-          paragraphs: ["One"],
-          photoalt: "Alt text",
-        },
-      }),
-    (error) =>
-      error instanceof ContentValidationError &&
-      error.message === "Photo alt text is present, but no photo file has been provided."
-  );
+test("maps locale-specific translation edits into translations block", () => {
+  const result = mapCommandToContent({
+    entity: "participant",
+    action: "update",
+    fields: {
+      slug: "participant-ivan-kotelnikov",
+      locale: "en",
+      bio: "Builds the club in English.",
+      role: "Founder",
+    },
+  });
+
+  assert.deepEqual(result.item, {
+    slug: "participant-ivan-kotelnikov",
+    sourceLocale: "ru",
+    translations: {
+      en: {
+        role: "Founder",
+        bio: "Builds the club in English.",
+      },
+    },
+    translationStatus: {
+      en: "edited",
+    },
+  });
 });

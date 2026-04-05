@@ -44,6 +44,7 @@ export function loadBotConfig(env = process.env) {
     telegramWebhookSecret: env.TELEGRAM_WEBHOOK_SECRET || null,
     openAiApiKey: env.OPENAI_API_KEY || null,
     openAiModel: env.OPENAI_MODEL || null,
+    openAiTranslationModel: env.OPENAI_TRANSLATION_MODEL || null,
     extractionBackend: env.EXTRACTION_BACKEND || "prototype",
     githubRepoOwner: env.GITHUB_REPO_OWNER || null,
     githubRepoName: env.GITHUB_REPO_NAME || null,

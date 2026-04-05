@@ -1,51 +1,21 @@
 {
+  "sourceLocale": "ru",
   "shell": {
     "brandTitle": "Pet Project Club",
     "brandSubtitle": "Budva / Montenegro",
     "nav": [
-      {
-        "key": "main",
-        "label": "Main",
-        "href": "./"
-      },
-      {
-        "key": "meetings",
-        "label": "Meetings",
-        "href": "./meetings/"
-      },
-      {
-        "key": "projects",
-        "label": "Projects",
-        "href": "./projects/"
-      },
-      {
-        "key": "participants",
-        "label": "Participants",
-        "href": "./participants/"
-      },
-      {
-        "key": "news",
-        "label": "News",
-        "href": "./news/"
-      }
+      { "key": "main", "label": "Main", "href": "./" },
+      { "key": "meetings", "label": "Meetings", "href": "./meetings/" },
+      { "key": "projects", "label": "Projects", "href": "./projects/" },
+      { "key": "participants", "label": "Participants", "href": "./participants/" },
+      { "key": "news", "label": "News", "href": "./news/" }
     ],
-    "telegram": {
-      "label": "Telegram",
-      "href": "https://t.me/PetProjectClubMNE"
-    },
+    "telegram": { "label": "Telegram", "href": "https://t.me/PetProjectClubMNE" },
     "footer": {
       "mark": "® Pet Project Club",
       "links": [
-        {
-          "label": "Address: MONTECO Coworking, Budva",
-          "href": "https://maps.google.com/?q=Monteco+Coworking+Budva",
-          "external": true
-        },
-        {
-          "label": "Contact: @ikotelnikov",
-          "href": "https://t.me/ikotelnikov",
-          "external": true
-        }
+        { "label": "Address: MONTECO Coworking, Budva", "href": "https://maps.google.com/?q=Monteco+Coworking+Budva", "external": true },
+        { "label": "Contact: @ikotelnikov", "href": "https://t.me/ikotelnikov", "external": true }
       ]
     }
   },
@@ -57,44 +27,16 @@
     "lead": "Pet Project Club собирает людей в Черногории, которые работают над своими Pet-проектами в любых сферах и нуждаются в поддержке, обсуждениях, пользователях, компетенциях, единомышленниках и партнерах. Делать что-то вместе всегда интереснее, а значит и эффективнее!",
     "description": "С апреля 2025 года клуб проводит регулярные оффлайн-встречи в Будве и имеет telegram-канал для того чтобы делиться новостями, полезными материалами и просто общаться. Есть проект, идея или желание что-то создавать? Присоединяйся!",
     "quickLinks": [
-      {
-        "label": "Meetings",
-        "href": "meetings/"
-      },
-      {
-        "label": "Projects and Participants",
-        "href": "projects/"
-      },
-      {
-        "label": "Participants",
-        "href": "participants/"
-      },
-      {
-        "label": "News",
-        "href": "news/"
-      }
+      { "label": "Meetings", "href": "meetings/" },
+      { "label": "Projects and Participants", "href": "projects/" },
+      { "label": "Participants", "href": "participants/" },
+      { "label": "News", "href": "news/" }
     ],
-    "primaryCta": {
-      "label": "Перейти в Telegram",
-      "href": "https://t.me/PetProjectClubMNE",
-      "external": true
-    },
-    "secondaryCta": {
-      "label": "Открыть встречи",
-      "href": "meetings/"
-    },
+    "primaryCta": { "label": "Перейти в Telegram", "href": "https://t.me/PetProjectClubMNE", "external": true },
+    "secondaryCta": { "label": "Открыть встречи", "href": "meetings/" },
     "stage": {
-      "captions": [
-        "club momentum",
-        "community energy"
-      ],
-      "nodes": {
-        "center": "club",
-        "n1": "idea",
-        "n2": "team",
-        "n3": "ship",
-        "n4": "feedback"
-      },
+      "captions": ["club momentum", "community energy"],
+      "nodes": { "center": "club", "n1": "idea", "n2": "team", "n3": "ship", "n4": "feedback" },
       "terminal": {
         "title": "club-session.log",
         "status": "live",
@@ -113,62 +55,25 @@
     }
   },
   "signals": [
-    {
-      "label": "Режим",
-      "value": "Build together"
-    },
-    {
-      "label": "Фокус",
-      "value": "MVP, ship, feedback"
-    },
-    {
-      "label": "Среда",
-      "value": "Люди, которые тоже делают"
-    }
+    { "label": "Режим", "value": "Build together" },
+    { "label": "Фокус", "value": "MVP, ship, feedback" },
+    { "label": "Среда", "value": "Люди, которые тоже делают" }
   ],
   "metrics": [
-    {
-      "label": "Постоянные участники",
-      "value": "10+",
-      "hint": "На оффлайн встречи регулярно приходит от 5 до 15 человек."
-    },
-    {
-      "label": "Участники онлайн",
-      "value": "100+",
-      "hint": "Более 100 человек участвует в обсуждениях онлайн."
-    },
-    {
-      "label": "Проекты",
-      "value": "20+",
-      "hint": "За год существования клуба участники поделились 20+ проектами."
-    },
-    {
-      "label": "Основной язык общения",
-      "value": "Ru",
-      "hint": "Большинство участников общается на русском, но мы рады добавить встречи на других языках по запросу участников."
-    }
+    { "label": "Постоянные участники", "value": "10+", "hint": "На оффлайн встречи регулярно приходит от 5 до 15 человек." },
+    { "label": "Участники онлайн", "value": "100+", "hint": "Более 100 человек участвует в обсуждениях онлайн." },
+    { "label": "Проекты", "value": "20+", "hint": "За год существования клуба участники поделились 20+ проектами." },
+    { "label": "Основной язык общения", "value": "Ru", "hint": "Большинство участников общается на русском, но мы рады добавить встречи на других языках по запросу участников." }
   ],
   "story": {
     "tag": "Зачем участвовать",
     "title": "Зачем участвовать",
     "description": "Клуб помогает не только обсуждать идеи, но и находить людей, знания, обратную связь и новые точки роста для проектов.",
     "items": [
-      {
-        "title": "Комьюнити энергичных профессионалов",
-        "text": "Здесь проще найти недостающие компетенции по дизайну, разработке, продукту или другим задачам и спросить совет у людей, которые реально что-то делают."
-      },
-      {
-        "title": "Живое общение с интересными людьми",
-        "text": "Это среда, где можно встретить тех, кто мыслит широко, делает свои проекты и приносит в разговор не только мнение, но и опыт."
-      },
-      {
-        "title": "Возможность показать проект на любой стадии",
-        "text": "Можно принести идею, сырой прототип или уже работающий проект, попросить зарегистрироваться, протестировать, дать обратную связь или помочь провалидировать направление."
-      },
-      {
-        "title": "Коллективный мозг для освоения новых технологий",
-        "text": "Новые технологии и инструменты осваиваются быстрее, когда люди тестируют их параллельно, делятся опытом и сразу обсуждают, что реально работает."
-      }
+      { "title": "Комьюнити энергичных профессионалов", "text": "Здесь проще найти недостающие компетенции по дизайну, разработке, продукту или другим задачам и спросить совет у людей, которые реально что-то делают." },
+      { "title": "Живое общение с интересными людьми", "text": "Это среда, где можно встретить тех, кто мыслит широко, делает свои проекты и приносит в разговор не только мнение, но и опыт." },
+      { "title": "Возможность показать проект на любой стадии", "text": "Можно принести идею, сырой прототип или уже работающий проект, попросить зарегистрироваться, протестировать, дать обратную связь или помочь провалидировать направление." },
+      { "title": "Коллективный мозг для освоения новых технологий", "text": "Новые технологии и инструменты осваиваются быстрее, когда люди тестируют их параллельно, делятся опытом и сразу обсуждают, что реально работает." }
     ]
   },
   "flow": {
@@ -176,26 +81,10 @@
     "title": "Темы и форматы встреч",
     "description": "На текущий момент у нас есть несколько разных тем и форматов, и мы стараемся чередовать их, чтобы всем было интересно.",
     "items": [
-      {
-        "index": "01",
-        "title": "Знакомство и новости проектов",
-        "text": "Раз в 1 или 2 месяца мы собираемся, чтобы познакомиться с новыми участниками, их проектами и рассказать об актуальном состоянии своих проектов. Поделиться новостями и идеями."
-      },
-      {
-        "index": "02",
-        "title": "Релиз нового проекта",
-        "text": "Когда кто-то из участников выпускает новый проект в бета-тест, мы собираемся, чтобы посмотреть механики проекта, обсудить его ближайшие цели и планы, дать свою оценку и поделиться мнением."
-      },
-      {
-        "index": "03",
-        "title": "Обсуждение новых технологий или подходов",
-        "text": "Иногда мы собираемся, чтобы вместе обсудить какую-нибудь нашумевшую новинку: нового агента, LLM, приложение или подход. Обычно такая встреча состоит из презентации и обсуждения."
-      },
-      {
-        "index": "04",
-        "title": "Productivity sprint",
-        "text": "Это короткий спринт на 1,5 часа: 15 минут обсуждаем задачи, что и зачем хотим сделать и что мешало раньше; 1 час занимаемся ими; в конце 15 минут финализируем, что получилось и что дальше."
-      }
+      { "index": "01", "title": "Знакомство и новости проектов", "text": "Раз в 1 или 2 месяца мы собираемся, чтобы познакомиться с новыми участниками, их проектами и рассказать об актуальном состоянии своих проектов. Поделиться новостями и идеями." },
+      { "index": "02", "title": "Релиз нового проекта", "text": "Когда кто-то из участников выпускает новый проект в бета-тест, мы собираемся, чтобы посмотреть механики проекта, обсудить его ближайшие цели и планы, дать свою оценку и поделиться мнением." },
+      { "index": "03", "title": "Обсуждение новых технологий или подходов", "text": "Иногда мы собираемся, чтобы вместе обсудить какую-нибудь нашумевшую новинку: нового агента, LLM, приложение или подход. Обычно такая встреча состоит из презентации и обсуждения." },
+      { "index": "04", "title": "Productivity sprint", "text": "Это короткий спринт на 1,5 часа: 15 минут обсуждаем задачи, что и зачем хотим сделать и что мешало раньше; 1 час занимаемся ими; в конце 15 минут финализируем, что получилось и что дальше." }
     ]
   },
   "gallery": {
@@ -203,71 +92,321 @@
     "title": "Как проходят встречи клуба",
     "description": "Встречи проходят в разных местах и форматах: для обсуждения проектов, демонстрации устройств и встречи с участниками из других городов и стран мы собираемся в коворкинге с большим экраном и профессиональным оборудованием для конференц-связи, иногда собираемся в кафе или ресторанах, чтобы обсудить новости, вместе встретить праздник или просто выпить кофе.",
     "items": [
-      {
-        "src": "assets/meetings/photo_2025-10-31_10-58-19.jpg",
-        "alt": "Фото участников сообщества во время встречи",
-        "caption": "Форматы встреч меняются, интерес остается"
-      },
-      {
-        "src": "assets/meetings/photo_2025-11-11_10-35-01.jpg",
-        "alt": "Фото с одной из встреч клуба",
-        "caption": "Проекты, люди и новые планы"
-      },
-      {
-        "src": "assets/meetings/photo_2025-09-04_22-06-34.jpg",
-        "alt": "Участники клуба на вечерней встрече",
-        "caption": "Обсуждения, знакомства и новости проектов"
-      },
-      {
-        "src": "assets/meetings/photo_2025-09-18_20-44-01.jpg",
-        "alt": "Фотография со встречи Pet Project Club",
-        "caption": "Люди, проекты и совместные идеи"
-      },
-      {
-        "src": "assets/meetings/photo_2025-10-10_09-39-01.jpg",
-        "alt": "Участники клуба на одной из встреч",
-        "caption": "Регулярные встречи и новые знакомства"
-      },
-      {
-        "src": "assets/meetings/photo_2025-08-08_12-36-30.jpg",
-        "alt": "Участники Pet Project Club за столом во время встречи",
-        "caption": "Оффлайн-встречи клуба в Будве"
-      },
-      {
-        "src": "assets/meetings/photo_2025-11-04_10-43-18.jpg",
-        "alt": "Небольшая встреча участников Pet Project Club",
-        "caption": "Камерные обсуждения и обратная связь"
-      },
-      {
-        "src": "assets/meetings/photo_2025-11-07_13-01-57.jpg",
-        "alt": "Участники клуба на встрече",
-        "caption": "Поддержка, идеи и совместный рост"
-      },
-      {
-        "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg",
-        "alt": "Встреча сообщества Pet Project Club",
-        "caption": "Обсуждение проектов и обмен опытом"
-      },
-      {
-        "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg",
-        "alt": "Участники клуба во время оффлайн-встречи",
-        "caption": "Сообщество, в котором делают вместе"
-      },
-      {
-        "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg",
-        "alt": "Фотография участников Pet Project Club",
-        "caption": "Оффлайн-формат, который помогает не терять темп"
-      },
-      {
-        "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg",
-        "alt": "Фото со встречи клуба в конце года",
-        "caption": "Клуб продолжает собираться и расти"
-      },
-      {
-        "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg",
-        "alt": "Недавняя фотография со встречи Pet Project Club",
-        "caption": "Свежие встречи и новые участники"
-      }
+      { "src": "assets/meetings/photo_2025-10-31_10-58-19.jpg", "alt": "Фото участников сообщества во время встречи", "caption": "Форматы встреч меняются, интерес остается" },
+      { "src": "assets/meetings/photo_2025-11-11_10-35-01.jpg", "alt": "Фото с одной из встреч клуба", "caption": "Проекты, люди и новые планы" },
+      { "src": "assets/meetings/photo_2025-09-04_22-06-34.jpg", "alt": "Участники клуба на вечерней встрече", "caption": "Обсуждения, знакомства и новости проектов" },
+      { "src": "assets/meetings/photo_2025-09-18_20-44-01.jpg", "alt": "Фотография со встречи Pet Project Club", "caption": "Люди, проекты и совместные идеи" },
+      { "src": "assets/meetings/photo_2025-10-10_09-39-01.jpg", "alt": "Участники клуба на одной из встреч", "caption": "Регулярные встречи и новые знакомства" },
+      { "src": "assets/meetings/photo_2025-08-08_12-36-30.jpg", "alt": "Участники Pet Project Club за столом во время встречи", "caption": "Оффлайн-встречи клуба в Будве" },
+      { "src": "assets/meetings/photo_2025-11-04_10-43-18.jpg", "alt": "Небольшая встреча участников Pet Project Club", "caption": "Камерные обсуждения и обратная связь" },
+      { "src": "assets/meetings/photo_2025-11-07_13-01-57.jpg", "alt": "Участники клуба на встрече", "caption": "Поддержка, идеи и совместный рост" },
+      { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Встреча сообщества Pet Project Club", "caption": "Обсуждение проектов и обмен опытом" },
+      { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Участники клуба во время оффлайн-встречи", "caption": "Сообщество, в котором делают вместе" },
+      { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Фотография участников Pet Project Club", "caption": "Оффлайн-формат, который помогает не терять темп" },
+      { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Фото со встречи клуба в конце года", "caption": "Клуб продолжает собираться и расти" },
+      { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Недавняя фотография со встречи Pet Project Club", "caption": "Свежие встречи и новые участники" }
     ]
+  },
+  "translations": {
+    "en": {
+      "hero": {
+        "title": "A community where pet project builders help each other grow.",
+        "lead": "Pet Project Club brings together people in Montenegro who are building pet projects in any field and need support, discussion, users, skills, collaborators, and partners. Building together is more engaging and usually more effective.",
+        "description": "Since April 2025, the club has hosted regular offline meetups in Budva and runs a Telegram channel for updates, useful materials, and conversation. Have a project, an idea, or just the urge to build something? Join us.",
+        "primaryCta": { "label": "Go to Telegram" },
+        "secondaryCta": { "label": "Open meetings" },
+        "stage": {
+          "lines": [
+            "Find support and your first users.",
+            "Get discussion, feedback, and fresh skills around the project.",
+            "Meet collaborators, partners, and people you actually want to build with."
+          ],
+          "phrases": [
+            "sync --messages into content/",
+            "review --idea and cut scope",
+            "ship --small but real",
+            "publish --progress in public"
+          ]
+        }
+      },
+      "signals": [
+        { "label": "Mode", "value": "Build together" },
+        { "label": "Focus", "value": "MVP, ship, feedback" },
+        { "label": "Environment", "value": "People who are also building" }
+      ],
+      "metrics": [
+        { "label": "Regular participants", "hint": "Offline meetups usually gather 5 to 15 people." },
+        { "label": "Online participants", "hint": "More than 100 people take part in online discussions." },
+        { "label": "Projects", "hint": "Club members have shared 20+ projects during the first year." },
+        { "label": "Main community language", "value": "RU", "hint": "Most participants speak Russian, but we are happy to add meetings in other languages on request." }
+      ],
+      "story": {
+        "tag": "Why join",
+        "title": "Why join",
+        "description": "The club helps you do more than discuss ideas. It helps you find people, knowledge, feedback, and fresh growth points for your projects.",
+        "items": [
+          { "title": "A community of energetic professionals", "text": "It is easier to find missing skills in design, development, product, and other areas and ask advice from people who are actually building." },
+          { "title": "Live conversations with interesting people", "text": "This is a space where you meet people who think broadly, build their own projects, and bring real experience into the conversation." },
+          { "title": "A chance to show your project at any stage", "text": "You can bring an idea, a rough prototype, or a working product and ask people to sign up, test it, give feedback, or help validate the direction." },
+          { "title": "A collective brain for learning new technologies", "text": "New tools and technologies are easier to understand when people test them in parallel, share what they learn, and compare what actually works." }
+        ]
+      },
+      "flow": {
+        "tag": "Meeting themes and formats",
+        "title": "Meeting themes and formats",
+        "description": "We currently have several themes and formats, and we try to alternate them so the club stays useful for different kinds of builders.",
+        "items": [
+          { "title": "Introductions and project updates", "text": "Every one or two months we gather to meet new members, hear about their projects, and share the current state of our own work, ideas, and updates." },
+          { "title": "New project release review", "text": "When someone launches a project into beta, we meet to look at the mechanics, discuss short-term goals and plans, and give grounded feedback." },
+          { "title": "Discussion of new technologies and approaches", "text": "Sometimes we gather to discuss a notable new tool, agent, LLM, app, or method. These meetings are usually a mix of presentation and discussion." },
+          { "title": "Productivity sprint", "text": "This is a short 90-minute sprint: 15 minutes to define goals and blockers, 60 minutes of focused work, and 15 minutes to review what happens next." }
+        ]
+      },
+      "gallery": {
+        "tag": "Photos from meetups",
+        "title": "What club meetups look like",
+        "description": "Meetups happen in different places and formats. For project discussions, device demos, and remote guests from other cities and countries, we gather in a coworking space with a large screen and proper conference equipment. Sometimes we meet in cafes or restaurants to talk through updates, celebrate, or simply have coffee together.",
+        "items": [
+          { "src": "assets/meetings/photo_2025-10-31_10-58-19.jpg", "alt": "Community members during a meetup", "caption": "The format changes, the interest stays" },
+          { "src": "assets/meetings/photo_2025-11-11_10-35-01.jpg", "alt": "One of the club meetups", "caption": "Projects, people, and new plans" },
+          { "src": "assets/meetings/photo_2025-09-04_22-06-34.jpg", "alt": "Club members at an evening meetup", "caption": "Discussion, new connections, and project updates" },
+          { "src": "assets/meetings/photo_2025-09-18_20-44-01.jpg", "alt": "Photo from a Pet Project Club meetup", "caption": "People, projects, and shared ideas" },
+          { "src": "assets/meetings/photo_2025-10-10_09-39-01.jpg", "alt": "Club members at one of the meetings", "caption": "Regular meetups and new connections" },
+          { "src": "assets/meetings/photo_2025-08-08_12-36-30.jpg", "alt": "Pet Project Club members around a table during a meetup", "caption": "Offline club meetups in Budva" },
+          { "src": "assets/meetings/photo_2025-11-04_10-43-18.jpg", "alt": "A small Pet Project Club meetup", "caption": "Focused discussions and feedback" },
+          { "src": "assets/meetings/photo_2025-11-07_13-01-57.jpg", "alt": "Club members during a meetup", "caption": "Support, ideas, and shared growth" },
+          { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Pet Project Club community meetup", "caption": "Project discussions and exchange of experience" },
+          { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Club members during an offline meetup", "caption": "A community that builds together" },
+          { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Photo of Pet Project Club participants", "caption": "An offline format that helps keep momentum" },
+          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Photo from the club meetup at the end of the year", "caption": "The club keeps gathering and growing" },
+          { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Recent photo from a Pet Project Club meetup", "caption": "Fresh meetups and new members" }
+        ]
+      }
+    },
+    "de": {
+      "hero": {
+        "title": "Eine Community, in der sich Pet-Project-Builders gegenseitig beim Wachsen helfen.",
+        "lead": "Pet Project Club bringt Menschen in Montenegro zusammen, die in beliebigen Bereichen an ihren Pet-Projekten arbeiten und Unterstuetzung, Diskussion, Nutzer, Kompetenzen, Mitstreiter und Partner brauchen. Gemeinsam zu bauen ist interessanter und meist effektiver.",
+        "description": "Seit April 2025 veranstaltet der Club regelmaessige Offline-Treffen in Budva und betreibt einen Telegram-Kanal fuer Updates, hilfreiche Materialien und Austausch. Haben Sie ein Projekt, eine Idee oder einfach Lust, etwas zu bauen? Machen Sie mit.",
+        "primaryCta": { "label": "Zu Telegram" },
+        "secondaryCta": { "label": "Treffen ansehen" },
+        "stage": {
+          "lines": [
+            "Unterstuetzung und erste Nutzer finden.",
+            "Diskussion, Feedback und neue Kompetenzen fuer das Projekt bekommen.",
+            "Mitstreiter, Partner und Menschen treffen, mit denen man wirklich bauen will."
+          ],
+          "phrases": [
+            "sync --nachrichten in content/",
+            "review --idee pruefen und scope kuerzen",
+            "ship --klein aber echt",
+            "publish --fortschritt oeffentlich teilen"
+          ]
+        }
+      },
+      "signals": [
+        { "label": "Modus", "value": "Build together" },
+        { "label": "Fokus", "value": "MVP, ship, feedback" },
+        { "label": "Umfeld", "value": "Menschen, die ebenfalls bauen" }
+      ],
+      "metrics": [
+        { "label": "Regelmaessige Teilnehmer", "hint": "Zu Offline-Treffen kommen normalerweise 5 bis 15 Personen." },
+        { "label": "Online-Teilnehmer", "hint": "Mehr als 100 Personen beteiligen sich an Online-Diskussionen." },
+        { "label": "Projekte", "hint": "Im ersten Jahr haben Mitglieder des Clubs mehr als 20 Projekte geteilt." },
+        { "label": "Hauptsprache der Community", "value": "RU", "hint": "Die meisten Teilnehmer sprechen Russisch, aber wir erweitern das Format auf Wunsch gern um andere Sprachen." }
+      ],
+      "story": {
+        "tag": "Warum mitmachen",
+        "title": "Warum mitmachen",
+        "description": "Der Club hilft nicht nur dabei, Ideen zu diskutieren. Er hilft dabei, Menschen, Wissen, Feedback und neue Wachstumspunkte fuer Projekte zu finden.",
+        "items": [
+          { "title": "Eine Community aus engagierten Profis", "text": "Hier findet man leichter fehlende Kompetenzen in Design, Entwicklung, Produkt und anderen Bereichen und bekommt Rat von Menschen, die wirklich etwas bauen." },
+          { "title": "Direkter Austausch mit interessanten Menschen", "text": "Das ist ein Umfeld, in dem man Menschen trifft, die breit denken, eigene Projekte vorantreiben und nicht nur Meinungen, sondern echte Erfahrung einbringen." },
+          { "title": "Die Moeglichkeit, ein Projekt in jedem Stadium zu zeigen", "text": "Man kann eine Idee, einen rohen Prototyp oder ein funktionierendes Produkt mitbringen und um Registrierungen, Tests, Feedback oder Hilfe bei der Validierung bitten." },
+          { "title": "Ein kollektives Gehirn fuer neue Technologien", "text": "Neue Tools und Technologien lassen sich schneller verstehen, wenn mehrere Menschen sie parallel ausprobieren, Erfahrungen teilen und direkt vergleichen, was wirklich funktioniert." }
+        ]
+      },
+      "flow": {
+        "tag": "Treffenthemen und Formate",
+        "title": "Treffenthemen und Formate",
+        "description": "Wir haben derzeit mehrere Themen und Formate und wechseln bewusst dazwischen, damit der Club fuer unterschiedliche Builder nuetzlich bleibt.",
+        "items": [
+          { "title": "Vorstellungsrunde und Projekt-Updates", "text": "Alle ein bis zwei Monate treffen wir uns, um neue Mitglieder und ihre Projekte kennenzulernen und den aktuellen Stand unserer eigenen Arbeit, Ideen und Updates zu teilen." },
+          { "title": "Review eines neuen Projekt-Releases", "text": "Wenn jemand ein neues Projekt in die Beta bringt, schauen wir uns gemeinsam die Mechanik an, besprechen kurzfristige Ziele und geben fundiertes Feedback." },
+          { "title": "Diskussion neuer Technologien und Ansaetze", "text": "Manchmal treffen wir uns, um ueber ein auffaelliges neues Tool, einen Agenten, ein LLM, eine App oder eine Methode zu sprechen. Solche Treffen bestehen meist aus Praesentation und Diskussion." },
+          { "title": "Productivity Sprint", "text": "Das ist ein kurzer 90-Minuten-Sprint: 15 Minuten fuer Ziele und Blocker, 60 Minuten fokussierte Arbeit und 15 Minuten fuer die Zusammenfassung der naechsten Schritte." }
+        ]
+      },
+      "gallery": {
+        "tag": "Fotos von den Treffen",
+        "title": "So sehen Club-Treffen aus",
+        "description": "Treffen finden an unterschiedlichen Orten und in verschiedenen Formaten statt. Fuer Projektdiskussionen, Geraetedemos und Remote-Gaeste aus anderen Staedten und Laendern treffen wir uns im Coworking mit grossem Bildschirm und guter Konferenztechnik. Manchmal treffen wir uns in Cafes oder Restaurants, um Updates zu besprechen, zu feiern oder einfach gemeinsam Kaffee zu trinken.",
+        "items": [
+          { "src": "assets/meetings/photo_2025-10-31_10-58-19.jpg", "alt": "Mitglieder der Community waehrend eines Treffens", "caption": "Das Format aendert sich, das Interesse bleibt" },
+          { "src": "assets/meetings/photo_2025-11-11_10-35-01.jpg", "alt": "Eines der Club-Treffen", "caption": "Projekte, Menschen und neue Plaene" },
+          { "src": "assets/meetings/photo_2025-09-04_22-06-34.jpg", "alt": "Clubmitglieder bei einem Abendtreffen", "caption": "Diskussionen, neue Kontakte und Projekt-Updates" },
+          { "src": "assets/meetings/photo_2025-09-18_20-44-01.jpg", "alt": "Foto von einem Pet Project Club Treffen", "caption": "Menschen, Projekte und gemeinsame Ideen" },
+          { "src": "assets/meetings/photo_2025-10-10_09-39-01.jpg", "alt": "Clubmitglieder bei einem der Treffen", "caption": "Regelmaessige Treffen und neue Kontakte" },
+          { "src": "assets/meetings/photo_2025-08-08_12-36-30.jpg", "alt": "Pet Project Club Mitglieder an einem Tisch waehrend eines Treffens", "caption": "Offline-Treffen des Clubs in Budva" },
+          { "src": "assets/meetings/photo_2025-11-04_10-43-18.jpg", "alt": "Ein kleines Pet Project Club Treffen", "caption": "Konzentrierte Diskussionen und Feedback" },
+          { "src": "assets/meetings/photo_2025-11-07_13-01-57.jpg", "alt": "Clubmitglieder waehrend eines Treffens", "caption": "Unterstuetzung, Ideen und gemeinsames Wachstum" },
+          { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Treffen der Pet Project Club Community", "caption": "Projektgespraeche und Erfahrungsaustausch" },
+          { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Clubmitglieder waehrend eines Offline-Treffens", "caption": "Eine Community, die gemeinsam baut" },
+          { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Foto von Teilnehmern des Pet Project Club", "caption": "Ein Offline-Format, das den Schwung haelt" },
+          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Foto vom Club-Treffen am Jahresende", "caption": "Der Club trifft sich weiter und waechst" },
+          { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Aktuelles Foto von einem Pet Project Club Treffen", "caption": "Frische Treffen und neue Mitglieder" }
+        ]
+      }
+    },
+    "me": {
+      "hero": {
+        "title": "Zajednica u kojoj ljudi koji grade pet projekte pomazu jedni drugima da napreduju.",
+        "lead": "Pet Project Club okuplja ljude u Crnoj Gori koji rade na svojim pet projektima u raznim oblastima i kojima su potrebni podrska, razgovor, korisnici, znanje, istomisljenici i partneri. Kada se gradi zajedno, sve je zanimljivije i obicno efikasnije.",
+        "description": "Od aprila 2025. klub organizuje redovne offline susrete u Budvi i vodi Telegram kanal za novosti, korisne materijale i svakodnevnu komunikaciju. Imate projekat, ideju ili samo zelju da nesto napravite? Pridruzite se.",
+        "primaryCta": { "label": "Idi na Telegram" },
+        "secondaryCta": { "label": "Otvori susrete" },
+        "stage": {
+          "lines": [
+            "Pronadji podrsku i prve korisnike.",
+            "Dobij razgovor, feedback i nove kompetencije oko projekta.",
+            "Upoznaj saradnike, partnere i ljude sa kojima stvarno zelis da gradis."
+          ],
+          "phrases": [
+            "sync --poruke u content/",
+            "review --pregledaj ideju i skrati scope",
+            "ship --malo ali stvarno",
+            "publish --objavi napredak javno"
+          ]
+        }
+      },
+      "signals": [
+        { "label": "Rezim", "value": "Build together" },
+        { "label": "Fokus", "value": "MVP, ship, feedback" },
+        { "label": "Okruzenje", "value": "Ljudi koji takodje grade" }
+      ],
+      "metrics": [
+        { "label": "Redovni ucesnici", "hint": "Na offline susretima se obicno okupi od 5 do 15 ljudi." },
+        { "label": "Online ucesnici", "hint": "Vise od 100 ljudi ucestvuje u online razgovorima." },
+        { "label": "Projekti", "hint": "Tokom prve godine clanovi kluba su predstavili vise od 20 projekata." },
+        { "label": "Glavni jezik zajednice", "value": "RU", "hint": "Vecina ucesnika govori ruski, ali rado dodajemo susrete i na drugim jezicima ako postoji interesovanje." }
+      ],
+      "story": {
+        "tag": "Zasto ucestvovati",
+        "title": "Zasto ucestvovati",
+        "description": "Klub ne pomaze samo da se ideje komentarisu. Pomaze da pronadjete ljude, znanje, feedback i nove tacke rasta za svoje projekte.",
+        "items": [
+          { "title": "Zajednica energicnih profesionalaca", "text": "Ovdje je lakse pronaci kompetencije koje nedostaju u dizajnu, razvoju, produktu i drugim oblastima, i pitati za savjet ljude koji zaista nesto grade." },
+          { "title": "Ziv razgovor sa zanimljivim ljudima", "text": "Ovo je prostor u kojem upoznajete ljude koji razmisljaju sire, rade na sopstvenim projektima i u razgovor unose stvarno iskustvo, a ne samo misljenje." },
+          { "title": "Prilika da pokazete projekat u bilo kojoj fazi", "text": "Mozete donijeti ideju, grubi prototip ili vec funkcionalan proizvod i zamoliti ljude da se prijave, testiraju ga, daju feedback ili pomognu da se provjeri pravac." },
+          { "title": "Kolektivni mozak za nove tehnologije", "text": "Nove alate i tehnologije je lakse savladati kada ih vise ljudi testira paralelno, dijeli iskustva i odmah uporedjuje sta zaista radi." }
+        ]
+      },
+      "flow": {
+        "tag": "Teme i formati susreta",
+        "title": "Teme i formati susreta",
+        "description": "Trenutno imamo nekoliko tema i formata i trudimo se da ih smjenjujemo kako bi klub ostao koristan razlicitim tipovima buildera.",
+        "items": [
+          { "title": "Upoznavanje i novosti o projektima", "text": "Na svakih mjesec ili dva okupljamo se da upoznamo nove clanove i njihove projekte, i da podijelimo trenutno stanje sopstvenog rada, ideja i novosti." },
+          { "title": "Pregled izlaska novog projekta", "text": "Kada neko lansira projekat u beta fazu, sastajemo se da pogledamo kako funkcionise, prodjemo kroz kratkorocne ciljeve i damo konkretan feedback." },
+          { "title": "Razgovor o novim tehnologijama i pristupima", "text": "Ponekad se okupljamo da prodiskutujemo neki novi alat, agenta, LLM, aplikaciju ili pristup koji je privukao paznju. Takvi susreti su obicno kombinacija prezentacije i razgovora." },
+          { "title": "Productivity sprint", "text": "Ovo je kratak sprint od 90 minuta: 15 minuta za ciljeve i blokere, 60 minuta fokusiranog rada i 15 minuta da sumiramo sta je sljedece." }
+        ]
+      },
+      "gallery": {
+        "tag": "Fotografije sa susreta",
+        "title": "Kako izgledaju klupski susreti",
+        "description": "Susreti se odrzavaju na razlicitim mjestima i u razlicitim formatima. Za razgovore o projektima, demonstracije uredjaja i goste iz drugih gradova i drzava okupljamo se u coworking prostoru sa velikim ekranom i dobrom opremom za konferencijske pozive. Ponekad se nalazimo i u kaficima ili restoranima da prodjemo kroz novosti, nesto proslavimo ili jednostavno popijemo kafu zajedno.",
+        "items": [
+          { "src": "assets/meetings/photo_2025-10-31_10-58-19.jpg", "alt": "Clanovi zajednice tokom jednog susreta", "caption": "Format se mijenja, interesovanje ostaje" },
+          { "src": "assets/meetings/photo_2025-11-11_10-35-01.jpg", "alt": "Jedan od klupskih susreta", "caption": "Projekti, ljudi i novi planovi" },
+          { "src": "assets/meetings/photo_2025-09-04_22-06-34.jpg", "alt": "Clanovi kluba na vecernjem susretu", "caption": "Razgovori, nova poznanstva i novosti o projektima" },
+          { "src": "assets/meetings/photo_2025-09-18_20-44-01.jpg", "alt": "Fotografija sa susreta Pet Project Cluba", "caption": "Ljudi, projekti i zajednicke ideje" },
+          { "src": "assets/meetings/photo_2025-10-10_09-39-01.jpg", "alt": "Clanovi kluba na jednom od susreta", "caption": "Redovni susreti i nova poznanstva" },
+          { "src": "assets/meetings/photo_2025-08-08_12-36-30.jpg", "alt": "Clanovi Pet Project Cluba za stolom tokom susreta", "caption": "Offline susreti kluba u Budvi" },
+          { "src": "assets/meetings/photo_2025-11-04_10-43-18.jpg", "alt": "Mali susret clanova Pet Project Cluba", "caption": "Fokusirani razgovori i feedback" },
+          { "src": "assets/meetings/photo_2025-11-07_13-01-57.jpg", "alt": "Clanovi kluba tokom susreta", "caption": "Podrska, ideje i zajednicki rast" },
+          { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Susret zajednice Pet Project Club", "caption": "Razgovor o projektima i razmjena iskustva" },
+          { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Clanovi kluba tokom offline susreta", "caption": "Zajednica koja gradi zajedno" },
+          { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Fotografija ucesnika Pet Project Cluba", "caption": "Offline format koji pomaze da se odrzi ritam" },
+          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Fotografija sa klupskog susreta na kraju godine", "caption": "Klub nastavlja da se okuplja i raste" },
+          { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Skorasnja fotografija sa susreta Pet Project Cluba", "caption": "Svjezi susreti i novi clanovi" }
+        ]
+      }
+    },
+    "es": {
+      "hero": {
+        "title": "Una comunidad donde quienes construyen pet projects se ayudan mutuamente a crecer.",
+        "lead": "Pet Project Club reune a personas en Montenegro que trabajan en sus pet projects en cualquier area y necesitan apoyo, conversacion, usuarios, capacidades, colaboradores y socios. Construir juntos es mas interesante y suele ser mas eficaz.",
+        "description": "Desde abril de 2025, el club organiza encuentros presenciales regulares en Budva y mantiene un canal de Telegram para noticias, materiales utiles y conversacion. Tienes un proyecto, una idea o simplemente ganas de crear algo? Unete.",
+        "primaryCta": { "label": "Ir a Telegram" },
+        "secondaryCta": { "label": "Abrir encuentros" },
+        "stage": {
+          "lines": [
+            "Encuentra apoyo y a tus primeros usuarios.",
+            "Recibe conversacion, feedback y nuevas capacidades alrededor del proyecto.",
+            "Conoce colaboradores, socios y personas con las que realmente quieras construir."
+          ],
+          "phrases": [
+            "sync --mensajes a content/",
+            "review --revisar idea y recortar scope",
+            "ship --pequeno pero real",
+            "publish --mostrar progreso en publico"
+          ]
+        }
+      },
+      "signals": [
+        { "label": "Modo", "value": "Build together" },
+        { "label": "Enfoque", "value": "MVP, ship, feedback" },
+        { "label": "Entorno", "value": "Gente que tambien esta construyendo" }
+      ],
+      "metrics": [
+        { "label": "Participantes regulares", "hint": "Los encuentros presenciales suelen reunir entre 5 y 15 personas." },
+        { "label": "Participantes online", "hint": "Mas de 100 personas participan en las discusiones online." },
+        { "label": "Proyectos", "hint": "Durante el primer ano, los miembros del club compartieron mas de 20 proyectos." },
+        { "label": "Idioma principal de la comunidad", "value": "RU", "hint": "La mayoria de los participantes habla ruso, pero con gusto abrimos encuentros en otros idiomas si hay interes." }
+      ],
+      "story": {
+        "tag": "Por que unirse",
+        "title": "Por que unirse",
+        "description": "El club no solo ayuda a discutir ideas. Ayuda a encontrar personas, conocimiento, feedback y nuevos puntos de crecimiento para los proyectos.",
+        "items": [
+          { "title": "Una comunidad de profesionales con energia", "text": "Aqui es mas facil encontrar capacidades que faltan en diseno, desarrollo, producto y otras areas, y pedir consejo a personas que realmente estan construyendo." },
+          { "title": "Conversaciones en vivo con gente interesante", "text": "Es un espacio donde conoces a personas que piensan en grande, construyen sus propios proyectos y aportan experiencia real, no solo opinion." },
+          { "title": "La oportunidad de mostrar tu proyecto en cualquier etapa", "text": "Puedes traer una idea, un prototipo inicial o un producto funcional y pedir que la gente se registre, lo pruebe, deje feedback o ayude a validar la direccion." },
+          { "title": "Una mente colectiva para aprender nuevas tecnologias", "text": "Las nuevas herramientas y tecnologias se entienden mas rapido cuando varias personas las prueban en paralelo, comparten experiencia y comparan enseguida lo que realmente funciona." }
+        ]
+      },
+      "flow": {
+        "tag": "Temas y formatos de los encuentros",
+        "title": "Temas y formatos de los encuentros",
+        "description": "Actualmente tenemos varios temas y formatos, y tratamos de alternarlos para que el club siga siendo util para distintos tipos de builders.",
+        "items": [
+          { "title": "Presentaciones y actualizaciones de proyectos", "text": "Cada uno o dos meses nos reunimos para conocer a nuevos miembros y sus proyectos, y para compartir el estado actual de nuestro propio trabajo, ideas y avances." },
+          { "title": "Revision del lanzamiento de un nuevo proyecto", "text": "Cuando alguien lanza un proyecto en beta, nos reunimos para revisar como funciona, hablar de objetivos cercanos y dar feedback concreto." },
+          { "title": "Conversacion sobre nuevas tecnologias y enfoques", "text": "A veces nos juntamos para hablar de una herramienta nueva, un agente, un LLM, una app o un enfoque que haya llamado la atencion. Estos encuentros suelen mezclar presentacion y conversacion." },
+          { "title": "Productivity sprint", "text": "Es un sprint corto de 90 minutos: 15 minutos para objetivos y bloqueos, 60 minutos de trabajo enfocado y 15 minutos para resumir los siguientes pasos." }
+        ]
+      },
+      "gallery": {
+        "tag": "Fotos de los encuentros",
+        "title": "Como son los encuentros del club",
+        "description": "Los encuentros se realizan en distintos lugares y formatos. Para conversaciones sobre proyectos, demos de dispositivos e invitados remotos de otras ciudades y paises, nos reunimos en un coworking con pantalla grande y buen equipo de conferencia. A veces tambien nos vemos en cafes o restaurantes para hablar de novedades, celebrar algo o simplemente tomar un cafe juntos.",
+        "items": [
+          { "src": "assets/meetings/photo_2025-10-31_10-58-19.jpg", "alt": "Miembros de la comunidad durante un encuentro", "caption": "El formato cambia, el interes se mantiene" },
+          { "src": "assets/meetings/photo_2025-11-11_10-35-01.jpg", "alt": "Uno de los encuentros del club", "caption": "Proyectos, personas y nuevos planes" },
+          { "src": "assets/meetings/photo_2025-09-04_22-06-34.jpg", "alt": "Miembros del club en un encuentro nocturno", "caption": "Conversaciones, nuevas conexiones y novedades de proyectos" },
+          { "src": "assets/meetings/photo_2025-09-18_20-44-01.jpg", "alt": "Foto de un encuentro de Pet Project Club", "caption": "Personas, proyectos e ideas compartidas" },
+          { "src": "assets/meetings/photo_2025-10-10_09-39-01.jpg", "alt": "Miembros del club en uno de los encuentros", "caption": "Encuentros regulares y nuevas conexiones" },
+          { "src": "assets/meetings/photo_2025-08-08_12-36-30.jpg", "alt": "Miembros de Pet Project Club alrededor de una mesa durante un encuentro", "caption": "Encuentros presenciales del club en Budva" },
+          { "src": "assets/meetings/photo_2025-11-04_10-43-18.jpg", "alt": "Un pequeno encuentro de Pet Project Club", "caption": "Conversaciones enfocadas y feedback" },
+          { "src": "assets/meetings/photo_2025-11-07_13-01-57.jpg", "alt": "Miembros del club durante un encuentro", "caption": "Apoyo, ideas y crecimiento compartido" },
+          { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Encuentro de la comunidad Pet Project Club", "caption": "Conversaciones sobre proyectos e intercambio de experiencia" },
+          { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Miembros del club durante un encuentro presencial", "caption": "Una comunidad que construye junta" },
+          { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Foto de participantes de Pet Project Club", "caption": "Un formato presencial que ayuda a mantener el ritmo" },
+          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Foto del encuentro del club al final del ano", "caption": "El club sigue reuniendose y creciendo" },
+          { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Foto reciente de un encuentro de Pet Project Club", "caption": "Encuentros recientes y nuevos miembros" }
+        ]
+      }
+    }
   }
 }

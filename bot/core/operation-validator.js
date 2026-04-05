@@ -2,11 +2,11 @@ import { ContentValidationError } from "../shared/errors.js";
 import { SLUG_PATTERN } from "../shared/constants.js";
 
 const ENTITY_FIELD_RULES = {
-  announcement: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
-  announce: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
-  meeting: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
-  participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
-  project: new Set(["title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug"]),
+  announcement: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
+  announce: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
+  meeting: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
+  participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
+  project: new Set(["title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
 };
 
 export function validateOperation(operation) {

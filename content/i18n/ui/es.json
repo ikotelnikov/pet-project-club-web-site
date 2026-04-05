@@ -1,0 +1,156 @@
+{
+  "shell": {
+    "brandTitle": "Pet Project Club",
+    "brandSubtitle": "Budva / Montenegro",
+    "nav": {
+      "main": "Inicio",
+      "meetings": "Encuentros",
+      "projects": "Proyectos",
+      "participants": "Participantes",
+      "news": "Noticias"
+    },
+    "telegram": "Telegram",
+    "languageSwitcherLabel": "Idioma",
+    "footer": {
+      "mark": "® Pet Project Club",
+      "address": "Direccion: MONTECO Coworking, Budva",
+      "contact": "Contacto: @ikotelnikov",
+      "updatedAt": "Actualizado"
+    }
+  },
+  "common": {
+    "loadingContent": "Cargando contenido desde el repositorio...",
+    "loadError": "No se pudo cargar el contenido desde content/. Revise los archivos JSON y ejecute el sitio con un servidor estatico.",
+    "emptyTitle": "No se encontro nada",
+    "pagination": {
+      "prev": "← Anterior",
+      "next": "Siguiente →",
+      "page": "Pagina"
+    }
+  },
+  "aria": {
+    "openNavigation": "Abrir navegacion",
+    "mainNavigation": "Navegacion principal",
+    "languageSwitcher": "Selector de idioma",
+    "storyCards": "Tarjetas de historia",
+    "flowCards": "Tarjetas de flujo",
+    "projectsPagination": "Paginacion de proyectos",
+    "newsPagination": "Paginacion de noticias",
+    "meetingsPagination": "Paginacion de encuentros",
+    "previousPhoto": "Foto anterior",
+    "nextPhoto": "Foto siguiente",
+    "previousImage": "Imagen anterior",
+    "nextImage": "Imagen siguiente",
+    "closeGallery": "Cerrar galeria",
+    "imageViewer": "Visor de imagenes",
+    "openStoryCard": "Abrir tarjeta de historia",
+    "openFlowCard": "Abrir tarjeta de flujo"
+  },
+  "errors": {
+    "meetingSlugMissing": "No se pudo abrir el encuentro porque falta el parametro slug en la URL.",
+    "participantSlugMissing": "No se pudo abrir el participante porque falta el parametro slug en la URL.",
+    "projectSlugMissing": "No se pudo abrir el proyecto porque falta el parametro slug en la URL."
+  },
+  "meta": {
+    "siteName": "Pet Project Club Budva",
+    "main": {
+      "title": "Pet Project Club Budva",
+      "description": "Una comunidad para personas que construyen pet projects en Montenegro."
+    },
+    "meetings": {
+      "title": "Encuentros | Pet Project Club Budva",
+      "description": "Formatos de encuentros, anuncios actuales y archivo de sesiones del club."
+    },
+    "meeting-detail": {
+      "title": "Encuentro | Pet Project Club Budva",
+      "description": "Pagina detallada de un encuentro de Pet Project Club."
+    },
+    "projects": {
+      "title": "Proyectos | Pet Project Club Budva",
+      "description": "Proyectos de la comunidad Pet Project Club."
+    },
+    "project-detail": {
+      "title": "Proyecto | Pet Project Club Budva",
+      "description": "Pagina detallada de un proyecto de Pet Project Club."
+    },
+    "participants": {
+      "title": "Participantes | Pet Project Club Budva",
+      "description": "Participantes de la comunidad Pet Project Club."
+    },
+    "participant-detail": {
+      "title": "Participante | Pet Project Club Budva",
+      "description": "Pagina detallada de un participante de Pet Project Club."
+    },
+    "news": {
+      "title": "Noticias | Pet Project Club Budva",
+      "description": "Noticias de proyectos, demos, lanzamientos y encuentros relacionados de la comunidad."
+    }
+  },
+  "visual": {
+    "mainTerminalTitle": "club-session.log",
+    "mainTerminalStatus": "en vivo",
+    "meetingsTerminalStatus": "listo para Telegram",
+    "projectsTerminalStatus": "colaboradores abiertos"
+  },
+  "projects": {
+    "title": "Proyectos del club",
+    "searchPlaceholder": "Buscar proyecto, stack, autor o solicitud",
+    "resultsLabel": "Proyectos encontrados",
+    "emptyText": "Todavia no hay proyectos que coincidan con esta busqueda.",
+    "openProject": "Abrir proyecto",
+    "readMore": "mas -->",
+    "pagination": {
+      "prev": "← Mas nuevo",
+      "next": "Mas antiguo →",
+      "page": "Pagina"
+    },
+    "detail": {
+      "backLabel": "← Volver a proyectos",
+      "detailsTitle": "Detalles del proyecto",
+      "ownersTitle": "Creadores del proyecto",
+      "ownersEmptyTitle": "Aun no especificado",
+      "ownersEmptyText": "Este proyecto todavia no tiene creadores indicados en ownerSlugs.",
+      "newsTitle": "Noticias y encuentros relacionados",
+      "relatedEmptyTitle": "Todavia vacio",
+      "relatedEmptyText": "Los encuentros relacionados apareceran aqui cuando un encuentro o anuncio incluya projectSlugs."
+    }
+  },
+  "participants": {
+    "tag": "Participantes",
+    "title": "Participantes de Pet Project Club",
+    "description": "Para entrar en la lista de participantes, editar tus datos o salir de ella, escribe al <a href=\"#footer-contact-organizer\">organizador</a>.",
+    "card": {
+      "untitled": "Participante sin nombre",
+      "roleFallback": "Rol no especificado",
+      "readMore": "mas -->"
+    },
+    "detail": {
+      "backLabel": "← Volver a participantes",
+      "projectsTitle": "Proyectos del participante",
+      "emptyTitle": "Todavia vacio",
+      "emptyText": "Todavia no hay proyectos vinculados a este participante."
+    }
+  },
+  "news": {
+    "title": "Noticias de proyectos",
+    "searchPlaceholder": "Buscar: proyecto, tecnologia, titulo...",
+    "resultsLabel": "Noticias encontradas",
+    "emptyText": "Prueba a cambiar la consulta de busqueda.",
+    "pagination": {
+      "prev": "← Mas nuevo",
+      "next": "Mas antiguo →",
+      "page": "Pagina"
+    }
+  },
+  "meetings": {
+    "readMore": "leer mas -->",
+    "emptyText": "Todavia no hay encuentros aqui.",
+    "types": {
+      "announcement": "Anuncio",
+      "meeting": "Encuentro"
+    },
+    "detail": {
+      "backLabel": "← Volver a encuentros"
+    }
+  }
+}

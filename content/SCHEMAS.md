@@ -55,6 +55,54 @@ Examples:
 - preserve paragraph boundaries as arrays where the schema expects arrays
 - keep list items as arrays of strings
 
+### Localized Content Extension
+
+Bot-managed items may additionally contain translation metadata without breaking the current flat source-locale shape.
+
+Incremental localized item shape:
+
+```json
+{
+  "slug": "meeting-2026-03-open-circle",
+  "sourceLocale": "ru",
+  "title": "Открытый круг проектов и знакомство с новыми участниками",
+  "paragraphs": [
+    "Русский исходный текст."
+  ],
+  "translations": {
+    "en": {
+      "title": "Open project circle and introductions for new members",
+      "paragraphs": [
+        "English translated text."
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine",
+    "de": "stale",
+    "me": "edited",
+    "es": "missing"
+  }
+}
+```
+
+Rules:
+
+- source text remains in the existing flat fields for backward compatibility
+- translated locale variants live in `translations.<locale>`
+- translated objects may include only localizable fields, not the whole item
+- frontend should overlay `translations.<locale>` onto the flat source item at read time
+- manual edits should set `translationStatus.<locale>` to `edited`
+- if source text changes, non-manual translations may become `stale`
+
+Supported locale keys:
+
+- `ru`
+- `en`
+- `de`
+- `me`
+- `es`
+
 ### Links
 
 When present, links use this shape:

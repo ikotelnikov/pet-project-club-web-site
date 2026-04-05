@@ -28,10 +28,10 @@ const CONFIDENCE_VALUES = new Set([
 ]);
 
 const ENTITY_FIELD_RULES = {
-  announcement: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"]),
-  meeting: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"]),
-  participant: new Set(["slug", "handle", "name", "role", "bio", "points", "location", "tags", "links", "photoAlt", "photoStagedPath"]),
-  project: new Set(["slug", "title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"]),
+  announcement: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
+  meeting: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
+  participant: new Set(["slug", "handle", "name", "role", "bio", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
+  project: new Set(["slug", "title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
 };
 
 export function validateExtraction(extraction) {

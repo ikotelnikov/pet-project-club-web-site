@@ -5,6 +5,7 @@ import { PendingFileStore } from "../adapters/storage/pending-file-store.js";
 import { PendingMemoryStore } from "../adapters/storage/pending-memory-store.js";
 import { handleTelegramMessage } from "../adapters/telegram/message-handler.js";
 import { createExtractionClient } from "./create-extraction-client.js";
+import { createTranslationClient } from "./create-translation-client.js";
 import { FilesystemContentRepository } from "../services/content-repository.js";
 import { LocalPhotoStore } from "../services/photo-store.js";
 
@@ -15,6 +16,9 @@ export function createBotRuntime(config, overrides = {}) {
   const extractionClient = overrides.extractionClient || createExtractionClient(config, {
     fetchImpl: overrides.fetchImpl,
   });
+  const translationClient = overrides.translationClient === undefined
+    ? createTranslationClient(config, { fetchImpl: overrides.fetchImpl })
+    : overrides.translationClient;
   const telegramClient = overrides.telegramClient || null;
 
   return {
@@ -22,6 +26,7 @@ export function createBotRuntime(config, overrides = {}) {
     photoStore,
     pendingStore,
     extractionClient,
+    translationClient,
     telegramClient,
     devMode: Boolean(config.devMode),
     async handleTelegramUpdate(update, options = {}) {
@@ -33,6 +38,7 @@ export function createBotRuntime(config, overrides = {}) {
         pendingStore,
         photoStore,
         extractionClient,
+        translationClient,
         telegramClient,
         dryRun: options.dryRun ?? true,
       });

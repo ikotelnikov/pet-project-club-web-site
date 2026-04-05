@@ -1,4 +1,5 @@
 import { ContentValidationError } from "../shared/errors.js";
+import { buildLocalizedItemPatch, DEFAULT_SOURCE_LOCALE, normalizeContentLocale } from "./content-localization.js";
 
 export function mapOperationToContent(operation, options = {}) {
   const { entity, action, fields } = operation;
@@ -18,7 +19,7 @@ export function mapOperationToContent(operation, options = {}) {
     case "announcement":
       return {
         slug: fields.slug,
-        item: pruneEmpty({
+        item: toLocalizedItemPatch(entity, pruneEmpty({
           slug: fields.slug,
           type: "announce",
           date: fields.date,
@@ -30,12 +31,12 @@ export function mapOperationToContent(operation, options = {}) {
           paragraphs: fields.paragraphs,
           sections: fields.section ?? fields.sections,
           links,
-        }),
+        }), fields, options),
       };
     case "meeting":
       return {
         slug: fields.slug,
-        item: pruneEmpty({
+        item: toLocalizedItemPatch(entity, pruneEmpty({
           slug: fields.slug,
           type: "meeting",
           date: fields.date,
@@ -47,12 +48,12 @@ export function mapOperationToContent(operation, options = {}) {
           paragraphs: fields.paragraphs,
           sections: fields.section ?? fields.sections,
           links,
-        }),
+        }), fields, options),
       };
     case "participant":
       return {
         slug: fields.slug,
-        item: pruneEmpty({
+        item: toLocalizedItemPatch(entity, pruneEmpty({
           slug: fields.slug,
           handle: fields.handle,
           name: fields.name,
@@ -63,13 +64,13 @@ export function mapOperationToContent(operation, options = {}) {
           links,
           location: fields.location,
           tags: fields.tags,
-        }),
+        }), fields, options),
       };
     case "project":
       const normalizedProjectText = normalizeProjectTextFields(fields);
       return {
         slug: fields.slug,
-        item: pruneEmpty({
+        item: toLocalizedItemPatch(entity, pruneEmpty({
           slug: fields.slug,
           title: fields.title,
           status: fields.status,
@@ -82,11 +83,22 @@ export function mapOperationToContent(operation, options = {}) {
           ownerSlugs: fields.owners ?? fields.ownerSlugs,
           location: fields.location,
           tags: fields.tags,
-        }),
+        }), fields, options),
       };
     default:
       throw new ContentValidationError(`Unsupported entity '${entity}'.`);
   }
+}
+
+function toLocalizedItemPatch(entity, item, fields, options = {}) {
+  const sourceLocale = normalizeContentLocale(options.sourceLocale || fields.sourceLocale || DEFAULT_SOURCE_LOCALE) || DEFAULT_SOURCE_LOCALE;
+  return buildLocalizedItemPatch(entity, {
+    ...item,
+    locale: fields.locale,
+    sourceLocale: fields.sourceLocale,
+  }, {
+    sourceLocale,
+  });
 }
 
 function normalizeProjectTextFields(fields) {

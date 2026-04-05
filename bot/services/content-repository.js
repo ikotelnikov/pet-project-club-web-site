@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 import { ContentRepositoryError } from "../domain/errors.js";
+import { mergeContentItems } from "../core/content-localization.js";
 
 export class FilesystemContentRepository {
   constructor({ contentRoot, assetsRoot, attachmentStageRoot }) {
@@ -167,15 +168,18 @@ export class FilesystemContentRepository {
     const currentIndex = await this.readIndex(entity);
     const nextIndex = updateIndexItems(currentIndex, slug, action);
     const { itemPath, indexPath } = this.getEntityPaths(entity, slug);
-    const existingItem = action === "delete" ? await this.readItem(entity, slug) : null;
+    const existingItem = exists ? await this.readItem(entity, slug) : null;
     const assetPaths = action === "delete" ? resolveManagedAssetPaths(existingItem) : [];
+    const nextItem = action === "update"
+      ? mergeContentItems(existingItem, item, { entity })
+      : item;
 
     if (action === "delete") {
       await fs.rm(itemPath, { force: true });
       await Promise.all(assetPaths.map((assetPath) => fs.rm(path.resolve(assetPath), { force: true })));
     } else {
       await fs.mkdir(path.dirname(itemPath), { recursive: true });
-      await writeJsonFile(itemPath, item);
+      await writeJsonFile(itemPath, nextItem);
     }
 
     await fs.mkdir(path.dirname(indexPath), { recursive: true });
@@ -199,8 +203,11 @@ export class FilesystemContentRepository {
     const slug = parsedCommand.fields.slug;
     const exists = await this.itemExists(entity, slug);
     const currentIndex = await this.readIndex(entity);
-    const existingItem = action === "delete" && exists ? await this.readItem(entity, slug) : null;
+    const existingItem = exists ? await this.readItem(entity, slug) : null;
     const assetPaths = action === "delete" ? resolveManagedAssetPaths(existingItem) : [];
+    const nextItem = action === "update"
+      ? mergeContentItems(existingItem, item, { entity })
+      : item;
 
     if (action === "create" && exists) {
       throw new ContentRepositoryError(`Cannot create '${slug}' because it already exists.`);
@@ -217,7 +224,7 @@ export class FilesystemContentRepository {
       exists,
       currentIndex,
       nextIndex: updateIndexItems(currentIndex, slug, action),
-      nextItem: item,
+      nextItem,
       paths: {
         ...this.getEntityPaths(entity, slug),
         assetPaths,

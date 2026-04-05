@@ -1,0 +1,156 @@
+{
+  "shell": {
+    "brandTitle": "Pet Project Club",
+    "brandSubtitle": "Budva / Montenegro",
+    "nav": {
+      "main": "Главная",
+      "meetings": "Встречи",
+      "projects": "Проекты",
+      "participants": "Участники",
+      "news": "Новости"
+    },
+    "telegram": "Telegram",
+    "languageSwitcherLabel": "Язык",
+    "footer": {
+      "mark": "® Pet Project Club",
+      "address": "Адрес: MONTECO Coworking, Budva",
+      "contact": "Контакт: @ikotelnikov",
+      "updatedAt": "Обновлено"
+    }
+  },
+  "common": {
+    "loadingContent": "Загружаю контент из репозитория...",
+    "loadError": "Не удалось загрузить контент из content/. Проверьте JSON-файлы и запустите сайт через статический сервер.",
+    "emptyTitle": "Ничего не найдено",
+    "pagination": {
+      "prev": "← Назад",
+      "next": "Вперед →",
+      "page": "Страница"
+    }
+  },
+  "aria": {
+    "openNavigation": "Открыть навигацию",
+    "mainNavigation": "Основная навигация",
+    "languageSwitcher": "Переключение языка",
+    "storyCards": "Карточки истории",
+    "flowCards": "Карточки форматов",
+    "projectsPagination": "Пагинация проектов",
+    "newsPagination": "Пагинация новостей",
+    "meetingsPagination": "Пагинация встреч",
+    "previousPhoto": "Предыдущее фото",
+    "nextPhoto": "Следующее фото",
+    "previousImage": "Предыдущее изображение",
+    "nextImage": "Следующее изображение",
+    "closeGallery": "Закрыть галерею",
+    "imageViewer": "Просмотр изображения",
+    "openStoryCard": "Открыть карточку истории",
+    "openFlowCard": "Открыть карточку формата"
+  },
+  "errors": {
+    "meetingSlugMissing": "Не удалось открыть встречу: в адресе отсутствует параметр slug.",
+    "participantSlugMissing": "Не удалось открыть участника: в адресе отсутствует параметр slug.",
+    "projectSlugMissing": "Не удалось открыть проект: в адресе отсутствует параметр slug."
+  },
+  "meta": {
+    "siteName": "Pet Project Club Budva",
+    "main": {
+      "title": "Pet Project Club Budva",
+      "description": "Сообщество для людей, которые создают pet-проекты в Черногории."
+    },
+    "meetings": {
+      "title": "Встречи | Pet Project Club Budva",
+      "description": "Форматы встреч, актуальные анонсы и архив сессий клуба."
+    },
+    "meeting-detail": {
+      "title": "Встреча | Pet Project Club Budva",
+      "description": "Подробная страница встречи Pet Project Club."
+    },
+    "projects": {
+      "title": "Проекты | Pet Project Club Budva",
+      "description": "Проекты сообщества Pet Project Club."
+    },
+    "project-detail": {
+      "title": "Проект | Pet Project Club Budva",
+      "description": "Подробная страница проекта Pet Project Club."
+    },
+    "participants": {
+      "title": "Участники | Pet Project Club Budva",
+      "description": "Участники сообщества Pet Project Club."
+    },
+    "participant-detail": {
+      "title": "Участник | Pet Project Club Budva",
+      "description": "Подробная страница участника Pet Project Club."
+    },
+    "news": {
+      "title": "Новости | Pet Project Club Budva",
+      "description": "Новости проектов, демо, релизы и связанные встречи сообщества."
+    }
+  },
+  "visual": {
+    "mainTerminalTitle": "club-session.log",
+    "mainTerminalStatus": "live",
+    "meetingsTerminalStatus": "готово для telegram",
+    "projectsTerminalStatus": "можно подключаться"
+  },
+  "projects": {
+    "title": "Проекты клуба",
+    "searchPlaceholder": "Найти проект, стек, автора или запрос",
+    "resultsLabel": "Проектов найдено",
+    "emptyText": "Пока нет проектов, подходящих под этот запрос.",
+    "openProject": "Открыть проект",
+    "readMore": "подробнее -->",
+    "pagination": {
+      "prev": "← Новее",
+      "next": "Старше →",
+      "page": "Страница"
+    },
+    "detail": {
+      "backLabel": "← Ко всем проектам",
+      "detailsTitle": "Подробности проекта",
+      "ownersTitle": "Создатели проекта",
+      "ownersEmptyTitle": "Пока не указано",
+      "ownersEmptyText": "Для этого проекта пока не указаны создатели в ownerSlugs.",
+      "newsTitle": "Новости и связанные встречи",
+      "relatedEmptyTitle": "Пока пусто",
+      "relatedEmptyText": "Связанные встречи появятся здесь, как только у встречи или анонса будет указан projectSlugs."
+    }
+  },
+  "participants": {
+    "tag": "Участники",
+    "title": "Участники Pet Project Club",
+    "description": "Для включения в список участников, редактирования данных или удаления из него напишите <a href=\"#footer-contact-organizer\">организатору</a>.",
+    "card": {
+      "untitled": "Участник без имени",
+      "roleFallback": "Роль не указана",
+      "readMore": "подробнее -->"
+    },
+    "detail": {
+      "backLabel": "← Ко всем участникам",
+      "projectsTitle": "Проекты участника",
+      "emptyTitle": "Пока пусто",
+      "emptyText": "Для этого участника пока не привязаны проекты."
+    }
+  },
+  "news": {
+    "title": "Новости проектов",
+    "searchPlaceholder": "Поиск: проект, технология, название...",
+    "resultsLabel": "Новостей найдено",
+    "emptyText": "Попробуйте изменить поисковый запрос.",
+    "pagination": {
+      "prev": "← Новее",
+      "next": "Старше →",
+      "page": "Страница"
+    }
+  },
+  "meetings": {
+    "readMore": "читать далее -->",
+    "emptyText": "Пока здесь нет встреч.",
+    "types": {
+      "announcement": "Анонс",
+      "meeting": "Встреча"
+    },
+    "detail": {
+      "backLabel": "← Ко всем встречам"
+    }
+  }
+}

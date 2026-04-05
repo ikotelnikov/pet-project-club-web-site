@@ -85,6 +85,55 @@ test("updates an existing project item without duplicating the index entry", asy
   assert.equal(item.title, "New title");
 });
 
+test("preserves translations when updating source-locale fields", async () => {
+  const fixture = await createFixture({
+    entity: "project",
+    slug: "project-existing",
+    item: {
+      slug: "project-existing",
+      sourceLocale: "ru",
+      title: "Старый заголовок",
+      status: "old",
+      stack: "node",
+      points: ["Old point"],
+      translations: {
+        en: {
+          title: "Old title",
+        },
+      },
+      translationStatus: {
+        en: "machine",
+      },
+    },
+  });
+  const repository = new FilesystemContentRepository(fixture);
+
+  await repository.applyCommand(
+    {
+      entity: "project",
+      action: "update",
+      fields: {
+        slug: "project-existing",
+      },
+    },
+    {
+      item: {
+        slug: "project-existing",
+        sourceLocale: "ru",
+        title: "Новый заголовок",
+      },
+    }
+  );
+
+  const item = JSON.parse(
+    await fs.readFile(path.join(fixture.contentRoot, "projects", "items", "project-existing.json"), "utf8")
+  );
+
+  assert.equal(item.title, "Новый заголовок");
+  assert.equal(item.translations.en.title, "Old title");
+  assert.equal(item.translationStatus.en, "stale");
+});
+
 test("deletes an announcement and removes it from the index", async () => {
   const fixture = await createFixture({
     entity: "announce",

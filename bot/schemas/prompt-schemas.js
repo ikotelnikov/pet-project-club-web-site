@@ -2,7 +2,7 @@ export const ENTITY_SCHEMAS = {
   participant: {
     entity: "participant",
     required: ["slug", "handle", "name", "role", "bio"],
-    optional: ["slug", "points", "location", "tags", "links", "photoAlt", "photoStagedPath"],
+    optional: ["slug", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
     fieldTypes: {
       slug: "string",
       handle: "string",
@@ -15,6 +15,8 @@ export const ENTITY_SCHEMAS = {
       links: "Link[]",
       photoAlt: "string",
       photoStagedPath: "string",
+      locale: "ru | en | de | me | es",
+      sourceLocale: "ru | en | de | me | es",
     },
     aliases: {
       description: "bio",
@@ -31,7 +33,7 @@ export const ENTITY_SCHEMAS = {
   project: {
     entity: "project",
     required: ["slug", "title", "status", "stack"],
-    optional: ["slug", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"],
+    optional: ["slug", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
     fieldTypes: {
       slug: "string",
       title: "string",
@@ -46,6 +48,8 @@ export const ENTITY_SCHEMAS = {
       links: "Link[]",
       photoAlt: "string",
       photoStagedPath: "string",
+      locale: "ru | en | de | me | es",
+      sourceLocale: "ru | en | de | me | es",
     },
     aliases: {
       description: "detailsHtml",
@@ -62,7 +66,7 @@ export const ENTITY_SCHEMAS = {
   meeting: {
     entity: "meeting",
     required: ["slug", "date", "title", "place", "format"],
-    optional: ["slug", "placeUrl", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"],
+    optional: ["slug", "placeUrl", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
     fieldTypes: {
       slug: "string",
       date: "string",
@@ -75,6 +79,8 @@ export const ENTITY_SCHEMAS = {
       links: "Link[]",
       photoAlt: "string",
       photoStagedPath: "string",
+      locale: "ru | en | de | me | es",
+      sourceLocale: "ru | en | de | me | es",
     },
     aliases: {
       description: "paragraphs",
@@ -91,7 +97,7 @@ export const ENTITY_SCHEMAS = {
   announcement: {
     entity: "announcement",
     required: ["slug", "date", "title", "place", "format"],
-    optional: ["slug", "placeUrl", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"],
+    optional: ["slug", "placeUrl", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
     fieldTypes: {
       slug: "string",
       date: "string",
@@ -104,6 +110,8 @@ export const ENTITY_SCHEMAS = {
       links: "Link[]",
       photoAlt: "string",
       photoStagedPath: "string",
+      locale: "ru | en | de | me | es",
+      sourceLocale: "ru | en | de | me | es",
     },
     aliases: {
       description: "paragraphs",

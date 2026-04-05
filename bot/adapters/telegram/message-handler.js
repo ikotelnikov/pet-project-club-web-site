@@ -20,6 +20,7 @@ export async function handleTelegramMessage({
   pendingStore,
   photoStore,
   extractionClient,
+  translationClient,
   telegramClient,
   dryRun = true,
 }) {
@@ -62,6 +63,7 @@ export async function handleTelegramMessage({
       pending: existingPending,
       repository,
       photoStore,
+      translationClient,
       dryRun,
     });
   }
@@ -248,6 +250,7 @@ async function handleConfirmationDecision({
   pending,
   repository,
   photoStore,
+  translationClient,
   dryRun,
 }) {
   const decision = normalizeConfirmationDecision(text);
@@ -312,7 +315,21 @@ async function handleConfirmationDecision({
     action: pending.operation.action,
     fields: pending.operation.fields,
   };
-  const mapped = mapOperationToContent(operation);
+  let mapped = mapOperationToContent(operation);
+
+  if (!dryRun && operation.action !== "delete" && translationClient && mapped.item) {
+    const preview = await repository.previewCommand(operation, mapped);
+    const nextItemWithTranslations = await translationClient.translateItem({
+      entity: operation.entity,
+      item: preview.nextItem,
+      sourceLocale: operation.fields.sourceLocale || "ru",
+    });
+    mapped = {
+      ...mapped,
+      item: nextItemWithTranslations,
+    };
+  }
+
   const writeResult = dryRun
     ? await repository.previewCommand(operation, mapped)
     : await repository.applyCommand(operation, mapped);

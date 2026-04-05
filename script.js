@@ -3,7 +3,7 @@ const page = body.dataset.page;
 const siteRoot = body.dataset.siteRoot || ".";
 const contentRoot = body.dataset.contentRoot || "./content";
 const pageContent = document.getElementById("page-content");
-const updatedAt = document.getElementById("updated-at");
+let updatedAt = document.getElementById("updated-at");
 const root = document.documentElement;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const DEFAULT_LOCALE = "ru";
@@ -63,6 +63,7 @@ const LOCALE_GROUP_ALIASES = {
   cnr: "me",
 };
 const repoRootPath = body.dataset.locale ? getRepoRootFromSiteRoot(siteRoot) : siteRoot;
+let uiMessages = {};
 
 const pageLoaders = {
   main: renderMainPage,
@@ -78,8 +79,15 @@ const pageLoaders = {
 const localeState = initLocaleState();
 
 if (!localeState.redirecting) {
+  startApp(localeState);
+}
+
+async function startApp(locale) {
+  uiMessages = await loadUiMessages(locale.locale);
+  applyStaticUiChrome();
+
   if (updatedAt) {
-    updatedAt.textContent = new Date().toLocaleDateString(localeState.langTag, {
+    updatedAt.textContent = new Date().toLocaleDateString(locale.langTag, {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -95,7 +103,7 @@ if (!localeState.redirecting) {
 
   setActiveNav();
   initTopbarMenu();
-  initLocaleSwitcher(localeState);
+  initLocaleSwitcher(locale);
   renderPage().finally(() => {
     initReveal();
     initCounters();
@@ -159,7 +167,7 @@ function initLocaleSwitcher(locale) {
 
   const switcher = document.createElement("nav");
   switcher.className = "locale-switcher";
-  switcher.setAttribute("aria-label", "Language switcher");
+  switcher.setAttribute("aria-label", t("aria.languageSwitcher", "Language switcher"));
 
   const options = SUPPORTED_LOCALES.map((localeKey) => {
     const meta = LOCALE_META[localeKey];
@@ -179,7 +187,7 @@ function initLocaleSwitcher(locale) {
   }).join("");
 
   switcher.innerHTML = `
-    <span class="locale-switcher-label">Language</span>
+    <span class="locale-switcher-label">${t("shell.languageSwitcherLabel", "Language")}</span>
     <div class="locale-switcher-links">${options}</div>
   `;
 
@@ -194,6 +202,157 @@ function initLocaleSwitcher(locale) {
   });
 
   footer.append(switcher);
+}
+
+async function loadUiMessages(locale) {
+  const normalizedLocale = normalizeLocale(locale) || DEFAULT_LOCALE;
+
+  try {
+    return await loadJsonFile(`i18n/ui/${normalizedLocale}.json`);
+  } catch {
+    if (normalizedLocale === DEFAULT_LOCALE) {
+      return {};
+    }
+
+    try {
+      return await loadJsonFile(`i18n/ui/${DEFAULT_LOCALE}.json`);
+    } catch {
+      return {};
+    }
+  }
+}
+
+async function loadJsonFile(path) {
+  const response = await fetch(`${contentRoot}/${path}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to load ${path}: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+function t(key, fallback = "") {
+  const value = getNestedValue(uiMessages, key);
+  return typeof value === "string" ? value : fallback;
+}
+
+function getNestedValue(source, key) {
+  if (!source || typeof source !== "object" || typeof key !== "string") {
+    return undefined;
+  }
+
+  return key.split(".").reduce((value, part) => {
+    if (value && typeof value === "object" && part in value) {
+      return value[part];
+    }
+
+    return undefined;
+  }, source);
+}
+
+function applyStaticUiChrome() {
+  const brandTitle = document.getElementById("main-brand-title") || document.querySelector(".brand-copy strong");
+  const brandSubtitle = document.getElementById("main-brand-subtitle") || document.querySelector(".brand-copy span");
+  const telegramLink = document.getElementById("main-telegram-link") || document.querySelector(".nav-cta");
+  const menuToggle = document.querySelector("[data-menu-toggle]");
+  const nav = document.getElementById("main-nav");
+  const footerMark = document.querySelector(".footer-mark");
+  const footerLinks = [...document.querySelectorAll(".footer-inline a")];
+  const updatedLabel = updatedAt?.parentElement;
+
+  if (brandTitle) {
+    brandTitle.textContent = t("shell.brandTitle", "Pet Project Club");
+  }
+
+  if (brandSubtitle) {
+    brandSubtitle.textContent = t("shell.brandSubtitle", "Budva / Montenegro");
+  }
+
+  if (menuToggle) {
+    menuToggle.setAttribute("aria-label", t("aria.openNavigation", "Open navigation"));
+  }
+
+  if (nav) {
+    nav.setAttribute("aria-label", t("aria.mainNavigation", "Main navigation"));
+    nav.querySelectorAll("[data-nav]").forEach((link) => {
+      const key = link.dataset.nav;
+      const label = t(`shell.nav.${key}`, "");
+
+      if (label) {
+        link.textContent = label;
+      }
+    });
+  }
+
+  if (telegramLink) {
+    telegramLink.textContent = t("shell.telegram", "Telegram");
+  }
+
+  if (footerMark) {
+    footerMark.textContent = t("shell.footer.mark", "® Pet Project Club");
+  }
+
+  footerLinks.forEach((link) => {
+    const href = link.getAttribute("href") || "";
+
+    if (/maps\.google\.com/i.test(href)) {
+      link.textContent = t("shell.footer.address", "Address: MONTECO Coworking, Budva");
+    } else if (/t\.me\/ikotelnikov/i.test(href)) {
+      link.textContent = t("shell.footer.contact", "Contact: @ikotelnikov");
+    }
+  });
+
+  if (updatedLabel && updatedAt) {
+    updatedLabel.innerHTML = `${escapeHtml(t("shell.footer.updatedAt", "Updated"))} <span id="updated-at"></span>`;
+    const previousValue = updatedAt.textContent;
+    updatedAt = document.getElementById("updated-at");
+
+    if (updatedAt) {
+      updatedAt.textContent = previousValue;
+    }
+  }
+
+  applyPageMeta();
+}
+
+function applyPageMeta() {
+  const pageTitle = t(`meta.${page}.title`, "");
+  const pageDescription = t(`meta.${page}.description`, "");
+  const titleNode = document.querySelector("title");
+  const descriptionNode = document.querySelector('meta[name="description"]');
+
+  if (pageTitle) {
+    document.title = pageTitle;
+    if (titleNode) {
+      titleNode.textContent = pageTitle;
+    }
+  }
+
+  if (pageDescription && descriptionNode) {
+    descriptionNode.setAttribute("content", pageDescription);
+  }
+}
+
+function getSiteName() {
+  return t("meta.siteName", "Pet Project Club Budva");
+}
+
+function buildDocumentTitle(title) {
+  return `${title} | ${getSiteName()}`;
+}
+
+function getUiPaginationCopy(scope) {
+  return {
+    prev: t(`${scope}.pagination.prev`, t("common.pagination.prev", "← Previous")),
+    next: t(`${scope}.pagination.next`, t("common.pagination.next", "Next →")),
+    page: t(`${scope}.pagination.page`, t("common.pagination.page", "Page")),
+  };
+}
+
+function getEntityTypeLabel(type) {
+  const normalizedType = type === "announce" ? "announcement" : type;
+  return t(`meetings.types.${normalizedType}`, normalizedType || "");
 }
 
 function getPathLocale(pathname) {
@@ -327,14 +486,14 @@ async function renderPage() {
     return;
   }
 
-  pageContent.innerHTML = `<section class="empty-state loading-state reveal"><p>Загружаю контент из репозитория…</p></section>`;
+  pageContent.innerHTML = `<section class="empty-state loading-state reveal"><p>${t("common.loadingContent", "Loading content from repository...")}</p></section>`;
 
   try {
     await pageLoaders[page]();
   } catch (error) {
     pageContent.innerHTML = `
       <section class="empty-state reveal">
-        <p>Не удалось загрузить контент из <code>content/</code>. Проверьте JSON-файлы и запустите сайт через статический сервер.</p>
+        <p>${t("common.loadError", "Failed to load content from content/. Check JSON files and run the site through a static server.")}</p>
       </section>
     `;
     console.error(error);
@@ -412,16 +571,16 @@ async function readJson(path) {
       throw new Error(`Failed to load ${path}: ${response.status}`);
     }
 
-    return response.json();
+    return localizeContentNode(await response.json(), localeState.locale);
   } catch (error) {
     const fallbackNode = document.querySelector(`[data-fallback-path="${path}"]`);
 
     if (fallbackNode) {
-      return JSON.parse(fallbackNode.textContent);
+      return localizeContentNode(JSON.parse(fallbackNode.textContent), localeState.locale);
     }
 
     if (window.__contentFallbackBundle?.[path]) {
-      return window.__contentFallbackBundle[path];
+      return localizeContentNode(window.__contentFallbackBundle[path], localeState.locale);
     }
 
     const bundleNode = document.getElementById("content-fallback-bundle");
@@ -432,7 +591,7 @@ async function readJson(path) {
       }
 
       if (window.__contentFallbackBundle[path]) {
-        return window.__contentFallbackBundle[path];
+        return localizeContentNode(window.__contentFallbackBundle[path], localeState.locale);
       }
     }
 
@@ -469,8 +628,8 @@ async function renderMainPage() {
       <div class="home-stage reveal">
         <div class="stage-panel terminal-card">
           <div class="terminal-topline">
-            <span>${terminal.title || "club-session.log"}</span>
-            <span class="terminal-status">${terminal.status || "live"}</span>
+            <span>${terminal.title || t("visual.mainTerminalTitle", "club-session.log")}</span>
+            <span class="terminal-status">${terminal.status || t("visual.mainTerminalStatus", "live")}</span>
           </div>
           <div class="terminal-body">
             <p><span class="terminal-prompt">$</span> <span id="terminal-line"></span><span class="cursor"></span></p>
@@ -494,7 +653,7 @@ async function renderMainPage() {
         <h2>${data.story.title}</h2>
         <p class="card-copy">${data.story.description}</p>
       </div>
-      <div class="story-tabs" data-story-tabs aria-label="Story cards"></div>
+      <div class="story-tabs" data-story-tabs aria-label="${t("aria.storyCards", "Story cards")}"></div>
       <div class="home-bento-grid story-deck" data-story-deck>
         ${(data.story.items || []).map((item, index) => `
           <article class="item-card home-story-card ${index === 0 ? "home-wide-card" : ""} reveal">
@@ -512,7 +671,7 @@ async function renderMainPage() {
         <h2>${data.flow.title}</h2>
         <p class="card-copy">${data.flow.description}</p>
       </div>
-      <div class="story-tabs" data-flow-tabs aria-label="Flow cards"></div>
+      <div class="story-tabs" data-flow-tabs aria-label="${t("aria.flowCards", "Flow cards")}"></div>
       <div class="home-flow-grid" data-flow-cards>
         ${(data.flow.items || []).map((item, index) => `
           <article class="item-card home-flow-card reveal">
@@ -531,7 +690,7 @@ async function renderMainPage() {
         <p class="item-copy">${data.gallery.description}</p>
       </div>
       <div class="gallery-shell">
-        <button class="gallery-nav prev" type="button" aria-label="Previous photo">‹</button>
+        <button class="gallery-nav prev" type="button" aria-label="${t("aria.previousPhoto", "Previous photo")}">‹</button>
         <div class="gallery-viewport">
           <div class="gallery-track">
             ${data.gallery.items
@@ -543,7 +702,7 @@ async function renderMainPage() {
               .join("")}
           </div>
         </div>
-        <button class="gallery-nav next" type="button" aria-label="Next photo">›</button>
+        <button class="gallery-nav next" type="button" aria-label="${t("aria.nextPhoto", "Next photo")}">›</button>
       </div>
     </section>
   `;
@@ -561,24 +720,25 @@ function applyMainChrome(shell) {
   const footer = document.getElementById("main-footer-copy");
 
   if (brandTitle) {
-    brandTitle.textContent = shell.brandTitle || "";
+    brandTitle.textContent = t("shell.brandTitle", shell.brandTitle || "Pet Project Club");
   }
 
   if (brandSubtitle) {
-    brandSubtitle.textContent = shell.brandSubtitle || "";
+    brandSubtitle.textContent = t("shell.brandSubtitle", shell.brandSubtitle || "Budva / Montenegro");
   }
 
   if (nav && Array.isArray(shell.nav)) {
     nav.innerHTML = shell.nav
       .map((item) => {
         const active = item.key === page ? " is-active" : "";
-        return `<a href="${item.href}" data-nav="${item.key}" class="${active.trim()}">${item.label}</a>`;
+        return `<a href="${item.href}" data-nav="${item.key}" class="${active.trim()}">${t(`shell.nav.${item.key}`, item.label)}</a>`;
       })
       .join("");
+    nav.setAttribute("aria-label", t("aria.mainNavigation", "Main navigation"));
   }
 
   if (telegram && shell.telegram) {
-    telegram.textContent = shell.telegram.label || "";
+    telegram.textContent = t("shell.telegram", shell.telegram.label || "Telegram");
     telegram.href = shell.telegram.href || "#";
   }
 
@@ -586,7 +746,7 @@ function applyMainChrome(shell) {
     if (typeof shell.footer === "string") {
       footer.textContent = shell.footer;
     } else if (shell.footer) {
-      const mark = shell.footer.mark ? `<span class="footer-mark">${shell.footer.mark}</span>` : "";
+      const mark = `<span class="footer-mark">${t("shell.footer.mark", shell.footer.mark || "® Pet Project Club")}</span>`;
       const links = Array.isArray(shell.footer.links)
         ? shell.footer.links
             .map((item) => {
@@ -594,7 +754,15 @@ function applyMainChrome(shell) {
                 /t\.me\/ikotelnikov/i.test(item.href || "") || /contact:/i.test(item.label || "")
                   ? ' id="footer-contact-organizer"'
                   : "";
-              return `<a${organizerId} href="${item.href}"${item.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${item.label}</a>`;
+              let label = item.label;
+
+              if (/maps\.google\.com/i.test(item.href || "")) {
+                label = t("shell.footer.address", item.label);
+              } else if (/t\.me\/ikotelnikov/i.test(item.href || "")) {
+                label = t("shell.footer.contact", item.label);
+              }
+
+              return `<a${organizerId} href="${item.href}"${item.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${label}</a>`;
             })
             .join("")
         : "";
@@ -659,7 +827,7 @@ async function renderMeetingDetailPage() {
   if (!slug) {
     pageContent.innerHTML = `
       <section class="empty-state reveal">
-        <p>Не удалось открыть встречу: в адресе отсутствует параметр <code>slug</code>.</p>
+        <p>${t("errors.meetingSlugMissing", "Could not open the meeting because the URL is missing the slug parameter.")}</p>
       </section>
     `;
     return;
@@ -670,7 +838,7 @@ async function renderMeetingDetailPage() {
     readJson("meetings/page.json"),
   ]);
 
-  document.title = `${item.title} | Meetings | Pet Project Club Budva`;
+  document.title = buildDocumentTitle(item.title || t("shell.nav.meetings", "Meetings"));
 
   pageContent.innerHTML = renderMeetingDetail(item, pageData);
 }
@@ -684,14 +852,14 @@ async function renderProjectsPage() {
   const ownerMap = new Map(participantItems.map((item) => [item.slug, item]));
   const listCopy = projectsData.list || {};
   const pageSize = Number(listCopy.pageSize || 6);
-  const searchPlaceholder = listCopy.searchPlaceholder || "Найти проект, стек, автора или запрос";
-  const emptyText = listCopy.empty || "Пока нет проектов, подходящих под этот запрос.";
+  const searchPlaceholder = listCopy.searchPlaceholder || t("projects.searchPlaceholder", "Find a project, stack, owner, or request");
+  const emptyText = listCopy.empty || t("projects.emptyText", "There are no projects matching this request yet.");
   const query = new URLSearchParams(window.location.search);
   const initialPage = Number(query.get("page") || "1");
   let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? Math.floor(initialPage) : 1;
   let currentSearch = (query.get("q") || "").trim();
 
-  document.title = `${listCopy.title || "Проекты клуба"} | Pet Project Club Budva`;
+  document.title = buildDocumentTitle(listCopy.title || t("projects.title", "Club projects"));
 
   pageContent.innerHTML = `
     <section class="section-shell reveal project-page-shell">
@@ -705,7 +873,7 @@ async function renderProjectsPage() {
       </div>
       <div class="project-results-meta" id="project-results-meta"></div>
       <div class="project-feed" id="project-feed"></div>
-      <div class="pagination-nav" id="project-pagination" aria-label="Projects pagination"></div>
+      <div class="pagination-nav" id="project-pagination" aria-label="${t("aria.projectsPagination", "Projects pagination")}"></div>
     </section>
     ${renderStatusSection(projectsData.notes)}
   `;
@@ -773,13 +941,13 @@ async function renderProjectsPage() {
 
     resultsMeta.innerHTML = currentSearch
       ? `
-        <span>${listCopy.resultsLabel || "Проектов найдено"}: <strong>${filteredProjects.length}</strong></span>
+        <span>${listCopy.resultsLabel || t("projects.resultsLabel", "Projects found")}: <strong>${filteredProjects.length}</strong></span>
       `
       : "";
 
     feed.innerHTML = pageItems.length
       ? pageItems.map((item) => renderProjectPreviewCard(item, ownerMap)).join("")
-      : `<article class="item-card reveal"><h3>${listCopy.emptyTitle || "Ничего не найдено"}</h3><p class="item-copy">${emptyText}</p></article>`;
+      : `<article class="item-card reveal"><h3>${listCopy.emptyTitle || t("common.emptyTitle", "Nothing found")}</h3><p class="item-copy">${emptyText}</p></article>`;
 
     feed.querySelectorAll(".reveal").forEach((node) => {
       node.classList.add("visible");
@@ -823,15 +991,15 @@ async function renderParticipantsPage() {
     readIndexedItems("participants"),
   ]);
   const pageSize = Number(participantsData.pageSize || 9);
-  const title = participantsData.title || "Участники Pet Project Club";
-  const description = participantsData.description || `Для включения в список учасников, редактирования данных или удаления из него напишите <a href="#footer-contact-organizer">организатору</a>.`;
+  const title = participantsData.title || t("participants.title", "Pet Project Club participants");
+  const description = participantsData.description || t("participants.description", "To join the participants list, edit your data, or remove it, contact the organizer.");
 
-  document.title = `${title} | Pet Project Club Budva`;
+  document.title = buildDocumentTitle(title);
 
   pageContent.innerHTML = `
     <section class="section-shell reveal participants-page-shell">
       <div class="section-heading">
-        <p class="section-kicker">${participantsData.tag || "Participants"}</p>
+        <p class="section-kicker">${participantsData.tag || t("participants.tag", "Participants")}</p>
         <h1>${title}</h1>
         <p class="card-copy">${description}</p>
       </div>
@@ -900,7 +1068,7 @@ async function renderParticipantDetailPage() {
   if (!slug) {
     pageContent.innerHTML = `
       <section class="empty-state reveal">
-        <p>Не удалось открыть участника: в адресе отсутствует параметр <code>slug</code>.</p>
+        <p>${t("errors.participantSlugMissing", "Could not open the participant because the URL is missing the slug parameter.")}</p>
       </section>
     `;
     return;
@@ -915,7 +1083,7 @@ async function renderParticipantDetailPage() {
     Array.isArray(project.ownerSlugs) && project.ownerSlugs.includes(slug)
   );
 
-  document.title = `${participant.name || slug} | Participants | Pet Project Club Budva`;
+  document.title = buildDocumentTitle(participant.name || slug);
 
   pageContent.innerHTML = renderParticipantDetail(participant, participantsData, relatedProjects);
 }
@@ -927,7 +1095,7 @@ async function renderProjectDetailPage() {
   if (!slug) {
     pageContent.innerHTML = `
       <section class="empty-state reveal">
-        <p>Не удалось открыть проект: в адресе отсутствует параметр <code>slug</code>.</p>
+        <p>${t("errors.projectSlugMissing", "Could not open the project because the URL is missing the slug parameter.")}</p>
       </section>
     `;
     return;
@@ -945,7 +1113,7 @@ async function renderProjectDetailPage() {
     .filter((item) => Array.isArray(item.projectSlugs) && item.projectSlugs.includes(slug))
     .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
 
-  document.title = `${project.title || slug} | Projects | Pet Project Club Budva`;
+  document.title = buildDocumentTitle(project.title || slug);
 
   pageContent.innerHTML = renderProjectDetail(project, projectsData, participantsBySlug, relatedMeetings);
 }
@@ -962,6 +1130,73 @@ async function readMeetingIndexItems(indexPath) {
   return Promise.all(
     (index.items || []).map((slug) => readJson(`meetings/items/${slug}.json`))
   );
+}
+
+function localizeContentNode(value, locale) {
+  if (Array.isArray(value)) {
+    return value.map((entry) => localizeContentNode(entry, locale));
+  }
+
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+
+  const base = Object.fromEntries(
+    Object.entries(value)
+      .filter(([key]) => !["translations", "translationStatus", "machineSuggestions"].includes(key))
+      .map(([key, entry]) => [key, localizeContentNode(entry, locale)])
+  );
+  const sourceLocale = normalizeLocale(base.sourceLocale) || DEFAULT_LOCALE;
+  const translation = locale !== sourceLocale && value.translations && typeof value.translations === "object"
+    ? value.translations[locale]
+    : null;
+
+  return translation && typeof translation === "object"
+    ? deepMergeContent(base, localizeContentNode(translation, locale))
+    : base;
+}
+
+function deepMergeContent(baseValue, overrideValue) {
+  if (Array.isArray(overrideValue)) {
+    return overrideValue.map((entry) => cloneContentValue(entry));
+  }
+
+  if (!overrideValue || typeof overrideValue !== "object") {
+    return overrideValue;
+  }
+
+  const baseObject = baseValue && typeof baseValue === "object" && !Array.isArray(baseValue)
+    ? baseValue
+    : {};
+  const result = { ...baseObject };
+
+  for (const [key, value] of Object.entries(overrideValue)) {
+    if (Array.isArray(value)) {
+      result[key] = value.map((entry) => cloneContentValue(entry));
+      continue;
+    }
+
+    if (value && typeof value === "object") {
+      result[key] = deepMergeContent(result[key], value);
+      continue;
+    }
+
+    result[key] = value;
+  }
+
+  return result;
+}
+
+function cloneContentValue(value) {
+  if (Array.isArray(value)) {
+    return value.map((entry) => cloneContentValue(entry));
+  }
+
+  if (value && typeof value === "object") {
+    return deepMergeContent({}, value);
+  }
+
+  return value;
 }
 
 async function renderNewsPage() {
@@ -984,21 +1219,21 @@ async function renderNewsPage() {
     )
   );
 
-  document.title = `${listCopy.title || "Новости проектов"} | Pet Project Club Budva`;
+  document.title = buildDocumentTitle(listCopy.title || t("news.title", "Project news"));
 
   pageContent.innerHTML = `
     <section class="section-shell reveal project-page-shell">
       <div class="section-heading">
-        <h1>${listCopy.title || "Новости проектов"}</h1>
+        <h1>${listCopy.title || t("news.title", "Project news")}</h1>
       </div>
       <div class="project-toolbar">
         <label class="project-search-shell" for="news-search">
-          <input id="news-search" class="project-search-input" type="search" placeholder="${listCopy.searchPlaceholder || "Поиск: проект, технология, название..."}" value="${escapeHtml(currentSearch)}">
+          <input id="news-search" class="project-search-input" type="search" placeholder="${listCopy.searchPlaceholder || t("news.searchPlaceholder", "Search: project, technology, title...")}" value="${escapeHtml(currentSearch)}">
         </label>
       </div>
       <div class="project-results-meta" id="news-results-meta"></div>
       <div class="meeting-feed" id="news-feed"></div>
-      <div class="pagination-nav" id="news-pagination" aria-label="News pagination"></div>
+      <div class="pagination-nav" id="news-pagination" aria-label="${t("aria.newsPagination", "News pagination")}"></div>
     </section>
     ${pageData.notes ? renderStatusSection(pageData.notes) : ""}
   `;
@@ -1065,13 +1300,13 @@ async function renderNewsPage() {
 
     resultsMeta.innerHTML = currentSearch
       ? `
-        <span>${listCopy.resultsLabel || "Новостей найдено"}: <strong>${filteredItems.length}</strong></span>
+        <span>${listCopy.resultsLabel || t("news.resultsLabel", "News found")}: <strong>${filteredItems.length}</strong></span>
       `
       : "";
 
     feed.innerHTML = pageItems.length
       ? pageItems.map((item) => renderMeetingPreviewCard(item)).join("")
-      : `<article class="item-card reveal"><h3>${listCopy.emptyTitle || "Ничего не найдено"}</h3><p class="item-copy">${listCopy.empty || "Попробуйте изменить поисковый запрос."}</p></article>`;
+      : `<article class="item-card reveal"><h3>${listCopy.emptyTitle || t("common.emptyTitle", "Nothing found")}</h3><p class="item-copy">${listCopy.empty || t("news.emptyText", "Try changing the search query.")}</p></article>`;
 
     feed.querySelectorAll(".reveal").forEach((node) => {
       node.classList.add("visible");
@@ -1080,9 +1315,9 @@ async function renderNewsPage() {
     pagination.innerHTML = totalPages > 1
       ? renderGenericPagination(
           {
-            prev: listCopy.pagination?.prev || "← Previous",
-            next: listCopy.pagination?.next || "Next →",
-            page: listCopy.pagination?.page || "Page",
+            prev: listCopy.pagination?.prev || getUiPaginationCopy("news").prev,
+            next: listCopy.pagination?.next || getUiPaginationCopy("news").next,
+            page: listCopy.pagination?.page || getUiPaginationCopy("news").page,
           },
           currentPage,
           totalPages
@@ -1162,7 +1397,7 @@ function renderVisual(kind) {
       <div class="terminal-card">
         <div class="terminal-topline">
           <span>meetings.feed</span>
-          <span class="terminal-status">ready for telegram</span>
+          <span class="terminal-status">${t("visual.meetingsTerminalStatus", "ready for telegram")}</span>
         </div>
         <div class="terminal-body">
           <p><span class="terminal-prompt">$</span> <span id="terminal-line"></span><span class="cursor"></span></p>
@@ -1197,7 +1432,7 @@ function renderVisual(kind) {
       <div class="terminal-card">
         <div class="terminal-topline">
           <span>projects.index</span>
-          <span class="terminal-status">contributors open</span>
+          <span class="terminal-status">${t("visual.projectsTerminalStatus", "contributors open")}</span>
         </div>
         <div class="terminal-body">
           <ul class="terminal-list">
@@ -1466,8 +1701,8 @@ function renderPeopleSection(section) {
 function renderPersonCard(item) {
   const points = Array.isArray(item.points) ? item.points : [];
   const handle = item.handle || item.slug || "participant";
-  const name = item.name || item.slug || "Untitled participant";
-  const role = item.role || "Role not specified";
+  const name = item.name || item.slug || t("participants.card.untitled", "Untitled participant");
+  const role = item.role || t("participants.card.roleFallback", "Role not specified");
   const bio = item.bio || "";
   const href = resolveHref(`participants/item/?slug=${item.slug}`);
   const previewBio = truncateText(bio, 170);
@@ -1485,7 +1720,7 @@ function renderPersonCard(item) {
       ${photo}
       <h3><a class="person-name-link" href="${href}">${name}</a></h3>
       <p class="person-role">${role}</p>
-      ${previewBio ? `<p class="person-copy">${previewBio}${bio.length > previewBio.length ? ` <a class="read-more-link" href="${href}">more --&gt;</a>` : ""}</p>` : ""}
+      ${previewBio ? `<p class="person-copy">${previewBio}${bio.length > previewBio.length ? ` <a class="read-more-link" href="${href}">${t("participants.card.readMore", "more -->")}</a>` : ""}</p>` : ""}
       ${points.length ? `
         <ul class="person-list">
           ${points.map((point) => `<li>${point}</li>`).join("")}
@@ -1525,7 +1760,7 @@ function renderProjectPreviewCard(item, ownerMap = new Map()) {
           ${ownerLinks}
           ${primaryUrl ? `<a class="meta-pill" href="${resolveHref(primaryUrl.href)}"${primaryUrl.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${primaryUrl.label}</a>` : ""}
         </div>
-        ${previewSummary ? `<p class="meeting-copy">${escapeHtml(previewSummary)}${hasMore ? ` <a class="read-more-link" href="${href}">more --&gt;</a>` : ""}</p>` : ""}
+        ${previewSummary ? `<p class="meeting-copy">${escapeHtml(previewSummary)}${hasMore ? ` <a class="read-more-link" href="${href}">${t("projects.readMore", "more -->")}</a>` : ""}</p>` : ""}
       </div>
     </article>
   `;
@@ -1545,7 +1780,7 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
   return `
     <section class="participant-detail-shell reveal">
       <div class="participant-detail-head">
-        <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Ко всем участникам"}</a>
+        <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || t("participants.detail.backLabel", "← Back to participants")}</a>
         ${photo}
         <h1 class="participant-detail-title">${item.name || item.slug}</h1>
         ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
@@ -1562,10 +1797,10 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
     </section>
     <section class="section-shell reveal">
       <div class="section-heading">
-        <h2>Проекты участника</h2>
+        <h2>${t("participants.detail.projectsTitle", "Participant projects")}</h2>
       </div>
       <div class="project-feed">
-        ${relatedProjects.length ? relatedProjects.map((project) => renderProjectPreviewCard(project, new Map([[item.slug, item]]))).join("") : `<article class="item-card reveal"><h3>Пока пусто</h3><p class="item-copy">Для этого участника пока не привязаны проекты.</p></article>`}
+        ${relatedProjects.length ? relatedProjects.map((project) => renderProjectPreviewCard(project, new Map([[item.slug, item]]))).join("") : `<article class="item-card reveal"><h3>${t("participants.detail.emptyTitle", "Nothing here yet")}</h3><p class="item-copy">${t("participants.detail.emptyText", "No projects are linked to this participant yet.")}</p></article>`}
       </div>
     </section>
   `;
@@ -1600,7 +1835,7 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
   return `
     <section class="project-detail-shell reveal">
       <div class="project-detail-head">
-        <a class="detail-back-link" href="${resolveHref("projects/")}">${pageData.detail?.backLabel || "← Ко всем проектам"}</a>
+        <a class="detail-back-link" href="${resolveHref("projects/")}">${pageData.detail?.backLabel || t("projects.detail.backLabel", "← Back to projects")}</a>
         ${item.status ? `<p class="meeting-date project-state-label">${item.status}</p>` : ""}
         <h1 class="project-detail-title">${item.title || item.slug}</h1>
         ${projectText.summary ? `<p class="card-copy project-detail-summary">${projectText.summary}</p>` : ""}
@@ -1615,7 +1850,7 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
         <section class="section-shell reveal">
           <div class="section-heading">
             ${pageData.detail?.detailsTag ? `<p class="section-kicker">${pageData.detail.detailsTag}</p>` : ""}
-            <h2>${pageData.detail?.detailsTitle || "Подробности проекта"}</h2>
+            <h2>${pageData.detail?.detailsTitle || t("projects.detail.detailsTitle", "Project details")}</h2>
           </div>
           ${detailsHtml}
         </section>
@@ -1623,25 +1858,25 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
       <section class="section-shell reveal">
         <div class="section-heading">
           ${pageData.detail?.ownersTag ? `<p class="section-kicker">${pageData.detail.ownersTag}</p>` : ""}
-          <h2>${pageData.detail?.ownersTitle || "Создатели проекта"}</h2>
+          <h2>${pageData.detail?.ownersTitle || t("projects.detail.ownersTitle", "Project creators")}</h2>
           ${pageData.detail?.ownersDescription ? `<p class="card-copy">${pageData.detail.ownersDescription}</p>` : ""}
         </div>
         <div class="project-owner-list">
           ${owners.length
             ? owners.map((owner) => renderPersonCard(owner)).join("")
-            : `<article class="item-card reveal"><h3>Пока не указано</h3><p class="item-copy">Для этого проекта пока не указаны создатели в ownerSlugs.</p></article>`}
+            : `<article class="item-card reveal"><h3>${t("projects.detail.ownersEmptyTitle", "Not specified yet")}</h3><p class="item-copy">${t("projects.detail.ownersEmptyText", "This project does not list creators in ownerSlugs yet.")}</p></article>`}
         </div>
       </section>
       <section class="section-shell reveal">
         <div class="section-heading">
           ${pageData.detail?.newsTag ? `<p class="section-kicker">${pageData.detail.newsTag}</p>` : ""}
-          <h2>${pageData.detail?.newsTitle || "Новости и связанные встречи"}</h2>
+          <h2>${pageData.detail?.newsTitle || t("projects.detail.newsTitle", "News and related meetings")}</h2>
           ${pageData.detail?.newsDescription ? `<p class="card-copy">${pageData.detail.newsDescription}</p>` : ""}
         </div>
         <div class="meeting-feed">
           ${relatedMeetings.length
             ? relatedMeetings.map((meeting) => renderMeetingPreviewCard(meeting)).join("")
-            : `<article class="item-card reveal"><h3>Пока пусто</h3><p class="item-copy">Связанные встречи появятся здесь, как только у meeting/announce записи будет указан projectSlugs.</p></article>`}
+            : `<article class="item-card reveal"><h3>${t("projects.detail.relatedEmptyTitle", "Nothing here yet")}</h3><p class="item-copy">${t("projects.detail.relatedEmptyText", "Related meetings will appear here once a meeting or announcement includes projectSlugs.")}</p></article>`}
         </div>
       </section>
     </section>
@@ -1744,7 +1979,7 @@ function renderProjectGallery(gallery, fallbackTitle) {
   return `
     <section class="project-detail-gallery reveal">
       <div class="gallery-shell">
-        <button class="gallery-nav prev" type="button" aria-label="Previous photo">‹</button>
+        <button class="gallery-nav prev" type="button" aria-label="${t("aria.previousPhoto", "Previous photo")}">‹</button>
         <div class="gallery-viewport">
           <div class="gallery-track">
             ${gallery.map((item) => `
@@ -1754,7 +1989,7 @@ function renderProjectGallery(gallery, fallbackTitle) {
             `).join("")}
           </div>
         </div>
-        <button class="gallery-nav next" type="button" aria-label="Next photo">›</button>
+        <button class="gallery-nav next" type="button" aria-label="${t("aria.nextPhoto", "Next photo")}">›</button>
       </div>
     </section>
   `;
@@ -1775,7 +2010,7 @@ function getProjectLinks(item) {
 
   if (item.url) {
     links.unshift({
-      label: item.urlLabel || "Open project",
+      label: item.urlLabel || t("projects.openProject", "Open project"),
       href: item.url,
       external: true,
     });
@@ -1858,12 +2093,12 @@ function renderGenericPagination(copy = {}, currentPage, totalPages) {
 
   return `
     ${prevPage
-      ? `<button class="pagination-link" type="button" data-project-page="${prevPage}">${copy.prev || "← Previous"}</button>`
-      : `<span class="pagination-link is-disabled">${copy.prev || "← Previous"}</span>`}
-    <span class="pagination-status">${copy.page || "Page"} ${currentPage} / ${totalPages}</span>
+      ? `<button class="pagination-link" type="button" data-project-page="${prevPage}">${copy.prev || t("common.pagination.prev", "← Previous")}</button>`
+      : `<span class="pagination-link is-disabled">${copy.prev || t("common.pagination.prev", "← Previous")}</span>`}
+    <span class="pagination-status">${copy.page || t("common.pagination.page", "Page")} ${currentPage} / ${totalPages}</span>
     ${nextPage
-      ? `<button class="pagination-link" type="button" data-project-page="${nextPage}">${copy.next || "Next →"}</button>`
-      : `<span class="pagination-link is-disabled">${copy.next || "Next →"}</span>`}
+      ? `<button class="pagination-link" type="button" data-project-page="${nextPage}">${copy.next || t("common.pagination.next", "Next →")}</button>`
+      : `<span class="pagination-link is-disabled">${copy.next || t("common.pagination.next", "Next →")}</span>`}
   `;
 }
 
@@ -1913,7 +2148,7 @@ function renderMeetingsFeed(section, items, currentPage, totalPages) {
         <p class="card-copy">${section.description}</p>
       </div>
       <div class="meeting-feed">
-        ${items.length ? items.map((item) => renderMeetingPreviewCard(item)).join("") : `<p class="card-copy">${section.empty || "Пока здесь нет встреч."}</p>`}
+        ${items.length ? items.map((item) => renderMeetingPreviewCard(item)).join("") : `<p class="card-copy">${section.empty || t("meetings.emptyText", "There are no meetings here yet.")}</p>`}
       </div>
       ${totalPages > 1 ? renderMeetingsPagination(section.pagination, currentPage, totalPages) : ""}
     </section>
@@ -1925,14 +2160,14 @@ function renderMeetingsPagination(copy = {}, currentPage, totalPages) {
   const nextHref = currentPage < totalPages ? `?page=${currentPage + 1}` : "";
 
   return `
-    <nav class="pagination-nav" aria-label="Meetings pagination">
+    <nav class="pagination-nav" aria-label="${t("aria.meetingsPagination", "Meetings pagination")}">
       ${prevHref
-        ? `<a class="pagination-link" href="${prevHref}">${copy.prev || "← Previous"}</a>`
-        : `<span class="pagination-link is-disabled">${copy.prev || "← Previous"}</span>`}
-      <span class="pagination-status">${copy.page || "Page"} ${currentPage} / ${totalPages}</span>
+        ? `<a class="pagination-link" href="${prevHref}">${copy.prev || t("common.pagination.prev", "← Previous")}</a>`
+        : `<span class="pagination-link is-disabled">${copy.prev || t("common.pagination.prev", "← Previous")}</span>`}
+      <span class="pagination-status">${copy.page || t("common.pagination.page", "Page")} ${currentPage} / ${totalPages}</span>
       ${nextHref
-        ? `<a class="pagination-link" href="${nextHref}">${copy.next || "Next →"}</a>`
-        : `<span class="pagination-link is-disabled">${copy.next || "Next →"}</span>`}
+        ? `<a class="pagination-link" href="${nextHref}">${copy.next || t("common.pagination.next", "Next →")}</a>`
+        : `<span class="pagination-link is-disabled">${copy.next || t("common.pagination.next", "Next →")}</span>`}
     </nav>
   `;
 }
@@ -1958,7 +2193,7 @@ function renderMeetingPreviewCard(item) {
         ${item.date ? `<p class="meeting-date">${item.date}</p>` : ""}
         <h3 class="meeting-title"><a href="${href}">${item.title}</a></h3>
         ${meta ? `<div class="meeting-meta">${meta}</div>` : ""}
-        ${lead ? `<p class="meeting-copy">${lead}${hasMore ? ` <a class="read-more-link" href="${href}">read more --&gt;</a>` : ""}</p>` : ""}
+        ${lead ? `<p class="meeting-copy">${lead}${hasMore ? ` <a class="read-more-link" href="${href}">${t("meetings.readMore", "read more -->")}</a>` : ""}</p>` : ""}
       </div>
     </article>
   `;
@@ -1991,7 +2226,7 @@ function renderMeetingDetail(item, pageData) {
       return `
         <section class="section-shell reveal">
           <div class="section-heading">
-            <p class="section-kicker">${section.tag || item.type}</p>
+            <p class="section-kicker">${section.tag || getEntityTypeLabel(item.type)}</p>
             <h2>${section.title}</h2>
           </div>
           <div class="detail-list-shell">
@@ -2011,7 +2246,7 @@ function renderMeetingDetail(item, pageData) {
   return `
     <section class="meeting-detail-shell reveal">
       <div class="meeting-detail-head">
-        <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || "← Back to meetings"}</a>
+        <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || t("meetings.detail.backLabel", "← Back to meetings")}</a>
         ${item.date ? `<p class="meeting-date">${item.date}</p>` : ""}
         <h1 class="meeting-detail-title">${item.title}</h1>
         ${meta ? `<div class="meeting-meta">${meta}</div>` : ""}
@@ -2396,7 +2631,7 @@ function syncStoryDeck(deck, tabs, useDeckLayout) {
     tabs.classList.add("is-visible");
     tabs.innerHTML = cards
       .map((card, index) => `
-        <button class="story-tab" type="button" data-story-tab="${index}" aria-label="Open story card ${index + 1}">
+        <button class="story-tab" type="button" data-story-tab="${index}" aria-label="${t("aria.openStoryCard", "Open story card")} ${index + 1}">
           <span aria-hidden="true">${tabIcons[index] || "•"}</span>
         </button>
       `)
@@ -2498,7 +2733,7 @@ function syncFlowTabs(grid, tabs, useTabsLayout) {
     tabs.classList.add("is-visible");
     tabs.innerHTML = cards
       .map((card, index) => `
-        <button class="story-tab" type="button" data-flow-tab="${index}" aria-label="Open flow card ${index + 1}">
+        <button class="story-tab" type="button" data-flow-tab="${index}" aria-label="${t("aria.openFlowCard", "Open flow card")} ${index + 1}">
           <span aria-hidden="true">${tabIcons[index] || "•"}</span>
         </button>
       `)
@@ -2537,9 +2772,9 @@ function ensureGalleryLightbox() {
   lightbox.className = "gallery-lightbox";
   lightbox.innerHTML = `
     <div class="gallery-lightbox-backdrop"></div>
-    <div class="gallery-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Image viewer">
-      <button class="gallery-lightbox-close" type="button" aria-label="Close gallery">×</button>
-      <button class="gallery-lightbox-prev" type="button" aria-label="Previous image">‹</button>
+    <div class="gallery-lightbox-dialog" role="dialog" aria-modal="true" aria-label="${t("aria.imageViewer", "Image viewer")}">
+      <button class="gallery-lightbox-close" type="button" aria-label="${t("aria.closeGallery", "Close gallery")}">×</button>
+      <button class="gallery-lightbox-prev" type="button" aria-label="${t("aria.previousImage", "Previous image")}">‹</button>
       <div class="gallery-lightbox-media">
         <img class="gallery-lightbox-image" alt="">
         <div class="gallery-lightbox-meta">
@@ -2547,7 +2782,7 @@ function ensureGalleryLightbox() {
           <p class="gallery-lightbox-caption"></p>
         </div>
       </div>
-      <button class="gallery-lightbox-next" type="button" aria-label="Next image">›</button>
+      <button class="gallery-lightbox-next" type="button" aria-label="${t("aria.nextImage", "Next image")}">›</button>
     </div>
   `;
 

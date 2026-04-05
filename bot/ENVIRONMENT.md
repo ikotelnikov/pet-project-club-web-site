@@ -113,6 +113,26 @@ Cloudflare:
 
 - Worker variable or secret
 
+### `OPENAI_TRANSLATION_MODEL`
+
+Optional.
+
+Purpose:
+
+- allows using a separate model for automatic content translation
+
+Default behavior:
+
+- if unset, translation uses `OPENAI_MODEL`
+
+Local:
+
+- optional in `bot/local-env.ps1`
+
+Cloudflare:
+
+- Worker variable or secret
+
 ## GitHub
 
 ### `GITHUB_REPO_OWNER`
