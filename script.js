@@ -222,12 +222,7 @@ async function loadUiMessages(locale) {
 }
 
 async function loadJsonFile(path) {
-  const response = await fetch(`${contentRoot}/${path}`, { cache: "no-store" });
-
-  if (!response.ok) {
-    throw new Error(`Failed to load ${path}: ${response.status}`);
-  }
-
+  const response = await fetchContentResponse(path);
   return response.json();
 }
 
@@ -564,12 +559,7 @@ function resolveHref(href) {
 
 async function readJson(path) {
   try {
-    const response = await fetch(`${contentRoot}/${path}`, { cache: "no-store" });
-
-    if (!response.ok) {
-      throw new Error(`Failed to load ${path}: ${response.status}`);
-    }
-
+    const response = await fetchContentResponse(path);
     return localizeContentNode(await response.json(), localeState.locale);
   } catch (error) {
     const fallbackNode = document.querySelector(`[data-fallback-path="${path}"]`);
@@ -595,6 +585,52 @@ async function readJson(path) {
     }
 
     throw error;
+  }
+}
+
+async function fetchContentResponse(path) {
+  let lastError = null;
+
+  for (const url of buildContentUrls(path)) {
+    try {
+      const response = await fetch(url, { cache: "no-store" });
+
+      if (!response.ok) {
+        lastError = new Error(`Failed to load ${path}: ${response.status}`);
+        continue;
+      }
+
+      return response;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw lastError || new Error(`Failed to load ${path}.`);
+}
+
+function buildContentUrls(path) {
+  const urls = [];
+  const normalizedPath = String(path).replace(/^\/+/, "");
+  const pushUrl = (value) => {
+    if (!value || urls.includes(value)) {
+      return;
+    }
+
+    urls.push(value);
+  };
+
+  pushUrl(resolveRelativeUrl(`${contentRoot}/${normalizedPath}`));
+  pushUrl(resolveRelativeUrl(`${repoRootPath}/content/${normalizedPath}`));
+
+  return urls;
+}
+
+function resolveRelativeUrl(value) {
+  try {
+    return new URL(value, window.location.href).toString();
+  } catch {
+    return value;
   }
 }
 
@@ -2267,6 +2303,9 @@ function renderMeetingMeta(item) {
 
 function renderMeetingDetail(item, pageData) {
   const meta = renderMeetingMeta(item);
+  const richDetailsHtml = typeof item.detailsHtml === "string" && item.detailsHtml.trim()
+    ? item.detailsHtml
+    : "";
   const detailSections = (item.sections || [])
     .map((section) => {
       if (!section.items || !section.items.length) {
@@ -2849,6 +2888,3 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 }
-  const richDetailsHtml = typeof item.detailsHtml === "string" && item.detailsHtml.trim()
-    ? item.detailsHtml
-    : "";
