@@ -2,9 +2,9 @@ export const SUPPORTED_LOCALES = ["ru", "en", "de", "me", "es"];
 export const DEFAULT_SOURCE_LOCALE = "ru";
 
 const LOCALIZABLE_FIELDS = {
-  announce: ["date", "title", "place", "format", "paragraphs", "sections", "links", "photo"],
-  announcement: ["date", "title", "place", "format", "paragraphs", "sections", "links", "photo"],
-  meeting: ["date", "title", "place", "format", "paragraphs", "sections", "links", "photo"],
+  announce: ["date", "title", "place", "format", "paragraphs", "detailsHtml", "sections", "links", "photo"],
+  announcement: ["date", "title", "place", "format", "paragraphs", "detailsHtml", "sections", "links", "photo"],
+  meeting: ["date", "title", "place", "format", "paragraphs", "detailsHtml", "sections", "links", "photo"],
   participant: ["handle", "name", "role", "bio", "points", "location", "links"],
   project: ["title", "status", "stack", "summary", "detailsHtml", "points", "location", "links"],
 };

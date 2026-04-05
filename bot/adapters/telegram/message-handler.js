@@ -38,6 +38,7 @@ export async function handleTelegramMessage({
   }
 
   const text = extractMessageText(message);
+  const formattedTextHtml = extractFormattedMessageHtml(message);
 
   if (!text) {
     return {
@@ -126,6 +127,7 @@ export async function handleTelegramMessage({
       }
     : await extractionClient.extractIntent({
         messageText: text,
+        formattedTextHtml,
         hasPhoto: Boolean(message.photo?.length),
         photoCount: Array.isArray(message.photo) ? message.photo.length : 0,
         attachments,
@@ -235,6 +237,19 @@ export function extractMessageText(message) {
   const text = typeof message.text === "string" && message.text.trim() ? message.text : null;
   const caption = typeof message.caption === "string" && message.caption.trim() ? message.caption : null;
   return text || caption || null;
+}
+
+export function extractFormattedMessageHtml(message) {
+  const text = typeof message.text === "string" && message.text.trim() ? message.text : null;
+  const caption = typeof message.caption === "string" && message.caption.trim() ? message.caption : null;
+  const rawText = text || caption;
+  const entities = text ? message.entities : message.caption_entities;
+
+  if (!rawText || !Array.isArray(entities) || entities.length === 0) {
+    return null;
+  }
+
+  return telegramEntitiesToHtml(rawText, entities);
 }
 
 export function extractCommandText(message) {
@@ -583,6 +598,94 @@ async function handleEditInstruction({
     operation: repositoryPreview,
     pendingState: newPending,
   };
+}
+
+function telegramEntitiesToHtml(text, entities) {
+  const normalizedEntities = entities
+    .filter((entity) => entity && Number.isInteger(entity.offset) && Number.isInteger(entity.length) && entity.length > 0)
+    .map((entity) => ({
+      ...entity,
+      end: entity.offset + entity.length,
+    }))
+    .sort((left, right) => left.offset - right.offset || right.length - left.length);
+
+  return renderEntityRange(text, normalizedEntities, 0, text.length);
+}
+
+function renderEntityRange(text, entities, start, end) {
+  let cursor = start;
+  let html = "";
+  const scoped = entities.filter((entity) => entity.offset >= start && entity.end <= end);
+
+  while (cursor < end) {
+    const nextEntity = scoped.find((entity) => entity.offset === cursor);
+
+    if (!nextEntity) {
+      const nextBoundary = scoped
+        .filter((entity) => entity.offset > cursor)
+        .reduce((min, entity) => Math.min(min, entity.offset), end);
+      html += escapeTelegramHtml(text.slice(cursor, nextBoundary)).replace(/\n/g, "<br>");
+      cursor = nextBoundary;
+      continue;
+    }
+
+    const childEntities = scoped.filter(
+      (entity) =>
+        entity !== nextEntity &&
+        entity.offset >= nextEntity.offset &&
+        entity.end <= nextEntity.end
+    );
+    const innerHtml = renderEntityRange(text, childEntities, nextEntity.offset, nextEntity.end);
+    html += wrapTelegramEntity(nextEntity, innerHtml);
+    cursor = nextEntity.end;
+  }
+
+  return html;
+}
+
+function wrapTelegramEntity(entity, innerHtml) {
+  switch (entity.type) {
+    case "bold":
+      return `<strong>${innerHtml}</strong>`;
+    case "italic":
+      return `<em>${innerHtml}</em>`;
+    case "underline":
+      return `<u>${innerHtml}</u>`;
+    case "strikethrough":
+      return `<s>${innerHtml}</s>`;
+    case "spoiler":
+      return `<span class="tg-spoiler">${innerHtml}</span>`;
+    case "code":
+      return `<code>${innerHtml.replace(/<br>/g, "\n")}</code>`;
+    case "pre":
+      return `<pre>${innerHtml.replace(/<br>/g, "\n")}</pre>`;
+    case "text_link":
+      return `<a href="${escapeTelegramAttribute(entity.url || "#")}">${innerHtml}</a>`;
+    case "url":
+      return `<a href="${escapeTelegramAttribute(stripHtmlTags(innerHtml))}">${innerHtml}</a>`;
+    default:
+      return innerHtml;
+  }
+}
+
+function escapeTelegramHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function escapeTelegramAttribute(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function stripHtmlTags(value) {
+  return String(value).replace(/<[^>]+>/g, "");
 }
 
 function normalizeExtractionToOperation(extraction, sourceText = "") {

@@ -164,6 +164,7 @@ function buildSystemPrompt() {
     "For update/delete, prefer targetRef over inventing a final slug.",
     "Slug may be provided either as top-level slug or as fields.slug. Both are valid.",
     "Supported content locales are: ru, en, de, me, es.",
+    "If formattedTextHtml is provided and the user message clearly contains rich formatting that should be preserved, include fields.detailsHtml for announcement, meeting, or project while also extracting clean structured summary fields such as paragraphs when possible.",
     "If the user explicitly asks to edit or create localized text for one locale, set fields.locale to that locale and include only the locale-specific text fields that should change.",
     "Use locale 'me' for Montenegrin and closely related local Balkan requests when the user clearly wants the /me/ site language.",
     "If pendingOperation is provided, treat the user message as an edit to that pending preview. Keep the same entity, action, and slug unless the user clearly asks to change them. Prefer returning only the changed fields.",

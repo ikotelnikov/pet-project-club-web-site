@@ -28,8 +28,8 @@ const CONFIDENCE_VALUES = new Set([
 ]);
 
 const ENTITY_FIELD_RULES = {
-  announcement: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
-  meeting: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
+  announcement: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "detailsHtml", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
+  meeting: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "detailsHtml", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
   participant: new Set(["slug", "handle", "name", "role", "bio", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
   project: new Set(["slug", "title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
 };

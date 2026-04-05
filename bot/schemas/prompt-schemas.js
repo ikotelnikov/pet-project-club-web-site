@@ -66,7 +66,7 @@ export const ENTITY_SCHEMAS = {
   meeting: {
     entity: "meeting",
     required: ["slug", "date", "title", "place", "format"],
-    optional: ["slug", "placeUrl", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
+    optional: ["slug", "placeUrl", "paragraphs", "detailsHtml", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
     fieldTypes: {
       slug: "string",
       date: "string",
@@ -75,6 +75,7 @@ export const ENTITY_SCHEMAS = {
       placeUrl: "string",
       format: "string",
       paragraphs: "string[]",
+      detailsHtml: "string",
       sections: "Section[]",
       links: "Link[]",
       photoAlt: "string",
@@ -97,7 +98,7 @@ export const ENTITY_SCHEMAS = {
   announcement: {
     entity: "announcement",
     required: ["slug", "date", "title", "place", "format"],
-    optional: ["slug", "placeUrl", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
+    optional: ["slug", "placeUrl", "paragraphs", "detailsHtml", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
     fieldTypes: {
       slug: "string",
       date: "string",
@@ -106,6 +107,7 @@ export const ENTITY_SCHEMAS = {
       placeUrl: "string",
       format: "string",
       paragraphs: "string[]",
+      detailsHtml: "string",
       sections: "Section[]",
       links: "Link[]",
       photoAlt: "string",

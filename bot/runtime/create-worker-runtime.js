@@ -1,6 +1,7 @@
 import { GitHubContentRepository } from "../adapters/github/repository.js";
 import { ExtractionClient } from "../adapters/openai/extraction-client.js";
 import { PrototypeExtractionClient } from "../adapters/openai/prototype-extraction-client.js";
+import { TranslationClient } from "../adapters/openai/translation-client.js";
 import { PendingKvStore } from "../adapters/storage/pending-kv-store.js";
 import { PendingMemoryStore } from "../adapters/storage/pending-memory-store.js";
 import { TelegramClient } from "../adapters/telegram/telegram-client.js";
@@ -23,6 +24,13 @@ export function createWorkerRuntime(env = {}, options = {}) {
           fetchImpl,
         })
       : new PrototypeExtractionClient();
+  const translationClient = env.OPENAI_API_KEY
+    ? new TranslationClient({
+        apiKey: env.OPENAI_API_KEY,
+        model: env.OPENAI_TRANSLATION_MODEL || env.OPENAI_MODEL || undefined,
+        fetchImpl,
+      })
+    : null;
   const pendingStore =
     options.pendingStore ||
     (env.PENDING_STATE_KV
@@ -43,6 +51,7 @@ export function createWorkerRuntime(env = {}, options = {}) {
   return {
     repository,
     extractionClient,
+    translationClient,
     pendingStore,
     photoStore,
     telegramClient,
@@ -58,6 +67,7 @@ export function createWorkerRuntime(env = {}, options = {}) {
         pendingStore,
         photoStore,
         extractionClient,
+        translationClient,
         telegramClient,
         dryRun: runtimeOptions.dryRun ?? true,
       });

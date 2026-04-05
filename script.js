@@ -2233,7 +2233,7 @@ function renderMeetingPreviewCard(item) {
     `
     : "";
   const paragraphs = Array.isArray(item.paragraphs) ? item.paragraphs : [];
-  const lead = paragraphs[0] || "";
+  const lead = paragraphs[0] || summarizePlainText(stripHtml(item.detailsHtml || ""), 220) || "";
   const hasMore = paragraphs.length > 1;
 
   return `
@@ -2307,7 +2307,9 @@ function renderMeetingDetail(item, pageData) {
         </div>
       ` : ""}
       <div class="meeting-detail-copy">
-        ${(item.paragraphs || []).map((paragraph) => `<p class="meeting-copy">${paragraph}</p>`).join("")}
+        ${richDetailsHtml
+          ? `<div class="project-richtext">${richDetailsHtml}</div>`
+          : (item.paragraphs || []).map((paragraph) => `<p class="meeting-copy">${paragraph}</p>`).join("")}
       </div>
       ${links ? `<div class="hero-actions">${links}</div>` : ""}
     </section>
@@ -2847,3 +2849,6 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 }
+  const richDetailsHtml = typeof item.detailsHtml === "string" && item.detailsHtml.trim()
+    ? item.detailsHtml
+    : "";
