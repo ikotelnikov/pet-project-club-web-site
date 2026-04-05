@@ -705,8 +705,7 @@ body.lightbox-open {
   background: rgba(255, 255, 255, 0.04);
 }
 
-.meeting-preview-media img,
-.meeting-detail-media img {
+.meeting-preview-media img {
   display: block;
   width: 100%;
   height: 100%;
@@ -826,7 +825,8 @@ body.lightbox-open {
 
 .meeting-detail-shell {
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(14, 21, 31, 0.72), rgba(8, 12, 18, 0.58));
+  background: linear-gradient(180deg, rgba(14, 21, 31, 0.84), rgba(8, 12, 18, 0.74));
+  box-shadow: var(--shadow);
   backdrop-filter: blur(16px);
 }
 
@@ -842,13 +842,19 @@ body.lightbox-open {
 }
 
 .meeting-detail-media {
+  display: grid;
+  place-items: center;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(8, 12, 18, 0.62);
 }
 
 .meeting-detail-media img {
-  height: min(60vw, 560px);
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(60vw, 560px);
+  object-fit: contain;
 }
 
 .meeting-detail-copy {
