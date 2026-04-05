@@ -97,7 +97,7 @@ export class TranslationClient {
 
     const data = await response.json();
     const text = extractJsonTextOutput(data);
-    const parsed = JSON.parse(text);
+    const parsed = normalizeTranslatedFields(JSON.parse(text));
 
     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
       throw new Error("Translation output must be a JSON object.");
@@ -154,4 +154,20 @@ function stripJsonCodeFences(text) {
   const trimmed = text.trim();
   const fenceMatch = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
   return fenceMatch ? fenceMatch[1].trim() : trimmed;
+}
+
+function normalizeTranslatedFields(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return value;
+  }
+
+  if (value.fields && typeof value.fields === "object" && !Array.isArray(value.fields)) {
+    return value.fields;
+  }
+
+  if (value.translatedFields && typeof value.translatedFields === "object" && !Array.isArray(value.translatedFields)) {
+    return value.translatedFields;
+  }
+
+  return value;
 }

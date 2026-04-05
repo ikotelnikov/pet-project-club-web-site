@@ -76,7 +76,8 @@ export class TelegramClient {
     });
 
     if (!response.ok) {
-      throw new TelegramBotError(`Telegram API request failed with status ${response.status}.`);
+      const body = await safeReadTelegramBody(response);
+      throw new TelegramBotError(`Telegram API request failed in ${method} with status ${response.status}${body ? `: ${body}` : "."}`);
     }
 
     const data = await response.json();
@@ -86,5 +87,14 @@ export class TelegramClient {
     }
 
     return data.result;
+  }
+}
+
+async function safeReadTelegramBody(response) {
+  try {
+    const text = await response.text();
+    return text.trim();
+  } catch {
+    return "";
   }
 }

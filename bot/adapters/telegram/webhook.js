@@ -123,9 +123,19 @@ export async function handleTelegramWebhookRequest({
     );
 
     if (runtime.telegramClient && update.callback_query?.id) {
-      await runtime.telegramClient.answerCallbackQuery({
-        callbackQueryId: update.callback_query.id,
-      });
+      try {
+        await runtime.telegramClient.answerCallbackQuery({
+          callbackQueryId: update.callback_query.id,
+        });
+      } catch (callbackError) {
+        console.error(
+          JSON.stringify({
+            event: "telegram_callback_answer_failed",
+            updateId: update.update_id,
+            error: callbackError instanceof Error ? callbackError.message : String(callbackError),
+          })
+        );
+      }
     }
 
     if (replyText && runtime.telegramClient && normalizedUpdate.message?.chat?.id != null) {
