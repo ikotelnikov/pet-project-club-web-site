@@ -116,17 +116,19 @@
         "primaryCta": { "label": "Go to Telegram" },
         "secondaryCta": { "label": "Open meetings" },
         "stage": {
-          "lines": [
-            "Find support and your first users.",
-            "Get discussion, feedback, and fresh skills around the project.",
-            "Meet collaborators, partners, and people you actually want to build with."
-          ],
-          "phrases": [
-            "sync --messages into content/",
-            "review --idea and cut scope",
-            "ship --small but real",
-            "publish --progress in public"
-          ]
+          "terminal": {
+            "lines": [
+              "Find support and your first users.",
+              "Get discussion, feedback, and fresh skills around the project.",
+              "Meet collaborators, partners, and people you actually want to build with."
+            ],
+            "phrases": [
+              "sync --messages into content/",
+              "review --idea and cut scope",
+              "ship --small but real",
+              "publish --progress in public"
+            ]
+          }
         }
       },
       "signals": [
@@ -191,17 +193,19 @@
         "primaryCta": { "label": "Zu Telegram" },
         "secondaryCta": { "label": "Treffen ansehen" },
         "stage": {
-          "lines": [
-            "Unterstuetzung und erste Nutzer finden.",
-            "Diskussion, Feedback und neue Kompetenzen fuer das Projekt bekommen.",
-            "Mitstreiter, Partner und Menschen treffen, mit denen man wirklich bauen will."
-          ],
-          "phrases": [
-            "sync --nachrichten in content/",
-            "review --idee pruefen und scope kuerzen",
-            "ship --klein aber echt",
-            "publish --fortschritt oeffentlich teilen"
-          ]
+          "terminal": {
+            "lines": [
+              "Unterstuetzung und erste Nutzer finden.",
+              "Diskussion, Feedback und neue Kompetenzen fuer das Projekt bekommen.",
+              "Mitstreiter, Partner und Menschen treffen, mit denen man wirklich bauen will."
+            ],
+            "phrases": [
+              "sync --nachrichten in content/",
+              "review --idee pruefen und scope kuerzen",
+              "ship --klein aber echt",
+              "publish --fortschritt oeffentlich teilen"
+            ]
+          }
         }
       },
       "signals": [
@@ -266,17 +270,19 @@
         "primaryCta": { "label": "Idi na Telegram" },
         "secondaryCta": { "label": "Otvori susrete" },
         "stage": {
-          "lines": [
-            "Pronadji podrsku i prve korisnike.",
-            "Dobij razgovor, feedback i nove kompetencije oko projekta.",
-            "Upoznaj saradnike, partnere i ljude sa kojima stvarno zelis da gradis."
-          ],
-          "phrases": [
-            "sync --poruke u content/",
-            "review --pregledaj ideju i skrati scope",
-            "ship --malo ali stvarno",
-            "publish --objavi napredak javno"
-          ]
+          "terminal": {
+            "lines": [
+              "Pronadji podrsku i prve korisnike.",
+              "Dobij razgovor, feedback i nove kompetencije oko projekta.",
+              "Upoznaj saradnike, partnere i ljude sa kojima stvarno zelis da gradis."
+            ],
+            "phrases": [
+              "sync --poruke u content/",
+              "review --pregledaj ideju i skrati scope",
+              "ship --malo ali stvarno",
+              "publish --objavi napredak javno"
+            ]
+          }
         }
       },
       "signals": [
@@ -341,17 +347,19 @@
         "primaryCta": { "label": "Ir a Telegram" },
         "secondaryCta": { "label": "Abrir encuentros" },
         "stage": {
-          "lines": [
-            "Encuentra apoyo y a tus primeros usuarios.",
-            "Recibe conversacion, feedback y nuevas capacidades alrededor del proyecto.",
-            "Conoce colaboradores, socios y personas con las que realmente quieras construir."
-          ],
-          "phrases": [
-            "sync --mensajes a content/",
-            "review --revisar idea y recortar scope",
-            "ship --pequeno pero real",
-            "publish --mostrar progreso en publico"
-          ]
+          "terminal": {
+            "lines": [
+              "Encuentra apoyo y a tus primeros usuarios.",
+              "Recibe conversacion, feedback y nuevas capacidades alrededor del proyecto.",
+              "Conoce colaboradores, socios y personas con las que realmente quieras construir."
+            ],
+            "phrases": [
+              "sync --mensajes a content/",
+              "review --revisar idea y recortar scope",
+              "ship --pequeno pero real",
+              "publish --mostrar progreso en publico"
+            ]
+          }
         }
       },
       "signals": [
