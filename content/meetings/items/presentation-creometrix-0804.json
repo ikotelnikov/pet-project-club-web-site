@@ -3,6 +3,7 @@
   "date": "2024-04-08",
   "title": "Презентация сервиса генеративного маркетинга CreometriX",
   "place": "Монтеко",
+  "placeUrl": "https://maps.app.goo.gl/VFpFRhN8ybmwJwCe7",
   "format": "presentation",
   "photo": {
     "src": "assets/uploads/272981189/216-photo-216-AQADeRlrG-V_mEp-.jpg",
@@ -24,133 +25,111 @@
     "Сейчас открываем бету: 14 мест на 3 месяца, цена в 2 раза ниже будущей подписки, выдача в 2 раза выше.",
     "В общем, приходите в среду — посмотрим, зададим вопросы, узнаем о планах и тестовой эксплуатации. Будет интересно!"
   ],
-  "detailsHtml": "В ближайшую среду 08.04 в 18:30 в Монтеко состоится презентация сервиса генеративного маркетинга CreometriX, слово создателю:<br><br><em>Хочу коротко рассказать, над чем мы сейчас работаем. Думаю, это будет особенно интересно тем, кто уже использует AI и генеративные инструменты в маркетинге, но так и не получил от них того, на что рассчитывал: более высокого уровня работы, большей уверенности в результате и, в конечном счёте, роста в доходе.<br><br>Мы сделали CreometriX.<br><br>Это не просто ещё один AI-инструмент, который штампует случайные креативы. И не генеративка ради генеративки.<br><br>CreometriX — это система, которая заменяет тот путь, через который рынок обычно пытается купить рост: обучение, набор разрозненных инструментов, дорогих специалистов и агентские услуги.<br><br>Вместо этого вы получаете одну систему, которая:<br>— собирает стратегическую основу проекта,<br>— фиксирует персонажей и маркетинговые сообщения,<br>— сохраняет логику и документацию,<br>— и только потом превращает всё это в сильные Meta ad creatives.<br><br>То есть на выходе это не просто пачка картинок, а понятная и управляемая маркетинговая система.<br><br>На мой взгляд, в этом и проблема большинства AI-решений сегодня:<br>инструментов стало много, выдачи стало много, а вот уровень работы, доход и спокойствие в процессе у многих почти не выросли.<br>Потому что очень часто AI добавляет не силу, а ещё один слой путаницы.<br><br>CreometriX как раз создан для обратного.<br><br>Он помогает:<br><br>бизнесу (в основном икомм со спендом $100-300 в денть) — получать более сильные Meta ad creatives без найма внутренней команды и без агентской комиссии;<br>фрилансерам — быстрее расти в уровне, уверенности и доходе без бесконечного дообучения и работы на ощупь;<br>агентствам — усиливать delivery и качество ad creatives без постоянного расширения штата и без необходимости всё время доучивать новых людей.<br><br>По сути, мы убираем:<br>— лишнее обучение,<br>— лишний набор инструментов,<br>— часть дорогой внешней экспертизы,<br>— и разрыв между стратегией и производством.<br><br>Мне нравится такая формулировка:<br><br>Мы не продаём ещё один AI-tool. Мы сокращаем путь от обучения, сложного набора инструментов и дорогих специалистов к сильным Meta ad creatives и понятной маркетинговой логике. А именно к экспертизе и дисциплине, которой многим не хватает для роста и на наращивание которых у многих просто нет ни средств, ни времени.<br>По сути это идеальное антикризисное предложение.<br>Сейчас открываем бету:<br>14 мест на 3 месяца<br>цена в 2 раза ниже будущей подписки<br>выдача в 2 раза выше.</em><br><br>В общем, приходите в среду — посмотрим, зададим вопросы, узнаем о планах и тестовой эксплуатации. Будет интересно!",
   "slug": "presentation-creometrix-0804",
   "sourceLocale": "ru",
   "translations": {
     "en": {
-      "entity": "announce",
-      "sourceLocale": "ru",
-      "targetLocale": "en",
-      "fields": {
-        "date": "2024-04-08",
-        "title": "Presentation of the CreometriX Generative Marketing Service",
-        "place": "Monteco",
-        "format": "presentation",
-        "paragraphs": [
-          "Next Wednesday 04/08 at 6:30 PM at Monteco, there will be a presentation of the CreometriX generative marketing service, here is a word from the creator:",
-          "I want to briefly talk about what we are working on now. I think this will be especially interesting for those who already use AI and generative tools in marketing but have not yet gotten what they expected from them: a higher level of work, greater confidence in the results, and ultimately, revenue growth.",
-          "We created CreometriX.",
-          "It’s not just another AI tool that churns out random creatives. Nor generative just for the sake of generative.",
-          "CreometriX is a system that replaces the usual market path to growth: training, assembling disconnected tools, expensive specialists, and agency services.",
-          "Instead, you get one system that: — gathers the strategic foundation of the project, — records characters and marketing messages, — preserves logic and documentation, — and only then turns all this into strong Meta ad creatives.",
-          "So the output is not just a bunch of images but a clear and manageable marketing system.",
-          "In my view, this is the problem of most AI solutions today: there are many tools, much output, but the level of work, income, and peace of mind in the process has hardly increased for many. Because often AI adds not power but another layer of confusion.",
-          "CreometriX is created for the opposite.",
-          "It helps: businesses (mainly e-commerce with $100-300 daily spend) — to get stronger Meta ad creatives without hiring an internal team or paying agency fees; freelancers — to grow faster in skill, confidence, and income without endless retraining and guesswork; agencies — to enhance delivery and quality of ad creatives without constantly expanding staff or having to constantly retrain new people.",
-          "Essentially, we eliminate: — unnecessary training, — unnecessary toolsets, — part of the expensive external expertise, — and the gap between strategy and production.",
-          "I like this formulation:",
-          "We don’t sell another AI tool. We shorten the path from training, complex toolsets, and expensive specialists to strong Meta ad creatives and clear marketing logic. Precisely to the expertise and discipline many lack for growth and for building which many simply do not have the resources or time. Essentially, this is the perfect anti-crisis offer.",
-          "We are now opening the beta: 14 spots for 3 months, the price is half of the future subscription, the output is twice as high.",
-          "So, come on Wednesday — let’s watch, ask questions, learn about plans and test operation. It will be interesting!"
-        ],
-        "detailsHtml": "Next Wednesday 04/08 at 6:30 PM at Monteco, there will be a presentation of the CreometriX generative marketing service, here is a word from the creator:<br><br><em>I want to briefly talk about what we are working on now. I think this will be especially interesting for those who already use AI and generative tools in marketing but have not yet gotten what they expected from them: a higher level of work, greater confidence in the results, and ultimately, revenue growth.<br><br>We created CreometriX.<br><br>It’s not just another AI tool that churns out random creatives. Nor generative just for the sake of generative.<br><br>CreometriX is a system that replaces the usual market path to growth: training, assembling disconnected tools, expensive specialists, and agency services.<br><br>Instead, you get one system that:<br>— gathers the strategic foundation of the project,<br>— records characters and marketing messages,<br>— preserves logic and documentation,<br>— and only then turns all this into strong Meta ad creatives.<br><br>So the output is not just a bunch of images but a clear and manageable marketing system.<br><br>In my view, this is the problem of most AI solutions today:<br>there are many tools, much output, but the level of work, income, and peace of mind in the process has hardly increased for many.<br>Because often AI adds not power but another layer of confusion.<br><br>CreometriX is created for the opposite.<br><br>It helps:<br><br>businesses (mainly e-commerce with $100-300 daily spend) — to get stronger Meta ad creatives without hiring an internal team or paying agency fees;<br>freelancers — to grow faster in skill, confidence, and income without endless retraining and guesswork;<br>agencies — to enhance delivery and quality of ad creatives without constantly expanding staff or having to constantly retrain new people.<br><br>Essentially, we eliminate:<br>— unnecessary training,<br>— unnecessary toolsets,<br>— part of the expensive external expertise,<br>— and the gap between strategy and production.<br><br>I like this formulation:<br><br>We don’t sell another AI tool. We shorten the path from training, complex toolsets, and expensive specialists to strong Meta ad creatives and clear marketing logic. Precisely to the expertise and discipline many lack for growth and for building which many simply do not have the resources or time.<br>Essentially, this is the perfect anti-crisis offer.<br>We are now opening the beta:<br>14 spots for 3 months<br>the price is half of the future subscription<br>the output is twice as high.</em><br><br>So, come on Wednesday — let’s watch, ask questions, learn about plans and test operation. It will be interesting!",
-        "photo": {
-          "src": "assets/uploads/272981189/216-photo-216-AQADeRlrG-V_mEp-.jpg",
-          "alt": "Presentation of the CreometriX generative marketing service"
-        }
+      "date": "2024-04-08",
+      "title": "Presentation of the Generative Marketing Service CreometriX",
+      "place": "Monteco",
+      "format": "presentation",
+      "paragraphs": [
+        "Next Wednesday, 08.04 at 18:30 at Monteco, there will be a presentation of the generative marketing service CreometriX, with a word from the creator:",
+        "I want to briefly tell you what we are currently working on. I think this will be especially interesting for those who already use AI and generative tools in marketing but have not received what they expected from them: a higher level of work, greater confidence in the result, and ultimately growth in income.",
+        "We created CreometriX.",
+        "This is not just another AI tool that churns out random creatives. And not generative tech for the sake of generative tech.",
+        "CreometriX is a system that replaces the usual path the market tries to buy growth through: training, a set of disparate tools, expensive specialists, and agency services.",
+        "Instead, you get one system that: — collects the strategic foundation of the project, — captures personas and marketing messages, — preserves logic and documentation, — and only then turns all this into strong Meta ad creatives.",
+        "That is, the output is not just a bunch of images but a clear and manageable marketing system.",
+        "In my opinion, this is the problem with most AI solutions today: there are many tools, many outputs, but the level of work, income, and peace of mind in the process has hardly grown for many. Because very often AI adds not strength but another layer of confusion.",
+        "CreometriX is created exactly for the opposite.",
+        "It helps: businesses (mainly e-comm with spend $100-300 per day) — get stronger Meta ad creatives without hiring an internal team and without agency fees; freelancers — grow faster in skill, confidence, and income without endless retraining and working blindly; agencies — strengthen delivery and ad creative quality without constant staff expansion and the need to continuously train new people.",
+        "Basically, we remove: — unnecessary training, — unnecessary sets of tools, — part of expensive external expertise, — and the gap between strategy and production.",
+        "I like this formulation: We don’t sell another AI tool. We shorten the path from training, a complex set of tools, and expensive specialists to strong Meta ad creatives and clear marketing logic. Specifically, to the expertise and discipline that many lack for growth and for which most simply don’t have the means or time to build up. Essentially, this is the perfect anti-crisis offer.",
+        "We are now opening beta: 14 spots for 3 months, price half of the future subscription, output twice as high.",
+        "So, come on Wednesday — let’s see, ask questions, learn about plans and test operation. It will be interesting!"
+      ],
+      "photo": {
+        "src": "assets/uploads/272981189/216-photo-216-AQADeRlrG-V_mEp-.jpg",
+        "alt": "Presentation of the generative marketing service CreometriX"
       }
     },
     "de": {
       "date": "2024-04-08",
-      "title": "Präsentation des generativen Marketing-Services CreometriX",
-      "place": "Monteko",
+      "title": "Präsentation des generativen Marketingdienstes CreometriX",
+      "place": "Monteco",
       "format": "presentation",
       "paragraphs": [
-        "Am kommenden Mittwoch, dem 08.04, um 18:30 Uhr findet in Monteko die Präsentation des generativen Marketing-Services CreometriX statt, das Wort an den Gründer:",
-        "Ich möchte kurz erzählen, woran wir gerade arbeiten. Ich denke, das wird besonders interessant für diejenigen sein, die bereits KI und generative Tools im Marketing einsetzen, aber nicht das erreicht haben, was sie erwartet hatten: ein höheres Niveau der Arbeit, mehr Sicherheit im Ergebnis und letztlich ein Wachstum des Einkommens.",
+        "Am kommenden Mittwoch, den 08.04 um 18:30 Uhr, findet in Monteco die Präsentation des generativen Marketingdienstes CreometriX statt. Hier das Wort an den Gründer:",
+        "Ich möchte kurz erzählen, woran wir gerade arbeiten. Ich denke, das wird besonders interessant für diejenigen sein, die bereits KI und generative Tools im Marketing nutzen, aber nicht das erreicht haben, was sie erwartet hatten: ein höheres Arbeitsniveau, mehr Sicherheit im Ergebnis und letztlich ein Wachstum beim Einkommen.",
         "Wir haben CreometriX entwickelt.",
-        "Es ist nicht einfach nur ein weiteres KI-Tool, das zufällige Kreative erstellt. Und keine generative Lösung um der Generierung willen.",
-        "CreometriX ist ein System, das den Weg ersetzt, den der Markt normalerweise geht, um Wachstum zu erzielen: Schulungen, die Nutzung von verstreuten Tools, teure Spezialisten und Agenturleistungen.",
-        "Stattdessen erhalten Sie ein System, das: — die strategische Grundlage des Projekts sammelt, — Personas und Marketingbotschaften festhält, — die Logik und Dokumentation bewahrt, — und erst danach alles in starke Meta-Anzeigen-Kreative verwandelt.",
-        "Das heißt, am Ende ist es nicht nur ein Stapel Bilder, sondern ein verständliches und steuerbares Marketing-System.",
-        "Meiner Meinung nach ist das das Problem der meisten KI-Lösungen heute: Es gibt viele Werkzeuge, viele Outputs, aber das Niveau der Arbeit, das Einkommen und die Ruhe im Prozess sind bei vielen kaum gewachsen. Denn oft fügt KI nicht Kraft hinzu, sondern nur eine weitere Schicht Verwirrung.",
-        "CreometriX ist genau für das Gegenteil gemacht.",
-        "Es hilft: Unternehmen (hauptsächlich E-Commerce mit $100-300 Tagesbudget) — bessere Meta-Anzeigen-Kreative zu erhalten, ohne ein internes Team einzustellen und ohne Agenturprovision; Freelancern — schneller im Niveau, in der Sicherheit und beim Einkommen zu wachsen, ohne endlose Weiterbildung und Arbeiten im Dunkeln; Agenturen — die Zustellung und Qualität der Anzeigen-Kreativen zu verbessern, ohne ständig den Personalstamm zu erweitern und ohne ständig neue Mitarbeiter schulen zu müssen.",
-        "Im Grunde entfernen wir: — unnötige Schulungen, — unnötige Tools, — einen Teil teurer externer Expertise, — und die Kluft zwischen Strategie und Produktion.",
-        "Mir gefällt folgende Formulierung:",
-        "Wir verkaufen kein weiteres KI-Tool. Wir verkürzen den Weg von Schulung, komplexen Tools und teuren Spezialisten zu starken Meta-Anzeigen-Kreativen und einer klaren Marketing-Logik. Nämlich zu der Expertise und Disziplin, die vielen für Wachstum fehlt und deren Entwicklung vielen an Zeit und Mitteln mangelt. Im Grunde ist das ein perfektes Anti-Krisen-Angebot.",
-        "Wir öffnen jetzt die Beta: 14 Plätze für 3 Monate, Preis halb so hoch wie das zukünftige Abonnement, Output doppelt so hoch.",
-        "Also kommt am Mittwoch – wir schauen uns alles an, stellen Fragen, erfahren etwas über Pläne und Testbetrieb. Es wird interessant!"
+        "Das ist nicht einfach nur ein weiteres KI-Tool, das zufällige Kreativideen produziert. Und keine Generierung um der Generierung willen.",
+        "CreometriX ist ein System, das den üblichen Weg ersetzt, den der Markt normalerweise zur Steigerung versucht: Schulungen, eine Sammlung einzelner Tools, teure Spezialisten und Agenturleistungen.",
+        "Stattdessen erhalten Sie ein einziges System, das: — die strategische Grundlage des Projekts sammelt, — Personas und Marketingbotschaften dokumentiert, — die Logik und Dokumentation bewahrt, — und erst danach alles in starke Meta-Anzeigenkreationen verwandelt.",
+        "Das heißt, am Ende entsteht nicht einfach ein Haufen Bilder, sondern ein verständliches und steuerbares Marketingsystem.",
+        "Meiner Meinung nach liegt hier das Problem der meisten KI-Lösungen heute: Es gibt viele Tools, viele Ausgaben, aber das Arbeitsniveau, der Umsatz und die Ruhe im Prozess sind bei vielen kaum gestiegen. Weil KI oft nicht Stärke verleiht, sondern eine weitere Verwirrungsebene hinzufügt.",
+        "CreometriX ist genau für das Gegenteil geschaffen.",
+        "Es hilft: Unternehmen (hauptsächlich E-Commerce mit einem Tagesbudget von $100-300) — stärkere Meta-Anzeigenkreationen zu erhalten, ohne ein internes Team einzustellen und ohne Agenturgebühren; Freelancern — schneller im Niveau, Selbstvertrauen und Einkommen zu wachsen, ohne endloses Nachschulen und unsicheres Arbeiten; Agenturen — Delivery und Qualität der Anzeigenkreationen zu verbessern, ohne ständig Personal aufzustocken und neue Mitarbeiter immer wieder schulen zu müssen.",
+        "Im Grunde eliminieren wir: — unnötige Schulungen, — überflüssige Tool-Sammlungen, — einen Teil teurer externer Expertise, — und die Kluft zwischen Strategie und Produktion.",
+        "Mir gefällt diese Formulierung: Wir verkaufen kein weiteres KI-Tool. Wir verkürzen den Weg von Schulungen, komplexen Werkzeugsets und teuren Spezialisten zu starken Meta-Anzeigenkreationen und verständlicher Marketinglogik. Und zwar zu der Expertise und Disziplin, die vielen für Wachstum fehlt und deren Aufbau vielen einfach an Mitteln und Zeit mangelt. Im Grunde ist das ein perfektes Anti-Krisen-Angebot.",
+        "Wir öffnen jetzt die Beta: 14 Plätze für 3 Monate, Preis ist halb so hoch wie das zukünftige Abonnement, die Leistung doppelt so hoch.",
+        "Also kommt am Mittwoch vorbei — wir schauen uns alles an, stellen Fragen, erfahren mehr über Pläne und Testbetrieb. Es wird spannend!"
       ],
-      "detailsHtml": "Am kommenden Mittwoch, dem 08.04, um 18:30 Uhr findet in Monteko die Präsentation des generativen Marketing-Services CreometriX statt, das Wort an den Gründer:<br><br><em>Ich möchte kurz erzählen, woran wir gerade arbeiten. Ich denke, das wird besonders interessant für diejenigen sein, die bereits KI und generative Tools im Marketing einsetzen, aber nicht das erreicht haben, was sie erwartet hatten: ein höheres Niveau der Arbeit, mehr Sicherheit im Ergebnis und letztlich ein Wachstum des Einkommens.<br><br>Wir haben CreometriX entwickelt.<br><br>Es ist nicht einfach nur ein weiteres KI-Tool, das zufällige Kreative erstellt. Und keine generative Lösung um der Generierung willen.<br><br>CreometriX ist ein System, das den Weg ersetzt, den der Markt normalerweise geht, um Wachstum zu erzielen: Schulungen, die Nutzung von verstreuten Tools, teure Spezialisten und Agenturleistungen.<br><br>Stattdessen erhalten Sie ein System, das:<br>— die strategische Grundlage des Projekts sammelt,<br>— Personas und Marketingbotschaften festhält,<br>— die Logik und Dokumentation bewahrt,<br>— und erst danach alles in starke Meta-Anzeigen-Kreative verwandelt.<br><br>Das heißt, am Ende ist es nicht nur ein Stapel Bilder, sondern ein verständliches und steuerbares Marketing-System.<br><br>Meiner Meinung nach ist das das Problem der meisten KI-Lösungen heute:<br>Es gibt viele Werkzeuge, viele Outputs, aber das Niveau der Arbeit, das Einkommen und die Ruhe im Prozess sind bei vielen kaum gewachsen.<br>Denn oft fügt KI nicht Kraft hinzu, sondern nur eine weitere Schicht Verwirrung.<br><br>CreometriX ist genau für das Gegenteil gemacht.<br><br>Es hilft:<br><br>Unternehmen (hauptsächlich E-Commerce mit $100-300 Tagesbudget) — bessere Meta-Anzeigen-Kreative zu erhalten, ohne ein internes Team einzustellen und ohne Agenturprovision;<br>Freelancern — schneller im Niveau, in der Sicherheit und beim Einkommen zu wachsen, ohne endlose Weiterbildung und Arbeiten im Dunkeln;<br>Agenturen — die Zustellung und Qualität der Anzeigen-Kreativen zu verbessern, ohne ständig den Personalstamm zu erweitern und ohne ständig neue Mitarbeiter schulen zu müssen.<br><br>Im Grunde entfernen wir:<br>— unnötige Schulungen,<br>— unnötige Tools,<br>— einen Teil teurer externer Expertise,<br>— und die Kluft zwischen Strategie und Produktion.<br><br>Mir gefällt folgende Formulierung:<br><br>Wir verkaufen kein weiteres KI-Tool. Wir verkürzen den Weg von Schulung, komplexen Tools und teuren Spezialisten zu starken Meta-Anzeigen-Kreativen und einer klaren Marketing-Logik. Nämlich zu der Expertise und Disziplin, die vielen für Wachstum fehlt und deren Entwicklung vielen an Zeit und Mitteln mangelt.<br>Im Grunde ist das ein perfektes Anti-Krisen-Angebot.<br>Wir öffnen jetzt die Beta:<br>14 Plätze für 3 Monate<br>Preis halb so hoch wie das zukünftige Abonnement<br>Output doppelt so hoch.</em><br><br>Also kommt am Mittwoch – wir schauen uns alles an, stellen Fragen, erfahren etwas über Pläne und Testbetrieb. Es wird interessant!",
       "photo": {
         "src": "assets/uploads/272981189/216-photo-216-AQADeRlrG-V_mEp-.jpg",
-        "alt": "Präsentation des generativen Marketing-Services CreometriX"
+        "alt": "Präsentation des generativen Marketingdienstes CreometriX"
       }
     },
     "me": {
-      "entity": "announce",
-      "sourceLocale": "ru",
-      "targetLocale": "me",
-      "fields": {
-        "date": "2024-04-08",
-        "title": "Prezentacija usluge generativnog marketinga CreometriX",
-        "place": "Monteko",
-        "format": "presentation",
-        "paragraphs": [
-          "U narednu srijedu 08.04 u 18:30 u Monteku biće prezentacija usluge generativnog marketinga CreometriX, riječ autora:",
-          "Želim ukratko ispričati nad čim trenutno radimo. Mislim da će ovo biti posebno zanimljivo onima koji već koriste AI i generativne alate u marketingu, ali nisu dobili ono što su očekivali: viši nivo rada, veću sigurnost u rezultat i, na kraju, rast prihoda.",
-          "Napravili smo CreometriX.",
-          "Ovo nije samo još jedan AI alat koji proizvodi nasumične kreativne sadržaje. Nije generativnost radi generativnosti.",
-          "CreometriX je sistem koji zamjenjuje put kojim tržište obično pokušava kupiti rast: obuka, niz nepovezanih alata, skupi stručnjaci i agencijske usluge.",
-          "Umjesto toga, dobijate jedan sistem koji: — prikuplja stratešku osnovu projekta, — registruje likove i marketinške poruke, — čuva logiku i dokumentaciju, — i tek onda pretvara sve to u jake Meta reklamne kreativce.",
-          "Dakle, na izlazu ovo nije samo gomila slika, već jasni i upravljivi marketinški sistem.",
-          "Po mom mišljenju, ovo je problem većine AI rješenja danas: alata ima mnogo, izlaza ima mnogo, ali nivo rada, prihod i spokojstvo u procesu za mnoge skoro da nisu porasli. Zato što AI često ne donosi snagu, već još jedan sloj zabune.",
-          "CreometriX je napravljen upravo za suprotno.",
-          "Pomaže: biznisu (uglavnom e-komerc sa potrošnjom $100-300 dnevno) — da dobiju jače Meta reklamne kreativce bez zapošljavanja internog tima i bez provizije agencije; freelancerima — brže da rastu u nivou, sigurnosti i prihodu bez beskonačnog dodatnog učenja i rada na slijepo; agencijama — da pojačaju isporuku i kvalitet reklamnih kreativaca bez stalnog proširenja osoblja i potrebe stalnog dodatnog usavršavanja novih ljudi.",
-          "Zapravo, mi uklanjamo: — nepotrebnu obuku, — nepotreban niz alata, — dio skupih eksternih stručnjaka, — i raskorak između strategije i proizvodnje.",
-          "Sviđa mi se ovakva formulacija: Ne prodajemo još jedan AI alat. Skraćujemo put od obuke, složenog niza alata i skupih stručnjaka do jakih Meta reklamnih kreativaca i razumljive marketinške logike. Tačno do ekspertize i discipline koje mnogima nedostaju za rast, a mnogi nemaju ni sredstva ni vremena za njihovo jačanje. U suštini, to je idealna antikrizna ponuda.",
-          "Sada otvaramo beta verziju: 14 mjesta na 3 mjeseca, cijena je dva puta niža od buduće pretplate, performanse su dva puta bolje.",
-          "Ukratko, dođite u srijedu — pogledamo, postavimo pitanja, saznamo o planovima i probnoj eksploataciji. Biće zanimljivo!"
-        ],
-        "detailsHtml": "U narednu srijedu 08.04 u 18:30 u Monteku biće prezentacija usluge generativnog marketinga CreometriX, riječ autora:<br><br><em>Želim ukratko ispričati nad čim trenutno radimo. Mislim da će ovo biti posebno zanimljivo onima koji već koriste AI i generativne alate u marketingu, ali nisu dobili ono što su očekivali: viši nivo rada, veću sigurnost u rezultat i, na kraju, rast prihoda.<br><br>Napravili smo CreometriX.<br><br>Ovo nije samo još jedan AI alat koji proizvodi nasumične kreativne sadržaje. Nije generativnost radi generativnosti.<br><br>CreometriX je sistem koji zamjenjuje put kojim tržište obično pokušava kupiti rast: obuka, niz nepovezanih alata, skupi stručnjaci i agencijske usluge.<br><br>Umjesto toga, dobijate jedan sistem koji:<br>— prikuplja stratešku osnovu projekta,<br>— registruje likove i marketinške poruke,<br>— čuva logiku i dokumentaciju,<br>— i tek onda pretvara sve to u jake Meta reklamne kreativce.<br><br>Dakle, na izlazu ovo nije samo gomila slika, već jasni i upravljivi marketinški sistem.<br><br>Po mom mišljenju, ovo je problem većine AI rješenja danas:<br>alati ima mnogo, izlaza ima mnogo, ali nivo rada, prihod i spokojstvo u procesu za mnoge skoro da nisu porasli.<br>Zato što AI često ne donosi snagu, već još jedan sloj zabune.<br><br>CreometriX je napravljen upravo za suprotno.<br><br>Pomaže:<br><br>biznisu (uglavnom e-komerc sa potrošnjom $100-300 dnevno) — da dobiju jače Meta reklamne kreativce bez zapošljavanja internog tima i bez provizije agencije;<br>freelancerima — brže da rastu u nivou, sigurnosti i prihodu bez beskonačnog dodatnog učenja i rada na slijepo;<br>agencijama — da pojačaju isporuku i kvalitet reklamnih kreativaca bez stalnog proširenja osoblja i potrebe stalnog dodatnog usavršavanja novih ljudi.<br><br>Zapravo, mi uklanjamo:<br>— nepotrebnu obuku,<br>— nepotreban niz alata,<br>— dio skupih eksternih stručnjaka,<br>— i raskorak između strategije i proizvodnje.<br><br>Sviđa mi se ovakva formulacija:<br><br>Ne prodajemo još jedan AI alat. Skraćujemo put od obuke, složenog niza alata i skupih stručnjaka do jakih Meta reklamnih kreativaca i razumljive marketinške logike. Tačno do ekspertize i discipline koje mnogima nedostaju za rast, a mnogi nemaju ni sredstva ni vremena za njihovo jačanje.<br>U suštini, to je idealna antikrizna ponuda.<br>Sada otvaramo beta verziju:<br>14 mjesta na 3 mjeseca<br>cijena je dva puta niža od buduće pretplate<br>performanse su dva puta bolje.</em><br><br>Ukratko, dođite u srijedu — pogledamo, postavimo pitanja, saznamo o planovima i probnoj eksploataciji. Biće zanimljivo!",
-        "photo": {
-          "src": "assets/uploads/272981189/216-photo-216-AQADeRlrG-V_mEp-.jpg",
-          "alt": "Prezentacija usluge generativnog marketinga CreometriX"
-        }
+      "date": "2024-04-08",
+      "title": "Prezentacija servisa generativnog marketinga CreometriX",
+      "place": "Monteko",
+      "format": "presentation",
+      "paragraphs": [
+        "U najbližu srijedu 08.04 u 18:30 u Monteku će se održati prezentacija servisa generativnog marketinga CreometriX, riječ autora:",
+        "Želim ukratko ispričati na čemu trenutno radimo. Mislim da će to biti posebno zanimljivo onima koji već koriste AI i generativne alate u marketingu, ali nisu dobili ono što su očekivali: viši nivo rada, veću sigurnost u rezultat i, na kraju, rast prihoda.",
+        "Napravili smo CreometriX.",
+        "To nije još jedan AI-alat koji proizvodi slučajne kreacije. Niti generativnost radi same generativnosti.",
+        "CreometriX je sistem koji zamjenjuje put kojim tržište obično nastoji postići rast: obrazovanje, skup raznih alata, skupi stručnjaci i agencijske usluge.",
+        "Umjesto toga dobijate jedan sistem koji: – prikuplja stratešku osnovu projekta, – bilježi likove i marketinške poruke, – čuva logiku i dokumentaciju, – a tek onda sve to pretvara u snažne Meta oglase.",
+        "Drugim riječima, na izlazu to nije samo gomila slika, nego razumljiv i upravljiv marketinški sistem.",
+        "Po mom mišljenju, u tome je problem većine AI-rješenja danas: alata ima mnogo, sadržaja ima mnogo, ali nivo rada, prihoda i mira u procesu se gotovo nije povećao. Zato što AI često ne dodaje snagu, nego još jedan sloj zabune.",
+        "CreometriX je upravo stvoren za suprotno.",
+        "Pomaže: poslovanju (uglavnom e-commerce sa potrošnjom $100-300 dnevno) – da dobiju snažnije Meta oglase bez zapošljavanja interne ekipe i bez komisije agencije; freelancerima – da brže rastu u nivou, sigurnosti i prihodu bez beskonačnog dodatnog učenja i rada napamet; agencijama – da pojačaju isporuku i kvalitet reklama bez stalnog povećanja kadra i bez stalnog obučavanja novih ljudi.",
+        "U suštini, uklanjamo: – nepotrebno obrazovanje, – nepotreban skup alata, – dio skupe eksternističke ekspertize, – i raskorak između strategije i proizvodnje.",
+        "Sviđa mi se ovakva formulacija: Ne prodajemo još jedan AI-alat. Skraćujemo put od obrazovanja, složenog skupa alata i skupih stručnjaka do snažnih Meta oglasa i jasne marketinške logike. Tačnije, do ekspertize i discipline koje mnogima nedostaju za rast, a kojima mnogi nemaju ni sredstva ni vrijeme za razvoj. Zapravo, ovo je idealna anti-krizna ponuda.",
+        "Sada otvaramo betu: 14 mjesta na 3 mjeseca, cijena je dvostruko niža od buduće pretplate, performanse su dvostruko bolje.",
+        "Ukratko, dođite u srijedu – pogledamo, postavimo pitanja, saznamo planove i testnu eksploataciju. Biće zanimljivo!"
+      ],
+      "photo": {
+        "src": "assets/uploads/272981189/216-photo-216-AQADeRlrG-V_mEp-.jpg",
+        "alt": "Prezentacija servisa generativnog marketinga CreometriX"
       }
     },
     "es": {
-      "entity": "announce",
-      "sourceLocale": "ru",
-      "targetLocale": "es",
-      "fields": {
-        "date": "2024-04-08",
-        "title": "Presentación del servicio de marketing generativo CreometriX",
-        "place": "Monteco",
-        "format": "presentation",
-        "paragraphs": [
-          "El próximo miércoles 08.04 a las 18:30 en Monteco tendrá lugar la presentación del servicio de marketing generativo CreometriX, palabra al creador:",
-          "Quiero contar brevemente en qué estamos trabajando ahora. Creo que será especialmente interesante para quienes ya usan IA e instrumentos generativos en marketing, pero que no han obtenido de ellos lo que esperaban: un nivel de trabajo más alto, mayor confianza en el resultado y, en última instancia, crecimiento en los ingresos.",
-          "Hicimos CreometriX.",
-          "No es solo otra herramienta de IA que genera creatividades al azar. Ni generación por el simple hecho de generar.",
-          "CreometriX es un sistema que reemplaza el camino habitual que el mercado intenta para lograr crecimiento: capacitación, un conjunto disperso de herramientas, especialistas costosos y servicios de agencia.",
-          "En cambio, obtiene un sistema que: — recopila la base estratégica del proyecto, — fija los personajes y los mensajes de marketing, — conserva la lógica y la documentación, — y solo entonces transforma todo esto en creatividades Meta ad poderosas.",
-          "Es decir, al final no es solo un montón de imágenes, sino un sistema de marketing claro y manejable.",
-          "En mi opinión, ese es el problema de muchas soluciones de IA hoy en día: hay muchas herramientas, se genera mucho contenido, pero el nivel de trabajo, los ingresos y la tranquilidad en el proceso apenas han aumentado para muchos. Porque muy a menudo la IA no añade fuerza, sino otra capa de confusión.",
-          "CreometriX fue creado precisamente para lo contrario.",
-          "Ayuda: a negocios (principalmente e-commerce con gastos de $100-300 al día) a obtener creatividades Meta ad más fuertes sin contratar equipo interno ni pagar comisión de agencia; a freelancers a crecer más rápido en nivel, confianza e ingresos sin formación interminable ni trabajo a tientas; a agencias a mejorar la entrega y calidad de las creatividades sin ampliar constantemente el personal ni tener que capacitar constantemente a nuevos empleados.",
-          "En esencia, eliminamos: — formación innecesaria, — conjunto innecesario de herramientas, — parte del costoso conocimiento externo, — y la brecha entre estrategia y producción.",
-          "Me gusta esta formulación: No vendemos otra herramienta de IA. Acortamos el camino desde la capacitación, el conjunto complejo de herramientas y especialistas costosos hacia creatividades Meta ad fuertes y una lógica de marketing clara. Es decir, hacia la experiencia y disciplina que muchos no tienen para crecer y para desarrollar, y para lo que muchos no tienen ni tiempo ni recursos. Básicamente, es una oferta ideal anti-crisis.",
-          "Ahora abrimos la beta: 14 plazas por 3 meses, precio 2 veces menor que la futura suscripción, resultados 2 veces mejores.",
-          "En resumen, vengan el miércoles — veremos, haremos preguntas, conoceremos los planes y la prueba operativa. ¡Será interesante!"
-        ],
-        "detailsHtml": "El próximo miércoles 08.04 a las 18:30 en Monteco tendrá lugar la presentación del servicio de marketing generativo CreometriX, palabra al creador:<br><br><em>Quiero contar brevemente en qué estamos trabajando ahora. Creo que será especialmente interesante para quienes ya usan IA e instrumentos generativos en marketing, pero que no han obtenido de ellos lo que esperaban: un nivel de trabajo más alto, mayor confianza en el resultado y, en última instancia, crecimiento en los ingresos.<br><br>Hicimos CreometriX.<br><br>No es solo otra herramienta de IA que genera creatividades al azar. Ni generación por el simple hecho de generar.<br><br>CreometriX es un sistema que reemplaza el camino habitual que el mercado intenta para lograr crecimiento: capacitación, un conjunto disperso de herramientas, especialistas costosos y servicios de agencia.<br><br>En cambio, obtiene un sistema que:<br>— recopila la base estratégica del proyecto,<br>— fija los personajes y los mensajes de marketing,<br>— conserva la lógica y la documentación,<br>— y solo entonces transforma todo esto en creatividades Meta ad poderosas.<br><br>Es decir, al final no es solo un montón de imágenes, sino un sistema de marketing claro y manejable.<br><br>En mi opinión, ese es el problema de muchas soluciones de IA hoy en día:<br>hay muchas herramientas, se genera mucho contenido, pero el nivel de trabajo, los ingresos y la tranquilidad en el proceso apenas han aumentado para muchos.<br>Porque muy a menudo la IA no añade fuerza, sino otra capa de confusión.<br><br>CreometriX fue creado precisamente para lo contrario.<br><br>Ayuda:<br><br>a negocios (principalmente e-commerce con gastos de $100-300 al día) a obtener creatividades Meta ad más fuertes sin contratar equipo interno ni pagar comisión de agencia;<br>a freelancers a crecer más rápido en nivel, confianza e ingresos sin formación interminable ni trabajo a tientas;<br>a agencias a mejorar la entrega y calidad de las creatividades sin ampliar constantemente el personal ni tener que capacitar constantemente a nuevos empleados.<br><br>En esencia, eliminamos:<br>— formación innecesaria,<br>— conjunto innecesario de herramientas,<br>— parte del costoso conocimiento externo,<br>— y la brecha entre estrategia y producción.<br><br>Me gusta esta formulación:<br><br>No vendemos otra herramienta de IA. Acortamos el camino desde la capacitación, el conjunto complejo de herramientas y especialistas costosos hacia creatividades Meta ad fuertes y una lógica de marketing clara. Es decir, hacia la experiencia y disciplina que muchos no tienen para crecer y para desarrollar, y para lo que muchos no tienen ni tiempo ni recursos.<br>Básicamente, es una oferta ideal anti-crisis.<br>Ahora abrimos la beta:<br>14 plazas por 3 meses<br>precio 2 veces menor que la futura suscripción<br>resultados 2 veces mejores.</em><br><br>En resumen, vengan el miércoles — veremos, haremos preguntas, conoceremos los planes y la prueba operativa. ¡Será interesante!",
-        "photo": {
-          "src": "assets/uploads/272981189/216-photo-216-AQADeRlrG-V_mEp-.jpg",
-          "alt": "Presentación del servicio de marketing generativo CreometriX"
-        }
+      "date": "2024-04-08",
+      "title": "Presentación del servicio de marketing generativo CreometriX",
+      "place": "Monteco",
+      "format": "presentation",
+      "paragraphs": [
+        "El próximo miércoles 08.04 a las 18:30 en Monteco tendrá lugar la presentación del servicio de marketing generativo CreometriX, palabra para el creador:",
+        "Quiero contar brevemente en qué estamos trabajando ahora. Creo que será especialmente interesante para quienes ya utilizan IA e instrumentos generativos en marketing, pero que no han obtenido lo que esperaban: un nivel más alto de trabajo, mayor confianza en el resultado y, en última instancia, crecimiento en ingresos.",
+        "Hemos creado CreometriX.",
+        "No es solo otra herramienta de IA que produce creatividades aleatorias. No es generativo solo por ser generativo.",
+        "CreometriX es un sistema que reemplaza el camino que el mercado suele usar para intentar comprar crecimiento: formación, un conjunto de herramientas dispersas, especialistas caros y servicios de agencia.",
+        "En su lugar obtienes un sistema que: — recopila la base estratégica del proyecto, — fija personajes y mensajes de marketing, — mantiene la lógica y documentación, — y solo después convierte todo eso en creatividades potentes para anuncios Meta.",
+        "Es decir, el resultado no es solo un montón de imágenes, sino un sistema de marketing claro y manejable.",
+        "En mi opinión, ahí está el problema de la mayoría de las soluciones de IA hoy en día: hay muchas herramientas, se generan muchas salidas, pero el nivel de trabajo, ingresos y tranquilidad en el proceso prácticamente no ha aumentado para muchos. Porque frecuentemente la IA no añade fuerza, sino otra capa de confusión.",
+        "CreometriX está diseñado precisamente para lo contrario.",
+        "Ayuda a: negocios (principalmente e-commerce con gasto de $100-300 diarios) — a obtener creatividades más potentes para anuncios Meta sin contratar equipo interno ni pagar comisión de agencia; freelancers — a crecer más rápido en nivel, confianza e ingresos sin capacitación interminable ni trabajo a ciegas; agencias — a mejorar la entrega y calidad de sus anuncios sin ampliar constantemente la plantilla ni tener que formar continuamente a nuevas personas.",
+        "En esencia, eliminamos: — formación innecesaria, — conjunto innecesario de herramientas, — parte de la costosa experiencia externa, — y la brecha entre estrategia y producción.",
+        "Me gusta esta formulación: No vendemos otra herramienta de IA. Acortamos el camino desde la formación, el conjunto complejo de herramientas y especialistas caros hasta creatividades potentes para anuncios Meta y una lógica de marketing clara. Es decir, a la experiencia y disciplina que muchos no tienen para crecer y para las cuales no disponen ni de medios ni de tiempo. En esencia es la oferta anti-crisis perfecta.",
+        "Ahora abrimos beta: 14 plazas por 3 meses, precio a mitad del futuro suscripción, rendimiento al doble.",
+        "En fin, vengan el miércoles — veremos, haremos preguntas, conoceremos planes y la prueba en uso. ¡Será interesante!"
+      ],
+      "photo": {
+        "src": "assets/uploads/272981189/216-photo-216-AQADeRlrG-V_mEp-.jpg",
+        "alt": "Presentación del servicio de marketing generativo CreometriX"
       }
     }
   },
