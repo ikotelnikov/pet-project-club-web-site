@@ -1,4 +1,5 @@
 {
+  "sourceLocale": "ru",
   "slug": "meeting-2023-02-25-club-report",
   "type": "meeting",
   "date": "2026-02-25",
@@ -26,5 +27,83 @@
     "3. Я лично предпочитаю создавать сайты в Codex CLI и публиковать их на GitHub Pages — тогда на генерацию изменений тратится общий лимит токенов Codex, ну и вообще, такой подход на мой взгляд более гибкий.",
     "4. Однако, на встрече мы выяснили, что для совсем новичков Codex CLI все же не так прост, как мне казалось (начать хотя бы с того, что надо научиться вызывать терминал, и перед установкой кодекса в нем придется как-то установить npm). Да, после установки Codex CLI вы сможете выполнять любые дополнительные настройки и команды через него, но установить его и запустить — это задача, требующая мотивации.",
     "5. В общем, всех подталкиваю к тому, чтобы попробовать создать свой первый сайт (хотя бы с lovable) и убедиться, насколько это теперь просто! А если будут трудности — задавайте вопросы в \"Свободном общении\"."
-  ]
+  ],
+  "translations": {
+    "en": {
+      "title": "Hands-on website creation with AI: building a website from start to finish",
+      "place": "Monteco coworking in Budva",
+      "photo": {
+        "alt": "Hands-on website creation with AI: building a website from start to finish"
+      },
+      "paragraphs": [
+        "We looked at Lovable and Codex CLI with GitHub Pages and tried to spend as much time as possible on practical issues.",
+        "Main takeaways:",
+        "1. The session had good energy. We set up several versions of the same website in parallel based on Tanya's project presentation. Here are the results:",
+        "- mine with Lovable: https://limmud-alternative.lovable.app",
+        "- Tanya's with Lovable: https://limud-portal-me.lovable.app",
+        "- mine with Codex CLI and GitHub Pages: https://ikotelnikov.github.io/new-site",
+        "2. I prepared a short instruction with just five steps on how to get a similar result with Lovable if you need a website and do not really understand how to build one yet. I made it especially concrete and simple for people who feel intimidated by all this: https://docs.google.com/document/d/17v06QIA0ujOU5FIm-gyMKqMUTtnQ3fewcdjPFtrvkYo",
+        "3. Personally, I prefer building websites in Codex CLI and publishing them on GitHub Pages. That way, changes are generated within the shared Codex token budget, and overall I find the approach more flexible.",
+        "4. At the meetup, however, we found that Codex CLI is still not as easy for complete beginners as I initially thought. You have to know how to open a terminal, and before installing Codex you need to figure out how to install npm. After Codex CLI is installed you can perform any additional setup through it, but getting it installed and launched still requires motivation.",
+        "5. In general, I keep encouraging everyone to try building their first website, even if it is just with Lovable, and see how simple it has become. And if something gets hard, ask questions in the Free Chat."
+      ]
+    },
+    "de": {
+      "title": "Praxis Website-Erstellung mit AI: eine Website von Anfang bis Ende bauen",
+      "place": "Monteco Coworking in Budva",
+      "photo": {
+        "alt": "Praxis Website-Erstellung mit AI: eine Website von Anfang bis Ende bauen"
+      },
+      "paragraphs": [
+        "Wir haben uns Lovable und Codex CLI zusammen mit GitHub Pages angesehen und versucht, moeglichst viel Zeit auf die praktischen Fragen zu verwenden.",
+        "Die wichtigsten Punkte:",
+        "1. Das Treffen hatte gutes Tempo. Wir haben parallel mehrere Versionen derselben Website auf Basis von Tanjas Projektpraesentation aufgesetzt. Hier sind die Ergebnisse:",
+        "- meine mit Lovable: https://limmud-alternative.lovable.app",
+        "- Tanjas Version mit Lovable: https://limud-portal-me.lovable.app",
+        "- meine mit Codex CLI und GitHub Pages: https://ikotelnikov.github.io/new-site",
+        "2. Ich habe eine kurze Anleitung in nur fuenf Schritten erstellt, wie man mit Lovable zu einem aehnlichen Ergebnis kommt, wenn man eine Website braucht und noch nicht wirklich weiss, wie das geht. Fuer alle, die davor Respekt haben, habe ich sie absichtlich sehr konkret und einfach gehalten: https://docs.google.com/document/d/17v06QIA0ujOU5FIm-gyMKqMUTtnQ3fewcdjPFtrvkYo",
+        "3. Persoenlich ziehe ich es vor, Websites in Codex CLI zu bauen und auf GitHub Pages zu veroeffentlichen. Dann laufen die Aenderungen ueber das gemeinsame Codex-Token-Limit, und insgesamt finde ich diesen Ansatz flexibler.",
+        "4. Gleichzeitig haben wir beim Treffen festgestellt, dass Codex CLI fuer absolute Anfaenger doch nicht so einfach ist, wie ich dachte. Schon das Oeffnen eines Terminals ist fuer manche ein erster Schritt, und vor der Installation von Codex muss man erst npm installieren. Nach der Installation kann man zwar alle weiteren Einstellungen ueber Codex CLI erledigen, aber die erste Einrichtung verlangt trotzdem Motivation.",
+        "5. Insgesamt versuche ich weiterhin alle dazu zu bringen, ihre erste Website auszuprobieren, selbst wenn es nur mit Lovable ist, um zu sehen, wie einfach das inzwischen geworden ist. Und wenn etwas schwierig wird, stellt Fragen im Bereich Freies Gespraech."
+      ]
+    },
+    "me": {
+      "title": "Prakticno pravljenje sajta uz AI: pravimo sajt od pocetka do kraja",
+      "place": "Monteco coworking u Budvi",
+      "photo": {
+        "alt": "Prakticno pravljenje sajta uz AI: pravimo sajt od pocetka do kraja"
+      },
+      "paragraphs": [
+        "Pogledali smo Lovable i Codex CLI uz GitHub Pages i trudili se da sto vise vremena posvetimo prakticnim pitanjima.",
+        "Glavne stvari:",
+        "1. Susret je imao dobar tempo. Paralelno smo podesili nekoliko verzija istog sajta na osnovu Tanjine prezentacije projekta. Evo rezultata:",
+        "- moj sa Lovable: https://limmud-alternative.lovable.app",
+        "- Tanjin sa Lovable: https://limud-portal-me.lovable.app",
+        "- moj sa Codex CLI i GitHub Pages: https://ikotelnikov.github.io/new-site",
+        "2. Napravio sam kratko uputstvo od samo pet koraka kako da se postigne slican rezultat uz Lovable, ako vam treba sajt, a ne razumijete jos kako se to radi. Namjerno sam ga napravio maksimalno konkretnim i jednostavnim za ljude koje sve ovo plasi: https://docs.google.com/document/d/17v06QIA0ujOU5FIm-gyMKqMUTtnQ3fewcdjPFtrvkYo",
+        "3. Licno vise volim da pravim sajtove u Codex CLI i objavljujem ih na GitHub Pages. Tako se izmjene generisu unutar zajednickog Codex token limita, a uopste mi je takav pristup fleksibilniji.",
+        "4. Ipak, na susretu smo vidjeli da Codex CLI za potpune pocetnike nije bas tako jednostavan kako sam mislio. Treba makar nauciti kako se otvara terminal, a prije instalacije Codexa treba nekako instalirati npm. Kada se Codex CLI jednom instalira, sve dodatne korake mozete raditi kroz njega, ali da biste ga instalirali i pokrenuli ipak je potrebna motivacija.",
+        "5. Uglavnom, podsticem sve da probaju da naprave svoj prvi sajt, makar uz Lovable, i da se uvjere koliko je to sada postalo jednostavno. A ako zapne, postavljajte pitanja u Slobodnom razgovoru."
+      ]
+    },
+    "es": {
+      "title": "Practica de crear un sitio web con AI: construimos un sitio de principio a fin",
+      "place": "Coworking Monteco en Budva",
+      "photo": {
+        "alt": "Practica de crear un sitio web con AI: construimos un sitio de principio a fin"
+      },
+      "paragraphs": [
+        "Vimos Lovable y Codex CLI junto con GitHub Pages e intentamos dedicar el mayor tiempo posible a cuestiones practicas.",
+        "Puntos principales:",
+        "1. La sesion tuvo muy buen ritmo. Configuramos en paralelo varias versiones del mismo sitio web a partir de la presentacion del proyecto de Tanya. Aqui estan los resultados:",
+        "- el mio con Lovable: https://limmud-alternative.lovable.app",
+        "- el de Tanya con Lovable: https://limud-portal-me.lovable.app",
+        "- el mio con Codex CLI y GitHub Pages: https://ikotelnikov.github.io/new-site",
+        "2. Prepare una instruccion corta de solo cinco pasos sobre como conseguir un resultado similar con Lovable si necesitas un sitio web y todavia no entiendes bien como hacerlo. La hice a proposito muy concreta y sencilla para quienes sienten cierto miedo a todo esto: https://docs.google.com/document/d/17v06QIA0ujOU5FIm-gyMKqMUTtnQ3fewcdjPFtrvkYo",
+        "3. Personalmente prefiero crear sitios en Codex CLI y publicarlos en GitHub Pages. Asi los cambios se generan dentro del limite compartido de tokens de Codex y, en general, me parece un enfoque mas flexible.",
+        "4. Aun asi, en el encuentro vimos que Codex CLI no es tan sencillo para principiantes absolutos como yo pensaba. Hay que saber al menos como abrir una terminal, y antes de instalar Codex hace falta instalar npm. Una vez instalado Codex CLI, ya puedes hacer cualquier configuracion adicional desde ahi, pero instalarlo y arrancarlo sigue requiriendo motivacion.",
+        "5. En general sigo animando a todos a intentar crear su primer sitio web, aunque sea con Lovable, para comprobar lo facil que se ha vuelto. Y si algo se complica, haced preguntas en Chat Libre."
+      ]
+    }
+  }
 }

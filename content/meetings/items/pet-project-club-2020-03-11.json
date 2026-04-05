@@ -1,4 +1,5 @@
 {
+  "sourceLocale": "ru",
   "slug": "pet-project-club-2020-03-11",
   "type": "announce",
   "date": "2026-03-11",
@@ -18,5 +19,71 @@
     "На встрече автор провел живую демонстрацию продукта, рассказал о механике работы и планах развития сервиса.",
     "Вместе обсудили, что еще можно добавить и куда дальше.",
     "Практика показывает, что встречи с демонстрацией новых пет проектов/продуктов САМЫЕ ИНТЕРЕСНЫЕ! Поэтому, даже для тех, кто работу не ищет, это было ценно."
-  ]
+  ],
+  "translations": {
+    "en": {
+      "title": "Pet project presentation: HelpMeMatch.ai, a service for generating accurate CVs, cover letters, self-presentations, and more with rich context",
+      "photo": {
+        "alt": "Pet Project Club meeting"
+      },
+      "paragraphs": [
+        "On Wednesday 11.03 at 18:30 we met offline at Monteco coworking for another Pet Project Club meetup.",
+        "This time we had a presentation of a new AI service called HelpMeMatch.ai for improving resumes and preparing for job interviews. It was developed by my friend and one of the remote members of our community.",
+        "The key feature of HelpMeMatch.ai is that it does not stop at a standard CV. In addition to the resume itself, it collects stories about your experience: projects, technologies, processes, development practices, and work with different systems and teams. The more of this context you add, the better the system understands your real professional background.",
+        "When you find a specific vacancy, the service analyzes its requirements and turns the most relevant stories into achievements inside the CV, increasing its relevance for ATS systems and improving the chance of getting invited to an interview.",
+        "Beyond CV adaptation, the platform also helps prepare cover letters, self-presentations, mock interviews, and other parts of the hiring process. The idea is that a candidate with a rich and structured context around their experience can present themselves much more accurately and convincingly, and the system uses that context to strengthen the application.",
+        "At the meetup the author gave a live product demo and talked through the mechanics and development plans for the service.",
+        "We also discussed what else could be added and where the product might go next.",
+        "Practice shows that meetups with live demos of new pet projects and products are the most interesting. So even for people who are not currently looking for a job, this was valuable."
+      ]
+    },
+    "de": {
+      "title": "Praesentation eines Pet-Projekts: HelpMeMatch.ai, ein Service fuer praezise CVs, Cover Letters, Self-Presentations und mehr mit reichhaltigem Kontext",
+      "photo": {
+        "alt": "Pet Project Club Treffen"
+      },
+      "paragraphs": [
+        "Am Mittwoch, dem 11.03, haben wir uns um 18:30 offline im Coworking Monteco zu einem weiteren Treffen des Pet Project Club versammelt.",
+        "Diesmal gab es eine Praesentation des neuen AI-Services HelpMeMatch.ai zur Verbesserung von Lebenslaeufen und zur Vorbereitung auf Bewerbungsgespraeche. Entwickelt wurde er von meinem Freund und einem der Remote-Mitglieder unserer Community.",
+        "Die zentrale Besonderheit von HelpMeMatch.ai ist, dass sich der Service nicht auf den normalen CV beschraenkt. Zusaetzlich zum Lebenslauf sammelt er Geschichten ueber Ihre Erfahrung: Projekte, Technologien, Prozesse, Entwicklungspraktiken sowie die Arbeit mit verschiedenen Systemen und Teams. Je mehr solcher Kontexte hinzugefuegt werden, desto besser versteht das System den tatsaechlichen beruflichen Hintergrund.",
+        "Wenn Sie eine konkrete Stelle finden, analysiert der Service deren Anforderungen und verwandelt die relevantesten Geschichten in achievements innerhalb des CV. Das erhoeht die Relevanz fuer ATS-Systeme und steigert die Wahrscheinlichkeit einer Einladung zum Interview.",
+        "Neben der Anpassung des CV hilft die Plattform auch bei Cover Letter, Self-Presentation, Mock Interview und anderen Teilen der Vorbereitung auf die Jobsuche. Die Idee dahinter: Wer einen grossen und strukturierten Kontext ueber die eigene Erfahrung mitbringt, kann sich viel praeziser und ueberzeugender praesentieren, und genau diesen Kontext nutzt das System, um die Bewerbung zu verstaerken.",
+        "Beim Treffen zeigte der Autor eine Live-Demo des Produkts und sprach ueber Funktionsweise und Entwicklungsplaene des Services.",
+        "Gemeinsam haben wir diskutiert, was noch hinzugefuegt werden koennte und wie es weitergehen kann.",
+        "Die Praxis zeigt, dass Treffen mit Demos neuer Pet-Projekte und Produkte am interessantesten sind. Deshalb war es auch fuer Menschen wertvoll, die gerade nicht aktiv nach Arbeit suchen."
+      ]
+    },
+    "me": {
+      "title": "Prezentacija pet projekta: HelpMeMatch.ai, servis za precizne CV-jeve, cover lettere, self-presentation i jos mnogo toga uz bogat kontekst",
+      "photo": {
+        "alt": "Susret Pet Project Cluba"
+      },
+      "paragraphs": [
+        "U srijedu 11.03 u 18:30 sastali smo se uzivo u Monteco coworkingu na jos jednom susretu Pet Project Cluba.",
+        "Ovog puta imali smo prezentaciju novog AI servisa HelpMeMatch.ai za unapredjenje CV-ja i pripremu za intervjue. Razvio ga je moj prijatelj i jedan od udaljenih clanova nase zajednice.",
+        "Glavna posebnost HelpMeMatch.ai je to sto se servis ne zavrsava na obicnom CV-ju. Pored samog CV-ja prikuplja i price o vasem iskustvu: projekte, tehnologije, procese, razvojne prakse i rad sa razlicitim sistemima i timovima. Sto vise takvog konteksta dodate, to preciznije sistem razumije vase stvarno profesionalno iskustvo.",
+        "Kada pronadjete konkretnu poziciju, servis analizira njene zahtjeve i pretvara najrelevantnije price u achievements unutar CV-ja, povecavajuci relevantnost za ATS sisteme i vjerovatnocu poziva na intervju.",
+        "Pored prilagodjavanja CV-ja, platforma pomaze i u pripremi cover lettera, self-presentation, mock-interviewa i drugih elemenata procesa zaposljavanja. Ideja je da kandidat sa bogatim i strukturisanim kontekstom o svom iskustvu moze mnogo preciznije i uvjerljivije da se predstavi, a sistem koristi bas taj kontekst da ojaca prijavu.",
+        "Na susretu je autor odrzao uzivo demonstraciju proizvoda i ispricao kako servis radi i u kom pravcu planira da se razvija.",
+        "Zajedno smo razgovarali o tome sta jos moze da se doda i kuda dalje.",
+        "Praksa pokazuje da su susreti sa demonstracijama novih pet projekata i proizvoda najzanimljiviji. Zato je ovo bilo vrijedno cak i za one koji trenutno ne traze posao."
+      ]
+    },
+    "es": {
+      "title": "Presentacion de pet project: HelpMeMatch.ai, un servicio para generar CV, cover letter, self-presentation y mas con contexto rico",
+      "photo": {
+        "alt": "Encuentro de Pet Project Club"
+      },
+      "paragraphs": [
+        "El miercoles 11.03 a las 18:30 nos reunimos presencialmente en el coworking Monteco para otro encuentro de Pet Project Club.",
+        "Esta vez tuvimos la presentacion de un nuevo servicio de AI llamado HelpMeMatch.ai para mejorar el CV y preparar entrevistas. Fue desarrollado por un amigo mio y uno de los miembros remotos de nuestra comunidad.",
+        "La caracteristica principal de HelpMeMatch.ai es que no se limita al CV habitual. Ademas del curriculo, recopila historias sobre tu experiencia: proyectos, tecnologias, procesos, practicas de desarrollo y trabajo con distintos sistemas y equipos. Cuanto mas contexto anades, mejor entiende el sistema tu experiencia profesional real.",
+        "Cuando encuentras una vacante concreta, el servicio analiza sus requisitos y convierte las historias mas relevantes en logros dentro del CV, aumentando la relevancia para sistemas ATS y la probabilidad de recibir una invitacion a entrevista.",
+        "Ademas de adaptar el CV, la plataforma ayuda a preparar cover letters, self-presentation, mock interviews y otros elementos del proceso de contratacion. La idea es que un candidato con un contexto amplio y bien estructurado sobre su experiencia puede presentarse de forma mucho mas precisa y convincente, y el sistema usa ese contexto para reforzar la candidatura.",
+        "Durante el encuentro, el autor hizo una demo en vivo del producto y explico como funciona y hacia donde planea desarrollarlo.",
+        "Tambien comentamos juntos que mas se podria anadir y cuales podrian ser los siguientes pasos.",
+        "La practica demuestra que los encuentros con demos de nuevos pet projects y productos son los mas interesantes. Por eso tambien fue valioso incluso para quienes no estan buscando trabajo ahora mismo."
+      ]
+    }
+  }
 }
