@@ -179,8 +179,7 @@ function initLocaleSwitcher(locale) {
     });
 
     return `
-      <a class="locale-link${currentClass}" href="${href}" data-locale-link="${localeKey}">
-        <span aria-hidden="true">${meta.flag}</span>
+      <a class="locale-link${currentClass}" href="${href}" data-locale-link="${localeKey}" aria-label="${meta.label}">
         <span>${meta.shortLabel}</span>
       </a>
     `;
