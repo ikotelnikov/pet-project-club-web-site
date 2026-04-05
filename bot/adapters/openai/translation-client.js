@@ -96,7 +96,7 @@ export class TranslationClient {
     }
 
     const data = await response.json();
-    const text = extractTextOutput(data);
+    const text = extractJsonTextOutput(data);
     const parsed = JSON.parse(text);
 
     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
@@ -143,4 +143,15 @@ function extractTextOutput(responseData) {
   }
 
   return combined;
+}
+
+function extractJsonTextOutput(responseData) {
+  const text = extractTextOutput(responseData);
+  return stripJsonCodeFences(text);
+}
+
+function stripJsonCodeFences(text) {
+  const trimmed = text.trim();
+  const fenceMatch = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+  return fenceMatch ? fenceMatch[1].trim() : trimmed;
 }

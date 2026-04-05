@@ -57,8 +57,26 @@ function summarizeFields(fields) {
       continue;
     }
 
+    if (typeof value === "string") {
+      summary[key] = summarizeStringField(key, value);
+      continue;
+    }
+
     summary[key] = value;
   }
 
   return summary;
+}
+
+function summarizeStringField(key, value) {
+  if (/html$/i.test(key)) {
+    const plainText = value.replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    return plainText.length > 140 ? `${plainText.slice(0, 137).trimEnd()}...` : plainText;
+  }
+
+  if (value.length > 140) {
+    return `${value.slice(0, 137).trimEnd()}...`;
+  }
+
+  return value;
 }
