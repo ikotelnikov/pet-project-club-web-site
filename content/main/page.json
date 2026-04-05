@@ -137,9 +137,9 @@
         { "label": "Environment", "value": "People who are also building" }
       ],
       "metrics": [
-        { "label": "Regular participants", "hint": "Offline meetups usually gather 5 to 15 people." },
-        { "label": "Online participants", "hint": "More than 100 people take part in online discussions." },
-        { "label": "Projects", "hint": "Club members have shared 20+ projects during the first year." },
+        { "label": "Regular participants", "value": "10+", "hint": "Offline meetups usually gather 5 to 15 people." },
+        { "label": "Online participants", "value": "100+", "hint": "More than 100 people take part in online discussions." },
+        { "label": "Projects", "value": "20+", "hint": "Club members have shared 20+ projects during the first year." },
         { "label": "Main community language", "value": "RU", "hint": "Most participants speak Russian, but we are happy to add meetings in other languages on request." }
       ],
       "story": {
@@ -214,9 +214,9 @@
         { "label": "Umfeld", "value": "Menschen, die ebenfalls bauen" }
       ],
       "metrics": [
-        { "label": "Regelmaessige Teilnehmer", "hint": "Zu Offline-Treffen kommen normalerweise 5 bis 15 Personen." },
-        { "label": "Online-Teilnehmer", "hint": "Mehr als 100 Personen beteiligen sich an Online-Diskussionen." },
-        { "label": "Projekte", "hint": "Im ersten Jahr haben Mitglieder des Clubs mehr als 20 Projekte geteilt." },
+        { "label": "Regelmaessige Teilnehmer", "value": "10+", "hint": "Zu Offline-Treffen kommen normalerweise 5 bis 15 Personen." },
+        { "label": "Online-Teilnehmer", "value": "100+", "hint": "Mehr als 100 Personen beteiligen sich an Online-Diskussionen." },
+        { "label": "Projekte", "value": "20+", "hint": "Im ersten Jahr haben Mitglieder des Clubs mehr als 20 Projekte geteilt." },
         { "label": "Hauptsprache der Community", "value": "RU", "hint": "Die meisten Teilnehmer sprechen Russisch, aber wir erweitern das Format auf Wunsch gern um andere Sprachen." }
       ],
       "story": {
@@ -291,9 +291,9 @@
         { "label": "Okruzenje", "value": "Ljudi koji takodje grade" }
       ],
       "metrics": [
-        { "label": "Redovni ucesnici", "hint": "Na offline susretima se obicno okupi od 5 do 15 ljudi." },
-        { "label": "Online ucesnici", "hint": "Vise od 100 ljudi ucestvuje u online razgovorima." },
-        { "label": "Projekti", "hint": "Tokom prve godine clanovi kluba su predstavili vise od 20 projekata." },
+        { "label": "Redovni ucesnici", "value": "10+", "hint": "Na offline susretima se obicno okupi od 5 do 15 ljudi." },
+        { "label": "Online ucesnici", "value": "100+", "hint": "Vise od 100 ljudi ucestvuje u online razgovorima." },
+        { "label": "Projekti", "value": "20+", "hint": "Tokom prve godine clanovi kluba su predstavili vise od 20 projekata." },
         { "label": "Glavni jezik zajednice", "value": "RU", "hint": "Vecina ucesnika govori ruski, ali rado dodajemo susrete i na drugim jezicima ako postoji interesovanje." }
       ],
       "story": {
@@ -368,9 +368,9 @@
         { "label": "Entorno", "value": "Gente que tambien esta construyendo" }
       ],
       "metrics": [
-        { "label": "Participantes regulares", "hint": "Los encuentros presenciales suelen reunir entre 5 y 15 personas." },
-        { "label": "Participantes online", "hint": "Mas de 100 personas participan en las discusiones online." },
-        { "label": "Proyectos", "hint": "Durante el primer ano, los miembros del club compartieron mas de 20 proyectos." },
+        { "label": "Participantes regulares", "value": "10+", "hint": "Los encuentros presenciales suelen reunir entre 5 y 15 personas." },
+        { "label": "Participantes online", "value": "100+", "hint": "Mas de 100 personas participan en las discusiones online." },
+        { "label": "Proyectos", "value": "20+", "hint": "Durante el primer ano, los miembros del club compartieron mas de 20 proyectos." },
         { "label": "Idioma principal de la comunidad", "value": "RU", "hint": "La mayoria de los participantes habla ruso, pero con gusto abrimos encuentros en otros idiomas si hay interes." }
       ],
       "story": {
