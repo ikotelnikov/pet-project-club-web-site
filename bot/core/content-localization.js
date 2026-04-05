@@ -186,6 +186,10 @@ function markNonSourceLocalesStale(translationStatus, sourceLocale) {
 
 function deepMerge(baseValue, overrideValue) {
   if (Array.isArray(overrideValue)) {
+    if (shouldMergeArrayByIndex(baseValue, overrideValue)) {
+      return mergeArrayByIndex(baseValue, overrideValue);
+    }
+
     return overrideValue.map((entry) => cloneValue(entry));
   }
 
@@ -202,7 +206,9 @@ function deepMerge(baseValue, overrideValue) {
     const baseEntry = result[key];
 
     if (Array.isArray(value)) {
-      result[key] = value.map((entry) => cloneValue(entry));
+      result[key] = shouldMergeArrayByIndex(baseEntry, value)
+        ? mergeArrayByIndex(baseEntry, value)
+        : value.map((entry) => cloneValue(entry));
       continue;
     }
 
@@ -227,4 +233,47 @@ function cloneValue(value) {
   }
 
   return value;
+}
+
+function shouldMergeArrayByIndex(baseValue, overrideValue) {
+  return (
+    Array.isArray(baseValue) &&
+    Array.isArray(overrideValue) &&
+    overrideValue.every((entry) => entry == null || isPlainObject(entry))
+  );
+}
+
+function mergeArrayByIndex(baseArray, overrideArray) {
+  const result = [];
+  const maxLength = Math.max(baseArray.length, overrideArray.length);
+
+  for (let index = 0; index < maxLength; index += 1) {
+    const hasOverride = index < overrideArray.length;
+
+    if (!hasOverride) {
+      result.push(cloneValue(baseArray[index]));
+      continue;
+    }
+
+    const overrideEntry = overrideArray[index];
+    const baseEntry = baseArray[index];
+
+    if (isPlainObject(overrideEntry) && isPlainObject(baseEntry)) {
+      result.push(deepMerge(baseEntry, overrideEntry));
+      continue;
+    }
+
+    if (isPlainObject(overrideEntry)) {
+      result.push(deepMerge({}, overrideEntry));
+      continue;
+    }
+
+    result.push(cloneValue(overrideEntry));
+  }
+
+  return result;
+}
+
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }

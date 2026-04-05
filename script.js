@@ -1157,6 +1157,10 @@ function localizeContentNode(value, locale) {
 
 function deepMergeContent(baseValue, overrideValue) {
   if (Array.isArray(overrideValue)) {
+    if (shouldMergeContentArrayByIndex(baseValue, overrideValue)) {
+      return mergeContentArrayByIndex(baseValue, overrideValue);
+    }
+
     return overrideValue.map((entry) => cloneContentValue(entry));
   }
 
@@ -1170,13 +1174,17 @@ function deepMergeContent(baseValue, overrideValue) {
   const result = { ...baseObject };
 
   for (const [key, value] of Object.entries(overrideValue)) {
+    const baseEntry = result[key];
+
     if (Array.isArray(value)) {
-      result[key] = value.map((entry) => cloneContentValue(entry));
+      result[key] = shouldMergeContentArrayByIndex(baseEntry, value)
+        ? mergeContentArrayByIndex(baseEntry, value)
+        : value.map((entry) => cloneContentValue(entry));
       continue;
     }
 
     if (value && typeof value === "object") {
-      result[key] = deepMergeContent(result[key], value);
+      result[key] = deepMergeContent(baseEntry, value);
       continue;
     }
 
@@ -1196,6 +1204,49 @@ function cloneContentValue(value) {
   }
 
   return value;
+}
+
+function shouldMergeContentArrayByIndex(baseValue, overrideValue) {
+  return (
+    Array.isArray(baseValue) &&
+    Array.isArray(overrideValue) &&
+    overrideValue.every((entry) => entry == null || isPlainContentObject(entry))
+  );
+}
+
+function mergeContentArrayByIndex(baseArray, overrideArray) {
+  const result = [];
+  const maxLength = Math.max(baseArray.length, overrideArray.length);
+
+  for (let index = 0; index < maxLength; index += 1) {
+    const hasOverride = index < overrideArray.length;
+
+    if (!hasOverride) {
+      result.push(cloneContentValue(baseArray[index]));
+      continue;
+    }
+
+    const overrideEntry = overrideArray[index];
+    const baseEntry = baseArray[index];
+
+    if (isPlainContentObject(overrideEntry) && isPlainContentObject(baseEntry)) {
+      result.push(deepMergeContent(baseEntry, overrideEntry));
+      continue;
+    }
+
+    if (isPlainContentObject(overrideEntry)) {
+      result.push(deepMergeContent({}, overrideEntry));
+      continue;
+    }
+
+    result.push(cloneContentValue(overrideEntry));
+  }
+
+  return result;
+}
+
+function isPlainContentObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
 async function renderNewsPage() {

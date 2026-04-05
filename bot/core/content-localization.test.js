@@ -61,3 +61,40 @@ test("marks machine translations stale when source text changes", () => {
   assert.equal(merged.translationStatus.en, "stale");
   assert.equal(merged.translationStatus.de, "edited");
 });
+
+test("merges translated object arrays by index instead of replacing whole arrays", () => {
+  const localized = localizeContentNode({
+    sourceLocale: "ru",
+    metrics: [
+      { label: "Участники", value: "10+", hint: "Русский hint" },
+      { label: "Проекты", value: "20+", hint: "Еще один hint" },
+    ],
+    translations: {
+      en: {
+        metrics: [
+          { label: "Participants" },
+          { label: "Projects", hint: "English hint" },
+        ],
+      },
+    },
+  }, "en");
+
+  assert.deepEqual(localized.metrics, [
+    { label: "Participants", value: "10+", hint: "Русский hint" },
+    { label: "Projects", value: "20+", hint: "English hint" },
+  ]);
+});
+
+test("still replaces primitive arrays during localization", () => {
+  const localized = localizeContentNode({
+    sourceLocale: "ru",
+    tags: ["один", "два", "три"],
+    translations: {
+      en: {
+        tags: ["one", "two"],
+      },
+    },
+  }, "en");
+
+  assert.deepEqual(localized.tags, ["one", "two"]);
+});
