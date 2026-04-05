@@ -1,4 +1,5 @@
 {
+  "sourceLocale": "ru",
   "slug": "project-club-site-bot",
   "title": "Pet Project Club (сообщество + группа + сайт + бот)",
   "status": "active build",
@@ -23,5 +24,79 @@
   ],
   "ownerSlugs": [
     "ikotelnikov"
-  ]
+  ],
+  "translations": {
+    "en": {
+      "title": "Pet Project Club (community + group + website + bot)",
+      "summary": "A community of active people building projects outside their main job or studies. Most members live in Montenegro and meet regularly in Budva.",
+      "detailsHtml": "<p>Pet Project Club is a community of active people who build projects outside their main job or studies. The offline part of the community lives and meets in Budva, Montenegro, and nearby areas. Online members live in Sweden, Latvia, Spain, Israel, Ukraine, and other countries.</p><p>In addition to the community itself, the scope of the &quot;Pet Project Club&quot; project includes a Telegram group, a website with information about projects, participants, and news, and a Telegram bot through which members can publish or edit information about their projects, post updates, and upload images.</p><p>The website and the bot work as one system: the website is hosted on GitHub Pages, including its content, while the bot runs on Cloudflare Workers. In both cases the project uses free plans.</p><p>The bot uses OpenAI to process user requests: detect intent, find entities, structure submitted information, and translate it into different languages. To try the bot and add your own project to the site, it is enough to ask the project author to add you to the participant list.</p>",
+      "points": [
+        "Parses Telegram commands into structured operations.",
+        "Commits JSON into the repo.",
+        "Publishes changes to GitHub Pages after confirmation."
+      ],
+      "photo": {
+        "alt": "Pet Project Club community, group, website, and bot"
+      },
+      "links": [
+        {
+          "label": "Telegram community"
+        }
+      ]
+    },
+    "de": {
+      "title": "Pet Project Club (Community + Gruppe + Website + Bot)",
+      "summary": "Eine Community aktiver Menschen, die Projekte ausserhalb von Hauptjob oder Studium bauen. Die meisten Mitglieder leben in Montenegro und treffen sich regelmaessig in Budva.",
+      "detailsHtml": "<p>Der Pet Project Club ist eine Community aktiver Menschen, die Projekte ausserhalb von Hauptjob oder Studium entwickeln. Der Offline-Teil der Community lebt und trifft sich in Budva, Montenegro, und in der Umgebung. Online-Mitglieder leben in Schweden, Lettland, Spanien, Israel, der Ukraine und weiteren Laendern.</p><p>Zum Umfang des Projekts &quot;Pet Project Club&quot; gehoeren neben der Community selbst auch eine Telegram-Gruppe, eine Website mit Informationen ueber Projekte, Teilnehmer und News sowie ein Telegram-Bot, ueber den Mitglieder Informationen zu ihren Projekten selbst veroeffentlichen oder bearbeiten, Updates posten und Bilder hochladen koennen.</p><p>Website und Bot arbeiten als ein System zusammen: Die Website wird inklusive Content auf GitHub Pages gehostet, waehrend der Bot auf Cloudflare Workers laeuft. In beiden Faellen werden kostenlose Tarife genutzt.</p><p>Der Bot verwendet OpenAI, um Nutzeranfragen zu verarbeiten: Absichten erkennen, Entitaeten finden, eingegebene Informationen strukturieren und in verschiedene Sprachen uebersetzen. Wer den Bot ausprobieren und Informationen zum eigenen Projekt auf der Website veroeffentlichen moechte, muss nur den Projektautor bitten, ihn zur Teilnehmerliste hinzuzufuegen.</p>",
+      "points": [
+        "Parst Telegram-Befehle in strukturierte Operationen.",
+        "Schreibt JSON-Aenderungen in das Repository.",
+        "Veroeffentlicht Aenderungen nach Bestaetigung auf GitHub Pages."
+      ],
+      "photo": {
+        "alt": "Pet Project Club Community, Gruppe, Website und Bot"
+      },
+      "links": [
+        {
+          "label": "Telegram-Community"
+        }
+      ]
+    },
+    "me": {
+      "title": "Pet Project Club (zajednica + grupa + sajt + bot)",
+      "summary": "Zajednica aktivnih ljudi koji grade projekte van glavnog posla ili studija. Vecina clanova zivi u Crnoj Gori i redovno se sastaje u Budvi.",
+      "detailsHtml": "<p>Pet Project Club je zajednica aktivnih ljudi koji grade projekte van glavnog posla ili studija. Offline dio zajednice zivi i sastaje se u Budvi, Crna Gora, i okolini. Online clanovi zive u Svedskoj, Letoniji, Spaniji, Izraelu, Ukrajini i drugim drzavama.</p><p>Pored same zajednice, u opseg projekta &quot;Pet Project Club&quot; ulaze i Telegram grupa, sajt sa informacijama o projektima, ucesnicima i novostima, kao i Telegram bot preko kojeg clanovi mogu samostalno objavljivati ili mijenjati informacije o svojim projektima, postavljati novosti i slike.</p><p>Sajt i bot rade kao jedan sistem: sajt se hostuje na GitHub Pages, ukljucujuci i sadrzaj, dok bot radi na Cloudflare Workers. U oba slucaja koriste se besplatni planovi.</p><p>Bot koristi OpenAI za obradu korisnickih zahtjeva: prepoznavanje namjere, pronalazenje entiteta, strukturiranje unesenih informacija i prevod na razlicite jezike. Da biste isprobali bot i dodali svoj projekat na sajt, dovoljno je da zamolite autora projekta da vas doda na listu ucesnika.</p>",
+      "points": [
+        "Parsira Telegram komande u strukturisane operacije.",
+        "Upisuje JSON izmjene u repozitorijum.",
+        "Objavljuje promjene na GitHub Pages nakon potvrde."
+      ],
+      "photo": {
+        "alt": "Pet Project Club zajednica, grupa, sajt i bot"
+      },
+      "links": [
+        {
+          "label": "Telegram zajednica"
+        }
+      ]
+    },
+    "es": {
+      "title": "Pet Project Club (comunidad + grupo + sitio web + bot)",
+      "summary": "Una comunidad de personas activas que construyen proyectos fuera de su trabajo principal o estudios. La mayoria de los miembros vive en Montenegro y se reune con regularidad en Budva.",
+      "detailsHtml": "<p>Pet Project Club es una comunidad de personas activas que construyen proyectos fuera de su trabajo principal o estudios. La parte presencial de la comunidad vive y se reune en Budva, Montenegro, y sus alrededores. Los miembros online viven en Suecia, Letonia, Espana, Israel, Ucrania y otros paises.</p><p>Ademas de la propia comunidad, el alcance del proyecto &quot;Pet Project Club&quot; incluye un grupo de Telegram, un sitio web con informacion sobre proyectos, participantes y noticias, y un bot de Telegram a traves del cual los miembros pueden publicar o editar informacion sobre sus proyectos, compartir novedades y subir imagenes.</p><p>El sitio web y el bot funcionan como un solo sistema: el sitio se aloja en GitHub Pages, incluido su contenido, mientras que el bot corre en Cloudflare Workers. En ambos casos se utilizan planes gratuitos.</p><p>El bot usa OpenAI para procesar solicitudes de usuarios: detectar intenciones, encontrar entidades, estructurar la informacion enviada y traducirla a distintos idiomas. Para probar el bot y agregar tu proyecto al sitio, basta con pedir al autor del proyecto que te anada a la lista de participantes.</p>",
+      "points": [
+        "Convierte comandos de Telegram en operaciones estructuradas.",
+        "Guarda cambios JSON en el repositorio.",
+        "Publica los cambios en GitHub Pages despues de la confirmacion."
+      ],
+      "photo": {
+        "alt": "Comunidad, grupo, sitio web y bot de Pet Project Club"
+      },
+      "links": [
+        {
+          "label": "Comunidad de Telegram"
+        }
+      ]
+    }
+  }
 }
