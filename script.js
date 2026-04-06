@@ -1771,12 +1771,16 @@ function renderMetricCard(item) {
   const value = isNumeric
     ? `<strong class="metric-value" data-target="${item.value}">0</strong>`
     : `<strong class="metric-value">${item.value}</strong>`;
+  const metricLink = item.href && item.ctaLabel
+    ? `<a class="metric-link" href="${resolveHref(item.href)}">${item.ctaLabel}</a>`
+    : "";
 
   return `
     <article class="metric-card">
       <span class="metric-label">${item.label}</span>
       ${value}
       <span class="card-copy">${item.hint}</span>
+      ${metricLink}
     </article>
   `;
 }

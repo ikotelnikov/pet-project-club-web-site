@@ -1247,7 +1247,7 @@ body.lightbox-open {
 .metric-value {
   display: block;
   margin-bottom: 6px;
-  font-size: clamp(1.4rem, 3vw, 2.5rem);
+  font-size: clamp(2.2rem, 4.8vw, 4rem);
   line-height: 1;
 }
 
@@ -1318,7 +1318,46 @@ body.lightbox-open {
   display: inline-block;
   margin-bottom: 24px;
   color: var(--accent);
-  font-size: 0.74rem;
+  min-width: 2.75rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(141, 246, 198, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(141, 246, 198, 0.16);
+  font-size: 1.4rem;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.metric-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-card .card-copy {
+  margin-bottom: 18px;
+}
+
+.metric-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: auto;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.metric-link::after {
+  content: " ->";
+  margin-left: 6px;
+}
+
+.metric-link:hover {
+  color: #dffeff;
+  transform: translateX(2px);
 }
 
 .item-list,
