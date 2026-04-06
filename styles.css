@@ -166,6 +166,7 @@ a {
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 18px;
   align-items: center;
+  overflow: visible;
   padding: 14px 16px;
   margin-bottom: 18px;
   transition:
@@ -1690,21 +1691,20 @@ body.lightbox-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-height: 46px;
-  padding: 0 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.04);
+  gap: 8px;
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--text);
   font: inherit;
+  font-weight: 500;
   cursor: pointer;
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  transition: color 180ms ease, opacity 180ms ease;
 }
 
 .locale-toggle:hover {
-  transform: translateY(-2px);
-  border-color: rgba(141, 246, 198, 0.22);
+  color: rgba(223, 254, 255, 0.92);
 }
 
 .locale-toggle-label {
@@ -2035,6 +2035,11 @@ body.lightbox-open {
   .nav-cta {
     min-height: 42px;
     padding: 0 12px;
+  }
+
+  .locale-toggle {
+    min-height: auto;
+    padding: 0;
   }
 
   .locale-switcher-menu {
