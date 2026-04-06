@@ -316,6 +316,7 @@ async function handleTranslationBatchRequest({
       ...extraction,
       intent: "content_operation",
       action: extraction.action || "update",
+      needsConfirmation: true,
       fields: {
         ...(extraction.fields || {}),
       },

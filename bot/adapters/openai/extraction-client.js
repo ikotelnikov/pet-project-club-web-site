@@ -307,10 +307,7 @@ function normalizeExtraction(extraction) {
     summary:
       normalizeSummary(expandedExtraction.summary, normalized.intent) ||
       summarizeEntityExpansion(normalized.entity, normalized.action, normalized.fields),
-    needsConfirmation:
-      typeof expandedExtraction.needsConfirmation === "boolean"
-        ? expandedExtraction.needsConfirmation
-        : true,
+    needsConfirmation: true,
   };
 }
 
