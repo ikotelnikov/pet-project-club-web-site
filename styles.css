@@ -1344,10 +1344,16 @@ body.lightbox-open {
   align-items: center;
   width: fit-content;
   margin-top: auto;
-  color: var(--accent);
+  color: #dffeff;
   font-weight: 600;
   text-decoration: none;
-  transition: transform 180ms ease, color 180ms ease;
+  border-bottom: 1px solid rgba(141, 246, 198, 0.42);
+  text-shadow:
+    0 0 6px rgba(141, 246, 198, 0.55),
+    0 0 14px rgba(80, 198, 255, 0.42),
+    0 0 28px rgba(80, 198, 255, 0.22);
+  transition: transform 180ms ease, color 180ms ease, border-color 180ms ease;
+  animation: broken-neon-flicker 5.8s linear infinite;
 }
 
 .metric-link::after {
@@ -1356,7 +1362,8 @@ body.lightbox-open {
 }
 
 .metric-link:hover {
-  color: #dffeff;
+  color: #f4ffff;
+  border-color: rgba(141, 246, 198, 0.68);
   transform: translateX(2px);
 }
 
