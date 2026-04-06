@@ -15,6 +15,7 @@ export async function runPostConfirmationTranslations({
   entity,
   slug,
   sourceLocale,
+  targetLocales = null,
   siteBaseUrl = null,
 }) {
   if (!repository || !translationClient || !telegramClient || chatId == null || !entity || !slug) {
@@ -24,9 +25,14 @@ export async function runPostConfirmationTranslations({
   const currentItem = await repository.readItem(entity, slug);
   const normalizedSourceLocale =
     normalizeContentLocale(sourceLocale || currentItem?.sourceLocale) || DEFAULT_SOURCE_LOCALE;
-  const targetLocales = resolvePendingTranslationLocales(currentItem, normalizedSourceLocale);
+  const localesToUpdate = Array.isArray(targetLocales) && targetLocales.length > 0
+    ? targetLocales
+        .map((locale) => normalizeContentLocale(locale))
+        .filter((locale) => locale && locale !== normalizedSourceLocale)
+        .filter((locale) => currentItem?.translationStatus?.[locale] !== "edited")
+    : resolvePendingTranslationLocales(currentItem, normalizedSourceLocale);
 
-  for (const targetLocale of targetLocales) {
+  for (const targetLocale of localesToUpdate) {
     try {
       const latestItem = await repository.readItem(entity, slug);
       const translatedFields = await translationClient.translateFields({

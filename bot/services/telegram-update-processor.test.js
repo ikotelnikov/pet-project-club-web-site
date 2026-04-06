@@ -208,7 +208,7 @@ test("confirmation still succeeds when translation stalls", async () => {
   assert.equal(await pendingStore.getPending(555), null);
 });
 
-test("translation intent without locale asks for clarification", async () => {
+test("translation intent without locale defaults to all non-source locales", async () => {
   const pendingStore = new PendingMemoryStore();
 
   const result = await handleTelegramMessage({
@@ -220,7 +220,23 @@ test("translation intent without locale asks for clarification", async () => {
     },
     updateId: 21,
     pendingStore,
-    repository: {},
+    repository: {
+      async findEntityBySlug() {
+        return "participant";
+      },
+      async listEntityCandidates() {
+        return [{ slug: "ikotelnikov", handle: "@ikotelnikov", label: "Ivan Kotelnikov" }];
+      },
+      async readItem() {
+        return {
+          sourceLocale: "ru",
+          slug: "ikotelnikov",
+          translationStatus: {
+            de: "edited",
+          },
+        };
+      },
+    },
     photoStore: null,
     extractionClient: {
       async extractIntent() {
@@ -247,8 +263,9 @@ test("translation intent without locale asks for clarification", async () => {
     dryRun: true,
   });
 
-  assert.equal(result.status, "clarification");
-  assert.match(result.question, /Which locale should I update/i);
+  assert.equal(result.status, "processed");
+  assert.equal(result.pendingState.state, "awaiting_confirmation");
+  assert.deepEqual(result.pendingState.operation.targetLocales, ["en", "me", "es"]);
 });
 
 test("translation intent with locale becomes a normal pending update", async () => {

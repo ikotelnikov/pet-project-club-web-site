@@ -9,6 +9,7 @@ import {
 import { validateOperation } from "../../core/operation-validator.js";
 import { buildOperationPreview } from "../../core/preview-builder.js";
 import { mapOperationToContent } from "../../core/content-mapper.js";
+import { resolvePendingTranslationLocales } from "../../services/post-confirmation-translation.js";
 import { extractTelegramAttachments } from "./attachments.js";
 import { inferHeuristicExtraction } from "./heuristic-intent.js";
 
@@ -157,6 +158,21 @@ export async function handleTelegramMessage({
       fromUserId,
     });
 
+    if (translationRouting.status === "batch") {
+      return handleTranslationBatchRequest({
+        extraction,
+        routing: translationRouting,
+        chatId,
+        fromUserId,
+        updateId,
+        messageId: message.message_id ?? null,
+        pendingStore,
+        repository,
+        extractionClient,
+        messageText: text,
+      });
+    }
+
     if (translationRouting.status !== "ok") {
       return translationRouting.result;
     }
@@ -253,6 +269,14 @@ export async function handleTelegramMessage({
 
 function routeTranslationOperation(extraction, { chatId, fromUserId }) {
   const locale = normalizeTranslationLocale(extraction?.fields?.locale);
+  const hasManualFields = hasTranslationContentFields(extraction?.fields);
+
+  if (!hasManualFields) {
+    return {
+      status: "batch",
+      locales: locale ? [locale] : null,
+    };
+  }
 
   if (!locale) {
     return {
@@ -275,6 +299,102 @@ function routeTranslationOperation(extraction, { chatId, fromUserId }) {
   };
 }
 
+async function handleTranslationBatchRequest({
+  extraction,
+  routing,
+  chatId,
+  fromUserId,
+  updateId,
+  messageId,
+  pendingStore,
+  repository,
+  extractionClient,
+  messageText,
+}) {
+  const resolution = await buildOperationFromExtraction({
+    extraction: {
+      ...extraction,
+      intent: "content_operation",
+      action: extraction.action || "update",
+      fields: {
+        ...(extraction.fields || {}),
+      },
+    },
+    repository,
+    extractionClient,
+    messageText,
+  });
+
+  if (!resolution.ok) {
+    return {
+      status: "clarification",
+      chatId,
+      fromUserId,
+      question: resolution.question,
+      extraction,
+    };
+  }
+
+  const entity = resolution.operation.entity;
+  const slug = resolution.operation.fields.slug;
+  const currentItem = await repository.readItem(entity, slug);
+  const sourceLocale = currentItem?.sourceLocale || "ru";
+  const targetLocales = Array.isArray(routing.locales) && routing.locales.length > 0
+    ? routing.locales.filter((locale) => locale !== sourceLocale)
+    : resolvePendingTranslationLocales(currentItem, sourceLocale);
+
+  if (targetLocales.length === 0) {
+    return {
+      status: "clarification",
+      chatId,
+      fromUserId,
+      question: "There are no auto-updatable locales for this entity. Existing translations are already manual or only the source locale remains.",
+      extraction,
+    };
+  }
+
+  const preview = {
+    entity,
+    action: "translate",
+    slug,
+    fields: {
+      locales: targetLocales.join(", "),
+    },
+    files: [resolution.operation.fields.slug ? `${entity}:${slug}` : entity],
+    attachments: [],
+  };
+  const newPending = createPendingRecord({
+    chatId,
+    userId: fromUserId,
+    state: "awaiting_confirmation",
+    sourceMessageId: messageId,
+    sourceUpdateId: updateId,
+    operation: {
+      type: "translation_batch",
+      entity,
+      action: "translate",
+      slug,
+      fields: {
+        slug,
+      },
+      sourceLocale,
+      targetLocales,
+      preview,
+      attachments: [],
+    },
+  });
+
+  await pendingStore.setPending(chatId, newPending);
+
+  return {
+    status: "processed",
+    fromUserId,
+    chatId,
+    extraction,
+    pendingState: newPending,
+  };
+}
+
 function normalizeTranslationLocale(locale) {
   if (typeof locale !== "string" || locale.trim() === "") {
     return null;
@@ -287,6 +407,14 @@ function normalizeTranslationLocale(locale) {
   }
 
   return null;
+}
+
+function hasTranslationContentFields(fields) {
+  if (!fields || typeof fields !== "object") {
+    return false;
+  }
+
+  return Object.keys(fields).some((key) => !["slug", "locale", "sourceLocale"].includes(key));
 }
 
 export function extractMessageText(message) {
@@ -378,6 +506,30 @@ async function handleConfirmationDecision({
       fromUserId,
       dryRun,
       writeResult,
+    };
+  }
+
+  if (pending.operation?.type === "translation_batch") {
+    await pendingStore.deletePending(chatId);
+
+    return {
+      status: "confirmed",
+      decision,
+      hasPending: true,
+      chatId,
+      fromUserId,
+      dryRun,
+      writeResult: {
+        action: "translate",
+        entity: pending.operation.entity,
+        slug: pending.operation.slug,
+      },
+      translationPlan: {
+        entity: pending.operation.entity,
+        slug: pending.operation.slug,
+        sourceLocale: pending.operation.sourceLocale || "ru",
+        targetLocales: Array.isArray(pending.operation.targetLocales) ? pending.operation.targetLocales : [],
+      },
     };
   }
 

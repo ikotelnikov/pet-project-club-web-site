@@ -64,6 +64,7 @@ export function createBotRuntime(config, overrides = {}) {
         entity: result.translationPlan.entity,
         slug: result.translationPlan.slug,
         sourceLocale: result.translationPlan.sourceLocale,
+        targetLocales: result.translationPlan.targetLocales || null,
         siteBaseUrl: publicSiteBaseUrl,
       });
     },
