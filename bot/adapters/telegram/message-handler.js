@@ -12,8 +12,6 @@ import { mapOperationToContent } from "../../core/content-mapper.js";
 import { extractTelegramAttachments } from "./attachments.js";
 import { inferHeuristicExtraction } from "./heuristic-intent.js";
 
-const CONFIRM_TRANSLATION_TIMEOUT_MS = 4000;
-
 export async function handleTelegramMessage({
   message,
   updateId,
@@ -334,35 +332,6 @@ async function handleConfirmationDecision({
   };
   let mapped = mapOperationToContent(operation);
 
-  if (!dryRun && operation.action !== "delete" && translationClient && mapped.item) {
-    const preview = await repository.previewCommand(operation, mapped);
-    const translationOutcome = await translatePendingItemSafely({
-      translationClient,
-      entity: operation.entity,
-      item: preview.nextItem,
-      sourceLocale: operation.fields.sourceLocale || "ru",
-      timeoutMs: CONFIRM_TRANSLATION_TIMEOUT_MS,
-    });
-
-    if (translationOutcome.ok) {
-      mapped = {
-        ...mapped,
-        item: translationOutcome.item,
-      };
-    } else {
-      console.warn(
-        JSON.stringify({
-          event: "telegram_confirmation_translation_skipped",
-          chatId,
-          entity: operation.entity,
-          action: operation.action,
-          slug: operation.fields?.slug ?? null,
-          reason: translationOutcome.error,
-        })
-      );
-    }
-  }
-
   const writeResult = dryRun
     ? await repository.previewCommand(operation, mapped)
     : await repository.applyCommand(operation, mapped);
@@ -377,55 +346,18 @@ async function handleConfirmationDecision({
     fromUserId,
     dryRun,
     writeResult,
+    operation,
+    translationPlan:
+      !dryRun &&
+      operation.action !== "delete" &&
+      shouldAutoTranslateAfterConfirmation(pending.operation)
+        ? {
+            entity: operation.entity,
+            slug: operation.fields.slug,
+            sourceLocale: operation.fields.sourceLocale || "ru",
+          }
+        : null,
   };
-}
-
-async function translatePendingItemSafely({
-  translationClient,
-  entity,
-  item,
-  sourceLocale,
-  timeoutMs,
-}) {
-  try {
-    const translatedItem = await withTimeout(
-      translationClient.translateItem({
-        entity,
-        item,
-        sourceLocale,
-      }),
-      timeoutMs,
-      `translation timed out after ${timeoutMs}ms`
-    );
-
-    return {
-      ok: true,
-      item: translatedItem,
-    };
-  } catch (error) {
-    return {
-      ok: false,
-      error: error instanceof Error ? error.message : String(error),
-    };
-  }
-}
-
-function withTimeout(promise, timeoutMs, message) {
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => {
-      reject(new Error(message));
-    }, timeoutMs);
-
-    Promise.resolve(promise)
-      .then((value) => {
-        clearTimeout(timer);
-        resolve(value);
-      })
-      .catch((error) => {
-        clearTimeout(timer);
-        reject(error);
-      });
-  });
 }
 
 async function handleUndoRequest({
@@ -492,6 +424,17 @@ async function handleUndoRequest({
     chatId,
     pendingState: newPending,
   };
+}
+
+function shouldAutoTranslateAfterConfirmation(operation) {
+  const sourceLocale = normalizeSourceLocale(operation?.fields?.sourceLocale);
+  const targetLocale = normalizeSourceLocale(operation?.fields?.locale);
+
+  return !targetLocale || targetLocale === sourceLocale;
+}
+
+function normalizeSourceLocale(locale) {
+  return typeof locale === "string" && locale.trim() ? locale.trim().toLowerCase() : "ru";
 }
 
 async function handleEditRequest({

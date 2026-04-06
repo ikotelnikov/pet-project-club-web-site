@@ -6,9 +6,12 @@ import { PendingKvStore } from "../adapters/storage/pending-kv-store.js";
 import { PendingMemoryStore } from "../adapters/storage/pending-memory-store.js";
 import { TelegramClient } from "../adapters/telegram/telegram-client.js";
 import { handleTelegramMessage } from "../adapters/telegram/message-handler.js";
+import { buildContentPageUrl } from "../core/content-links.js";
+import { runPostConfirmationTranslations } from "../services/post-confirmation-translation.js";
 
 export function createWorkerRuntime(env = {}, options = {}) {
   const fetchImpl = normalizeFetchImpl(options.fetchImpl);
+  const publicSiteBaseUrl = resolvePublicSiteBaseUrl(env);
   const repository = new GitHubContentRepository({
     owner: env.GITHUB_REPO_OWNER || null,
     repo: env.GITHUB_REPO_NAME || null,
@@ -56,8 +59,9 @@ export function createWorkerRuntime(env = {}, options = {}) {
     photoStore,
     telegramClient,
     devMode: env.DEV_MODE === "true",
+    publicSiteBaseUrl,
     async handleTelegramUpdate(update, runtimeOptions = {}) {
-      return handleTelegramMessage({
+      const result = await handleTelegramMessage({
         message: update.message,
         updateId: update.update_id,
         allowedUserId: env.TELEGRAM_ALLOWED_USER_ID
@@ -70,6 +74,26 @@ export function createWorkerRuntime(env = {}, options = {}) {
         translationClient,
         telegramClient,
         dryRun: runtimeOptions.dryRun ?? true,
+      });
+
+      return augmentTelegramResult(result, {
+        publicSiteBaseUrl,
+      });
+    },
+    async runPostConfirmTranslations(result) {
+      if (!result?.translationPlan || !telegramClient) {
+        return;
+      }
+
+      await runPostConfirmationTranslations({
+        repository,
+        translationClient,
+        telegramClient,
+        chatId: result.chatId,
+        entity: result.translationPlan.entity,
+        slug: result.translationPlan.slug,
+        sourceLocale: result.translationPlan.sourceLocale,
+        siteBaseUrl: publicSiteBaseUrl,
       });
     },
   };
@@ -101,6 +125,44 @@ function createWorkerPhotoStore(repository) {
       }
 
       return repository.applyStagedPhoto(entity, slug, stagedPath);
+    },
+  };
+}
+
+function resolvePublicSiteBaseUrl(env) {
+  if (env.PUBLIC_SITE_BASE_URL) {
+    return env.PUBLIC_SITE_BASE_URL;
+  }
+
+  if (env.GITHUB_REPO_OWNER && env.GITHUB_REPO_NAME) {
+    return `https://${env.GITHUB_REPO_OWNER}.github.io/${env.GITHUB_REPO_NAME}`;
+  }
+
+  return null;
+}
+
+function augmentTelegramResult(result, { publicSiteBaseUrl } = {}) {
+  if (!result?.writeResult?.entity || !result?.writeResult?.slug) {
+    return result;
+  }
+
+  const sourceLocale =
+    result.operation?.fields?.locale ||
+    result.translationPlan?.sourceLocale ||
+    result.operation?.fields?.sourceLocale ||
+    result.pendingState?.operation?.fields?.sourceLocale ||
+    "ru";
+
+  return {
+    ...result,
+    writeResult: {
+      ...result.writeResult,
+      pageUrl: buildContentPageUrl({
+        siteBaseUrl: publicSiteBaseUrl,
+        entity: result.writeResult.entity,
+        slug: result.writeResult.slug,
+        locale: sourceLocale,
+      }),
     },
   };
 }

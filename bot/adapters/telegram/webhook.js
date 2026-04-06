@@ -5,6 +5,7 @@ export async function handleTelegramWebhookRequest({
   runtime,
   webhookSecret = null,
   dryRun = true,
+  executionCtx = null,
 }) {
   if (request.method === "GET") {
     const url = new URL(request.url);
@@ -174,6 +175,28 @@ export async function handleTelegramWebhookRequest({
           replyLength: replyText.length,
         })
       );
+    }
+
+    if (
+      result?.status === "confirmed" &&
+      result?.translationPlan &&
+      typeof runtime.runPostConfirmTranslations === "function"
+    ) {
+      const translationTask = runtime.runPostConfirmTranslations(result).catch((translationError) => {
+        console.error(
+          JSON.stringify({
+            event: "telegram_post_confirm_translation_failed",
+            updateId: update.update_id,
+            error: translationError instanceof Error ? translationError.message : String(translationError),
+          })
+        );
+      });
+
+      if (executionCtx && typeof executionCtx.waitUntil === "function") {
+        executionCtx.waitUntil(translationTask);
+      } else {
+        await translationTask;
+      }
     }
 
     return jsonResponse(200, {

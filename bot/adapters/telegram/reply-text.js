@@ -99,6 +99,7 @@ function buildConfirmedText(result, dryRun) {
       ? `${writeResult.action} ${writeResult.entity} ${writeResult.slug}`
       : null,
     writeResult.commitSha ? `Commit: ${writeResult.commitSha}` : null,
+    writeResult.pageUrl ? `Link: ${writeResult.pageUrl}` : null,
   ]
     .filter(Boolean)
     .join("\n");

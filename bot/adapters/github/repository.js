@@ -1,4 +1,5 @@
 import { ContentRepositoryError } from "../../domain/errors.js";
+import { mergeContentItems } from "../../core/content-localization.js";
 
 const GITHUB_API_ROOT = "https://api.github.com";
 const RETRYABLE_GITHUB_STATUSES = new Set([502, 503, 504]);
@@ -172,8 +173,11 @@ export class GitHubContentRepository {
     const slug = parsedCommand.fields.slug;
     const exists = await this.itemExists(entity, slug);
     const currentIndex = await this.readIndex(entity);
-    const existingItem = action === "delete" && exists ? await this.readItem(entity, slug) : null;
+    const existingItem = exists ? await this.readItem(entity, slug) : null;
     const assetPaths = action === "delete" ? resolveManagedAssetPaths(existingItem) : [];
+    const nextItem = action === "update"
+      ? mergeContentItems(existingItem, item, { entity })
+      : item;
 
     validateCommandPreconditions(action, slug, exists);
 
@@ -184,7 +188,7 @@ export class GitHubContentRepository {
       exists,
       currentIndex,
       nextIndex: updateIndexItems(currentIndex, slug, action),
-      nextItem: item,
+      nextItem,
       paths: {
         ...this.getEntityPaths(entity, slug),
         assetPaths,
@@ -235,7 +239,7 @@ export class GitHubContentRepository {
         path: itemPath,
         mode: "100644",
         type: "blob",
-        content: stringifyJson(item),
+        content: stringifyJson(preview.nextItem),
       });
     }
 
