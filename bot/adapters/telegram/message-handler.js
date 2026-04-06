@@ -12,6 +12,8 @@ import { mapOperationToContent } from "../../core/content-mapper.js";
 import { extractTelegramAttachments } from "./attachments.js";
 import { inferHeuristicExtraction } from "./heuristic-intent.js";
 
+const CONFIRM_TRANSLATION_TIMEOUT_MS = 4000;
+
 export async function handleTelegramMessage({
   message,
   updateId,
@@ -334,15 +336,31 @@ async function handleConfirmationDecision({
 
   if (!dryRun && operation.action !== "delete" && translationClient && mapped.item) {
     const preview = await repository.previewCommand(operation, mapped);
-    const nextItemWithTranslations = await translationClient.translateItem({
+    const translationOutcome = await translatePendingItemSafely({
+      translationClient,
       entity: operation.entity,
       item: preview.nextItem,
       sourceLocale: operation.fields.sourceLocale || "ru",
+      timeoutMs: CONFIRM_TRANSLATION_TIMEOUT_MS,
     });
-    mapped = {
-      ...mapped,
-      item: nextItemWithTranslations,
-    };
+
+    if (translationOutcome.ok) {
+      mapped = {
+        ...mapped,
+        item: translationOutcome.item,
+      };
+    } else {
+      console.warn(
+        JSON.stringify({
+          event: "telegram_confirmation_translation_skipped",
+          chatId,
+          entity: operation.entity,
+          action: operation.action,
+          slug: operation.fields?.slug ?? null,
+          reason: translationOutcome.error,
+        })
+      );
+    }
   }
 
   const writeResult = dryRun
@@ -360,6 +378,54 @@ async function handleConfirmationDecision({
     dryRun,
     writeResult,
   };
+}
+
+async function translatePendingItemSafely({
+  translationClient,
+  entity,
+  item,
+  sourceLocale,
+  timeoutMs,
+}) {
+  try {
+    const translatedItem = await withTimeout(
+      translationClient.translateItem({
+        entity,
+        item,
+        sourceLocale,
+      }),
+      timeoutMs,
+      `translation timed out after ${timeoutMs}ms`
+    );
+
+    return {
+      ok: true,
+      item: translatedItem,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+function withTimeout(promise, timeoutMs, message) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(message));
+    }, timeoutMs);
+
+    Promise.resolve(promise)
+      .then((value) => {
+        clearTimeout(timer);
+        resolve(value);
+      })
+      .catch((error) => {
+        clearTimeout(timer);
+        reject(error);
+      });
+  });
 }
 
 async function handleUndoRequest({

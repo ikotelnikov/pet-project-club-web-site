@@ -98,6 +98,26 @@ export async function handleTelegramWebhookRequest({
       })
     );
 
+    let callbackAnswered = false;
+
+    if (runtime.telegramClient && update.callback_query?.id) {
+      try {
+        await runtime.telegramClient.answerCallbackQuery({
+          callbackQueryId: update.callback_query.id,
+        });
+        callbackAnswered = true;
+      } catch (callbackError) {
+        console.error(
+          JSON.stringify({
+            event: "telegram_callback_answer_failed",
+            updateId: update.update_id,
+            stage: "before_processing",
+            error: callbackError instanceof Error ? callbackError.message : String(callbackError),
+          })
+        );
+      }
+    }
+
     const result = await runtime.handleTelegramUpdate(normalizedUpdate, { dryRun });
     const reply = buildTelegramReply(result, {
       dryRun,
@@ -122,7 +142,7 @@ export async function handleTelegramWebhookRequest({
       })
     );
 
-    if (runtime.telegramClient && update.callback_query?.id) {
+    if (!callbackAnswered && runtime.telegramClient && update.callback_query?.id) {
       try {
         await runtime.telegramClient.answerCallbackQuery({
           callbackQueryId: update.callback_query.id,
@@ -132,6 +152,7 @@ export async function handleTelegramWebhookRequest({
           JSON.stringify({
             event: "telegram_callback_answer_failed",
             updateId: update.update_id,
+            stage: "after_processing",
             error: callbackError instanceof Error ? callbackError.message : String(callbackError),
           })
         );

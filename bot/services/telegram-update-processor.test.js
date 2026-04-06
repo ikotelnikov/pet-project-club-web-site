@@ -8,8 +8,10 @@ import { FilesystemContentRepository } from "./content-repository.js";
 import { FileOffsetStore } from "./offset-store.js";
 import { LocalPhotoStore } from "./photo-store.js";
 import { PendingFileStore } from "../adapters/storage/pending-file-store.js";
+import { PendingMemoryStore } from "../adapters/storage/pending-memory-store.js";
 import { PrototypeExtractionClient } from "../adapters/openai/prototype-extraction-client.js";
-import { extractCommandText } from "../adapters/telegram/message-handler.js";
+import { createPendingRecord } from "../core/confirmation-flow.js";
+import { extractCommandText, handleTelegramMessage } from "../adapters/telegram/message-handler.js";
 import { processTelegramUpdates } from "./telegram-update-processor.js";
 
 test("extracts command text from message text or caption", () => {
@@ -116,6 +118,94 @@ test("marks malformed authorized commands as failed and advances offset", async 
   assert.equal(result.failedCount, 1);
   assert.equal(result.nextOffset, 202);
   assert.match(result.results[0].error, /Field 'slug'/);
+});
+
+test("confirmation still succeeds when translation stalls", async () => {
+  const pendingStore = new PendingMemoryStore();
+  const applied = [];
+  const repository = {
+    async previewCommand(parsedCommand, mapped) {
+      return {
+        action: parsedCommand.action,
+        entity: parsedCommand.entity,
+        slug: parsedCommand.fields.slug,
+        currentIndex: { items: [] },
+        nextIndex: { items: [parsedCommand.fields.slug] },
+        nextItem: mapped.item,
+        paths: {
+          indexPath: "content/meetings/announcements/index.json",
+          itemPath: `content/meetings/items/${parsedCommand.fields.slug}.json`,
+          assetPaths: [],
+        },
+      };
+    },
+    async applyCommand(parsedCommand, mapped) {
+      applied.push({
+        parsedCommand,
+        mapped,
+      });
+
+      return {
+        action: parsedCommand.action,
+        entity: parsedCommand.entity,
+        slug: parsedCommand.fields.slug,
+        commitSha: "abc123",
+        commitMessage: "bot: test",
+        paths: {
+          itemPath: `content/meetings/items/${parsedCommand.fields.slug}.json`,
+          indexPath: "content/meetings/announcements/index.json",
+          assetPaths: [],
+        },
+        indexChanged: true,
+      };
+    },
+  };
+  const pending = createPendingRecord({
+    chatId: 555,
+    userId: 123,
+    state: "awaiting_confirmation",
+    sourceMessageId: 10,
+    sourceUpdateId: 20,
+    operation: {
+      entity: "announce",
+      action: "create",
+      slug: "presentation-creometrix-0804",
+      fields: {
+        slug: "presentation-creometrix-0804",
+        sourceLocale: "ru",
+        title: "Презентация сервиса генеративного маркетинга CreometriX",
+      },
+      attachments: [],
+      preview: {},
+    },
+  });
+
+  await pendingStore.setPending(555, pending);
+
+  const result = await handleTelegramMessage({
+    message: {
+      message_id: 11,
+      from: { id: 123 },
+      chat: { id: 555 },
+      text: "confirm",
+    },
+    updateId: 21,
+    pendingStore,
+    repository,
+    photoStore: null,
+    extractionClient: new PrototypeExtractionClient(),
+    translationClient: {
+      async translateItem() {
+        return new Promise(() => {});
+      },
+    },
+    dryRun: false,
+  });
+
+  assert.equal(result.status, "confirmed");
+  assert.equal(applied.length, 1);
+  assert.equal(applied[0].parsedCommand.fields.slug, "presentation-creometrix-0804");
+  assert.equal(await pendingStore.getPending(555), null);
 });
 
 async function createFixture() {
