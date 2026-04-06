@@ -41,15 +41,15 @@
         "title": "club-session.log",
         "status": "live",
         "lines": [
-          "Найти поддержку и первых пользователей.",
-          "Получить обсуждение, обратную связь и новые компетенции.",
-          "Встретить единомышленников, партнеров и людей, с которыми хочется создавать вместе."
+          "Pet project - это любой проект, который вы делаете не по работе и не в школе или университете.",
+          "Название пришло от слова pet - как домашний питомец, которого держат просто для души и удовольствия.",
+          "Иногда pet project перерастает в бизнес и становится главным делом для своего создателя."
         ],
         "phrases": [
-          "sync --messages into content/",
-          "review --idea and cut scope",
-          "ship --small but real",
-          "publish --progress in public"
+          "what is a pet project?",
+          "why do people start pet projects?",
+          "can a pet project become a business?",
+          "do I need a team to start?"
         ]
       }
     }
@@ -118,15 +118,15 @@
         "stage": {
           "terminal": {
             "lines": [
-              "Find support and your first users.",
-              "Get discussion, feedback, and fresh skills around the project.",
-              "Meet collaborators, partners, and people you actually want to build with."
+              "A pet project is any project you do outside work and outside school or university.",
+              "The term comes from the idea of a pet: something you keep mostly for interest, care, and fun.",
+              "Sometimes a pet project grows into a business and becomes its creator's main occupation."
             ],
             "phrases": [
-              "sync --messages into content/",
-              "review --idea and cut scope",
-              "ship --small but real",
-              "publish --progress in public"
+              "what is a pet project?",
+              "why do people start pet projects?",
+              "can a pet project become a business?",
+              "do I need a team to start?"
             ]
           }
         }
@@ -195,15 +195,15 @@
         "stage": {
           "terminal": {
             "lines": [
-              "Unterstuetzung und erste Nutzer finden.",
-              "Diskussion, Feedback und neue Kompetenzen fuer das Projekt bekommen.",
-              "Mitstreiter, Partner und Menschen treffen, mit denen man wirklich bauen will."
+              "Ein Pet Project ist jedes Projekt, das man ausserhalb der Arbeit und ausserhalb von Schule oder Universitaet macht.",
+              "Der Begriff kommt von der Idee eines Haustiers: etwas, um das man sich vor allem aus Interesse und Freude kuemmert.",
+              "Manche Pet Projects wachsen zu einem Geschaeft und werden zur Hauptbeschaeftigung ihrer Gruender."
             ],
             "phrases": [
-              "sync --nachrichten in content/",
-              "review --idee pruefen und scope kuerzen",
-              "ship --klein aber echt",
-              "publish --fortschritt oeffentlich teilen"
+              "was ist ein pet project?",
+              "warum starten menschen pet projects?",
+              "kann daraus ein business werden?",
+              "brauche ich dafuer ein team?"
             ]
           }
         }
@@ -272,15 +272,15 @@
         "stage": {
           "terminal": {
             "lines": [
-              "Pronadji podrsku i prve korisnike.",
-              "Dobij razgovor, feedback i nove kompetencije oko projekta.",
-              "Upoznaj saradnike, partnere i ljude sa kojima stvarno zelis da gradis."
+              "Pet project je bilo koji projekat koji radis van posla i van skole ili fakulteta.",
+              "Naziv dolazi od ideje ljubimca: nesto cime se bavis uglavnom iz interesovanja i zadovoljstva.",
+              "Ponekad pet project preraste u biznis i postane glavno zanimanje svog autora."
             ],
             "phrases": [
-              "sync --poruke u content/",
-              "review --pregledaj ideju i skrati scope",
-              "ship --malo ali stvarno",
-              "publish --objavi napredak javno"
+              "sta je pet project?",
+              "zasto ljudi pokrecu pet projekte?",
+              "moze li da postane biznis?",
+              "da li mi treba tim za pocetak?"
             ]
           }
         }
@@ -349,15 +349,15 @@
         "stage": {
           "terminal": {
             "lines": [
-              "Encuentra apoyo y a tus primeros usuarios.",
-              "Recibe conversacion, feedback y nuevas capacidades alrededor del proyecto.",
-              "Conoce colaboradores, socios y personas con las que realmente quieras construir."
+              "Un pet project es cualquier proyecto que haces fuera del trabajo y fuera de la escuela o la universidad.",
+              "El termino viene de la idea de una mascota: algo que mantienes sobre todo por interes y disfrute.",
+              "A veces un pet project crece, se convierte en negocio y pasa a ser la ocupacion principal de su creador."
             ],
             "phrases": [
-              "sync --mensajes a content/",
-              "review --revisar idea y recortar scope",
-              "ship --pequeno pero real",
-              "publish --mostrar progreso en publico"
+              "que es un pet project?",
+              "por que la gente empieza pet projects?",
+              "puede convertirse en negocio?",
+              "necesito un equipo para empezar?"
             ]
           }
         }
