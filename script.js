@@ -433,6 +433,27 @@ function applyPageMeta() {
   if (pageDescription && descriptionNode) {
     descriptionNode.setAttribute("content", pageDescription);
   }
+
+  const effectiveTitle = pageTitle || titleNode?.textContent || document.title;
+  const effectiveDescription =
+    pageDescription ||
+    descriptionNode?.getAttribute("content") ||
+    "";
+  const currentUrl = window.location.href;
+
+  setMetaContent('meta[property="og:title"]', effectiveTitle);
+  setMetaContent('meta[property="og:description"]', effectiveDescription);
+  setMetaContent('meta[property="og:url"]', currentUrl);
+  setMetaContent('meta[name="twitter:title"]', effectiveTitle);
+  setMetaContent('meta[name="twitter:description"]', effectiveDescription);
+}
+
+function setMetaContent(selector, value) {
+  const node = document.querySelector(selector);
+
+  if (node && value) {
+    node.setAttribute("content", value);
+  }
 }
 
 function getSiteName() {

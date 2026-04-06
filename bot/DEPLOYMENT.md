@@ -49,6 +49,7 @@ Recommended:
 
 - use a long random value for `TELEGRAM_WEBHOOK_SECRET`
 - keep `TELEGRAM_ALLOWED_USER_ID`, `GITHUB_REPO_OWNER`, `GITHUB_REPO_NAME`, `GITHUB_BRANCH`, and `EXTRACTION_BACKEND` in `[vars]`
+- set `PUBLIC_SITE_BASE_URL` in `[vars]` to the production site URL, for example `https://petprojectclub.me`
 
 ## First Deploy
 

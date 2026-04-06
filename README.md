@@ -47,6 +47,8 @@ Then open `http://localhost:8080/`.
 
 This repository includes a GitHub Actions workflow to deploy to GitHub Pages.
 
+For the production custom-domain setup for `petprojectclub.me`, use [DOMAIN_SETUP.md](/C:/Users/ikotelnikov/Documents/GitHub/pet-project-club-web-site/DOMAIN_SETUP.md).
+
 ## Bot workspace
 
 The future Telegram bot lives under `bot/`.

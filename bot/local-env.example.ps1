@@ -8,6 +8,7 @@ $env:GITHUB_BRANCH='main'
 $env:GITHUB_WRITE_TOKEN='PASTE_YOUR_GITHUB_WRITE_TOKEN_HERE'
 
 # Optional overrides:
+# $env:PUBLIC_SITE_BASE_URL='https://petprojectclub.me'
 # $env:OPENAI_MODEL='...'
 # $env:TELEGRAM_WEBHOOK_SECRET='...'
 # $env:TELEGRAM_OFFSET_STATE_PATH="$PWD\\bot\\state\\telegram-offset.json"
