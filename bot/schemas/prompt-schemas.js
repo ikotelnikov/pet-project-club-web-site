@@ -131,7 +131,7 @@ export const ENTITY_SCHEMAS = {
 
 export const STAGE_SCHEMAS = {
   intent: {
-    intent: "content_operation | clarification_response | confirmation_response | non_actionable",
+    intent: "content_operation | translation_operation | clarification_response | confirmation_response | non_actionable",
     entity: "announcement | meeting | participant | project | null",
     action: "create | update | delete | null",
     slug: "string | null",

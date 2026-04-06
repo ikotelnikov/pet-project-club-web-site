@@ -1,7 +1,7 @@
 {
   "stage": "intent",
   "output": {
-    "intent": "content_operation | clarification_response | confirmation_response | non_actionable",
+    "intent": "content_operation | translation_operation | clarification_response | confirmation_response | non_actionable",
     "entity": "announcement | meeting | participant | project | null",
     "action": "create | update | delete | null",
     "targetRef": "string | null",

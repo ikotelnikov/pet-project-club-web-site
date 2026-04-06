@@ -151,6 +151,24 @@ export async function handleTelegramMessage({
 
   const extraction = extractionResult.extraction;
 
+  if (extraction.intent === "translation_operation") {
+    const translationRouting = routeTranslationOperation(extraction, {
+      chatId,
+      fromUserId,
+    });
+
+    if (translationRouting.status !== "ok") {
+      return translationRouting.result;
+    }
+
+    extraction.intent = "content_operation";
+    extraction.action = extraction.action || "update";
+    extraction.fields = {
+      ...extraction.fields,
+      locale: translationRouting.locale,
+    };
+  }
+
   if (extraction.intent !== "content_operation") {
     return {
       status: "ignored",
@@ -231,6 +249,44 @@ export async function handleTelegramMessage({
     operation: repositoryPreview,
     pendingState: newPending,
   };
+}
+
+function routeTranslationOperation(extraction, { chatId, fromUserId }) {
+  const locale = normalizeTranslationLocale(extraction?.fields?.locale);
+
+  if (!locale) {
+    return {
+      status: "clarification",
+      result: {
+        status: "clarification",
+        chatId,
+        fromUserId,
+        question:
+          extraction?.questions?.[0] ||
+          "Which locale should I update for this translation: ru, en, de, me, or es?",
+        extraction,
+      },
+    };
+  }
+
+  return {
+    status: "ok",
+    locale,
+  };
+}
+
+function normalizeTranslationLocale(locale) {
+  if (typeof locale !== "string" || locale.trim() === "") {
+    return null;
+  }
+
+  const normalized = locale.trim().toLowerCase();
+
+  if (normalized === "ru" || normalized === "en" || normalized === "de" || normalized === "me" || normalized === "es") {
+    return normalized;
+  }
+
+  return null;
 }
 
 export function extractMessageText(message) {
@@ -973,6 +1029,19 @@ async function resolveExistingSlug({
 }
 
 function mergeExistingFields(entity, currentItem, newFields) {
+  const targetLocale =
+    typeof newFields?.locale === "string" && newFields.locale.trim() !== ""
+      ? newFields.locale.trim().toLowerCase()
+      : null;
+
+  if (targetLocale && targetLocale !== (currentItem?.sourceLocale || "ru")) {
+    return {
+      ...(currentItem?.translations?.[targetLocale] || {}),
+      sourceLocale: currentItem?.sourceLocale || "ru",
+      ...newFields,
+    };
+  }
+
   switch (entity) {
     case "participant":
       return {

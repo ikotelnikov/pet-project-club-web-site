@@ -156,7 +156,7 @@ function buildSystemPrompt() {
     "Return JSON only.",
     "Do not include markdown, explanations, or prose outside the JSON object.",
     "Follow the intent-stage schema exactly.",
-    "Allowed intents: content_operation, clarification_response, confirmation_response, non_actionable.",
+    "Allowed intents: content_operation, translation_operation, clarification_response, confirmation_response, non_actionable.",
     "Allowed entities: announcement, meeting, participant, project.",
     "Allowed actions: create, update, delete.",
     "Confidence must be exactly one of: high, medium, low.",
@@ -165,7 +165,10 @@ function buildSystemPrompt() {
     "Slug may be provided either as top-level slug or as fields.slug. Both are valid.",
     "Supported content locales are: ru, en, de, me, es.",
     "If formattedTextHtml is provided and the user message clearly contains rich formatting that should be preserved, include fields.detailsHtml for announcement, meeting, or project while also extracting clean structured summary fields such as paragraphs when possible.",
-    "If the user explicitly asks to edit or create localized text for one locale, set fields.locale to that locale and include only the locale-specific text fields that should change.",
+    "If the user explicitly asks to add, update, translate, or fix localized text for one locale, prefer intent = translation_operation.",
+    "For translation_operation, keep entity populated, use action create or update when clear, and include fields.locale when the language is specified.",
+    "For translation_operation, include only the locale-specific text fields that should change and avoid unrelated source-locale fields.",
+    "If the user asks to add or update a translation but does not specify the target language, return translation_operation with no fields.locale and include one clarification question asking which locale to update.",
     "Use locale 'me' for Montenegrin and closely related local Balkan requests when the user clearly wants the /me/ site language.",
     "If pendingOperation is provided, treat the user message as an edit to that pending preview. Keep the same entity, action, and slug unless the user clearly asks to change them. Prefer returning only the changed fields.",
     "If the user message includes contact data such as Telegram handles, LinkedIn URLs, X/Twitter URLs, GitHub URLs, or other public links, place them into fields.links as {label, href, external}.",
@@ -289,6 +292,10 @@ function normalizeExtraction(extraction) {
 
   return {
     ...normalized,
+    action:
+      normalized.intent === "translation_operation"
+        ? normalized.action ?? "update"
+        : normalized.action,
     slug: normalized.slug ?? deriveSlug(normalized.entity, normalized.fields),
     targetRef:
       normalized.targetRef ??
@@ -519,6 +526,14 @@ function resolveEntityFields(entityRecord) {
 function normalizeFieldAliases(entity, fields) {
   const normalized = { ...fields };
 
+  if (typeof normalized.locale === "string") {
+    normalized.locale = normalizeLocaleCode(normalized.locale);
+  }
+
+  if (typeof normalized.sourceLocale === "string") {
+    normalized.sourceLocale = normalizeLocaleCode(normalized.sourceLocale);
+  }
+
   if (typeof normalized.mainPhotoPath === "string" && !normalized.photoStagedPath) {
     normalized.photoStagedPath = normalized.mainPhotoPath;
   }
@@ -572,6 +587,42 @@ function normalizeFieldAliases(entity, fields) {
   }
 
   return pruneUnknownFields(entity, normalized);
+}
+
+function normalizeLocaleCode(value) {
+  const normalized = String(value).trim().toLowerCase();
+
+  switch (normalized) {
+    case "ru":
+    case "russian":
+    case "russkiy":
+    case "russkii":
+    case "русский":
+      return "ru";
+    case "en":
+    case "english":
+    case "английский":
+      return "en";
+    case "de":
+    case "german":
+    case "deutsch":
+    case "немецкий":
+      return "de";
+    case "me":
+    case "montenegrin":
+    case "crnogorski":
+    case "montenegro":
+    case "черногорский":
+      return "me";
+    case "es":
+    case "spanish":
+    case "espanol":
+    case "español":
+    case "испанский":
+      return "es";
+    default:
+      return normalized;
+  }
 }
 
 function stripAttachmentTransportFields(fields) {

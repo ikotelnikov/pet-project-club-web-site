@@ -3,6 +3,7 @@ import { SLUG_PATTERN } from "../shared/constants.js";
 
 const INTENTS = new Set([
   "content_operation",
+  "translation_operation",
   "clarification_response",
   "confirmation_response",
   "non_actionable",
@@ -58,7 +59,7 @@ export function validateExtraction(extraction) {
     throw new ContentValidationError("Extraction field 'needsConfirmation' must be a boolean.");
   }
 
-  if (extraction.intent === "content_operation") {
+  if (extraction.intent === "content_operation" || extraction.intent === "translation_operation") {
     validateContentOperationExtraction(extraction);
   } else {
     validateNonOperationExtraction(extraction);
@@ -69,7 +70,17 @@ export function validateExtraction(extraction) {
 
 function validateContentOperationExtraction(extraction) {
   requireStringEnum(extraction.entity, ENTITIES, "entity");
-  requireStringEnum(extraction.action, ACTIONS, "action");
+  if (extraction.intent === "translation_operation") {
+    if (
+      extraction.action !== "create" &&
+      extraction.action !== "update" &&
+      extraction.action !== null
+    ) {
+      throw new ContentValidationError("Translation operations support only create, update, or null action.");
+    }
+  } else {
+    requireStringEnum(extraction.action, ACTIONS, "action");
+  }
 
   if (extraction.slug != null) {
     requireSlug(extraction.slug);
@@ -100,6 +111,14 @@ function validateContentOperationExtraction(extraction) {
   }
 
   validateFieldShapes(extraction.entity, extraction.fields);
+
+  if (
+    extraction.intent === "translation_operation" &&
+    extraction.fields.locale != null &&
+    !["ru", "en", "de", "me", "es"].includes(extraction.fields.locale)
+  ) {
+    throw new ContentValidationError("Translation operation field 'locale' must be one of ru, en, de, me, es.");
+  }
 
   const hasResolvableTarget =
     typeof extraction.slug === "string" ||

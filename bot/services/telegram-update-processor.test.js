@@ -208,6 +208,147 @@ test("confirmation still succeeds when translation stalls", async () => {
   assert.equal(await pendingStore.getPending(555), null);
 });
 
+test("translation intent without locale asks for clarification", async () => {
+  const pendingStore = new PendingMemoryStore();
+
+  const result = await handleTelegramMessage({
+    message: {
+      message_id: 11,
+      from: { id: 123 },
+      chat: { id: 555 },
+      text: "translate the participant profile for ikotelnikov",
+    },
+    updateId: 21,
+    pendingStore,
+    repository: {},
+    photoStore: null,
+    extractionClient: {
+      async extractIntent() {
+        return {
+          ok: true,
+          usedModel: "test",
+          attempts: 1,
+          extraction: {
+            intent: "translation_operation",
+            entity: "participant",
+            action: "update",
+            slug: null,
+            targetRef: "ikotelnikov",
+            confidence: "medium",
+            needsConfirmation: true,
+            summary: "update translation for ikotelnikov",
+            fields: {},
+            questions: ["Which locale should I update: ru, en, de, me, or es?"],
+            warnings: [],
+          },
+        };
+      },
+    },
+    dryRun: true,
+  });
+
+  assert.equal(result.status, "clarification");
+  assert.match(result.question, /Which locale should I update/i);
+});
+
+test("translation intent with locale becomes a normal pending update", async () => {
+  const pendingStore = new PendingMemoryStore();
+  const repository = {
+    async findEntityBySlug() {
+      return "participant";
+    },
+    async listEntityCandidates() {
+      return [{ slug: "ikotelnikov", handle: "@ikotelnikov", label: "Ivan Kotelnikov" }];
+    },
+    async readItem() {
+      return {
+        sourceLocale: "ru",
+        slug: "ikotelnikov",
+        handle: "@ikotelnikov",
+        name: "Ivan Kotelnikov",
+        role: "Основатель",
+        bio: "Строит клуб.",
+        translations: {
+          en: {
+            role: "Founder",
+          },
+        },
+      };
+    },
+    async previewCommand(parsedCommand, mapped) {
+      return {
+        action: parsedCommand.action,
+        entity: parsedCommand.entity,
+        slug: parsedCommand.fields.slug,
+        currentIndex: { items: ["ikotelnikov"] },
+        nextIndex: { items: ["ikotelnikov"] },
+        nextItem: mapped.item,
+        paths: {
+          indexPath: "content/participants/index.json",
+          itemPath: "content/participants/items/ikotelnikov.json",
+          assetPaths: [],
+        },
+      };
+    },
+  };
+
+  const result = await handleTelegramMessage({
+    message: {
+      message_id: 11,
+      from: { id: 123 },
+      chat: { id: 555 },
+      text: "update english translation for ikotelnikov",
+    },
+    updateId: 21,
+    pendingStore,
+    repository,
+    photoStore: null,
+    extractionClient: {
+      async extractIntent() {
+        return {
+          ok: true,
+          usedModel: "test",
+          attempts: 1,
+          extraction: {
+            intent: "translation_operation",
+            entity: "participant",
+            action: "update",
+            slug: null,
+            targetRef: "ikotelnikov",
+            confidence: "high",
+            needsConfirmation: true,
+            summary: "update en translation for ikotelnikov",
+            fields: {
+              locale: "en",
+              bio: "Builds the club in English.",
+            },
+            questions: [],
+            warnings: [],
+          },
+        };
+      },
+      async resolveTarget() {
+        return {
+          ok: true,
+          usedModel: "test",
+          resolution: {
+            matchedSlug: "ikotelnikov",
+            confidence: "high",
+            question: null,
+          },
+        };
+      },
+    },
+    dryRun: true,
+  });
+
+  assert.equal(result.status, "processed");
+  assert.equal(result.pendingState.state, "awaiting_confirmation");
+  assert.equal(result.pendingState.operation.fields.locale, "en");
+  assert.equal(result.pendingState.operation.fields.role, "Founder");
+  assert.equal(result.pendingState.operation.fields.bio, "Builds the club in English.");
+});
+
 async function createFixture() {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "ppc-telegram-"));
   const contentRoot = path.join(root, "content");
