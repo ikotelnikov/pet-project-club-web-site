@@ -104,6 +104,7 @@ async function startApp(locale) {
   setActiveNav();
   initTopbarMenu();
   initLocaleSwitcher(locale);
+  initStickyTopbar();
   renderPage().finally(() => {
     initReveal();
     initCounters();
@@ -153,21 +154,20 @@ function initLocaleState() {
 }
 
 function initLocaleSwitcher(locale) {
-  const footer = document.querySelector(".site-footer");
+  const topbar = document.querySelector(".topbar");
+  const actions = ensureTopbarActions();
 
-  if (!footer) {
+  if (!topbar || !actions) {
     return;
   }
 
-  const existing = footer.querySelector(".locale-switcher");
+  document.querySelectorAll(".locale-switcher").forEach((existing) => existing.remove());
 
-  if (existing) {
-    existing.remove();
-  }
-
-  const switcher = document.createElement("nav");
+  const switcher = document.createElement("div");
   switcher.className = "locale-switcher";
   switcher.setAttribute("aria-label", t("aria.languageSwitcher", "Language switcher"));
+  const currentMeta = LOCALE_META[locale.locale] || LOCALE_META[DEFAULT_LOCALE];
+  const menuId = "locale-switcher-menu";
 
   const options = SUPPORTED_LOCALES.map((localeKey) => {
     const meta = LOCALE_META[localeKey];
@@ -180,15 +180,50 @@ function initLocaleSwitcher(locale) {
 
     return `
       <a class="locale-link${currentClass}" href="${href}" data-locale-link="${localeKey}" aria-label="${meta.label}">
-        <span>${meta.shortLabel}</span>
+        <span class="locale-link-code">${meta.shortLabel}</span>
+        <span class="locale-link-label">${escapeHtml(meta.label)}</span>
       </a>
     `;
   }).join("");
 
   switcher.innerHTML = `
-    <span class="locale-switcher-label">${t("shell.languageSwitcherLabel", "Language")}</span>
-    <div class="locale-switcher-links">${options}</div>
+    <button
+      class="locale-toggle"
+      type="button"
+      aria-haspopup="true"
+      aria-expanded="false"
+      aria-controls="${menuId}"
+      aria-label="${t("aria.languageSwitcher", "Language switcher")}"
+    >
+      <span class="locale-toggle-label">${escapeHtml(t("shell.languageSwitcherCompact", "Lang"))}: ${escapeHtml(currentMeta.shortLabel)}</span>
+      <span class="locale-toggle-icon" aria-hidden="true">▾</span>
+    </button>
+    <div class="locale-switcher-menu" id="${menuId}">
+      <span class="locale-switcher-label">${t("shell.languageSwitcherLabel", "Language")}</span>
+      <div class="locale-switcher-links">${options}</div>
+    </div>
   `;
+
+  const toggle = switcher.querySelector(".locale-toggle");
+  const closeMenu = () => {
+    switcher.classList.remove("is-open");
+    toggle?.setAttribute("aria-expanded", "false");
+  };
+  const openMenu = () => {
+    switcher.classList.add("is-open");
+    toggle?.setAttribute("aria-expanded", "true");
+  };
+
+  toggle?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const nextOpen = !switcher.classList.contains("is-open");
+
+    if (nextOpen) {
+      openMenu();
+    } else {
+      closeMenu();
+    }
+  });
 
   switcher.querySelectorAll("[data-locale-link]").forEach((link) => {
     link.addEventListener("click", () => {
@@ -197,10 +232,82 @@ function initLocaleSwitcher(locale) {
       if (nextLocale) {
         persistPreferredLocale(nextLocale);
       }
+
+      closeMenu();
     });
   });
 
-  footer.append(switcher);
+  document.addEventListener("click", (event) => {
+    if (!switcher.contains(event.target)) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+  });
+
+  actions.prepend(switcher);
+}
+
+function ensureTopbarActions() {
+  const topbar = document.querySelector(".topbar");
+
+  if (!topbar) {
+    return null;
+  }
+
+  let actions = topbar.querySelector(".topbar-actions");
+
+  if (actions) {
+    return actions;
+  }
+
+  actions = document.createElement("div");
+  actions.className = "topbar-actions";
+
+  const navCta = topbar.querySelector(".nav-cta");
+  const menuToggle = topbar.querySelector("[data-menu-toggle]");
+
+  if (navCta) {
+    actions.append(navCta);
+  }
+
+  if (menuToggle) {
+    actions.append(menuToggle);
+  }
+
+  topbar.append(actions);
+  return actions;
+}
+
+function initStickyTopbar() {
+  const topbar = document.querySelector(".topbar");
+
+  if (!topbar) {
+    return;
+  }
+
+  let spacer = document.querySelector(".topbar-spacer");
+
+  if (!spacer) {
+    spacer = document.createElement("div");
+    spacer.className = "topbar-spacer";
+    topbar.insertAdjacentElement("afterend", spacer);
+  }
+
+  const syncStickyState = () => {
+    const shouldStick = window.scrollY > 12;
+
+    topbar.classList.toggle("is-sticky", shouldStick);
+    spacer.style.height = shouldStick ? `${topbar.offsetHeight + 18}px` : "0px";
+  };
+
+  syncStickyState();
+  window.addEventListener("scroll", syncStickyState, { passive: true });
+  window.addEventListener("resize", syncStickyState);
 }
 
 async function loadUiMessages(locale) {
@@ -514,12 +621,14 @@ function initTopbarMenu() {
   const closeMenu = () => {
     toggle.setAttribute("aria-expanded", "false");
     nav.classList.remove("is-open");
+    window.dispatchEvent(new Event("resize"));
   };
 
   toggle.addEventListener("click", () => {
     const nextExpanded = toggle.getAttribute("aria-expanded") !== "true";
     toggle.setAttribute("aria-expanded", String(nextExpanded));
     nav.classList.toggle("is-open", nextExpanded);
+    window.dispatchEvent(new Event("resize"));
   });
 
   nav.querySelectorAll("a").forEach((link) => {
