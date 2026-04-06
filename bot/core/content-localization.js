@@ -61,9 +61,15 @@ export function localizeContentNode(value, locale, sourceLocaleFallback = DEFAUL
       ? localizeContentNode(value.translations[normalizedLocale], normalizedLocale, sourceLocaleFallback)
       : null;
 
-  return translationOverlay
+  const localizedObject = translationOverlay
     ? deepMerge(baseObject, translationOverlay)
     : baseObject;
+
+  return attachLocalizationMetadata(localizedObject, {
+    locale: normalizedLocale,
+    sourceLocale,
+    translatedKeys: translationOverlay ? Object.keys(value.translations[normalizedLocale] || {}) : [],
+  });
 }
 
 export function buildLocalizedItemPatch(entity, fields, options = {}) {
@@ -221,6 +227,35 @@ function deepMerge(baseValue, overrideValue) {
   }
 
   return result;
+}
+
+function attachLocalizationMetadata(value, metadata) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return value;
+  }
+
+  Object.defineProperties(value, {
+    __localizedLocale: {
+      configurable: true,
+      enumerable: false,
+      value: metadata.locale,
+      writable: true,
+    },
+    __sourceLocale: {
+      configurable: true,
+      enumerable: false,
+      value: metadata.sourceLocale,
+      writable: true,
+    },
+    __localizedKeys: {
+      configurable: true,
+      enumerable: false,
+      value: metadata.translatedKeys,
+      writable: true,
+    },
+  });
+
+  return value;
 }
 
 function cloneValue(value) {

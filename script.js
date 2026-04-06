@@ -1314,9 +1314,44 @@ function localizeContentNode(value, locale) {
     ? value.translations[locale]
     : null;
 
-  return translation && typeof translation === "object"
+  const localizedValue = translation && typeof translation === "object"
     ? deepMergeContent(base, localizeContentNode(translation, locale))
     : base;
+
+  return attachLocalizationMetadata(localizedValue, {
+    locale,
+    sourceLocale,
+    translatedKeys: translation && typeof translation === "object" ? Object.keys(translation) : [],
+  });
+}
+
+function attachLocalizationMetadata(value, metadata) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return value;
+  }
+
+  Object.defineProperties(value, {
+    __localizedLocale: {
+      configurable: true,
+      enumerable: false,
+      value: metadata.locale,
+      writable: true,
+    },
+    __sourceLocale: {
+      configurable: true,
+      enumerable: false,
+      value: metadata.sourceLocale,
+      writable: true,
+    },
+    __localizedKeys: {
+      configurable: true,
+      enumerable: false,
+      value: metadata.translatedKeys,
+      writable: true,
+    },
+  });
+
+  return value;
 }
 
 function deepMergeContent(baseValue, overrideValue) {
@@ -2432,11 +2467,9 @@ function renderMeetingMeta(item) {
 function renderMeetingDetail(item, pageData) {
   const meta = renderMeetingMeta(item);
   const sourceLocale = normalizeLocale(item.sourceLocale) || DEFAULT_LOCALE;
-  const prefersLocalizedParagraphs =
-    localeState.locale !== sourceLocale &&
-    Array.isArray(item.paragraphs) &&
-    item.paragraphs.length > 0;
-  const richDetailsHtml = !prefersLocalizedParagraphs && typeof item.detailsHtml === "string" && item.detailsHtml.trim()
+  const localizedKeys = Array.isArray(item.__localizedKeys) ? new Set(item.__localizedKeys) : new Set();
+  const hasTranslatedDetailsHtml = localeState.locale === sourceLocale || localizedKeys.has("detailsHtml");
+  const richDetailsHtml = hasTranslatedDetailsHtml && typeof item.detailsHtml === "string" && item.detailsHtml.trim()
     ? item.detailsHtml
     : "";
   const detailSections = (item.sections || [])

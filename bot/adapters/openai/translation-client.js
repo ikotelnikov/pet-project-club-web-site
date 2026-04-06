@@ -114,6 +114,8 @@ function buildTranslationPrompt() {
     "Preserve the exact object shape of the provided fields.",
     "Translate only user-facing text.",
     "Do not change slugs, ids, URLs, handles, file paths, or HTML structure inside strings unless translation of visible text requires it.",
+    "For HTML strings, preserve the original markup structure exactly: keep the same tags, nesting, list structure, line breaks, emphasis, and ordering; translate only the visible text nodes.",
+    "Never convert HTML into plain text, never drop list items, and never remove or add bold, italic, or bullet formatting unless the source text itself changes structure.",
     "Keep arrays, paragraph boundaries, section boundaries, and link counts stable.",
     "When a link object includes label, href, external, translate label but preserve href and external.",
     "When a photo object includes src and alt, translate alt but preserve src.",

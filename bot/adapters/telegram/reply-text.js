@@ -92,6 +92,11 @@ function buildPreviewText(result, dryRun) {
 
 function buildConfirmedText(result, dryRun) {
   const writeResult = result.writeResult || {};
+  const translationLinkLines = Array.isArray(writeResult.translationLinks)
+    ? writeResult.translationLinks
+        .filter((entry) => entry && entry.url)
+        .map((entry) => `${String(entry.locale || "").toUpperCase()} - ${entry.url}`)
+    : [];
 
   return [
     dryRun ? "Dry run confirmed." : "Applied successfully.",
@@ -99,7 +104,9 @@ function buildConfirmedText(result, dryRun) {
       ? `${writeResult.action} ${writeResult.entity} ${writeResult.slug}`
       : null,
     writeResult.commitSha ? `Commit: ${writeResult.commitSha}` : null,
-    writeResult.pageUrl ? `Link: ${writeResult.pageUrl}` : null,
+    translationLinkLines.length > 0
+      ? `Links:\n${translationLinkLines.join("\n")}`
+      : (writeResult.pageUrl ? `Link: ${writeResult.pageUrl}` : null),
   ]
     .filter(Boolean)
     .join("\n");

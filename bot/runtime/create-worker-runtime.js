@@ -164,6 +164,19 @@ function augmentTelegramResult(result, { publicSiteBaseUrl } = {}) {
         slug: result.writeResult.slug,
         locale: sourceLocale,
       }),
+      translationLinks: Array.isArray(result.translationPlan?.targetLocales)
+        ? result.translationPlan.targetLocales
+            .map((locale) => ({
+              locale,
+              url: buildContentPageUrl({
+                siteBaseUrl: publicSiteBaseUrl,
+                entity: result.writeResult.entity,
+                slug: result.writeResult.slug,
+                locale,
+              }),
+            }))
+            .filter((entry) => entry.url)
+        : null,
     },
   };
 }

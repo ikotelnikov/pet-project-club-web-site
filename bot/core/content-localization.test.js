@@ -98,3 +98,21 @@ test("still replaces primitive arrays during localization", () => {
 
   assert.deepEqual(localized.tags, ["one", "two"]);
 });
+
+test("tracks which top-level fields were localized", () => {
+  const localized = localizeContentNode({
+    sourceLocale: "ru",
+    title: "Русский заголовок",
+    detailsHtml: "<p><strong>Жирный</strong> текст</p>",
+    translations: {
+      en: {
+        title: "English title",
+        detailsHtml: "<p><strong>Bold</strong> text</p>",
+      },
+    },
+  }, "en");
+
+  assert.equal(localized.__localizedLocale, "en");
+  assert.equal(localized.__sourceLocale, "ru");
+  assert.deepEqual(localized.__localizedKeys, ["title", "detailsHtml"]);
+});
