@@ -2431,7 +2431,12 @@ function renderMeetingMeta(item) {
 
 function renderMeetingDetail(item, pageData) {
   const meta = renderMeetingMeta(item);
-  const richDetailsHtml = typeof item.detailsHtml === "string" && item.detailsHtml.trim()
+  const sourceLocale = normalizeLocale(item.sourceLocale) || DEFAULT_LOCALE;
+  const prefersLocalizedParagraphs =
+    localeState.locale !== sourceLocale &&
+    Array.isArray(item.paragraphs) &&
+    item.paragraphs.length > 0;
+  const richDetailsHtml = !prefersLocalizedParagraphs && typeof item.detailsHtml === "string" && item.detailsHtml.trim()
     ? item.detailsHtml
     : "";
   const detailSections = (item.sections || [])
