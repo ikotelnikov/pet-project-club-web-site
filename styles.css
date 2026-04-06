@@ -2031,6 +2031,11 @@ body.lightbox-open {
     justify-self: end;
   }
 
+  .main-nav .nav-cta {
+    width: 100%;
+    justify-self: stretch;
+  }
+
   .locale-toggle,
   .nav-cta {
     min-height: 42px;
