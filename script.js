@@ -44,11 +44,11 @@ const SUPPORTED_LOCALES = Object.keys(LOCALE_META);
 const PAGE_PATHS = {
   main: "",
   meetings: "meetings/",
-  "meeting-detail": "meetings/item/",
+  "meeting-detail": "meetings/",
   projects: "projects/",
-  "project-detail": "projects/item/",
+  "project-detail": "projects/",
   participants: "participants/",
-  "participant-detail": "participants/item/",
+  "participant-detail": "participants/",
   news: "news/",
 };
 const LOCALE_GROUP_ALIASES = {
@@ -120,25 +120,6 @@ function initLocaleState() {
   const pagePath = PAGE_PATHS[page] ?? "";
   const pathLocale = getPathLocale(window.location.pathname);
   const explicitLocale = body.dataset.locale || pathLocale || null;
-
-  if (!explicitLocale) {
-    const detectedLocale = detectPreferredLocale();
-    const redirectHref = buildLocaleHref(detectedLocale, {
-      pagePath,
-      preserveLocation: true,
-      localizedPage: false,
-    });
-
-    if (redirectHref) {
-      window.location.replace(redirectHref);
-      return {
-        redirecting: true,
-        locale: detectedLocale,
-        langTag: LOCALE_META[detectedLocale]?.lang || detectedLocale,
-        pagePath,
-      };
-    }
-  }
 
   const locale = normalizeLocale(explicitLocale) || DEFAULT_LOCALE;
   const langTag = LOCALE_META[locale]?.lang || locale;
@@ -557,13 +538,16 @@ function buildLocaleHref(locale, options = {}) {
   const {
     pagePath = "",
     preserveLocation = false,
-    localizedPage = Boolean(body.dataset.locale || getPathLocale(window.location.pathname)),
   } = options;
-  const repoRoot = localizedPage
-    ? getRepoRootFromSiteRoot(siteRoot)
-    : siteRoot;
-  const targetPath = `${repoRoot}/${normalizedLocale}/${pagePath}`;
-  const url = new URL(targetPath, window.location.href);
+  const targetSegments = preserveLocation
+    ? getNormalizedPathSegments(window.location.pathname)
+    : String(pagePath)
+        .split("/")
+        .filter(Boolean);
+  const pathname = normalizedLocale === DEFAULT_LOCALE
+    ? (targetSegments.length ? `/${targetSegments.join("/")}/` : "/")
+    : `/${normalizedLocale}/${targetSegments.join("/")}${targetSegments.length ? "/" : ""}`;
+  const url = new URL(pathname, window.location.href);
 
   if (preserveLocation) {
     url.search = window.location.search;
@@ -571,6 +555,28 @@ function buildLocaleHref(locale, options = {}) {
   }
 
   return url.toString();
+}
+
+function getNormalizedPathSegments(pathname = window.location.pathname) {
+  const segments = String(pathname)
+    .split("/")
+    .filter(Boolean);
+  const locale = normalizeLocale(segments[0]);
+  return locale ? segments.slice(1) : segments;
+}
+
+function getDetailSlug(section) {
+  const pathSegments = getNormalizedPathSegments();
+
+  if (pathSegments[0] === section && pathSegments[1] && pathSegments[1] !== "item") {
+    return decodeURIComponent(pathSegments[1]);
+  }
+
+  return new URLSearchParams(window.location.search).get("slug");
+}
+
+function buildEntityDetailHref(section, slug) {
+  return resolveHref(`${section}/${encodeURIComponent(slug)}/`);
 }
 
 function getRepoRootFromSiteRoot(rootPath) {
@@ -1005,8 +1011,7 @@ function sortMeetingsByDateDesc(items = []) {
 }
 
 async function renderMeetingDetailPage() {
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("slug");
+  const slug = getDetailSlug("meetings");
 
   if (!slug) {
     pageContent.innerHTML = `
@@ -1246,8 +1251,7 @@ async function renderParticipantsPage() {
 }
 
 async function renderParticipantDetailPage() {
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("slug");
+  const slug = getDetailSlug("participants");
 
   if (!slug) {
     pageContent.innerHTML = `
@@ -1273,8 +1277,7 @@ async function renderParticipantDetailPage() {
 }
 
 async function renderProjectDetailPage() {
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("slug");
+  const slug = getDetailSlug("projects");
 
   if (!slug) {
     pageContent.innerHTML = `
@@ -1978,7 +1981,7 @@ function renderPersonCard(item) {
   const name = item.name || item.slug || t("participants.card.untitled", "Untitled participant");
   const role = item.role || t("participants.card.roleFallback", "Role not specified");
   const bio = item.bio || "";
-  const href = resolveHref(`participants/item/?slug=${item.slug}`);
+  const href = buildEntityDetailHref("participants", item.slug);
   const previewBio = truncateText(bio, 170);
   const photo = item.photo?.src
     ? `
@@ -2006,7 +2009,7 @@ function renderPersonCard(item) {
 }
 
 function renderProjectPreviewCard(item, ownerMap = new Map()) {
-  const href = resolveHref(`projects/item/?slug=${item.slug}`);
+  const href = buildEntityDetailHref("projects", item.slug);
   const summary = item.summary || (Array.isArray(item.points) ? item.points[0] : "") || "";
   const previewSummary = truncateText(summary, 190);
   const hasMore = summary.length > previewSummary.length;
@@ -2015,7 +2018,7 @@ function renderProjectPreviewCard(item, ownerMap = new Map()) {
     .map((slug) => ownerMap.get(slug))
     .filter(Boolean);
   const ownerLinks = owners
-    .map((owner) => `<a class="meta-pill" href="${resolveHref(`participants/item/?slug=${owner.slug}`)}">${owner.name || owner.slug}</a>`)
+    .map((owner) => `<a class="meta-pill" href="${buildEntityDetailHref("participants", owner.slug)}">${owner.name || owner.slug}</a>`)
     .join("");
   const primaryUrl = getProjectPrimaryUrl(item);
 
@@ -2087,7 +2090,7 @@ function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings
     .filter(Boolean);
   const relatedParticipants = owners.length
     ? owners.map((owner) => `
-      <a class="meta-pill" href="${resolveHref(`participants/item/?slug=${owner.slug}`)}">${owner.name || owner.slug}</a>
+      <a class="meta-pill" href="${buildEntityDetailHref("participants", owner.slug)}">${owner.name || owner.slug}</a>
     `).join("")
     : "";
   const externalLinks = getProjectLinks(item)
@@ -2447,7 +2450,7 @@ function renderMeetingsPagination(copy = {}, currentPage, totalPages) {
 }
 
 function renderMeetingPreviewCard(item) {
-  const href = resolveHref(`meetings/item/?slug=${item.slug}`);
+  const href = buildEntityDetailHref("meetings", item.slug);
   const meta = renderMeetingMeta(item);
   const photo = item.photo?.src
     ? `
