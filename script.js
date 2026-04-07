@@ -8,6 +8,7 @@ const root = document.documentElement;
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const DEFAULT_LOCALE = "ru";
 const LOCALE_STORAGE_KEY = "ppc-preferred-locale";
+const BOT_UA_PATTERN = /(bot|crawler|spider|slurp|bingpreview|google-structured-data-testing-tool|googleother|mediapartners-google|adsbot-google|apis-google|duplexweb-google|feedfetcher-google|google-read-aloud|google favicon|googleweblight|storebot-google|yandex|baiduspider|duckduckbot|sogou|exabot|facebookexternalhit|facebot|ia_archiver|applebot|petalbot|semrushbot|ahrefsbot|mj12bot|dotbot|rogerbot|linkedinbot|embedly|quora link preview|showyoubot|outbrain|pinterest|slackbot|vkshare|w3c_validator|whatsapp|telegrambot|skypeuripreview|discordbot|twitterbot|xbot)/i;
 const LOCALE_META = {
   ru: {
     label: "Русский",
@@ -120,11 +121,23 @@ function initLocaleState() {
   const pagePath = PAGE_PATHS[page] ?? "";
   const pathLocale = getPathLocale(window.location.pathname);
   const explicitLocale = body.dataset.locale || pathLocale || null;
+  const currentLocale = normalizeLocale(explicitLocale) || DEFAULT_LOCALE;
+  const redirectTarget = resolveLocaleRedirectTarget(currentLocale, pagePath);
 
-  const locale = normalizeLocale(explicitLocale) || DEFAULT_LOCALE;
+  if (redirectTarget) {
+    window.location.replace(redirectTarget.href);
+
+    return {
+      redirecting: true,
+      locale: redirectTarget.locale,
+      langTag: LOCALE_META[redirectTarget.locale]?.lang || redirectTarget.locale,
+      pagePath,
+    };
+  }
+
+  const locale = currentLocale;
   const langTag = LOCALE_META[locale]?.lang || locale;
   root.lang = langTag;
-  persistPreferredLocale(locale);
 
   return {
     redirecting: false,
@@ -491,7 +504,7 @@ function detectPreferredLocale() {
     }
   }
 
-  return DEFAULT_LOCALE;
+  return null;
 }
 
 function resolveLocaleFromLanguageTag(languageTag) {
@@ -555,6 +568,58 @@ function buildLocaleHref(locale, options = {}) {
   }
 
   return url.toString();
+}
+
+function resolveLocaleRedirectTarget(currentLocale, pagePath) {
+  if (!shouldApplyLocaleRedirect()) {
+    return null;
+  }
+
+  const manualLocale = readStoredLocale();
+  const autoLocale = manualLocale ? null : detectPreferredLocale();
+  const targetLocale = manualLocale || autoLocale;
+
+  if (!targetLocale || targetLocale === currentLocale) {
+    return null;
+  }
+
+  const href = buildLocaleHref(targetLocale, {
+    pagePath,
+    preserveLocation: true,
+  });
+  const currentUrl = new URL(window.location.href);
+  const targetUrl = new URL(href, window.location.href);
+
+  if (targetUrl.href === currentUrl.href) {
+    return null;
+  }
+
+  return {
+    locale: targetLocale,
+    href: targetUrl.href,
+  };
+}
+
+function shouldApplyLocaleRedirect() {
+  if (isLikelyBot()) {
+    return false;
+  }
+
+  if (typeof document.visibilityState === "string" && document.visibilityState === "prerender") {
+    return false;
+  }
+
+  return true;
+}
+
+function isLikelyBot() {
+  const userAgent = navigator.userAgent || "";
+
+  if (BOT_UA_PATTERN.test(userAgent)) {
+    return true;
+  }
+
+  return navigator.webdriver === true;
 }
 
 function getNormalizedPathSegments(pathname = window.location.pathname) {
