@@ -17,10 +17,17 @@
       "stack": "Flutter (iOS/Android), Laravel, Python/Telethon, GPT-4o-mini, OneSignal",
       "summary": "Conoted ist das zweite Gehirn Ihres Teams: ein Ort, an dem Gespräche zu Wissen werden und Wissen die richtigen Menschen findet. Die App verbindet sich mit Telegram-Gruppenchats, erstellt automatisch AI-Digests, taggt Themen und erstellt eine Expertise-Karte.",
       "detailsHtml": "Conoted verwandelt das Chaos der Telegram-Gruppenchats in eine strukturierte Wissensbasis. Die App erstellt automatisch AI-Digests aus Nachrichten, taggt Inhalte, findet Experten zu Themen und baut ein soziales Kontaktgraph auf. Zettelkasten-Ansatz: Das System findet selbst unerwartete Verbindungen zwischen alten und neuen Notizen und hilft so, Ideen an Schnittstellen von Themen zu generieren.<br><br>Etwa 800 Nutzer. Zu den Hauptfunktionen gehören intelligente Tags mit AI-Clustering und Kategorisierungshierarchie, Import und AI-Profiling von Kontakten aus Telefon/Gmail, Sprachtranskription über Whisper und Teilnehmer-Ranking nach Expertise.<br><br>Das Projekt befindet sich in aktiver Entwicklung und wird für die Veröffentlichung im App Store vorbereitet."
+    },
+    "me": {
+      "title": "Conoted — „Ко шта зна ко“ у вашем тиму",
+      "stack": "Flutter (iOS/Android), Laravel, Python/Telethon, GPT-4o-mini, OneSignal",
+      "summary": "Conoted је други мозак вашег тима: место где разговори прелазе у знање, а знање налази праве људе. Апликација се повезује на Telegram групне четове, аутоматски креира AI-сажеће, означава теме и гради мапу експертизе.",
+      "detailsHtml": "Conoted претвара хаос Telegram групних четова у структурисану базу знања. Апликација аутоматски креира AI-сажеће из порука, означава садржај, проналази експерте по темама и гради социјални граф контаката. Zettelkasten-приступ: систем сам проналази неочекиване везе између старих и нових белешки, помажући у генерисању идеја на раскршћу тема.<br><br>Око 800 корисника. Међу кључним функцијама су паметне ознаке са AI-кластеризацијом и хијерархијом категорија, увоз и AI-профилисање контаката из телефона/Gmail-а, гласовна транскрипција преко Whisper-а, рангирање учесника по експертизи.<br><br>Пројекат је у активној развоју, припрема се за објаву у App Store-у."
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
