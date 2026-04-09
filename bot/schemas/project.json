@@ -1,7 +1,7 @@
 {
   "entity": "project",
   "required": ["slug", "title", "status", "stack"],
-  "optional": ["summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath"],
+  "optional": ["summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath", "photoAction", "gallery"],
   "fieldTypes": {
     "slug": "string",
     "title": "string",
@@ -15,7 +15,9 @@
     "ownerSlugs": "string[]",
     "links": "Link[]",
     "photoAlt": "string",
-    "photoStagedPath": "string"
+    "photoStagedPath": "string",
+    "photoAction": "append | replace | remove | clear",
+    "gallery": "Photo[]"
   },
   "aliases": {
     "description": "detailsHtml",
@@ -24,7 +26,7 @@
   },
   "matchingKeys": ["slug", "title"],
   "attachmentHints": {
-    "photo": "A photo attachment may become project screenshot or cover media.",
+    "photo": "A photo attachment may replace the main screenshot, add another gallery image, or be removed depending on the user instruction.",
     "video": "A video attachment may become demo media if the user asks to attach it.",
     "document": "A document may become project material or linked artifact."
   }

@@ -29,10 +29,10 @@ const CONFIDENCE_VALUES = new Set([
 ]);
 
 const ENTITY_FIELD_RULES = {
-  announcement: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "detailsHtml", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
-  meeting: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "detailsHtml", "sections", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
-  participant: new Set(["slug", "handle", "name", "role", "bio", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
-  project: new Set(["slug", "title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"]),
+  announcement: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "detailsHtml", "sections", "links", "photoAlt", "photoStagedPath", "photoAction", "locale", "sourceLocale"]),
+  meeting: new Set(["slug", "date", "title", "place", "placeUrl", "format", "paragraphs", "detailsHtml", "sections", "links", "photoAlt", "photoStagedPath", "photoAction", "locale", "sourceLocale"]),
+  participant: new Set(["slug", "handle", "name", "role", "bio", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "photoAction", "locale", "sourceLocale"]),
+  project: new Set(["slug", "title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath", "photoAction", "gallery", "locale", "sourceLocale"]),
 };
 
 export function validateExtraction(extraction) {
@@ -192,6 +192,22 @@ function validateFieldShapes(entity, fields) {
     for (const link of fields.links) {
       if (!link || typeof link.label !== "string" || link.label.trim() === "" || typeof link.href !== "string" || link.href.trim() === "") {
         throw new ContentValidationError("Each link must include non-empty 'label' and 'href'.");
+      }
+    }
+  }
+
+  if (fields.photoAction && !["append", "replace", "remove", "clear"].includes(fields.photoAction)) {
+    throw new ContentValidationError("Extraction field 'photoAction' must be one of append, replace, remove, or clear.");
+  }
+
+  if (fields.gallery) {
+    if (!Array.isArray(fields.gallery)) {
+      throw new ContentValidationError("Extraction field 'gallery' must be an array.");
+    }
+
+    for (const entry of fields.gallery) {
+      if (!entry || typeof entry.src !== "string" || entry.src.trim() === "") {
+        throw new ContentValidationError("Each gallery entry must include a non-empty 'src'.");
       }
     }
   }

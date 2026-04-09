@@ -908,6 +908,7 @@ function stripHtmlTags(value) {
 
 function normalizeExtractionToOperation(extraction, sourceText = "") {
   const enrichedFields = enrichContactFields(extraction.entity, extraction.fields ?? {}, sourceText);
+  const photoAction = inferPhotoAction(sourceText, extraction.entity, enrichedFields);
   const derivedSlug = normalizeSlug(extraction.slug ?? extraction.fields?.slug ?? null);
 
   return {
@@ -915,6 +916,7 @@ function normalizeExtractionToOperation(extraction, sourceText = "") {
     action: extraction.action,
     fields: {
       ...enrichedFields,
+      ...(photoAction ? { photoAction } : {}),
       photoStagedPath: enrichedFields.photoStagedPath ?? null,
       slug:
         derivedSlug ||
@@ -1110,7 +1112,7 @@ async function buildOperationFromExtraction({ extraction, repository, extraction
   }
 
   const currentItem = await repository.readItem(operationWithSlug.entity, operationWithSlug.fields.slug);
-  const mergedFields = mergeExistingFields(operationWithSlug.entity, currentItem, extraction.fields);
+  const mergedFields = mergeExistingFields(operationWithSlug.entity, currentItem, operationWithSlug.fields);
 
   return {
     ok: true,
@@ -1211,6 +1213,7 @@ function mergeExistingFields(entity, currentItem, newFields) {
         ...newFields,
       };
     case "project":
+      const mergedProjectPhotos = mergeProjectPhotoFields(currentItem, newFields);
       return {
         title: currentItem.title,
         status: currentItem.status,
@@ -1224,7 +1227,10 @@ function mergeExistingFields(entity, currentItem, newFields) {
         links: currentItem.links,
         photoAlt: currentItem.photo?.alt,
         photoStagedPath: currentItem.photo?.src,
+        photoAction: null,
+        gallery: currentItem.gallery,
         ...newFields,
+        ...mergedProjectPhotos,
       };
     case "meeting":
     case "announce":
@@ -1247,6 +1253,88 @@ function mergeExistingFields(entity, currentItem, newFields) {
         ...newFields,
       };
   }
+}
+
+function inferPhotoAction(sourceText, entity, fields) {
+  if (typeof fields?.photoAction === "string" && fields.photoAction.trim() !== "") {
+    return fields.photoAction.trim().toLowerCase();
+  }
+
+  const normalizedText = typeof sourceText === "string" ? sourceText.toLowerCase() : "";
+  const hasIncomingPhoto = typeof fields?.photoStagedPath === "string" && fields.photoStagedPath.trim() !== "";
+
+  if (!normalizedText) {
+    return hasIncomingPhoto ? "replace" : null;
+  }
+
+  if (/\b(remove|delete|clear)\b/.test(normalizedText) && /\b(photo|image|picture|screenshot|cover|media)\b/.test(normalizedText)) {
+    return /\b(all|every)\b/.test(normalizedText) || /\bphotos\b/.test(normalizedText) ? "clear" : "remove";
+  }
+
+  if (hasIncomingPhoto && /\b(add|append|another|additional|extra|one more)\b/.test(normalizedText) && /\b(photo|image|picture|screenshot)\b/.test(normalizedText)) {
+    return "append";
+  }
+
+  if (hasIncomingPhoto && /\b(change|replace|update|swap|set)\b/.test(normalizedText) && /\b(photo|image|picture|screenshot|cover)\b/.test(normalizedText)) {
+    return "replace";
+  }
+
+  if (entity === "project" && hasIncomingPhoto) {
+    return "replace";
+  }
+
+  return null;
+}
+
+function mergeProjectPhotoFields(currentItem, newFields) {
+  const photoAction = typeof newFields?.photoAction === "string" ? newFields.photoAction.toLowerCase() : null;
+  const stagedPath = typeof newFields?.photoStagedPath === "string" && newFields.photoStagedPath.trim() !== ""
+    ? newFields.photoStagedPath
+    : null;
+  const photoAlt = newFields?.photoAlt ?? newFields?.photoalt ?? currentItem?.photo?.alt ?? currentItem?.title ?? currentItem?.slug;
+  const existingGallery = getExistingProjectGallery(currentItem);
+
+  if (!photoAction && !stagedPath) {
+    return {};
+  }
+
+  let nextGallery = existingGallery.map((entry) => ({ ...entry }));
+
+  if (photoAction === "clear") {
+    nextGallery = [];
+  } else if (photoAction === "remove") {
+    nextGallery = nextGallery.slice(1);
+  } else if (stagedPath) {
+    const nextEntry = {
+      src: stagedPath,
+      alt: photoAlt,
+    };
+
+    if (photoAction === "append") {
+      nextGallery.push(nextEntry);
+    } else {
+      if (nextGallery.length > 0) {
+        nextGallery[0] = nextEntry;
+      } else {
+        nextGallery = [nextEntry];
+      }
+    }
+  }
+
+  return {
+    gallery: nextGallery,
+    photoAlt: nextGallery[0]?.alt ?? undefined,
+    photoStagedPath: nextGallery[0]?.src ?? null,
+    photoAction,
+  };
+}
+
+function getExistingProjectGallery(item) {
+  if (Array.isArray(item?.gallery) && item.gallery.length > 0) {
+    return item.gallery.filter((entry) => entry?.src);
+  }
+
+  return item?.photo?.src ? [item.photo] : [];
 }
 
 async function stageTelegramAttachments({

@@ -320,5 +320,11 @@ function resolveManagedAssetPaths(item) {
     paths.push(item.photo.src);
   }
 
+  for (const entry of Array.isArray(item?.gallery) ? item.gallery : []) {
+    if (entry?.src && typeof entry.src === "string" && entry.src.startsWith("assets/") && !paths.includes(entry.src)) {
+      paths.push(entry.src);
+    }
+  }
+
   return paths;
 }

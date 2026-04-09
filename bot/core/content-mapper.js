@@ -12,6 +12,7 @@ export function mapOperationToContent(operation, options = {}) {
   }
 
   const photo = buildPhoto(entity, fields, options.photoFilename || null);
+  const gallery = buildGallery(entity, fields, options.photoFilename || null);
   const links = buildLinks(fields.link ?? fields.links);
 
   switch (entity) {
@@ -81,6 +82,7 @@ export function mapOperationToContent(operation, options = {}) {
           detailsHtml: normalizedProjectText.detailsHtml,
           points: fields.points,
           photo,
+          gallery,
           links,
           ownerSlugs: fields.owners ?? fields.ownerSlugs,
           location: fields.location,
@@ -181,6 +183,11 @@ export function mapCommandToContent(parsedCommand, options = {}) {
 }
 
 function buildPhoto(entity, fields, photoFilename) {
+  if (entity === "project" && Array.isArray(fields.gallery)) {
+    const firstEntry = fields.gallery.find((entry) => entry?.src);
+    return firstEntry ? normalizePhotoEntry(firstEntry) : null;
+  }
+
   const photoSrcPath = fields.photoStagedPath ?? null;
   const photoAlt = fields.photoalt ?? fields.photoAlt ?? buildFallbackPhotoAlt(fields);
 
@@ -195,6 +202,30 @@ function buildPhoto(entity, fields, photoFilename) {
   return {
     src: photoSrcPath || `assets/${resolveAssetFolder(entity)}/${photoFilename}`,
     alt: photoAlt,
+  };
+}
+
+function buildGallery(entity, fields, photoFilename) {
+  if (entity !== "project") {
+    return undefined;
+  }
+
+  if (Array.isArray(fields.gallery)) {
+    return fields.gallery.map((entry) => normalizePhotoEntry(entry)).filter((entry) => entry?.src);
+  }
+
+  const singlePhoto = buildPhoto(entity, fields, photoFilename);
+  return singlePhoto ? [singlePhoto] : undefined;
+}
+
+function normalizePhotoEntry(entry) {
+  if (!entry || typeof entry !== "object" || typeof entry.src !== "string" || entry.src.trim() === "") {
+    return null;
+  }
+
+  return {
+    src: entry.src,
+    alt: entry.alt || undefined,
   };
 }
 

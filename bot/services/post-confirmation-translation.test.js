@@ -15,7 +15,7 @@ test("resolvePendingTranslationLocales skips manually edited locales", () => {
     "ru"
   );
 
-  assert.deepEqual(locales, ["en", "me", "es"]);
+  assert.deepEqual(locales, ["me", "es"]);
 });
 
 test("runPostConfirmationTranslations sends one update per auto locale", async () => {
@@ -80,9 +80,8 @@ test("runPostConfirmationTranslations sends one update per auto locale", async (
     siteBaseUrl: "https://example.com",
   });
 
-  assert.equal(writes.length, 3);
+  assert.equal(writes.length, 2);
   assert.match(messages[0], /Translation to en updated/);
-  assert.match(messages[0], /https:\/\/example\.com\/en\/meetings\/item\/\?slug=presentation-creometrix-0804/);
-  assert.match(messages[1], /Translation to me updated/);
-  assert.match(messages[2], /Translation to es updated/);
+  assert.match(messages[0], /https:\/\/example\.com\/en\/meetings\/presentation-creometrix-0804\//);
+  assert.match(messages[1], /Translation to es updated/);
 });

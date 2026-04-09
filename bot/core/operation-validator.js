@@ -2,11 +2,11 @@ import { ContentValidationError } from "../shared/errors.js";
 import { SLUG_PATTERN } from "../shared/constants.js";
 
 const ENTITY_FIELD_RULES = {
-  announcement: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
-  announce: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
-  meeting: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
-  participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
-  project: new Set(["title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "slug", "locale", "sourceLocale"]),
+  announcement: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
+  announce: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
+  meeting: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
+  participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
+  project: new Set(["title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "gallery", "slug", "locale", "sourceLocale"]),
 };
 
 export function validateOperation(operation) {
@@ -72,6 +72,22 @@ function validateFieldShapes(entity, fields) {
     for (const link of links) {
       if (!link || typeof link.label !== "string" || typeof link.href !== "string") {
         throw new ContentValidationError("Each link must include 'label' and 'href'.");
+      }
+    }
+  }
+
+  if (fields.photoAction && !["append", "replace", "remove", "clear"].includes(fields.photoAction)) {
+    throw new ContentValidationError("Field 'photoAction' must be one of append, replace, remove, or clear.");
+  }
+
+  if (fields.gallery) {
+    if (!Array.isArray(fields.gallery)) {
+      throw new ContentValidationError("Field 'gallery' must be an array.");
+    }
+
+    for (const entry of fields.gallery) {
+      if (!entry || typeof entry.src !== "string" || entry.src.trim() === "") {
+        throw new ContentValidationError("Each gallery entry must include a non-empty 'src'.");
       }
     }
   }

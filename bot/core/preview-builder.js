@@ -8,7 +8,12 @@ export function buildOperationPreview(operation, repositoryPreview = null, optio
     slug: operation.fields.slug,
     fields: summarizeFields(operation.fields),
     files,
-    hasPhoto: Boolean(operation.fields.photoAlt || operation.fields.photoalt),
+    hasPhoto: Boolean(
+      operation.fields.photoAlt ||
+      operation.fields.photoalt ||
+      operation.fields.photoStagedPath ||
+      (Array.isArray(operation.fields.gallery) && operation.fields.gallery.length > 0)
+    ),
     attachments: attachments.map((attachment) => ({
       kind: attachment.kind,
       fileName: attachment.fileName,

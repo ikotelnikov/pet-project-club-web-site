@@ -174,7 +174,8 @@ function buildSystemPrompt() {
     "If the user message includes contact data such as Telegram handles, LinkedIn URLs, X/Twitter URLs, GitHub URLs, or other public links, place them into fields.links as {label, href, external}.",
     "For participants, if a Telegram handle is clearly present, also set fields.handle.",
     "The input may include attachments. Use their kind, file names, and stagedPath values as evidence when deciding whether media should be associated with the entity.",
-    "If an attached photo should become the main photo, set fields.photoStagedPath to one of the provided stagedPath values and optionally set fields.photoAlt.",
+    "If an attached photo should become the main photo, set fields.photoStagedPath to one of the provided stagedPath values, optionally set fields.photoAlt, and use fields.photoAction='replace'.",
+    "For project photo requests, use fields.photoAction='append' when the user clearly asks to add another/additional photo, 'replace' when they ask to change/update/replace the main photo, 'remove' when they ask to delete the current main photo, and 'clear' when they ask to remove all project photos.",
     "Do not emit raw transport objects such as photo, video, document, fileId, fileName, or mimeType inside fields.",
     "If the request is unclear, prefer one focused clarification question over guessing.",
     `Intent stage schema: ${buildStageSchemaSnippet("intent")}`,
@@ -533,6 +534,18 @@ function normalizeFieldAliases(entity, fields) {
 
   if (typeof normalized.mainPhotoPath === "string" && !normalized.photoStagedPath) {
     normalized.photoStagedPath = normalized.mainPhotoPath;
+  }
+
+  if (typeof normalized.photoAction === "string") {
+    normalized.photoAction = normalized.photoAction.trim().toLowerCase();
+  }
+
+  if (typeof normalized.photoMode === "string" && !normalized.photoAction) {
+    normalized.photoAction = normalized.photoMode.trim().toLowerCase();
+  }
+
+  if (typeof normalized.imageAction === "string" && !normalized.photoAction) {
+    normalized.photoAction = normalized.imageAction.trim().toLowerCase();
   }
 
   if (normalized.photo && typeof normalized.photo === "object" && !Array.isArray(normalized.photo)) {

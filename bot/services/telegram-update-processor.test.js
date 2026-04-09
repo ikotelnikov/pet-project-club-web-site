@@ -314,7 +314,7 @@ test("translation intent with locale becomes a normal pending update", async () 
       message_id: 11,
       from: { id: 123 },
       chat: { id: 555 },
-      text: "update english translation for ikotelnikov",
+      text: "set the english bio for participant ikotelnikov to Builds the club in English.",
     },
     updateId: 21,
     pendingStore,
@@ -364,6 +364,116 @@ test("translation intent with locale becomes a normal pending update", async () 
   assert.equal(result.pendingState.operation.fields.locale, "en");
   assert.equal(result.pendingState.operation.fields.role, "Founder");
   assert.equal(result.pendingState.operation.fields.bio, "Builds the club in English.");
+});
+
+test("project photo update can append an additional gallery image", async () => {
+  const pendingStore = new PendingMemoryStore();
+  const repository = {
+    async findEntityBySlug() {
+      return "project";
+    },
+    async listEntityCandidates() {
+      return [{ slug: "project-existing", label: "Project Existing", title: "active" }];
+    },
+    async readItem() {
+      return {
+        sourceLocale: "ru",
+        slug: "project-existing",
+        title: "Project Existing",
+        status: "active",
+        stack: "node",
+        summary: "Summary",
+        photo: {
+          src: "assets/projects/project-existing-cover.jpg",
+          alt: "Cover image",
+        },
+      };
+    },
+    async previewCommand(parsedCommand, mapped) {
+      return {
+        action: parsedCommand.action,
+        entity: parsedCommand.entity,
+        slug: parsedCommand.fields.slug,
+        currentIndex: { items: ["project-existing"] },
+        nextIndex: { items: ["project-existing"] },
+        nextItem: mapped.item,
+        paths: {
+          indexPath: "content/projects/index.json",
+          itemPath: "content/projects/items/project-existing.json",
+          assetPaths: [],
+        },
+      };
+    },
+  };
+
+  const result = await handleTelegramMessage({
+    message: {
+      message_id: 11,
+      from: { id: 123 },
+      chat: { id: 555 },
+      caption: "add another photo to project-existing",
+      photo: [{ file_id: "ph1", file_unique_id: "uniq1", width: 1200, height: 800, file_size: 1024 }],
+    },
+    updateId: 21,
+    pendingStore,
+    repository,
+    photoStore: {
+      async planStagedPhoto(_entity, _slug, stagedPath) {
+        return { stagedPath, srcPath: stagedPath };
+      },
+    },
+    telegramClient: {
+      async downloadFileBytes() {
+        return {
+          filePath: "photos/incoming.jpg",
+          bytes: new Uint8Array([1, 2, 3]),
+        };
+      },
+    },
+    extractionClient: {
+      async extractIntent() {
+        return {
+          ok: true,
+          usedModel: "test",
+          attempts: 1,
+          extraction: {
+            intent: "content_operation",
+            entity: "project",
+            action: "update",
+            slug: null,
+            targetRef: "project-existing",
+            confidence: "high",
+            needsConfirmation: true,
+            summary: "append project photo",
+            fields: {
+              photoStagedPath: "assets/uploads/555/11-photo.jpg",
+              photoAlt: "Second screenshot",
+            },
+            questions: [],
+            warnings: [],
+          },
+        };
+      },
+      async resolveTarget() {
+        return {
+          ok: true,
+          usedModel: "test",
+          resolution: {
+            matchedSlug: "project-existing",
+            confidence: "high",
+            question: null,
+          },
+        };
+      },
+    },
+    dryRun: true,
+  });
+
+  assert.equal(result.status, "processed");
+  assert.equal(result.pendingState.operation.fields.photoAction, "append");
+  assert.equal(result.pendingState.operation.fields.gallery.length, 2);
+  assert.equal(result.operation.nextItem.gallery.length, 2);
+  assert.equal(result.operation.nextItem.gallery[1].alt, "Second screenshot");
 });
 
 async function createFixture() {

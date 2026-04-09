@@ -32,6 +32,8 @@ export async function runPostConfirmationTranslations({
         .filter((locale) => currentItem?.translationStatus?.[locale] !== "edited")
     : resolvePendingTranslationLocales(currentItem, normalizedSourceLocale);
 
+  const failures = [];
+
   for (const targetLocale of localesToUpdate) {
     try {
       const latestItem = await repository.readItem(entity, slug);
@@ -72,6 +74,10 @@ export async function runPostConfirmationTranslations({
           .join("\n"),
       });
     } catch (error) {
+      failures.push({
+        locale: targetLocale,
+        error: error instanceof Error ? error.message : String(error),
+      });
       console.error(
         JSON.stringify({
           event: "telegram_translation_update_failed",
@@ -83,6 +89,16 @@ export async function runPostConfirmationTranslations({
         })
       );
     }
+  }
+
+  if (failures.length) {
+    await telegramClient.sendMessage({
+      chatId,
+      text: [
+        "Some translations failed to update:",
+        ...failures.map((failure) => `- ${failure.locale}: ${failure.error}`),
+      ].join("\n"),
+    });
   }
 }
 
@@ -97,6 +113,6 @@ export function resolvePendingTranslationLocales(item, sourceLocale = DEFAULT_SO
       return false;
     }
 
-    return translationStatus[locale] !== "edited";
+    return translationStatus[locale] == null || translationStatus[locale] === "stale";
   });
 }

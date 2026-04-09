@@ -33,7 +33,7 @@ export const ENTITY_SCHEMAS = {
   project: {
     entity: "project",
     required: ["slug", "title", "status", "stack"],
-    optional: ["slug", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
+    optional: ["slug", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath", "photoAction", "gallery", "locale", "sourceLocale"],
     fieldTypes: {
       slug: "string",
       title: "string",
@@ -48,6 +48,8 @@ export const ENTITY_SCHEMAS = {
       links: "Link[]",
       photoAlt: "string",
       photoStagedPath: "string",
+      photoAction: "append | replace | remove | clear",
+      gallery: "Photo[]",
       locale: "ru | en | de | me | es",
       sourceLocale: "ru | en | de | me | es",
     },
@@ -58,7 +60,7 @@ export const ENTITY_SCHEMAS = {
     },
     matchingKeys: ["slug", "title"],
     attachmentHints: {
-      photo: "A photo attachment may become project screenshot or cover media.",
+      photo: "A photo attachment may replace the main screenshot, add another gallery image, or remove project media depending on the user instruction.",
       video: "A video attachment may become demo media if the user asks to attach it.",
       document: "A document may become project material or linked artifact.",
     },

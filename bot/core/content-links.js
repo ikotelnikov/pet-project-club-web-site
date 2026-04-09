@@ -13,18 +13,19 @@ export function buildContentPageUrl({ siteBaseUrl, entity, slug, locale }) {
     return null;
   }
 
-  return `${normalizedBaseUrl}/${normalizedLocale}/${path}`;
+  const localePrefix = normalizedLocale === DEFAULT_SOURCE_LOCALE ? "" : `/${normalizedLocale}`;
+  return `${normalizedBaseUrl}${localePrefix}/${path}`;
 }
 
 function resolveEntityPath(entity, slug) {
   switch (entity) {
     case "announce":
     case "meeting":
-      return `meetings/item/?slug=${encodeURIComponent(slug)}`;
+      return `meetings/${encodeURIComponent(slug)}/`;
     case "participant":
-      return `participants/item/?slug=${encodeURIComponent(slug)}`;
+      return `participants/${encodeURIComponent(slug)}/`;
     case "project":
-      return `projects/item/?slug=${encodeURIComponent(slug)}`;
+      return `projects/${encodeURIComponent(slug)}/`;
     default:
       return null;
   }
