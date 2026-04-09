@@ -4,5 +4,16 @@
   "bio": "Строю Conoted - сервис, который отвечает на вопрос «кто что знает?» в любой команде. Идея родилась из собственной боли: сотни чатов в Telegram, тысячи сообщений в день - а найти нужного эксперта или вспомнить обсуждение невозможно. Conoted решает это: AI читает чаты, структурирует знания, находит людей. Живу в Черногории, верю что лучшие знания уже есть в разговорах — нужно только научиться их находить.",
   "location": "Черногория",
   "slug": "evgeniy-streltsov",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "name": "Evgeny Streltsov",
+      "role": "Founder & Solo Developer",
+      "bio": "I am building Conoted - a service that answers the question \"who knows what?\" in any team. The idea came from my own pain: hundreds of chats in Telegram, thousands of messages per day - but it's impossible to find the right expert or recall a discussion. Conoted solves this: AI reads chats, structures knowledge, finds people. I live in Montenegro, and I believe that the best knowledge is already in conversations — you just need to learn how to find it.",
+      "location": "Montenegro"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
