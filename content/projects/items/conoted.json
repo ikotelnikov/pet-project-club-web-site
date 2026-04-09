@@ -7,10 +7,10 @@
   "sourceLocale": "ru",
   "translations": {
     "en": {
-      "title": "Conoted — 'Who Knows What' in Your Team",
+      "title": "Conoted — \"Who Knows What\" in Your Team",
       "stack": "Flutter (iOS/Android), Laravel, Python/Telethon, GPT-4o-mini, OneSignal",
       "summary": "Conoted is the second brain of your team: a place where conversations turn into knowledge, and knowledge finds the right people. The app connects to Telegram group chats, automatically creates AI digests, tags topics, and builds an expertise map.",
-      "detailsHtml": "Conoted turns the chaos of Telegram group chats into a structured knowledge base. The app automatically creates AI digests from messages, tags content, finds experts on topics, and builds a social contact graph. Zettelkasten approach: the system itself finds unexpected connections between old and new notes, helping to generate ideas at topic intersections.<br><br>About 800 users. Key features include smart tags with AI clustering and category hierarchy, import and AI profiling of contacts from phone/Gmail, voice transcription via Whisper, and ranking participants by expertise.<br><br>The project is actively developed and preparing for publication in the App Store."
+      "detailsHtml": "Conoted transforms the chaos of Telegram group chats into a structured knowledge base. The app automatically creates AI digests from messages, tags content, finds experts on topics, and builds a social contact graph. The Zettelkasten approach: the system itself finds unexpected connections between old and new notes, helping to generate ideas at the intersection of topics.<br><br>About 800 users. Key features include smart tags with AI clustering and hierarchical categories, importing and AI profiling contacts from phone/Gmail, voice transcription through Whisper, and participant ranking by expertise.<br><br>The project is in active development, preparing for publication on the App Store."
     },
     "de": {
       "title": "Conoted — „Wer weiß was“ in Ihrem Team",
