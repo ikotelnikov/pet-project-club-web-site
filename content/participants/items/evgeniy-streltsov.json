@@ -11,9 +11,16 @@
       "role": "Founder & Solo Developer",
       "bio": "I am building Conoted - a service that answers the question \"who knows what?\" in any team. The idea came from my own pain: hundreds of chats in Telegram, thousands of messages per day - but it's impossible to find the right expert or recall a discussion. Conoted solves this: AI reads chats, structures knowledge, finds people. I live in Montenegro, and I believe that the best knowledge is already in conversations — you just need to learn how to find it.",
       "location": "Montenegro"
+    },
+    "de": {
+      "name": "Евгений Стрельцов",
+      "role": "Gründer & Solo-Entwickler",
+      "bio": "Ich baue Conoted – einen Service, der die Frage „Wer weiß was?“ in jedem Team beantwortet. Die Idee entstand aus eigenem Schmerz: Hunderte Chats in Telegram, Tausende Nachrichten pro Tag – aber den richtigen Experten zu finden oder eine Diskussion wiederzufinden ist unmöglich. Conoted löst das: KI liest Chats, strukturiert Wissen, findet Menschen. Ich lebe in Montenegro und glaube, dass das beste Wissen bereits in Gesprächen steckt – man muss nur lernen, es zu finden.",
+      "location": "Montenegro"
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
