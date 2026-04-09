@@ -21,8 +21,8 @@
     "me": {
       "title": "Conoted — „Ko zna šta“ u vašem timu",
       "stack": "Flutter (iOS/Android), Laravel, Python/Telethon, GPT-4o-mini, OneSignal",
-      "summary": "Conoted je drugi mozak vašeg tima: mjesto gdje razgovori postaju znanje, a znanje pronalazi prave ljude. Aplikacija se povezuje s grupnim Telegram chatovima, automatski kreira AI sažetke, označava teme i gradi mapu stručnosti.",
-      "detailsHtml": "Conoted pretvara haos grupnih Telegram chatova u strukturiranu bazu znanja. Aplikacija automatski kreira AI sažetke iz poruka, označava sadržaj, pronalazi stručnjake po temama i gradi socijalni graf kontakata. Zettelkasten pristup: sistem sam pronalazi neočekivane veze između starih i novih bilješki, pomažući u generisanju ideja na spoju tema.<br><br>Oko 800 korisnika. Među ključnim značajkama su pametne oznake s AI-klasterizacijom i hijerarhijom kategorija, uvoz i AI profilisanje kontakata iz telefona/Gmaila, glasovna transkripcija preko Whispera, rangiranje učesnika po stručnosti.<br><br>Projekat je u aktivnom razvoju, priprema se za objavljivanje u App Store-u."
+      "summary": "Conoted je drugi mozak vašeg tima: mesto gde se razgovori pretvaraju u znanje, a znanje pronalazi prave ljude. Aplikacija se povezuje sa grupnim chatovima na Telegramu, automatski kreira AI sažetke, označava teme i pravi mapu ekspertize.",
+      "detailsHtml": "Conoted pretvara haos grupnih chatova na Telegramu u strukturiranu bazu znanja. Aplikacija automatski kreira AI sažetke iz poruka, označava sadržaj, pronalazi eksperte po temama i pravi društveni graf kontakata. Zettelkasten pristup: sistem sam pronalazi neočekivane veze između starih i novih beleški, pomažući u generisanju ideja na preseku tema.<br><br>Oko 800 korisnika. Među ključnim funkcijama su pametne oznake sa AI klasterizacijom i hijerarhijom kategorija, uvoz i AI profilisanje kontakata iz telefona/Gmail-a, glasovna transkripcija preko Whisper-a, rangiranje učesnika po ekspertizi.<br><br>Projekat je u aktivnom razvoju, priprema se za objavljivanje u App Store-u."
     }
   },
   "translationStatus": {
