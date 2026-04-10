@@ -60,9 +60,37 @@
           "external": true
         }
       ]
+    },
+    "de": {
+      "title": "IQ Pump",
+      "summary": "Dies ist mein Versuch, Intelligenz und Web3 zu verbinden. Das Format ist ein Spiel im Telegram, bei dem Wissen und Schnelligkeit im Denken buchstäblich monetarisiert werden können. Die Spieler beantworten Fragen, nehmen an Turnieren teil und erhalten Belohnungen in Token. Die Idee ist einfach: Intelligenz zu einem Vermögenswert zu machen, den man verbessern kann und der anfängt, echten Wert zu schaffen.",
+      "detailsHtml": "Dies ist mein Versuch, Intelligenz und Web3 zu verbinden. Das Format ist ein Spiel im Telegram, bei dem Wissen und Schnelligkeit im Denken buchstäblich monetarisiert werden können. Die Spieler beantworten Fragen, nehmen an Turnieren teil und erhalten Belohnungen in Token. Die Idee ist einfach: Intelligenz zu einem Vermögenswert zu machen, den man verbessern kann und der anfängt, echten Wert zu schaffen.<br><br>Hier spielen:<br><a href=\"https://t.me/iqPumpBot?startapp\">https://t.me/iqPumpBot?startapp</a><br><br>Kanal:<br><a href=\"https://t.me/IQ_PUMP_RU\">https://t.me/IQ_PUMP_RU</a>",
+      "links": [
+        {
+          "label": "Hier spielen",
+          "href": "https://t.me/iqPumpBot?startapp",
+          "external": true
+        },
+        {
+          "label": "Kanal",
+          "href": "https://t.me/IQ_PUMP_RU",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/iqPumpBot?startapp",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/IQ_PUMP_RU",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
