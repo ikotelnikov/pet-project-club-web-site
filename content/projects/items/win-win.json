@@ -30,9 +30,22 @@
           "external": true
         }
       ]
+    },
+    "de": {
+      "title": "Win-Win",
+      "summary": "Dezentrales Spiel, das vollständig auf einem Smart Contract läuft und Zufallsgenerierung über Chainlink verwendet.",
+      "detailsHtml": "<p>Dezentrales Spiel, das vollständig auf einem Smart Contract läuft und Zufallsgenerierung über Chainlink verwendet. Die Basis ist eine transparente Spielmechanik, bei der alle Regeln und Ergebnisse on-chain bestimmt werden, ohne eine zentrale Steuerung. Es ist ein Experiment mit dem Format von „Spielökonomien“, in denen Teilnehmer direkt mit dem Code interagieren und das Vertrauen nicht von einer Plattform, sondern von der Architektur selbst gewährleistet wird.</p>",
+      "links": [
+        {
+          "label": "win.stt.market",
+          "href": "http://win.stt.market",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
