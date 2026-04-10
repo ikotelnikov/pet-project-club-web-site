@@ -23,5 +23,32 @@
   ],
   "location": "Монтеко",
   "slug": "polako-accelerator",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "Polaco Accelerator",
+      "summary": "Gym for your pet projects",
+      "detailsHtml": "<p>Polaco Accelerator is a place where you regularly come to “train” your project just like people go to the gym to train their body.</p><p><strong>📍 Offline in Monteco</strong><br><strong>🕔 Evening, from 5:00 PM to 8:00 PM</strong><br><strong>📅 1–5 times a week — you choose</strong></p><p><strong>💡 How it works</strong><br>You come with your idea or project — and you are not left alone with it.</p><ul><li>We discuss your idea together</li><li>With the help of YPMO, we turn it into a clear plan</li><li>You move forward according to the plan with my support</li><li>And with the support of other participants</li></ul><p>This is not lectures or a course.<br>It is regular work on your project in the right environment.</p><p><strong>⚙️ Work format (simple Scrum)</strong><br>Each project works in short iterations:</p><ul><li>📅 Iteration = 5 work sessions</li><li>🧠 Day 1 — task planning (backlog)</li><li>🛠 Days 2–4 — work + short discussions</li><li>🎤 Day 5 — demo to other participants</li></ul><p>Important:<br>these 5 days can take place:</p><ul><li>within 1 week (if you come often)</li><li>or within a month (if 1–2 times a week)</li></ul><p>👉 You set the pace yourself — the system adapts to you.</p><p><strong>🎯 What you get</strong><br>Unlimited access to YPMO<br>— your AI assistant for product work</p><ul><li>My involvement (Senior Product Manager) — up to 2 hours per month of personal work with your project</li><li>Coworking environment — up to 5 days a week, 5:00 PM–8:00 PM — workspaces + possibility of calls</li><li>Help with planning — turning chaos into a clear roadmap</li><li>Community and support — feedback, ideas, help from other participants — a normal working atmosphere without infobusiness</li></ul><p><strong>🤝 What is the value</strong><br>Regular work → brings money now<br>Pet project → gives a chance for the future</p><p>But there is a problem:<br>👉 projects almost always “die” alone</p><p>Polaco Accelerator solves this through:</p><ul><li>regularity</li><li>structure</li><li>support</li><li>and peer pressure (in a good sense)</li></ul><p>🧠 Briefly<br>This is not training.<br>This is not consulting.<br>This is a system where your project starts moving.</p>",
+      "points": [
+        "Offline in Monteco",
+        "Evenings, from 5:00 PM to 8:00 PM",
+        "1–5 times a week — you choose",
+        "Work format: simple Scrum",
+        "Iteration = 5 work sessions",
+        "Day 1 — task planning (backlog)",
+        "Days 2–4 — work + short discussions",
+        "Day 5 — demo to other participants",
+        "Unlimited access to YPMO — your AI assistant for product work",
+        "Involvement of Senior Product Manager — up to 2 hours per month of personal work",
+        "Coworking environment — up to 5 days a week, 5:00 PM–8:00 PM",
+        "Help with planning — turning chaos into a clear roadmap",
+        "Community and support — feedback, ideas, help from other participants",
+        "Regularity, structure, support, and peer pressure help move the project forward"
+      ],
+      "location": "Monteco"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
