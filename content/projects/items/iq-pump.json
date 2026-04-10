@@ -1,0 +1,36 @@
+{
+  "title": "IQ Pump",
+  "summary": "Это моя попытка соединить интеллект и Web3. Формат — игра в Telegram, где знания и скорость мышления можно буквально монетизировать. Игроки отвечают на вопросы, участвуют в турнирах и получают вознаграждение в токенах. Идея простая: сделать так, чтобы интеллект стал активом, который можно прокачивать и который начинает приносить реальную ценность.",
+  "detailsHtml": "Это моя попытка соединить интеллект и Web3. Формат — игра в Telegram, где знания и скорость мышления можно буквально монетизировать. Игроки отвечают на вопросы, участвуют в турнирах и получают вознаграждение в токенах. Идея простая: сделать так, чтобы интеллект стал активом, который можно прокачивать и который начинает приносить реальную ценность.<br><br>Играть тут:<br><a href=\"https://t.me/iqPumpBot?startapp\">https://t.me/iqPumpBot?startapp</a><br><br>Канал:<br><a href=\"https://t.me/IQ_PUMP_RU\">https://t.me/IQ_PUMP_RU</a>",
+  "photo": {
+    "src": "assets/uploads/272981189/324-photo-324-AQADlxRrGw33yEp-.jpg",
+    "alt": "Проект IQ Pump"
+  },
+  "links": [
+    {
+      "label": "Играть тут",
+      "href": "https://t.me/iqPumpBot?startapp",
+      "external": true
+    },
+    {
+      "label": "Канал",
+      "href": "https://t.me/IQ_PUMP_RU",
+      "external": true
+    },
+    {
+      "label": "Telegram",
+      "href": "https://t.me/iqPumpBot?startapp",
+      "external": true
+    },
+    {
+      "label": "Telegram",
+      "href": "https://t.me/IQ_PUMP_RU",
+      "external": true
+    }
+  ],
+  "ownerSlugs": [
+    "aleksey-popov"
+  ],
+  "slug": "iq-pump",
+  "sourceLocale": "ru"
+}
