@@ -17,5 +17,22 @@
     "aleksey-popov"
   ],
   "slug": "win-win",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "Win-Win",
+      "summary": "A decentralized game fully running on a smart contract, utilizing randomness through Chainlink.",
+      "detailsHtml": "<p>A decentralized game fully running on a smart contract, utilizing randomness through Chainlink. At its core is transparent game logic, where all rules and outcomes are defined on-chain, without a control center. This is an experiment with the format of \"game economies,\" where participants interact directly with the code, and trust is ensured not by a platform but by the architecture itself.</p>",
+      "links": [
+        {
+          "label": "win.stt.market",
+          "href": "http://win.stt.market",
+          "external": true
+        }
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
