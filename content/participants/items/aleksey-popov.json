@@ -40,10 +40,29 @@
     "de": {
       "name": "Aleksey Popov",
       "role": "Investor und Web3-Spezialist",
-      "bio": "Aleksey ist seit mehr als 20 Jahren in der Welt der Investments taetig, darunter Immobilien, Bau, Technologieprojekte und Engineering. In den letzten Jahren konzentriert er sich stark auf Web3, AI, Tokenomics und Smart Contracts und baut gern Systeme, die ohne viel menschlichen Eingriff funktionieren und skalieren. Sein Hauptprojekt in Montenegro ist eine exklusive private Villa an der Adria in Petrovac, gedacht fuer Menschen, die schoen leben und gleichzeitig sinnvoll investieren wollen. Das Grundstueck ist vorhanden, ein erstes Konzept existiert und die Finanzierungsstruktur steht, auch wenn das lokale \"polako\" die Umsetzung etwas verlangsamt. Zu seinen liebsten Pet-Projekten gehoeren IQ PUMP, ein Telegram-MiniApp-Quizspiel im Stil von \"Wer wird Millionaer?\", bei dem Spieler Fragen beantworten, ihr Denken trainieren und STT-Token verdienen, sowie STTORE, ein dezentrales Web3-Netzwerk mit Marktplatz und Finanzinfrastruktur auf Arbitrum-Smart-Contracts mit eigenem Token, On-Chain-MLM-Mechanik, transparenter Tokenomics, Empfehlungslogik und dezentraler Autorisierung ohne KYC. Er kann bei klassischen und Venture-Investments, beim Start von IT- und Web3-Produkten, bei Tokenomics, Smart Contracts, Monetarisierung von Communities sowie strategischer Entwicklung und Skalierung helfen. Er sucht Mitstreiter in Entwicklung, Marketing, Architektur, Design, Partnerschaften und Investments und ist offen fuer Co-Investment und praktische Zusammenarbeit.",
+      "bio": "Hallo zusammen, ich bin Aleksey 👋\n\nIch liebe Dinge, die fördern: Zeichnen, Sport, schwierige Gespräche über Politik und Religion – kurz gesagt alles, was Sinn und Tiefe hat.\n\nIm Leben bin ich ein systematischer Mensch. Seit über 20 Jahren bin ich in Investments und Projekten tätig: von Immobilien und Bauwesen bis hin zu Technologiethemen. In den letzten Jahren beschäftige ich mich intensiv mit Web3, Krypto und dezentralen Systemen. Es reizt mich, Modelle zu schaffen, die eigenständig funktionieren und wachsen können – ohne „manuelle Steuerung“.\n\nDerzeit leite ich mehrere Pet-Projekte an der Schnittstelle von Web3, Gamifizierung und Gemeinschaften. Noch sind das Experimente… aber mit dem Ziel, zu etwas viel Größerem zu wachsen (ja, das Wort „Einhorn“ fällt dabei manchmal auch 😄).\n\nIch lebe in Montenegro – hier geht alles ein bisschen langsamer als in der Blockchain, aber dafür mit Meerblick und der Philosophie „polako“.\n\nIch bin offen für Bekanntschaften, Ideen und starke Persönlichkeiten. Wenn du das Gefühl hast, dass wir uns gegenseitig unterstützen können – schreib mir 🤝",
       "photo": {
         "alt": "Aleksey Popov"
-      }
+      },
+      "handle": "aleksey.popov",
+      "location": "Montenegro",
+      "links": [
+        {
+          "label": "Projekte im Telegram-Bot",
+          "href": "https://t.me/stt_info_bot",
+          "external": true
+        },
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/aleksei_sttore?igsh=MTViN3hlYjB6cmE1bA==&utm_source=ig_contact_invite",
+          "external": true
+        },
+        {
+          "label": "TikTok",
+          "href": "https://www.tiktok.com/@aleksei.stt?_r=1&_t=ZS-95Q1YmyXz1g",
+          "external": true
+        }
+      ]
     },
     "me": {
       "name": "Aleksey Popov",
@@ -81,6 +100,7 @@
   ],
   "location": "Черногория",
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
