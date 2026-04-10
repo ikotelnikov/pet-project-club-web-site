@@ -32,5 +32,37 @@
     "aleksey-popov"
   ],
   "slug": "iq-pump",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "IQ Pump",
+      "summary": "This is my attempt to connect intelligence and Web3. The format is a game in Telegram where knowledge and quick thinking can literally be monetized. Players answer questions, participate in tournaments, and earn rewards in tokens. The idea is simple: to make intelligence an asset that can be developed and that begins to bring real value.",
+      "detailsHtml": "This is my attempt to connect intelligence and Web3. The format is a game in Telegram where knowledge and quick thinking can literally be monetized. Players answer questions, participate in tournaments, and earn rewards in tokens. The idea is simple: to make intelligence an asset that can be developed and that begins to bring real value.<br><br>Play here:<br><a href=\"https://t.me/iqPumpBot?startapp\">https://t.me/iqPumpBot?startapp</a><br><br>Channel:<br><a href=\"https://t.me/IQ_PUMP_RU\">https://t.me/IQ_PUMP_RU</a>",
+      "links": [
+        {
+          "label": "Play here",
+          "href": "https://t.me/iqPumpBot?startapp",
+          "external": true
+        },
+        {
+          "label": "Channel",
+          "href": "https://t.me/IQ_PUMP_RU",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/iqPumpBot?startapp",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/IQ_PUMP_RU",
+          "external": true
+        }
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
