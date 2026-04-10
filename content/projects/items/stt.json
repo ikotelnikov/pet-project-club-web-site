@@ -18,5 +18,23 @@
     "aleksey-popov"
   ],
   "slug": "stt",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "STT",
+      "stack": "L2 Arbitrum, Web3, smart contracts, tokenomics",
+      "summary": "The basic Web3 product I am currently working on is STT.Market. It is a set of smart contracts on the L2 Arbitrum network, built around the native STT token with a deflationary model. Inside, I am developing an approach where decentralized finance becomes not only transparent but also practical: the system allows projects and businesses (including in the B2C segment) to implement on-chain referral programs, tokenize their products, and establish new formats for audience interaction. A special focus is on creating tools that can be used to attract venture capital through Web3 mechanics.",
+      "detailsHtml": "<p>The basic Web3 product I am currently working on is STT.Market. It is a set of smart contracts on the L2 Arbitrum network, built around the native STT token with a deflationary model. Inside, I am developing an approach where decentralized finance becomes not only transparent but also practical: the system allows projects and businesses (including in the B2C segment) to implement on-chain referral programs, tokenize their products, and establish new formats for audience interaction. A special focus is on creating tools that can be used to attract venture capital through Web3 mechanics.</p>",
+      "links": [
+        {
+          "label": "Website",
+          "href": "http://stt.market",
+          "external": true
+        }
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
