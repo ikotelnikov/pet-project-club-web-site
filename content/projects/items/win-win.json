@@ -45,8 +45,8 @@
     },
     "me": {
       "title": "Win-Win",
-      "summary": "Decentralizovana igra koja potpuno funkcioniše na pametnom ugovoru, koristeći Chainlink za randomizaciju.",
-      "detailsHtml": "<p>Decentralizovana igra koja potpuno funkcioniše na pametnom ugovoru, koristeći Chainlink za randomizaciju. U osnovi je transparentna logika igre, gdje se sva pravila i ishodi određuju on-chain, bez centralnog upravljanja. Ovo je eksperiment sa formatom „igračkih ekonomija“ u kojima učesnici direktno komuniciraju sa kodom, a poverenje obezbjeđuje ne platforma, već sama arhitektura.</p>",
+      "summary": "Decentralizovana igra koja u potpunosti radi na pametnom ugovoru, koristeći randomizaciju putem Chainlinka.",
+      "detailsHtml": "<p>Decentralizovana igra koja u potpunosti radi na pametnom ugovoru, koristeći randomizaciju putem Chainlinka. U osnovi je transparentna igračka logika, gde su sva pravila i ishodi određeni on-chain, bez centralne kontrole. Ovo je eksperiment sa formatom „igre ekonomija“, u kojima učesnici direktno komuniciraju sa kodom, a poverenje nije obezbeđeno platformom, već samom arhitekturom.</p>",
       "links": [
         {
           "label": "win.stt.market",
