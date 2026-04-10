@@ -12,11 +12,30 @@
   "translations": {
     "en": {
       "name": "Aleksey Popov",
-      "role": "Investor and Web3 specialist",
-      "bio": "Aleksey has spent more than 20 years in the world of investments, including real estate, construction, technology projects, and engineering. In recent years he has been focused on Web3, AI, tokenomics, and smart contracts, with a strong interest in building systems that can run and scale with minimal human intervention. His main project in Montenegro is an exclusive private villa on the Adriatic in Petrovac, aimed at people who want both a beautiful place to live and a sensible investment. The land is already owned, an initial concept exists, and the financing structure is in place, although the local \"polako\" rhythm slows execution a bit. His favorite pet projects include IQ PUMP, a Telegram Mini App quiz game inspired by \"Who Wants to Be a Millionaire?\" where players answer questions, train their thinking, and earn STT tokens, and STTORE, a decentralized Web3 social network, marketplace, and financial infrastructure built on Arbitrum smart contracts with its own token, on-chain MLM mechanics, transparent tokenomics, referral economy, and decentralized authorization without KYC. He can contribute investment expertise, IT and Web3 product launches, tokenomics and smart-contract architecture, monetization of communities, strategic development, and scaling. He is looking for collaborators across development, marketing, architecture, design, partnerships, and investment, and is open to co-investment and practical collaboration.",
+      "role": "Investor and Web3 Specialist",
+      "bio": "Hi everyone, I'm Aleksey 👋\n\nI love things that develop you: drawing, sports, deep conversations about politics and religion – basically, everything that has meaning and depth.\n\nIn life, I am a systematic person. I've been involved in investments and projects for over 20 years: from real estate and construction to tech ventures. In recent years, I've been deeply involved in Web3, crypto, and decentralized systems. I'm interested in creating models that can operate and grow by themselves – without “manual control.”\n\nCurrently, I run several pet projects at the intersection of Web3, gamification, and communities. These are experiments for now… but with ambitions to grow into something much bigger (yes, the word “unicorn” sometimes pops up too 😄).\n\nI live in Montenegro – here things happen a bit slower than on the blockchain, but with a sea view and the philosophy of “polako.”\n\nOpen to meeting new people, ideas, and strong individuals. If you feel we can be useful to each other – reach out 🤝",
       "photo": {
         "alt": "Aleksey Popov"
-      }
+      },
+      "handle": "aleksey.popov",
+      "location": "Montenegro",
+      "links": [
+        {
+          "label": "Projects in TG-bot",
+          "href": "https://t.me/stt_info_bot",
+          "external": true
+        },
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/aleksei_sttore?igsh=MTViN3hlYjB6cmE1bA==&utm_source=ig_contact_invite",
+          "external": true
+        },
+        {
+          "label": "TikTok",
+          "href": "https://www.tiktok.com/@aleksei.stt?_r=1&_t=ZS-95Q1YmyXz1g",
+          "external": true
+        }
+      ]
     },
     "de": {
       "name": "Aleksey Popov",
@@ -61,5 +80,7 @@
     }
   ],
   "location": "Черногория",
-  "translationStatus": {}
+  "translationStatus": {
+    "en": "machine"
+  }
 }
