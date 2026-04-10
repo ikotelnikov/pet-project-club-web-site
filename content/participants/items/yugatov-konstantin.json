@@ -26,5 +26,38 @@
     }
   ],
   "slug": "yugatov-konstantin",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "handle": "designer_konstantin_yugatov",
+      "name": "Konstantin Yugatov",
+      "role": "Architect and Designer",
+      "bio": "Architect and designer with 15 years of experience in residential environment design. I teach architecture and design for children and adults — offline at Che Design School (Montenegro) and online. My method is not only about form but also about internal support. I develop authorial courses where I combine architectural practice and psychology. I integrate artificial intelligence into design and educational formats — to expand thinking horizons and boost skills through a conscious approach. I lead mentoring projects: “Create Your Dream Interior” — for those who want to independently design a space where it will be good to live. “Build the House of Your Dream” — step-by-step support from idea to implementation. I also provide consultations and project reviews — helping to identify weak points, find solutions, and make design clear and honest. I run Instagram and Telegram — sharing experience, visual thinking, interior tips, and practical tools for designers and clients. I work at the intersection of aesthetics and meaning. I am inspired by Scandinavian and Japanese minimalism, creating a space where it is easy for a person to be themselves. On a personal note. I run. It’s my meditation in motion. In running, I hear the silence where clear thoughts and new ideas are born.",
+      "links": [
+        {
+          "label": "Instagram (in Russian)",
+          "href": "https://www.instagram.com/yugatov_design/profilecard/?igsh=N2Rnbnd4dGVpOTJ1",
+          "external": true
+        },
+        {
+          "label": "Instagram (in Montenegrin)",
+          "href": "https://www.instagram.com/iugatov.design?igsh=dmdrd2pnOHVxMXFi&utm_source=qr",
+          "external": true
+        },
+        {
+          "label": "Telegram Channel",
+          "href": "https://t.me/designer_konstantin_yugatov",
+          "external": true
+        },
+        {
+          "label": "Telegram Chat (about interior design and renovation)",
+          "href": "https://t.me/+KE9yPxolVIczMmVi",
+          "external": true
+        }
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
