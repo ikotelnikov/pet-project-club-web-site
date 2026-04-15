@@ -77,10 +77,37 @@
           "external": true
         }
       ]
+    },
+    "me": {
+      "title": "Montenegro Jewish Home",
+      "summary": "Mladi jevrejski komunitet u Crnoj Gori. Organizujem kulturne događaje sa jevrejskim sadržajem. U poslednje 3 godine sam organizovao preko 100 događaja, od malih za nekoliko osoba do gradskih događaja za preko 300 ljudi. Obrazovne predavanja, radionice, muzički koncerti, časovi hebrejskog i još mnogo toga.",
+      "links": [
+        {
+          "label": "Sajt",
+          "href": "http://www.jevreji.me",
+          "external": true
+        },
+        {
+          "label": "Telegram kanal",
+          "href": "https://t.me/montenegroJH",
+          "external": true
+        },
+        {
+          "label": "jevreji.me",
+          "href": "http://www.jevreji.me",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/montenegroJH",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
