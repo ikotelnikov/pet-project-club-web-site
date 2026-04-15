@@ -139,5 +139,15 @@
   },
   "ownerSlugs": [
     "tatiana-nirman"
+  ],
+  "photo": {
+    "src": "assets/uploads/272981189/409-photo-409-AQADqxJrG7k2AAFLfQ.jpg",
+    "alt": "Montenegro Jewish Home"
+  },
+  "gallery": [
+    {
+      "src": "assets/uploads/272981189/409-photo-409-AQADqxJrG7k2AAFLfQ.jpg",
+      "alt": "Montenegro Jewish Home"
+    }
   ]
 }
