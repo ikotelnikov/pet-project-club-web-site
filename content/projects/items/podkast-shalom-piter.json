@@ -56,9 +56,37 @@
           "external": true
         }
       ]
+    },
+    "de": {
+      "title": "Podcast „Shalom, Peter!“",
+      "summary": "Podcast über das jüdische Leben in Sankt Petersburg.",
+      "detailsHtml": "<p>Podcast über das jüdische Leben in Sankt Petersburg. Interviews mit bekannten Persönlichkeiten, entwickelnde jüdische Projekte – Kindergärten, Schulen, Wohltätigkeitsorganisationen. Erzählungen über jüdische Kultur und Geschichte. Das Projekt zielt darauf ab, Antisemitismus zu verringern und neuen Gemeindemitgliedern bei der Anpassung zu helfen. Außerdem soll es die Möglichkeiten für bestehende Mitglieder erweitern, indem vorhandene Projekte popularisiert werden.</p>",
+      "links": [
+        {
+          "label": "Telegram-Kanal",
+          "href": "https://t.me/shalompiter",
+          "external": true
+        },
+        {
+          "label": "Youtube",
+          "href": "https://youtu.be/aGIz82MiJ_o?si=JIlvoy_F_pTMyvkt",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/shalompiter",
+          "external": true
+        },
+        {
+          "label": "youtu.be",
+          "href": "https://youtu.be/aGIz82MiJ_o?si=JIlvoy_F_pTMyvkt",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
