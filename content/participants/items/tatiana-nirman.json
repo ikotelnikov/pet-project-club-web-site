@@ -15,9 +15,16 @@
       "name": "Tatyana Nirman",
       "role": "",
       "bio": "An entrepreneur with 17 years of experience in sales and operational management (Telecom B2B/B2C). Built and developed a successful call center from scratch for 5 years. For the past 7 years, professionally engaged in real estate management: building, renting out my properties, and managing others'. Core competencies include building sales departments, customer service, and working with booking platforms (Airbnb, Booking). Passionate about small business automation and people who turn ideas into working products."
+    },
+    "de": {
+      "handle": "",
+      "name": "Tatiana Nirman",
+      "role": "",
+      "bio": "Unternehmerin mit 17 Jahren Erfahrung im Vertrieb und operativen Management (Telekom B2B/B2C). Hat von Grund auf erfolgreich ein Callcenter aufgebaut und 5 Jahre lang geleitet. In den letzten 7 Jahren professionell im Immobilienmanagement tätig: baut, vermietet eigene Objekte und übernimmt die Verwaltung fremder Immobilien. Hauptkompetenzen sind der Aufbau von Vertriebsabteilungen, Kundenservice und die Arbeit mit Buchungsplattformen (Airbnb, Booking). Begeistert sich für die Automatisierung von Kleinunternehmen und für Menschen, die Ideen in funktionierende Produkte verwandeln."
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
