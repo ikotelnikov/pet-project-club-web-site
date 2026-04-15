@@ -56,9 +56,32 @@
           "external": true
         }
       ]
+    },
+    "de": {
+      "title": "Treuhandverwaltung in Montenegro",
+      "summary": "In den letzten 3 Jahren entwickle ich ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnungen in ein profitables Geschäft mit Kurzzeitvermietung zu verwandeln: von der Vorbereitung des Objekts mit Homestaging und Hilfe bei der Lizenzierung bis hin zum vollständigen operativen Management.",
+      "detailsHtml": "<p>In den letzten 3 Jahren entwickle ich ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnungen in ein profitables Geschäft mit Kurzzeitvermietung zu verwandeln: von der Vorbereitung des Objekts mit Homestaging und Hilfe bei der Lizenzierung bis hin zum vollständigen operativen Management.</p><p>Ich biete Schulungen und Beratungen für einen effektiven Start auf Booking und Airbnb unter modernen Bedingungen an.</p>",
+      "links": [
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/airbnbtop",
+          "external": true
+        },
+        {
+          "label": "instagram.com",
+          "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
