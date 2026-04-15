@@ -1,0 +1,32 @@
+{
+  "title": "Подкаст \"Шалом, Питер!\"",
+  "summary": "Подкаст о еврейской жизни в Петербурге.",
+  "detailsHtml": "<p>Подкаст о еврейской жизни в Петербурге. Интервью с известными людьми, развивающие еврейские проекты - детские сады, школы, благотворительные организации. Рассказы о еврейской культуре и истории. Проект направлен на снижение антисемитизма и помощь в адаптации для новых членов общины. А также, чтобы расширить возможности для существующих членов, за счет популяризации имеющихся проектов.</p>",
+  "links": [
+    {
+      "label": "Телеграм канал",
+      "href": "https://t.me/shalompiter",
+      "external": true
+    },
+    {
+      "label": "Youtube",
+      "href": "https://youtu.be/aGIz82MiJ_o?si=JIlvoy_F_pTMyvkt",
+      "external": true
+    },
+    {
+      "label": "Telegram",
+      "href": "https://t.me/shalompiter",
+      "external": true
+    },
+    {
+      "label": "youtu.be",
+      "href": "https://youtu.be/aGIz82MiJ_o?si=JIlvoy_F_pTMyvkt",
+      "external": true
+    }
+  ],
+  "ownerSlugs": [
+    "tatiana-nirman"
+  ],
+  "slug": "podkast-shalom-piter",
+  "sourceLocale": "ru"
+}
