@@ -103,12 +103,39 @@
           "external": true
         }
       ]
+    },
+    "es": {
+      "title": "Montenegro Jewish Home",
+      "summary": "Comunidad judía joven en Montenegro. Organizo eventos culturales con contenido judío. En los últimos 3 años he realizado más de 100 eventos, desde pequeños para unas pocas personas hasta eventos a escala urbana con más de 300 personas. Conferencias educativas, talleres, conciertos de música, cursos de hebreo y mucho más.",
+      "links": [
+        {
+          "label": "Sitio web",
+          "href": "http://www.jevreji.me",
+          "external": true
+        },
+        {
+          "label": "Canal de Telegram",
+          "href": "https://t.me/montenegroJH",
+          "external": true
+        },
+        {
+          "label": "jevreji.me",
+          "href": "http://www.jevreji.me",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/montenegroJH",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   },
   "ownerSlugs": [
     "tatiana-nirman"
