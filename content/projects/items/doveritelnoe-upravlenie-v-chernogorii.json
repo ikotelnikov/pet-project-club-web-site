@@ -33,5 +33,32 @@
     "tatiana-nirman"
   ],
   "slug": "doveritelnoe-upravlenie-v-chernogorii",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "Trust Management in Montenegro",
+      "summary": "For the past 3 years, I have been developing a project for the professional monetization of real estate for Russian-speaking owners. I help turn housing into a profitable business through short-term rentals: from preparing the property with home staging and assisting in obtaining licenses to full operational management.",
+      "detailsHtml": "<p>For the past 3 years, I have been developing a project for the professional monetization of real estate for Russian-speaking owners. I help turn housing into a profitable business through short-term rentals: from preparing the property with home staging and assisting in obtaining licenses to full operational management.</p><p>I conduct training and consultations on effective launching on Booking and Airbnb under current conditions.</p>",
+      "links": [
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/airbnbtop",
+          "external": true
+        },
+        {
+          "label": "instagram.com",
+          "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
+          "external": true
+        }
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
