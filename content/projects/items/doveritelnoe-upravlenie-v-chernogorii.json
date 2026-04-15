@@ -100,11 +100,34 @@
           "external": true
         }
       ]
+    },
+    "es": {
+      "title": "Gestión fiduciaria en Montenegro",
+      "summary": "Durante los últimos 3 años he desarrollado un proyecto para la monetización profesional de propiedades para propietarios de habla rusa. Ayudo a convertir viviendas en un negocio rentable de alquiler a corto plazo: desde la preparación del inmueble con home staging y asistencia para obtener la licencia hasta la gestión operativa completa.",
+      "detailsHtml": "<p>Durante los últimos 3 años he desarrollado un proyecto para la monetización profesional de propiedades para propietarios de habla rusa. Ayudo a convertir viviendas en un negocio rentable de alquiler a corto plazo: desde la preparación del inmueble con home staging y asistencia para obtener la licencia hasta la gestión operativa completa.</p><p>Realizo formación y consultorías sobre el lanzamiento eficiente en Booking y Airbnb en las condiciones actuales.</p>",
+      "links": [
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/airbnbtop",
+          "external": true
+        },
+        {
+          "label": "instagram.com",
+          "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
