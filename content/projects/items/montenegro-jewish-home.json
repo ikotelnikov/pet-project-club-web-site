@@ -1,0 +1,28 @@
+{
+  "title": "Montenegro Jewish Home",
+  "summary": "Молодое еврейское комьюнити в Черногории. Организую культурные мероприятия с еврейским контентом. За последние 3 года провела более 100 событий, от маленьких на несколько человек, до событий городского масштаба на +300 человек. Образовательные лекции, мастер-классы, музыкальные концерты, курсы иврита и многое другое.",
+  "links": [
+    {
+      "label": "Сайт",
+      "href": "http://www.jevreji.me",
+      "external": true
+    },
+    {
+      "label": "Телеграм канал",
+      "href": "https://t.me/montenegroJH",
+      "external": true
+    },
+    {
+      "label": "jevreji.me",
+      "href": "http://www.jevreji.me",
+      "external": true
+    },
+    {
+      "label": "Telegram",
+      "href": "https://t.me/montenegroJH",
+      "external": true
+    }
+  ],
+  "slug": "montenegro-jewish-home",
+  "sourceLocale": "ru"
+}
