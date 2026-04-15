@@ -83,10 +83,38 @@
           "external": true
         }
       ]
+    },
+    "me": {
+      "title": "Podcast \"Shalom, Piter!\"",
+      "summary": "Podcast o jevrejskom životu u Peterburgu.",
+      "detailsHtml": "<p>Podcast o jevrejskom životu u Peterburgu. Intervjui sa poznatim ličnostima, razvojni jevrejski projekti - dečiji vrtići, škole, dobrotvorne organizacije. Priče o jevrejskoj kulturi i istoriji. Projekat je usmeren na smanjenje antisemitizma i pomoć u adaptaciji za nove članove zajednice. Takođe, da bi se proširile mogućnosti za postojeće članove kroz popularizaciju postojećih projekata.</p>",
+      "links": [
+        {
+          "label": "Telegram kanal",
+          "href": "https://t.me/shalompiter",
+          "external": true
+        },
+        {
+          "label": "Youtube",
+          "href": "https://youtu.be/aGIz82MiJ_o?si=JIlvoy_F_pTMyvkt",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/shalompiter",
+          "external": true
+        },
+        {
+          "label": "youtu.be",
+          "href": "https://youtu.be/aGIz82MiJ_o?si=JIlvoy_F_pTMyvkt",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
