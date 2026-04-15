@@ -51,9 +51,36 @@
           "external": true
         }
       ]
+    },
+    "de": {
+      "title": "Montenegro Jewish Home",
+      "summary": "Eine junge jüdische Gemeinschaft in Montenegro. Ich organisiere kulturelle Veranstaltungen mit jüdischem Inhalt. In den letzten 3 Jahren habe ich über 100 Events durchgeführt, von kleinen mit wenigen Teilnehmern bis hin zu städtischen Veranstaltungen mit über 300 Personen. Bildungslectures, Workshops, Musikkonzerte, Hebräischkurse und vieles mehr.",
+      "links": [
+        {
+          "label": "Website",
+          "href": "http://www.jevreji.me",
+          "external": true
+        },
+        {
+          "label": "Telegram-Kanal",
+          "href": "https://t.me/montenegroJH",
+          "external": true
+        },
+        {
+          "label": "jevreji.me",
+          "href": "http://www.jevreji.me",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/montenegroJH",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
