@@ -28,5 +28,37 @@
     "tatiana-nirman"
   ],
   "slug": "podkast-shalom-piter",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "Podcast \"Shalom, Peter!\"",
+      "summary": "A podcast about Jewish life in Petersburg.",
+      "detailsHtml": "<p>A podcast about Jewish life in Petersburg. Interviews with famous people, developing Jewish projects - kindergartens, schools, charitable organizations. Stories about Jewish culture and history. The project is aimed at reducing antisemitism and helping new community members adapt. Also, to expand opportunities for existing members by promoting existing projects.</p>",
+      "links": [
+        {
+          "label": "Telegram channel",
+          "href": "https://t.me/shalompiter",
+          "external": true
+        },
+        {
+          "label": "Youtube",
+          "href": "https://youtu.be/aGIz82MiJ_o?si=JIlvoy_F_pTMyvkt",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/shalompiter",
+          "external": true
+        },
+        {
+          "label": "youtu.be",
+          "href": "https://youtu.be/aGIz82MiJ_o?si=JIlvoy_F_pTMyvkt",
+          "external": true
+        }
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
