@@ -18,9 +18,9 @@
     },
     "de": {
       "handle": "",
-      "name": "Tatiana Nirman",
-      "role": "",
-      "bio": "Unternehmerin mit 17 Jahren Erfahrung im Vertrieb und operativen Management (Telekom B2B/B2C). Hat von Grund auf erfolgreich ein Callcenter aufgebaut und 5 Jahre lang geleitet. In den letzten 7 Jahren professionell im Immobilienmanagement tätig: baut, vermietet eigene Objekte und übernimmt die Verwaltung fremder Immobilien. Hauptkompetenzen sind der Aufbau von Vertriebsabteilungen, Kundenservice und die Arbeit mit Buchungsplattformen (Airbnb, Booking). Begeistert sich für die Automatisierung von Kleinunternehmen und für Menschen, die Ideen in funktionierende Produkte verwandeln."
+      "name": "Tatjana Nirman",
+      "role": "Unternehmerin und Community Managerin",
+      "bio": "Unternehmerin mit 17 Jahren Erfahrung im Vertrieb und operativen Management (Telekommunikation B2B/B2C). Habe von Grund auf ein erfolgreiches Callcenter aufgebaut und 5 Jahre lang entwickelt. In den letzten 7 Jahren beschäftige ich mich professionell mit Immobilienmanagement: Ich baue, vermiete eigene Objekte und übernehme die Verwaltung für fremde. Meine Hauptkompetenzen liegen im Aufbau von Vertriebsabteilungen, Kundenservice und der Arbeit mit Buchungsplattformen (Airbnb, Booking). Ich liebe das Thema Automatisierung von Kleinunternehmen und Menschen, die Ideen in funktionierende Produkte verwandeln."
     },
     "me": {
       "handle": "",
@@ -31,7 +31,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale",
+    "de": "machine",
     "me": "stale"
   }
 }
