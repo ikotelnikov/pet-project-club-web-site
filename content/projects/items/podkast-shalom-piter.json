@@ -116,5 +116,15 @@
     "en": "machine",
     "de": "machine",
     "me": "machine"
-  }
+  },
+  "photo": {
+    "src": "assets/uploads/272981189/423-photo-423-AQADSBdrG5_aAUt9.jpg",
+    "alt": "Подкаст \"Шалом, Питер!\""
+  },
+  "gallery": [
+    {
+      "src": "assets/uploads/272981189/423-photo-423-AQADSBdrG5_aAUt9.jpg",
+      "alt": "Подкаст \"Шалом, Питер!\""
+    }
+  ]
 }
