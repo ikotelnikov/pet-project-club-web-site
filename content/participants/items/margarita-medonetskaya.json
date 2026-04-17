@@ -20,9 +20,9 @@
     },
     "me": {
       "handle": null,
-      "name": "Margarita Medoneckaja",
-      "role": "preduzetnica, ekspertkinja za digitalnu ekonomiju i Web3, osnivačica kluba „Investeya“",
-      "bio": "Specijalizovana za pokretanje i razvoj projekata u oblasti blokčeina, tokenizacije i digitalnih servisa. Kreirala je ekosistem koji povezuje obrazovanje, kripto-instrumente i praktičnu primjenu tehnologija kroz sopstvena rješenja, uključujući kripto-trenažer na pametnom ugovoru i digitalne proizvode. Radi na spoju tehnologije i obrazovanja, pomažući ljudima — posebno ženama starijim od 45 godina — da se prilagode novoj digitalnoj stvarnosti, savladaju Web3 i izgrade sopstvene izvore prihoda. Ima praktično iskustvo u pokretanju IT projekata, automatizaciji poslovnih procesa, pravljenju prodajnih lijevaka i partnerskih sistema. Upravljanje razvojem međunarodnog projekta sa pravnom osnovom u Crnoj Gori i sopstvenom digitalnom infrastrukturom."
+      "name": "Margarita Medonecka",
+      "role": "preduzetnica, ekspertkinja u oblasti digitalne ekonomije i Web3, osnivačica kluba «Investeja»",
+      "bio": "Specijalizovana za pokretanje i razvoj projekata u oblasti blockchaina, tokenizacije i digitalnih servisa. Kreirala je ekosistem koji objedinjuje obrazovanje, kripto- alate i praktičnu implementaciju tehnologija kroz sopstvena rešenja, uključujući kripto-trenažer na smart ugovoru i digitalne proizvode.\n\nRadi na spoju tehnologije i obrazovanja, pomažući ljudima – posebno ženama 45+ – da se prilagode novoj digitalnoj realnosti, savladaju Web3 i izgrade sopstvene izvore prihoda.\n\nIma praktično iskustvo u pokretanju IT projekata, automatizaciji poslovnih procesa, izgradnji prodajnih levaka i partnerskih sistema. Upravljala je razvojem međunarodnog projekta sa pravnom osnovom u Crnoj Gori i sopstvenom digitalnom infrastrukturom."
     },
     "es": {
       "handle": null,
@@ -34,7 +34,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   },
   "photo": {
