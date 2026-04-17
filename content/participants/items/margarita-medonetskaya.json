@@ -4,5 +4,16 @@
   "role": "предприниматель, эксперт в сфере цифровой экономики и Web3, основатель клуба «Инвестея»",
   "bio": "Специализируется на запуске и развитии проектов в области блокчейна, токенизации и цифровых сервисов. Создала экосистему, объединяющую обучение, крипто-инструменты и практическое внедрение технологий через собственные решения, включая крипто-тренажёр на смарт-контракте и цифровые продукты. Работает на стыке технологий и образования, помогая людям — особенно женщинам 45+ — адаптироваться к новой цифровой реальности, осваивать Web3 и выстраивать собственные источники дохода. Имеет практический опыт в запуске IT-проектов, автоматизации бизнес-процессов, построении воронок продаж и партнёрских систем. Руководит развитием международного проекта с юридической базой в Черногории и собственной цифровой инфраструктурой.",
   "slug": "margarita-medonetskaya",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "handle": null,
+      "name": "Margarita Medonetskaya",
+      "role": "entrepreneur, expert in digital economy and Web3, founder of the \"Investea\" club",
+      "bio": "Specializes in launching and developing projects in blockchain, tokenization, and digital services. Created an ecosystem that combines education, crypto tools, and practical technology implementation through proprietary solutions, including a crypto simulator on a smart contract and digital products. Works at the intersection of technology and education, helping people—especially women aged 45+—adapt to the new digital reality, master Web3, and build their own income sources. Has practical experience in launching IT projects, business process automation, building sales funnels, and partnership systems. Leads the development of an international project with a legal base in Montenegro and its own digital infrastructure."
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
