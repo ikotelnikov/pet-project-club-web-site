@@ -125,9 +125,9 @@
     }
   },
   "translationStatus": {
-    "en": "machine",
-    "de": "machine",
-    "me": "machine",
+    "en": "stale",
+    "de": "stale",
+    "me": "stale",
     "es": "stale"
   }
 }
