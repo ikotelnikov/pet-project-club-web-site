@@ -59,12 +59,12 @@
     },
     "de": {
       "title": "Treuhandverwaltung in Montenegro",
-      "summary": "Ich entwickle seit 3 Jahren ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnraum in ein profitables Geschäft mit Kurzzeitvermietungen zu verwandeln: von der Vorbereitung der Immobilie mit Homestaging und Unterstützung bei der Lizenzierung bis hin zur vollständigen operativen Verwaltung.",
-      "detailsHtml": "<p>Ich entwickle seit 3 Jahren ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnraum in ein profitables Geschäft mit Kurzzeitvermietungen zu verwandeln: von der Vorbereitung der Immobilie mit Homestaging und Unterstützung bei der Lizenzierung bis hin zur vollständigen operativen Verwaltung.</p><p>Ich biete Schulungen und Beratungen für einen effektiven Start auf Booking und Airbnb unter modernen Bedingungen an.</p>",
+      "summary": "Seit 3 Jahren entwickle ich ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnraum in ein profitables Geschäft mit Kurzzeitvermietung zu verwandeln: von der Objektvorbereitung mit Homestaging und Unterstützung bei der Lizenzbeschaffung bis hin zum vollständigen operativen Management.",
+      "detailsHtml": "<p>Seit 3 Jahren entwickle ich ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnraum in ein profitables Geschäft mit Kurzzeitvermietung zu verwandeln: von der Objektvorbereitung mit Homestaging und Unterstützung bei der Lizenzbeschaffung bis hin zum vollständigen operativen Management.</p><p>Ich biete Schulungen und Beratungen für einen effektiven Start auf Booking und Airbnb unter den heutigen Bedingungen an.</p>",
       "links": [
         {
-          "label": "Instagram",
-          "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
+          "label": "Telegram",
+          "href": "https://t.me/airbnbtop",
           "external": true
         },
         {
@@ -126,7 +126,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale",
+    "de": "machine",
     "me": "stale",
     "es": "stale"
   }
