@@ -80,13 +80,13 @@
       ]
     },
     "me": {
-      "title": "Upravljanje povjerenjem u Crnoj Gori",
-      "summary": "Posljednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za vlasnike koji govore ruski. Pomažem u pretvaranju stambenog prostora u unosan posao kroz kratkoročni najam: od pripreme objekta uz homstedžing i pomoći u dobijanju licence do potpunog operativnog upravljanja.",
-      "detailsHtml": "<p>Posljednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za vlasnike koji govore ruski. Pomažem u pretvaranju stambenog prostora u unosan posao kroz kratkoročni najam: od pripreme objekta uz homstedžing i pomoći u dobijanju licence do potpunog operativnog upravljanja.</p><p>Održavam obuke i konsultacije o efikasnom pokretanju na Booking i Airbnb pod savremenim uslovima.</p>",
+      "title": "Upravljanje poverenjem u Crnoj Gori",
+      "summary": "Poslednje 3 godine razvijam projekat za profesionalnu monetizaciju nekretnina za ruskojezične vlasnike. Pomažem da se stanovanje pretvori u profitabilan biznis na kratkoročnom izdavanju: od pripreme objekta sa home stagingom i pomoći pri dobijanju licence do potpune operativne uprave.",
+      "detailsHtml": "<p>Poslednje 3 godine razvijam projekat za profesionalnu monetizaciju nekretnina za ruskojezične vlasnike. Pomažem da se stanovanje pretvori u profitabilan biznis na kratkoročnom izdavanju: od pripreme objekta sa home stagingom i pomoći pri dobijanju licence do potpune operativne uprave.</p><p>Držim obuke i konsultacije o efikasnom pokretanju na Booking-u i Airbnb-u u savremenim uslovima.</p>",
       "links": [
         {
-          "label": "Instagram",
-          "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
+          "label": "Telegram",
+          "href": "https://t.me/airbnbtop",
           "external": true
         },
         {
@@ -127,7 +127,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   }
 }
