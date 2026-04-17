@@ -17,10 +17,17 @@
       "name": "Margarita Medonezkaja",
       "role": "Unternehmerin, Expertin im Bereich der digitalen Wirtschaft und Web3, Gründerin des Clubs „Investeya“",
       "bio": "Spezialisiert auf den Start und die Entwicklung von Projekten im Bereich Blockchain, Tokenisierung und digitale Dienste. Hat ein Ökosystem geschaffen, das Bildung, Krypto-Instrumente und die praktische Implementierung von Technologien über eigene Lösungen vereint, einschließlich eines Krypto-Simulators auf Basis von Smart Contracts und digitaler Produkte. Arbeitet an der Schnittstelle von Technologie und Bildung, unterstützt Menschen – insbesondere Frauen 45+ – sich an die neue digitale Realität anzupassen, Web3 zu erlernen und eigene Einkommensquellen aufzubauen. Verfügt über praktische Erfahrung in der Einführung von IT-Projekten, der Automatisierung von Geschäftsprozessen, dem Aufbau von Verkaufstrichtern und Partnersystemen. Leitet die Entwicklung eines internationalen Projekts mit juristischer Basis in Montenegro und eigener digitaler Infrastruktur."
+    },
+    "me": {
+      "handle": null,
+      "name": "Margarita Medoneckaja",
+      "role": "preduzetnica, ekspertkinja za digitalnu ekonomiju i Web3, osnivačica kluba „Investeya“",
+      "bio": "Specijalizovana za pokretanje i razvoj projekata u oblasti blokčeina, tokenizacije i digitalnih servisa. Kreirala je ekosistem koji povezuje obrazovanje, kripto-instrumente i praktičnu primjenu tehnologija kroz sopstvena rješenja, uključujući kripto-trenažer na pametnom ugovoru i digitalne proizvode. Radi na spoju tehnologije i obrazovanja, pomažući ljudima — posebno ženama starijim od 45 godina — da se prilagode novoj digitalnoj stvarnosti, savladaju Web3 i izgrade sopstvene izvore prihoda. Ima praktično iskustvo u pokretanju IT projekata, automatizaciji poslovnih procesa, pravljenju prodajnih lijevaka i partnerskih sistema. Upravljanje razvojem međunarodnog projekta sa pravnom osnovom u Crnoj Gori i sopstvenom digitalnom infrastrukturom."
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
