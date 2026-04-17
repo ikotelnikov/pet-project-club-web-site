@@ -80,9 +80,9 @@
       ]
     },
     "me": {
-      "title": "Upravljanje poverenjem u Crnoj Gori",
-      "summary": "Poslednje 3 godine razvijam projekat za profesionalnu monetizaciju nekretnina za ruskojezične vlasnike. Pomažem da se stanovanje pretvori u profitabilan biznis na kratkoročnom izdavanju: od pripreme objekta sa home stagingom i pomoći pri dobijanju licence do potpune operativne uprave.",
-      "detailsHtml": "<p>Poslednje 3 godine razvijam projekat za profesionalnu monetizaciju nekretnina za ruskojezične vlasnike. Pomažem da se stanovanje pretvori u profitabilan biznis na kratkoročnom izdavanju: od pripreme objekta sa home stagingom i pomoći pri dobijanju licence do potpune operativne uprave.</p><p>Držim obuke i konsultacije o efikasnom pokretanju na Booking-u i Airbnb-u u savremenim uslovima.</p>",
+      "title": "Poverenička uprava u Crnoj Gori",
+      "summary": "Poslednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za ruski govoreće vlasnike. Pomažem u pretvaranju stanova u profitabilan posao na kratkoročnom izdavanju: od pripreme objekta sa home stagingom i pomoći pri dobijanju licence do pune operativne uprave.",
+      "detailsHtml": "<p>Poslednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za ruski govoreće vlasnike. Pomažem u pretvaranju stanova u profitabilan posao na kratkoročnom izdavanju: od pripreme objekta sa home stagingom i pomoći pri dobijanju licence do pune operativne uprave.</p><p>Održavam obuke i konsultacije o efikasnom pokretanju na Booking i Airbnb u savremenim uslovima.</p>",
       "links": [
         {
           "label": "Telegram",
@@ -127,7 +127,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   }
 }
