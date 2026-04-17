@@ -11,9 +11,16 @@
       "name": "Margarita Medonetskaya",
       "role": "entrepreneur, expert in digital economy and Web3, founder of the \"Investea\" club",
       "bio": "Specializes in launching and developing projects in blockchain, tokenization, and digital services. Created an ecosystem that combines education, crypto tools, and practical technology implementation through proprietary solutions, including a crypto simulator on a smart contract and digital products. Works at the intersection of technology and education, helping people—especially women aged 45+—adapt to the new digital reality, master Web3, and build their own income sources. Has practical experience in launching IT projects, business process automation, building sales funnels, and partnership systems. Leads the development of an international project with a legal base in Montenegro and its own digital infrastructure."
+    },
+    "de": {
+      "handle": null,
+      "name": "Margarita Medonezkaja",
+      "role": "Unternehmerin, Expertin im Bereich der digitalen Wirtschaft und Web3, Gründerin des Clubs „Investeya“",
+      "bio": "Spezialisiert auf den Start und die Entwicklung von Projekten im Bereich Blockchain, Tokenisierung und digitale Dienste. Hat ein Ökosystem geschaffen, das Bildung, Krypto-Instrumente und die praktische Implementierung von Technologien über eigene Lösungen vereint, einschließlich eines Krypto-Simulators auf Basis von Smart Contracts und digitaler Produkte. Arbeitet an der Schnittstelle von Technologie und Bildung, unterstützt Menschen – insbesondere Frauen 45+ – sich an die neue digitale Realität anzupassen, Web3 zu erlernen und eigene Einkommensquellen aufzubauen. Verfügt über praktische Erfahrung in der Einführung von IT-Projekten, der Automatisierung von Geschäftsprozessen, dem Aufbau von Verkaufstrichtern und Partnersystemen. Leitet die Entwicklung eines internationalen Projekts mit juristischer Basis in Montenegro und eigener digitaler Infrastruktur."
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
