@@ -80,9 +80,9 @@
       ]
     },
     "me": {
-      "title": "Upravljanje pouzdanjem u Crnoj Gori",
-      "summary": "Poslednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za ruski govorni vlasnike. Pomažem da se stan pretvori u profitabilan biznis na kratkoročnoj renti: od pripreme objekta sa home staging-om i pomoći pri dobijanju licence do potpunog operativnog upravljanja.",
-      "detailsHtml": "<p>Poslednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za ruski govorni vlasnike. Pomažem da se stan pretvori u profitabilan biznis na kratkoročnoj renti: od pripreme objekta sa home staging-om i pomoći pri dobijanju licence do potpunog operativnog upravljanja.</p><p>Održavam obuke i konsultacije za efikasan početak na Booking-u i Airbnb-u u savremenim uslovima.</p>",
+      "title": "Upravljanje povjerenjem u Crnoj Gori",
+      "summary": "Posljednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za vlasnike koji govore ruski. Pomažem u pretvaranju stambenog prostora u unosan posao kroz kratkoročni najam: od pripreme objekta uz homstedžing i pomoći u dobijanju licence do potpunog operativnog upravljanja.",
+      "detailsHtml": "<p>Posljednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za vlasnike koji govore ruski. Pomažem u pretvaranju stambenog prostora u unosan posao kroz kratkoročni najam: od pripreme objekta uz homstedžing i pomoći u dobijanju licence do potpunog operativnog upravljanja.</p><p>Održavam obuke i konsultacije o efikasnom pokretanju na Booking i Airbnb pod savremenim uslovima.</p>",
       "links": [
         {
           "label": "Instagram",
@@ -127,7 +127,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   }
 }
