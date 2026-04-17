@@ -286,9 +286,17 @@ function initStickyTopbar() {
 
   let isSticky = false;
 
+  const syncStickyBleed = () => {
+    const rect = topbar.getBoundingClientRect();
+    topbar.style.setProperty("--topbar-bleed-left", `${Math.max(0, rect.left)}px`);
+    topbar.style.setProperty("--topbar-bleed-right", `${Math.max(0, window.innerWidth - rect.right)}px`);
+  };
+
   const syncStickyState = () => {
     const scrollY = window.scrollY;
     const shouldStick = isSticky ? scrollY > 4 : scrollY > 16;
+
+    syncStickyBleed();
 
     if (shouldStick === isSticky) {
       return;
@@ -894,7 +902,7 @@ async function renderMainPage() {
             <span class="terminal-status">${terminal.status || t("visual.mainTerminalStatus", "live")}</span>
           </div>
           <div class="terminal-body">
-            <p><span class="terminal-prompt">$</span> <span id="terminal-line"></span><span class="cursor"></span></p>
+            <p><span class="terminal-prompt">$</span> <span id="terminal-line"></span><span class="cursor"></span><span class="terminal-line-buffer" aria-hidden="true"><br>&nbsp;</span></p>
             <ul class="terminal-list">
               ${(terminal.lines || [])
                 .map((line) => `<li>${line}</li>`)
@@ -1745,7 +1753,7 @@ function renderVisual(kind) {
           <span class="terminal-status">${t("visual.meetingsTerminalStatus", "ready for telegram")}</span>
         </div>
         <div class="terminal-body">
-          <p><span class="terminal-prompt">$</span> <span id="terminal-line"></span><span class="cursor"></span></p>
+          <p><span class="terminal-prompt">$</span> <span id="terminal-line"></span><span class="cursor"></span><span class="terminal-line-buffer" aria-hidden="true"><br>&nbsp;</span></p>
           <ul class="terminal-list">
             <li>Анонсировать тему, формат и место.</li>
             <li>Собрать участников, слоты и обновления.</li>
@@ -1813,7 +1821,7 @@ function renderVisual(kind) {
         <span class="terminal-status">live</span>
       </div>
       <div class="terminal-body">
-        <p><span class="terminal-prompt">$</span> <span id="terminal-line"></span><span class="cursor"></span></p>
+        <p><span class="terminal-prompt">$</span> <span id="terminal-line"></span><span class="cursor"></span><span class="terminal-line-buffer" aria-hidden="true"><br>&nbsp;</span></p>
         <ul class="terminal-list">
           <li>Найти людей, которые делают, а не обещают.</li>
           <li>Принести идею, набросок или почти готовый проект.</li>

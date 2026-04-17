@@ -133,7 +133,6 @@ a {
   padding: 28px 0 64px;
 }
 
-.topbar,
 .hero-shell,
 .section-shell,
 .metrics-strip,
@@ -172,20 +171,50 @@ a {
   overflow: visible;
   padding: 14px clamp(16px, 3vw, 32px);
   margin-bottom: 18px;
+  isolation: isolate;
   transition:
-    background 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease,
-    border-radius 180ms ease;
+    color 180ms ease;
   z-index: 20;
+}
+
+.topbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(14, 21, 31, 0.72), rgba(8, 12, 18, 0.58));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  transition:
+    left 500ms ease,
+    right 500ms ease,
+    border-radius 500ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    backdrop-filter 180ms ease;
+  z-index: -1;
+}
+
+.topbar > * {
+  position: relative;
+  z-index: 1;
 }
 
 .topbar.is-sticky {
   top: 0;
+  z-index: 60;
+}
+
+.topbar.is-sticky::before {
+  left: calc(var(--topbar-bleed-left, 0px) * -1);
+  right: calc(var(--topbar-bleed-right, 0px) * -1);
+  border-radius: 0;
   background: linear-gradient(180deg, rgba(8, 12, 18, 0.96), rgba(8, 12, 18, 0.92));
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(18px);
-  z-index: 60;
 }
 
 .brand {
@@ -538,7 +567,7 @@ a {
   scroll-behavior: smooth;
   scrollbar-width: none;
   overscroll-behavior-x: contain;
-  touch-action: pan-x;
+  touch-action: pan-y pinch-zoom;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
 }
@@ -1184,8 +1213,12 @@ body.lightbox-open {
 }
 
 .terminal-body p {
-  min-height: 30px;
+  min-height: calc(2em + 10px);
   margin: 0 0 14px;
+}
+
+.terminal-line-buffer {
+  visibility: hidden;
 }
 
 .terminal-prompt {
@@ -2038,6 +2071,12 @@ body.lightbox-open {
   .topbar {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
+  }
+
+  .topbar::before {
+    left: calc(var(--topbar-bleed-left, 0px) * -1);
+    right: calc(var(--topbar-bleed-right, 0px) * -1);
+    border-radius: 0;
   }
 
   .topbar.is-sticky {
