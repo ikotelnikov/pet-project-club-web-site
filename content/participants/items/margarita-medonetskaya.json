@@ -7,10 +7,17 @@
   "sourceLocale": "ru",
   "translations": {
     "en": {
-      "handle": null,
+      "handle": "@SuperDriver8",
       "name": "Margarita Medonetskaya",
-      "role": "entrepreneur, expert in digital economy and Web3, founder of the Investeya club",
-      "bio": "Specializes in launching and developing projects in blockchain, tokenization, and digital services. Created an ecosystem combining education, crypto tools, and practical technology implementation through proprietary solutions, including a crypto simulator on a smart contract and digital products.\n\nWorks at the intersection of technology and education, helping people—especially women 45+—adapt to the new digital reality, master Web3, and build their own income sources.\n\nHas practical experience in launching IT projects, automating business processes, building sales funnels, and partner systems. Leads the development of an international project with a legal base in Montenegro and its own digital infrastructure."
+      "role": "entrepreneur, expert in digital economy and Web3, founder of the \"Investea\" club",
+      "bio": "Specializes in launching and developing projects in blockchain, tokenization, and digital services. Created an ecosystem combining education, crypto tools, and practical technology implementation through proprietary solutions, including a crypto simulator on a smart contract and digital products.\n\nWorks at the intersection of technology and education, helping people—especially women 45+—adapt to the new digital reality, master Web3, and build their own income sources.\n\nHas practical experience in launching IT projects, automating business processes, building sales funnels, and partnership systems. Leads the development of an international project with a legal base in Montenegro and its own digital infrastructure.",
+      "links": [
+        {
+          "label": "Telegram",
+          "href": "https://t.me/SuperDriver8",
+          "external": true
+        }
+      ]
     },
     "de": {
       "handle": null,
@@ -32,7 +39,7 @@
     }
   },
   "translationStatus": {
-    "en": "stale",
+    "en": "machine",
     "de": "stale",
     "me": "stale",
     "es": "stale"
