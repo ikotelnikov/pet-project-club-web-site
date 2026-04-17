@@ -284,19 +284,18 @@ function initStickyTopbar() {
     return;
   }
 
-  let spacer = document.querySelector(".topbar-spacer");
-
-  if (!spacer) {
-    spacer = document.createElement("div");
-    spacer.className = "topbar-spacer";
-    topbar.insertAdjacentElement("afterend", spacer);
-  }
+  let isSticky = false;
 
   const syncStickyState = () => {
-    const shouldStick = window.scrollY > 12;
+    const scrollY = window.scrollY;
+    const shouldStick = isSticky ? scrollY > 4 : scrollY > 16;
 
+    if (shouldStick === isSticky) {
+      return;
+    }
+
+    isSticky = shouldStick;
     topbar.classList.toggle("is-sticky", shouldStick);
-    spacer.style.height = shouldStick ? `${topbar.offsetHeight + 18}px` : "0px";
   };
 
   syncStickyState();
@@ -679,7 +678,9 @@ async function renderPage() {
     return;
   }
 
-  pageContent.innerHTML = `<section class="empty-state loading-state reveal"><p>${t("common.loadingContent", "Loading content from repository...")}</p></section>`;
+  if (!hasRenderableInitialContent(pageContent)) {
+    pageContent.innerHTML = `<section class="empty-state loading-state reveal"><p>${t("common.loadingContent", "Loading content from repository...")}</p></section>`;
+  }
 
   try {
     await pageLoaders[page]();
@@ -810,10 +811,11 @@ async function readJson(path) {
 
 async function fetchContentResponse(path) {
   let lastError = null;
+  const cacheMode = isLocalDevelopment() ? "no-store" : "default";
 
   for (const url of buildContentUrls(path)) {
     try {
-      const response = await fetch(url, { cache: "no-store" });
+      const response = await fetch(url, { cache: cacheMode });
 
       if (!response.ok) {
         lastError = new Error(`Failed to load ${path}: ${response.status}`);
@@ -827,6 +829,11 @@ async function fetchContentResponse(path) {
   }
 
   throw lastError || new Error(`Failed to load ${path}.`);
+}
+
+function isLocalDevelopment() {
+  const { hostname, protocol } = window.location;
+  return protocol === "file:" || hostname === "localhost" || hostname === "127.0.0.1";
 }
 
 function buildContentUrls(path) {
@@ -2262,7 +2269,7 @@ function renderEntityContactTags(item, options = {}) {
     pushTag(`handle:${item.handle}`, `<span class="meta-pill">${item.handle}</span>`);
   }
 
-  for (const link of Array.isArray(item.links) ? item.links : []) {
+  for (const link of dedupeRenderableLinks(Array.isArray(item.links) ? item.links : [])) {
     if (!link?.href || !link?.label) {
       continue;
     }
@@ -2348,7 +2355,7 @@ function getProjectGallery(item) {
 }
 
 function getProjectLinks(item) {
-  const links = Array.isArray(item.links) ? item.links.filter((entry) => entry?.href && entry?.label) : [];
+  const links = dedupeRenderableLinks(Array.isArray(item.links) ? item.links : []);
 
   if (item.url) {
     links.unshift({
@@ -2358,7 +2365,73 @@ function getProjectLinks(item) {
     });
   }
 
-  return links;
+  return dedupeRenderableLinks(links);
+}
+
+function dedupeRenderableLinks(links) {
+  const deduped = [];
+  const seenByKey = new Map();
+
+  for (const link of Array.isArray(links) ? links : []) {
+    if (!link?.href || !link?.label) {
+      continue;
+    }
+
+    const key = buildRenderableLinkKey(link.href);
+    const existingIndex = seenByKey.get(key);
+
+    if (existingIndex == null) {
+      seenByKey.set(key, deduped.length);
+      deduped.push(link);
+      continue;
+    }
+
+    if (scoreRenderableLinkLabel(link.label) > scoreRenderableLinkLabel(deduped[existingIndex].label)) {
+      deduped[existingIndex] = link;
+    }
+  }
+
+  return deduped;
+}
+
+function buildRenderableLinkKey(href) {
+  try {
+    const url = new URL(resolveHref(href), window.location.href);
+    const normalizedPath = url.pathname.replace(/\/+$/, "") || "/";
+    return `${url.hostname.replace(/^www\./i, "").toLowerCase()}${normalizedPath}${url.search}`;
+  } catch {
+    return String(href).trim().toLowerCase();
+  }
+}
+
+function hasRenderableInitialContent(node) {
+  if (!node) {
+    return false;
+  }
+
+  if (node.children.length > 0) {
+    return true;
+  }
+
+  return node.textContent.trim().length > 0;
+}
+
+function scoreRenderableLinkLabel(label) {
+  const normalized = String(label || "").trim().toLowerCase();
+
+  if (!normalized) {
+    return 0;
+  }
+
+  if (normalized === "telegram" || normalized === "instagram" || normalized === "linkedin" || normalized === "github" || normalized === "x / twitter") {
+    return 3;
+  }
+
+  if (normalized.includes(".com") || normalized.includes(".me") || normalized.includes(".org") || normalized.includes(".net")) {
+    return 1;
+  }
+
+  return 2;
 }
 
 function getProjectPrimaryUrl(item) {

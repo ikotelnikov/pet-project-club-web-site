@@ -163,44 +163,29 @@ a {
 }
 
 .topbar {
+  position: sticky;
+  top: 0;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 18px;
   align-items: center;
   overflow: visible;
-  padding: 14px 16px;
+  padding: 14px clamp(16px, 3vw, 32px);
   margin-bottom: 18px;
   transition:
     background 180ms ease,
     border-color 180ms ease,
     box-shadow 180ms ease,
-    border-radius 180ms ease,
-    padding 180ms ease;
+    border-radius 180ms ease;
   z-index: 20;
 }
 
 .topbar.is-sticky {
-  position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 12px clamp(16px, 3vw, 32px);
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-radius: 0;
   background: linear-gradient(180deg, rgba(8, 12, 18, 0.96), rgba(8, 12, 18, 0.92));
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(18px);
   z-index: 60;
-}
-
-.topbar-spacer {
-  height: 0;
-  pointer-events: none;
-  transition: height 180ms ease;
 }
 
 .brand {
