@@ -33,10 +33,17 @@
       ]
     },
     "me": {
-      "handle": null,
-      "name": "Margarita Medonecka",
-      "role": "preduzetnica, ekspertkinja u oblasti digitalne ekonomije i Web3, osnivačica kluba «Investeja»",
-      "bio": "Specijalizovana za pokretanje i razvoj projekata u oblasti blockchaina, tokenizacije i digitalnih servisa. Kreirala je ekosistem koji objedinjuje obrazovanje, kripto- alate i praktičnu implementaciju tehnologija kroz sopstvena rešenja, uključujući kripto-trenažer na smart ugovoru i digitalne proizvode.\n\nRadi na spoju tehnologije i obrazovanja, pomažući ljudima – posebno ženama 45+ – da se prilagode novoj digitalnoj realnosti, savladaju Web3 i izgrade sopstvene izvore prihoda.\n\nIma praktično iskustvo u pokretanju IT projekata, automatizaciji poslovnih procesa, izgradnji prodajnih levaka i partnerskih sistema. Upravljala je razvojem međunarodnog projekta sa pravnom osnovom u Crnoj Gori i sopstvenom digitalnom infrastrukturom."
+      "handle": "@SuperDriver8",
+      "name": "Маргарита Медонецкая",
+      "role": "preduzetnica, stručnjak za digitalnu ekonomiju i Web3, osnivač kluba «Investeya»",
+      "bio": "Specijalizovana za pokretanje i razvoj projekata u oblasti blokčeina, tokenizacije i digitalnih servisa. Kreirala je ekosistem koji objedinjue obuku, kripto- instrumente i praktičnu primjenu tehnologija kroz sopstvena rješenja, uključujući kripto-trenažer na smart-kontaktu i digitalne proizvode.\n\nRadi na spoju tehnologija i obrazovanja, pomažući ljudima — naročito ženama starijim od 45 godina — da se prilagode novoj digitalnoj stvarnosti, savladaju Web3 i izgrade sopstvene izvore prihoda.\n\nIma praktično iskustvo u pokretanju IT projekata, automatizaciji poslovnih procesa, izgradnji prodajnih levaka i partnerskih sistema. Rukovodi razvojem međunarodnog projekta sa pravnom bazom u Crnoj Gori i sopstvenom digitalnom infrastrukturom.",
+      "links": [
+        {
+          "label": "Telegram",
+          "href": "https://t.me/SuperDriver8",
+          "external": true
+        }
+      ]
     },
     "es": {
       "handle": null,
@@ -48,7 +55,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   },
   "photo": {
