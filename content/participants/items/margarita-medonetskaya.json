@@ -20,10 +20,17 @@
       ]
     },
     "de": {
-      "handle": null,
+      "handle": "@SuperDriver8",
       "name": "Margarita Medonetskaya",
-      "role": "Unternehmerin, Expertin für digitale Wirtschaft und Web3, Gründerin des Clubs „Investeya“",
-      "bio": "Spezialisiert auf die Lancierung und Entwicklung von Projekten im Bereich Blockchain, Tokenisierung und digitale Dienste. Hat ein Ökosystem geschaffen, das Bildung, Krypto-Instrumente und die praktische Implementierung von Technologien durch eigene Lösungen verbindet, einschließlich eines Krypto-Trainers auf Smart-Contract-Basis und digitaler Produkte.\n\nArbeitet an der Schnittstelle von Technologie und Bildung, hilft Menschen – insbesondere Frauen über 45 – sich an die neue digitale Realität anzupassen, Web3 zu erlernen und eigene Einkommensquellen aufzubauen.\n\nVerfügt über praktische Erfahrung in der Einführung von IT-Projekten, der Automatisierung von Geschäftsprozessen, dem Aufbau von Verkaufstrichtern und Partnersystemen. Leitet die Weiterentwicklung eines internationalen Projekts mit rechtlicher Basis in Montenegro und eigener digitaler Infrastruktur."
+      "role": "Unternehmerin, Expertin im Bereich der digitalen Wirtschaft und Web3, Gründerin des Clubs «Investeya»",
+      "bio": "Spezialisiert auf den Start und die Entwicklung von Projekten im Bereich Blockchain, Tokenisierung und digitale Dienstleistungen. Hat ein Ökosystem geschaffen, das Ausbildung, Krypto-Tools und praktische Implementierung von Technologien durch eigene Lösungen vereint, einschließlich eines Krypto-Trainers auf Smart-Contract-Basis und digitaler Produkte.\n\nArbeitet an der Schnittstelle von Technologie und Bildung, unterstützt Menschen – insbesondere Frauen ab 45 – dabei, sich an die neue digitale Realität anzupassen, Web3 zu erlernen und eigene Einkommensquellen aufzubauen.\n\nVerfügt über praktische Erfahrung im Starten von IT-Projekten, der Automatisierung von Geschäftsprozessen, im Aufbau von Verkaufstrichtern und Partnerschaftssystemen. Leitet die Entwicklung eines internationalen Projekts mit juristischer Basis in Montenegro und eigener digitaler Infrastruktur.",
+      "links": [
+        {
+          "label": "Telegram",
+          "href": "https://t.me/SuperDriver8",
+          "external": true
+        }
+      ]
     },
     "me": {
       "handle": null,
@@ -40,7 +47,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale",
+    "de": "machine",
     "me": "stale",
     "es": "stale"
   },
