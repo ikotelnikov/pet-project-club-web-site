@@ -23,12 +23,19 @@
       "name": "Margarita Medoneckaja",
       "role": "preduzetnica, ekspertkinja za digitalnu ekonomiju i Web3, osnivačica kluba „Investeya“",
       "bio": "Specijalizovana za pokretanje i razvoj projekata u oblasti blokčeina, tokenizacije i digitalnih servisa. Kreirala je ekosistem koji povezuje obrazovanje, kripto-instrumente i praktičnu primjenu tehnologija kroz sopstvena rješenja, uključujući kripto-trenažer na pametnom ugovoru i digitalne proizvode. Radi na spoju tehnologije i obrazovanja, pomažući ljudima — posebno ženama starijim od 45 godina — da se prilagode novoj digitalnoj stvarnosti, savladaju Web3 i izgrade sopstvene izvore prihoda. Ima praktično iskustvo u pokretanju IT projekata, automatizaciji poslovnih procesa, pravljenju prodajnih lijevaka i partnerskih sistema. Upravljanje razvojem međunarodnog projekta sa pravnom osnovom u Crnoj Gori i sopstvenom digitalnom infrastrukturom."
+    },
+    "es": {
+      "handle": null,
+      "name": "Margarita Medonetskaya",
+      "role": "emprendedora, experta en economía digital y Web3, fundadora del club «Investeya»",
+      "bio": "Se especializa en el lanzamiento y desarrollo de proyectos en el ámbito de blockchain, tokenización y servicios digitales. Ha creado un ecosistema que une formación, herramientas cripto e implementación práctica de tecnologías a través de soluciones propias, incluyendo un simulador cripto basado en contratos inteligentes y productos digitales. Trabaja en la intersección de tecnología y educación, ayudando a las personas — especialmente mujeres de más de 45 años — a adaptarse a la nueva realidad digital, dominar Web3 y construir sus propias fuentes de ingresos. Posee experiencia práctica en el lanzamiento de proyectos IT, automatización de procesos empresariales, creación de embudos de venta y sistemas de socios. Lidera el desarrollo de un proyecto internacional con base legal en Montenegro y su propia infraestructura digital."
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   },
   "photo": {
     "src": "assets/uploads/272981189/474-photo-474-AQADuxNrG_ojCEt-.jpg",
