@@ -285,6 +285,7 @@ function initStickyTopbar() {
   }
 
   let isSticky = false;
+  let stickySettleTimeout = null;
 
   const syncStickyBleed = () => {
     const rect = topbar.getBoundingClientRect();
@@ -302,8 +303,22 @@ function initStickyTopbar() {
       return;
     }
 
+    window.clearTimeout(stickySettleTimeout);
+
+    if (!shouldStick) {
+      topbar.classList.remove("is-sticky-settled");
+    }
+
     isSticky = shouldStick;
     topbar.classList.toggle("is-sticky", shouldStick);
+
+    if (shouldStick) {
+      stickySettleTimeout = window.setTimeout(() => {
+        if (isSticky) {
+          topbar.classList.add("is-sticky-settled");
+        }
+      }, 500);
+    }
   };
 
   syncStickyState();

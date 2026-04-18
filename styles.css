@@ -212,12 +212,15 @@ a {
   left: calc(var(--topbar-bleed-left, 0px) * -1);
   right: calc(var(--topbar-bleed-right, 0px) * -1);
   border-radius: 0;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
   background: linear-gradient(180deg, rgba(8, 12, 18, 0.96), rgba(8, 12, 18, 0.92));
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(18px);
+}
+
+.topbar.is-sticky-settled::before {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
 }
 
 .brand {
