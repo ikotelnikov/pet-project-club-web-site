@@ -46,10 +46,33 @@
         "Regularity, structure, support, and peer pressure help move the project forward"
       ],
       "location": "Monteco"
+    },
+    "de": {
+      "title": "Polako Accelerator",
+      "summary": "Fitnessstudio für Ihre Nebenprojekte",
+      "detailsHtml": "<p>Der Polako Accelerator ist ein Ort, an dem Sie regelmäßig Ihr Projekt \"trainieren\", genau wie man ins Fitnessstudio geht, um seinen Körper zu trainieren.</p><p><strong>📍 Offline in Monteco</strong><br><strong>🕔 Abends, von 17:00 bis 20:00 Uhr</strong><br><strong>📅 1–5 Mal pro Woche — Sie wählen selbst</strong></p><p><strong>💡 Wie es funktioniert</strong><br>Sie kommen mit Ihrer Idee oder Ihrem Projekt — und bleiben nicht allein damit.</p><ul><li>Wir besprechen gemeinsam Ihre Idee</li><li>Mit Hilfe von YPMO verwandeln wir sie in einen klaren Plan</li><li>Sie arbeiten den Plan mit meiner Unterstützung ab</li><li>Und mit der Unterstützung anderer Teilnehmer</li></ul><p>Das sind keine Vorträge und kein Kurs.<br>Das ist regelmäßige Arbeit an Ihrem Projekt in der richtigen Umgebung.</p><p><strong>⚙️ Arbeitsformat (einfaches Scrum)</strong><br>Jedes Projekt arbeitet in kurzen Iterationen:</p><ul><li>📅 Iteration = 5 Arbeitssitzungen</li><li>🧠 Tag 1 — Aufgabenplanung (Backlog)</li><li>🛠 Tage 2–4 — Arbeit + kurze Diskussionen</li><li>🎤 Tag 5 — Demo für andere Teilnehmer</li></ul><p>Wichtig:<br>Diese 5 Tage können sein:</p><ul><li>in 1 Woche (wenn Sie oft kommen)</li><li>oder in einem Monat (wenn 1–2 Mal pro Woche)</li></ul><p>👉 Sie bestimmen selbst das Tempo — das System passt sich Ihnen an.</p><p><strong>🎯 Was Sie bekommen</strong><br>Unbegrenzter Zugang zu YPMO<br>— Ihr KI-Assistent für Produktarbeit</p><ul><li>Meine Teilnahme (Senior Product Manager) — bis zu 2 Stunden persönliche Arbeit pro Monat an Ihrem Projekt</li><li>Coworking-Umgebung — bis zu 5 Tage pro Woche, 17:00–20:00 Uhr — Arbeitsplätze + Möglichkeit für Meetings</li><li>Hilfe bei der Planung — wir verwandeln Chaos in einen klaren Fahrplan</li><li>Community und Unterstützung — Feedback, Ideen, Hilfe von anderen Teilnehmern — eine normale Arbeitsatmosphäre ohne Info-Business</li></ul><p><strong>🤝 Was den Wert ausmacht</strong><br>Normale Arbeit → bringt jetzt Geld<br>Nebenprojekt → bietet Chance für die Zukunft</p><p>Aber es gibt ein Problem:<br>👉 Projekte sterben fast immer allein aus</p><p>Der Polako Accelerator löst das durch:</p><ul><li>Regelmäßigkeit</li><li>Struktur</li><li>Unterstützung</li><li>und den Druck der Umgebung (im positiven Sinn)</li></ul><p>🧠 Kurz gesagt<br>Das ist keine Ausbildung.<br>Das ist keine Beratung.<br>Das ist ein System, in dem Ihr Projekt ins Rollen kommt.</p>",
+      "points": [
+        "Offline in Monteco",
+        "Abends, von 17:00 bis 20:00 Uhr",
+        "1–5 Mal pro Woche — Sie wählen selbst",
+        "Arbeitsformat: Einfaches Scrum",
+        "Iteration = 5 Arbeitssitzungen",
+        "Tag 1 — Aufgabenplanung (Backlog)",
+        "Tage 2–4 — Arbeit + kurze Diskussionen",
+        "Tag 5 — Demo für andere Teilnehmer",
+        "Unbegrenzter Zugang zu YPMO — Ihr KI-Assistent für Produktarbeit",
+        "Teilnahme eines Senior Product Manager — bis zu 2 Stunden persönliche Arbeit pro Monat",
+        "Coworking-Umgebung — bis zu 5 Tage pro Woche, 17:00–20:00 Uhr",
+        "Hilfe bei der Planung — wir verwandeln Chaos in einen klaren Fahrplan",
+        "Community und Unterstützung — Feedback, Ideen, Hilfe von anderen Teilnehmern",
+        "Regelmäßigkeit, Struktur, Unterstützung und der Umgebungsdruck helfen, das Projekt voranzubringen"
+      ],
+      "location": "Monteco"
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   },
   "photo": {
     "src": "assets/uploads/272981189/533-photo-533-AQAD9RJrGzeGGUt-.jpg",
