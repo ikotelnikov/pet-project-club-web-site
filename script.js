@@ -1118,6 +1118,7 @@ async function renderProjectsPage() {
     readIndexedItems("projects"),
     readIndexedItems("participants"),
   ]);
+  const sortedProjectItems = sortItemsByFeaturedRank(projectItems);
   const ownerMap = new Map(participantItems.map((item) => [item.slug, item]));
   const listCopy = projectsData.list || {};
   const pageSize = Number(listCopy.pageSize || 6);
@@ -1177,10 +1178,10 @@ async function renderProjectsPage() {
     const normalizedSearch = currentSearch.toLowerCase();
 
     if (!normalizedSearch) {
-      return projectItems.slice();
+      return sortedProjectItems.slice();
     }
 
-    return projectItems.filter((item) => {
+    return sortedProjectItems.filter((item) => {
       const ownerNames = (item.ownerSlugs || [])
         .map((slug) => ownerMap.get(slug)?.name || ownerMap.get(slug)?.handle || slug)
         .join(" ");
@@ -1259,7 +1260,7 @@ async function renderParticipantsPage() {
     readJson("participants/page.json"),
     readIndexedItems("participants"),
   ]);
-  const pageSize = Number(participantsData.pageSize || 9);
+  const sortedParticipantItems = sortItemsByFeaturedRank(participantItems);
   const title = participantsData.title || t("participants.title", "Pet Project Club participants");
   const description = participantsData.description || t("participants.description", "To join the participants list, edit your data, or remove it, contact the organizer.");
 
@@ -1272,62 +1273,19 @@ async function renderParticipantsPage() {
         <h1>${title}</h1>
         <p class="card-copy">${description}</p>
       </div>
-      <div class="people-grid" id="participants-grid"></div>
-      <div class="list-sentinel" id="participants-sentinel" aria-hidden="true"></div>
+      <div class="people-grid" id="participants-grid">${sortedParticipantItems.map(renderPersonCard).join("")}</div>
     </section>
   `;
 
   const grid = document.getElementById("participants-grid");
-  const sentinel = document.getElementById("participants-sentinel");
 
-  if (!grid || !sentinel) {
+  if (!grid) {
     return;
   }
 
-  let renderedCount = 0;
-
-  const renderNextBatch = () => {
-    const nextItems = participantItems.slice(renderedCount, renderedCount + pageSize);
-
-    if (!nextItems.length) {
-      sentinel.remove();
-      return false;
-    }
-
-    const wrapper = document.createElement("div");
-    wrapper.innerHTML = nextItems.map(renderPersonCard).join("");
-    const cards = [...wrapper.children];
-    cards.forEach((card) => {
-      card.classList.add("visible");
-      grid.appendChild(card);
-    });
-    renderedCount += nextItems.length;
-
-    if (renderedCount >= participantItems.length) {
-      sentinel.remove();
-    }
-
-    return true;
-  };
-
-  renderNextBatch();
-
-  if (!sentinel.isConnected) {
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    if (!entries.some((entry) => entry.isIntersecting)) {
-      return;
-    }
-
-    const hasMore = renderNextBatch();
-    if (!hasMore || !sentinel.isConnected) {
-      observer.disconnect();
-    }
-  }, { rootMargin: "200px 0px" });
-
-  observer.observe(sentinel);
+  grid.querySelectorAll(".reveal").forEach((node) => {
+    node.classList.add("visible");
+  });
 }
 
 async function renderParticipantDetailPage() {
@@ -2059,6 +2017,7 @@ function renderPersonCard(item) {
   const points = Array.isArray(item.points) ? item.points : [];
   const handle = item.handle || item.slug || "participant";
   const name = item.name || item.slug || t("participants.card.untitled", "Untitled participant");
+  const badge = item.badge || "";
   const role = item.role || t("participants.card.roleFallback", "Role not specified");
   const bio = item.bio || "";
   const href = buildEntityDetailHref("participants", item.slug);
@@ -2075,6 +2034,7 @@ function renderPersonCard(item) {
   return `
     <article class="person-card reveal">
       ${photo}
+      ${badge ? `<span class="person-badge">${badge}</span>` : ""}
       <h3><a class="person-name-link" href="${href}">${name}</a></h3>
       <p class="person-role">${role}</p>
       ${previewBio ? `<p class="person-copy">${previewBio}${bio.length > previewBio.length ? ` <a class="read-more-link" href="${href}">${t("participants.card.readMore", "more -->")}</a>` : ""}</p>` : ""}
@@ -2086,6 +2046,23 @@ function renderPersonCard(item) {
       ${footerBits ? `<div class="person-footer">${footerBits}</div>` : ""}
     </article>
   `;
+}
+
+function sortItemsByFeaturedRank(items = []) {
+  return [...items].sort((left, right) => {
+    const leftRank = Number.isFinite(Number(left?.featuredRank)) ? Number(left.featuredRank) : Number.POSITIVE_INFINITY;
+    const rightRank = Number.isFinite(Number(right?.featuredRank)) ? Number(right.featuredRank) : Number.POSITIVE_INFINITY;
+
+    if (leftRank !== rightRank) {
+      return leftRank - rightRank;
+    }
+
+    return String(left?.title || left?.name || left?.slug || "").localeCompare(
+      String(right?.title || right?.name || right?.slug || ""),
+      undefined,
+      { sensitivity: "base" }
+    );
+  });
 }
 
 function renderProjectPreviewCard(item, ownerMap = new Map()) {

@@ -1,6 +1,7 @@
 {
   "sourceLocale": "ru",
   "slug": "project-club-site-bot",
+  "featuredRank": 1,
   "title": "Pet Project Club (сообщество + группа + сайт + бот)",
   "status": "active build",
   "stack": "telegram / openai / cloudflare worker / github pages",
