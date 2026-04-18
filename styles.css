@@ -163,7 +163,7 @@ a {
 
 .topbar {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 18px;
@@ -1213,11 +1213,14 @@ body.lightbox-open {
 }
 
 .terminal-body p {
-  min-height: calc(2em + 10px);
+  line-height: 1.5;
+  min-height: 3em;
   margin: 0 0 14px;
 }
 
 .terminal-line-buffer {
+  display: block;
+  height: 1.5em;
   visibility: hidden;
 }
 
@@ -2043,7 +2046,7 @@ body.lightbox-open {
 
   .page-shell {
     width: min(100vw - 20px, 1180px);
-    padding-top: 10px;
+    padding-top: 0;
     padding-bottom: 32px;
   }
 
@@ -2069,6 +2072,7 @@ body.lightbox-open {
   }
 
   .topbar {
+    top: env(safe-area-inset-top, 0px);
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
   }
