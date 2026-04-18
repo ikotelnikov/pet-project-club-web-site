@@ -49,8 +49,8 @@
     },
     "de": {
       "title": "Treuhandverwaltung in Montenegro",
-      "summary": "In den letzten 3 Jahren entwickle ich ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnraum in ein profitables Kurzzeitvermietungsgeschäft zu verwandeln: von der Vorbereitung der Immobilie mit Homestaging und Unterstützung bei der Erlangung der Lizenz bis hin zur vollständigen operativen Verwaltung.",
-      "detailsHtml": "<p>In den letzten 3 Jahren entwickle ich ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnraum in ein profitables Kurzzeitvermietungsgeschäft zu verwandeln: von der Vorbereitung der Immobilie mit Homestaging und Unterstützung bei der Erlangung der Lizenz bis hin zur vollständigen operativen Verwaltung.</p><p>Ich biete Schulungen und Beratungen für einen erfolgreichen Start auf Booking und Airbnb unter den heutigen Bedingungen an.</p>",
+      "summary": "Seit 3 Jahren entwickle ich ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnraum in ein profitables Geschäft für Kurzzeitvermietung zu verwandeln: von der Vorbereitung des Objekts mit Homestaging und Unterstützung bei der Lizenzierung bis hin zum vollständigen operativen Management.",
+      "detailsHtml": "<p>Seit 3 Jahren entwickle ich ein Projekt zur professionellen Monetarisierung von Immobilien für russischsprachige Eigentümer. Ich helfe dabei, Wohnraum in ein profitables Geschäft für Kurzzeitvermietung zu verwandeln: von der Vorbereitung des Objekts mit Homestaging und Unterstützung bei der Lizenzierung bis hin zum vollständigen operativen Management.</p><p>Ich biete Schulungen und Beratungen für einen effektiven Start auf Booking und Airbnb unter modernen Bedingungen an.</p>",
       "links": [
         {
           "label": "Telegram",
@@ -101,7 +101,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale",
+    "de": "machine",
     "me": "stale",
     "es": "stale"
   }
