@@ -60,7 +60,7 @@
       "handle": "designer_konstantin_yugatov",
       "name": "Konstantin Yugatov",
       "role": "Architekt und Designer",
-      "bio": "Architekt und Designer mit 15 Jahren Erfahrung in der Gestaltung von Wohnräumen. Ich unterrichte Architektur und Design für Kinder und Erwachsene – offline an der Che Design School (Montenegro) und online. Meine Methode geht über die Form hinaus und umfasst auch die innere Unterstützung. Ich entwickle eigene Kurse, die architektonische Praxis und Psychologie verbinden. Ich integriere Künstliche Intelligenz in die Projektplanung und Bildungsformate, um die Horizonte des Denkens zu erweitern und Fähigkeiten durch bewusste Herangehensweisen zu fördern. Ich leite Mentoring-Projekte: „Gestalte dein Trauminnenraum“ – für alle, die den Raum, in dem sie gut leben möchten, selbst gestalten wollen. „Baue dein Traumhaus“ – eine Schritt-für-Schritt-Begleitung von der Idee bis zur Umsetzung. Außerdem biete ich Beratungen und Projektanalysen an – ich helfe, Schwachstellen zu erkennen, Lösungen zu finden und das Design klar und ehrlich zu gestalten. Ich betreibe Instagram und Telegram – ich teile Erfahrungen, visuelles Denken, Einrichtungstipps und praktische Werkzeuge für Designer und Kunden. Ich arbeite an der Schnittstelle von Ästhetik und Sinn. Ich lasse mich vom skandinavischen und japanischen Minimalismus inspirieren und kreiere Räume, in denen Menschen ganz sie selbst sein können. Persönliches: Ich laufe gern. Das ist meine Meditation in Bewegung. Beim Laufen höre ich die Stille, in der klare Gedanken und neue Ideen geboren werden.",
+      "bio": "Architekt und Designer mit 15 Jahren Erfahrung in der Planung von Wohnumgebungen.\n\nIch unterrichte Architektur und Design für Kinder und Erwachsene – offline an der Che Design School (Montenegro) und online.\nMeine Methode geht nicht nur um Form, sondern auch um innere Stütze.\n\nIch entwickle eigene Kurse, in denen ich architektonische Praxis und Psychologie verbinde.\nIch integriere künstliche Intelligenz in Planungs- und Bildungsformate – um Denkweisen zu erweitern und Fähigkeiten durch einen bewussten Ansatz zu verbessern.\n\nIch leite Mentoring-Projekte:\n🔹 „Gestalte dein Trauminterieur“ – für diejenigen, die selbst einen Raum entwerfen wollen, in dem man gut leben kann.\n🔹 „Baue dein Traumhaus“ – Schritt-für-Schritt-Begleitung von der Idee bis zur Umsetzung.\n\nAußerdem biete ich Beratungen und Projektanalysen an – ich helfe dabei, Schwachstellen zu erkennen, Lösungen zu finden und das Design verständlich und ehrlich zu machen.\n\nIch betreibe Instagram und Telegram – teile Erfahrungen, visuelles Denken, Interior-Tricks und praktische Werkzeuge für Designer und Kunden.\n\nIch arbeite an der Schnittstelle von Ästhetik und Sinn. Ich lasse mich vom skandinavischen und japanischen Minimalismus inspirieren und schaffe Räume, in denen es dem Menschen leicht fällt, er selbst zu sein.\n\nZu Persönlichem: Ich laufe. Das ist meine Meditation in Bewegung. Beim Laufen höre ich die Stille, in der klare Gedanken und neue Ideen entstehen.",
       "links": [
         {
           "label": "Instagram (auf Russisch)",
@@ -78,7 +78,7 @@
           "external": true
         },
         {
-          "label": "Chat bei Telegram (über Innendesign und Renovierung)",
+          "label": "Telegram-Chat (über Innendesign und Renovierung)",
           "href": "https://t.me/+KE9yPxolVIczMmVi",
           "external": true
         }
@@ -87,7 +87,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale"
+    "de": "machine"
   },
   "photo": {
     "src": "assets/uploads/272981189/358-photo-358-AQADeRVrGw33yEp9.jpg",
