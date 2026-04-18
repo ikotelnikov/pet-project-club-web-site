@@ -2125,16 +2125,21 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
     `
     : "";
   const footerBits = renderEntityContactTags(item, { includeTags: true });
+  const detailBadge = item.badge
+    ? `<span class="person-badge participant-detail-badge">${item.detailBadge || t("participant-detail.founderBadge", "Founder of Pet Project Club")}</span>`
+    : "";
+  const bioHtml = normalizeParticipantDetailText(item);
 
   return `
     <section class="participant-detail-shell reveal">
       <div class="participant-detail-head">
         <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || t("participants.detail.backLabel", "← Back to participants")}</a>
         ${photo}
+        ${detailBadge}
         <h1 class="participant-detail-title">${item.name || item.slug}</h1>
         ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
         ${footerBits ? `<div class="participant-detail-meta">${footerBits}</div>` : ""}
-        ${item.bio ? `<p class="person-copy participant-detail-bio">${item.bio}</p>` : ""}
+        ${bioHtml ? `<div class="project-richtext participant-detail-bio">${bioHtml}</div>` : ""}
       </div>
       ${Array.isArray(item.points) && item.points.length ? `
         <div class="detail-list-shell">
@@ -2153,6 +2158,21 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
       </div>
     </section>
   `;
+}
+
+function normalizeParticipantDetailText(item) {
+  const rawBioHtml = typeof item.bioHtml === "string" ? item.bioHtml.trim() : "";
+  const rawBio = typeof item.bio === "string" ? item.bio.trim() : "";
+
+  if (rawBioHtml) {
+    return looksLikeHtml(rawBioHtml) ? rawBioHtml : plainTextToHtml(rawBioHtml);
+  }
+
+  if (!rawBio) {
+    return "";
+  }
+
+  return plainTextToHtml(rawBio);
 }
 
 function renderProjectDetail(item, pageData, participantsBySlug, relatedMeetings) {

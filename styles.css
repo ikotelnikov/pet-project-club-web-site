@@ -1701,6 +1701,10 @@ body.lightbox-open {
   margin: 0 0 14px;
 }
 
+.participant-detail-badge {
+  margin-bottom: 14px;
+}
+
 .participant-detail-meta {
   display: flex;
   flex-wrap: wrap;

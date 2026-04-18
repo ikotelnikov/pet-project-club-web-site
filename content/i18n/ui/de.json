@@ -79,7 +79,8 @@
     },
     "participant-detail": {
       "title": "Teilnehmer | Pet Project Club Budva",
-      "description": "Teilnehmer-Detailseite des Pet Project Club."
+      "description": "Teilnehmer-Detailseite des Pet Project Club.",
+      "founderBadge": "Gruender des Pet Project Club"
     },
     "news": {
       "title": "Neuigkeiten | Pet Project Club Budva",
