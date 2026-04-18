@@ -50,5 +50,15 @@
   },
   "translationStatus": {
     "en": "machine"
-  }
+  },
+  "photo": {
+    "src": "assets/uploads/272981189/533-photo-533-AQAD9RJrGzeGGUt-.jpg",
+    "alt": "Полако Акселератор"
+  },
+  "gallery": [
+    {
+      "src": "assets/uploads/272981189/533-photo-533-AQAD9RJrGzeGGUt-.jpg",
+      "alt": "Полако Акселератор"
+    }
+  ]
 }
