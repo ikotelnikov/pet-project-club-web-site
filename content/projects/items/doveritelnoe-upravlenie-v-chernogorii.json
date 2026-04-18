@@ -19,11 +19,6 @@
       "external": true
     },
     {
-      "label": "Telegram",
-      "href": "https://t.me/airbnbtop",
-      "external": true
-    },
-    {
       "label": "instagram.com",
       "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
       "external": true
@@ -40,11 +35,6 @@
       "summary": "For the past 3 years, I have been developing a project for professional monetization of real estate for Russian-speaking owners. I help turn housing into a profitable business through short-term rentals: from preparing the property with home staging and assistance in obtaining a license to full operational management.",
       "detailsHtml": "<p>For the past 3 years, I have been developing a project for professional monetization of real estate for Russian-speaking owners. I help turn housing into a profitable business through short-term rentals: from preparing the property with home staging and assistance in obtaining a license to full operational management.</p><p>I conduct training and consultations on effective launching on Booking and Airbnb in current conditions.</p>",
       "links": [
-        {
-          "label": "Telegram",
-          "href": "https://t.me/airbnbtop",
-          "external": true
-        },
         {
           "label": "Telegram",
           "href": "https://t.me/airbnbtop",
@@ -68,11 +58,6 @@
           "external": true
         },
         {
-          "label": "Telegram",
-          "href": "https://t.me/airbnbtop",
-          "external": true
-        },
-        {
           "label": "instagram.com",
           "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
           "external": true
@@ -84,11 +69,6 @@
       "summary": "Poslednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za ruski govoreće vlasnike. Pomažem u pretvaranju stanova u profitabilan posao na kratkoročnom izdavanju: od pripreme objekta sa home stagingom i pomoći pri dobijanju licence do pune operativne uprave.",
       "detailsHtml": "<p>Poslednje 3 godine razvijam projekat profesionalne monetizacije nekretnina za ruski govoreće vlasnike. Pomažem u pretvaranju stanova u profitabilan posao na kratkoročnom izdavanju: od pripreme objekta sa home stagingom i pomoći pri dobijanju licence do pune operativne uprave.</p><p>Održavam obuke i konsultacije o efikasnom pokretanju na Booking i Airbnb u savremenim uslovima.</p>",
       "links": [
-        {
-          "label": "Telegram",
-          "href": "https://t.me/airbnbtop",
-          "external": true
-        },
         {
           "label": "Telegram",
           "href": "https://t.me/airbnbtop",
@@ -115,19 +95,14 @@
           "label": "Telegram",
           "href": "https://t.me/airbnbtop",
           "external": true
-        },
-        {
-          "label": "instagram.com",
-          "href": "https://www.instagram.com/tatyana_nirman?igsh=ODNjeXBkdWZneGp4",
-          "external": true
         }
       ]
     }
   },
   "translationStatus": {
-    "en": "machine",
-    "de": "machine",
-    "me": "machine",
+    "en": "stale",
+    "de": "stale",
+    "me": "stale",
     "es": "stale"
   }
 }
