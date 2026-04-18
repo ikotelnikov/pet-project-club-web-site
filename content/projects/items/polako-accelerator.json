@@ -68,11 +68,34 @@
         "Regelmäßigkeit, Struktur, Unterstützung und der Umgebungsdruck helfen, das Projekt voranzubringen"
       ],
       "location": "Monteco"
+    },
+    "me": {
+      "title": "Polako Akcelerator",
+      "summary": "Teretana za vaše pet-projekte",
+      "detailsHtml": "<p>Polako Akcelerator je mjesto gdje redovno dolazite da \"trenirate\" svoj projekat isto kao što ljudi idu u teretanu da treniraju tijelo.</p><p><strong>📍 U živo u Monteku</strong><br><strong>🕔 Uveče, od 17:00 do 20:00</strong><br><strong>📅 1–5 puta nedeljno — birate sami</strong></p><p><strong>💡 Kako to funkcioniše</strong><br>Dolazite sa svojom idejom ili projektom — i ne ostajete sami sa njim.</p><ul><li>Zajedno diskutujemo o vašoj ideji</li><li>Uz pomoć YPMO pretvaramo je u jasan plan</li><li>Napredujete po planu sa mojom podrškom</li><li>I uz podršku drugih učesnika</li></ul><p>Ovo nisu predavanja niti kurs.<br>Ovo je redovan rad na vašem projektu u pravom okruženju.</p><p><strong>⚙️ Format rada (jednostavan Scrum)</strong><br>Svaki projekat radi u kratkim iteracijama:</p><ul><li>📅 Iteracija = 5 radnih sesija</li><li>🧠 Dan 1 — planiranje zadataka (backlog)</li><li>🛠 Dani 2–4 — rad + kratke diskusije</li><li>🎤 Dan 5 — demo za druge učesnike</li></ul><p>Važno:<br>ovih 5 dana može proći:</p><ul><li>za 1 sedmicu (ako dolazite često)</li><li>ili za mjesec dana (ako dolazite 1–2 puta nedjeljno)</li></ul><p>👉 Sami određujete tempo — sistem se prilagođava vama.</p><p><strong>🎯 Šta dobijate</strong><br>Neograničen pristup YPMO<br>— vašem AI-asistentu za rad na proizvodu</p><ul><li>Moje učešće (Senior Product Manager) — do 2 sata mesečno ličnog rada na vašem projektu</li><li>Koworking okruženje — do 5 dana nedeljno, 17:00–20:00 — radna mesta + mogućnost video poziva</li><li>Pomoć u planiranju — pretvaramo haos u jasan roadmap</li><li>Zajednica i podrška — povratne informacije, ideje, pomoć od drugih učesnika — normalna radna atmosfera bez info biznisa</li></ul><p><strong>🤝 Koja je vrednost</strong><br>Običan rad → donosi novac sada<br>Pet-projekat → daje šansu za budućnost</p><p>Ali postoji problem:<br>👉 sami projekti gotovo uvijek \"umiru\"</p><p>Polako Akcelerator rešava ovo kroz:</p><ul><li>regularnost</li><li>strukturu</li><li>podršku</li><li>i pritisak okruženja (u dobrom smislu)</li></ul><p>🧠 Ukratko<br>Ovo nije edukacija.<br>Ovo nije konsultacija.<br>Ovo je sistem u kome vaš projekat počinje da se pokreće.</p>",
+      "points": [
+        "U živo u Monteku",
+        "Uveče, od 17:00 do 20:00",
+        "1–5 puta nedeljno — birate sami",
+        "Format rada: jednostavan Scrum",
+        "Iteracija = 5 radnih sesija",
+        "Dan 1 — planiranje zadataka (backlog)",
+        "Dani 2–4 — rad + kratke diskusije",
+        "Dan 5 — demo za druge učesnike",
+        "Neograničen pristup YPMO — vaš AI-asistent za rad na proizvodu",
+        "Učešće Senior Product Managera — do 2 sata mesečno ličnog rada",
+        "Koworking okruženje — do 5 dana nedeljno, 17:00–20:00",
+        "Pomoć u planiranju — pretvaramo haos u jasan roadmap",
+        "Zajednica i podrška — povratne informacije, ideje, pomoć od drugih učesnika",
+        "Regularnost, struktura, podrška i pritisak okruženja pomažu u napretku projekta"
+      ],
+      "location": "Monteko"
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   },
   "photo": {
     "src": "assets/uploads/272981189/533-photo-533-AQAD9RJrGzeGGUt-.jpg",
