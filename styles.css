@@ -2077,10 +2077,18 @@ body.lightbox-open {
     align-items: center;
   }
 
+  .brand {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .topbar::before {
     left: calc(var(--topbar-bleed-left, 0px) * -1);
     right: calc(var(--topbar-bleed-right, 0px) * -1);
     border-radius: 0;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
   }
 
   .topbar.is-sticky {
@@ -2101,6 +2109,10 @@ body.lightbox-open {
   }
 
   .topbar-actions {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    align-self: start;
     gap: 10px;
   }
 
@@ -2111,6 +2123,7 @@ body.lightbox-open {
   .main-nav {
     display: none;
     grid-column: 1 / -1;
+    grid-row: 2;
     width: 100%;
     padding-top: 10px;
   }
