@@ -33,7 +33,7 @@
     "en": {
       "title": "Trust Management in Montenegro",
       "summary": "For the past 3 years, I have been developing a project for professional monetization of real estate for Russian-speaking owners. I help turn housing into a profitable business through short-term rentals: from preparing the property with home staging and assistance in obtaining a license to full operational management.",
-      "detailsHtml": "<p>For the past 3 years, I have been developing a project for professional monetization of real estate for Russian-speaking owners. I help turn housing into a profitable business through short-term rentals: from preparing the property with home staging and assistance in obtaining a license to full operational management.</p><p>I conduct training and consultations on effective launching on Booking and Airbnb in current conditions.</p>",
+      "detailsHtml": "<p>For the past 3 years, I have been developing a project for professional monetization of real estate for Russian-speaking owners. I help turn housing into a profitable business through short-term rentals: from preparing the property with home staging and assistance in obtaining a license to full operational management.</p><p>I provide training and consultations on effective launching on Booking and Airbnb in modern conditions.</p>",
       "links": [
         {
           "label": "Telegram",
@@ -100,7 +100,7 @@
     }
   },
   "translationStatus": {
-    "en": "stale",
+    "en": "machine",
     "de": "stale",
     "me": "stale",
     "es": "stale"
