@@ -13,8 +13,8 @@
     "en": {
       "handle": "asker",
       "name": "Asker",
-      "role": "realtor and videographer",
-      "bio": "My name is Asker. I grew up in a family of realtors, worked as an agent and an appraiser. Now I shoot real estate to make sure it is properly appreciated. I use an FPV drone for an immersive effect and classic aerial filming. I also use neural networks in my work, so I can create videos remotely based on your references."
+      "role": "drone operator and real estate videographer",
+      "bio": "My name is Asker. I grew up in a family of realtors, worked as an agent and an appraiser. Now I shoot real estate so that it is properly valued. I use an FPV drone for an immersive effect and classic aerial photography. In my work, I also use neural networks, so I can create videos remotely based on your references."
     },
     "de": {
       "handle": "asker",
@@ -30,7 +30,7 @@
     }
   },
   "translationStatus": {
-    "en": "stale",
+    "en": "machine",
     "de": "stale",
     "me": "stale"
   }
