@@ -44,16 +44,22 @@
       ]
     },
     "me": {
-      "title": "regalestate.media",
+      "title": "Regal Estate Media",
       "status": "active",
       "stack": "drone videography, FPV tours, AI visualization",
-      "summary": "Ovo je priča o tome kako je hobi snimanja FPV dronom prerastao u produkciju elitnih nekretnina: dron-videografija, FPV ture i AI vizualizacija. Video kao alat za prodaju nekretnina i jačanje brenda agenata."
+      "summary": "Ovo je priča o tome kako je hobi snimanja FPV dronom prerasao u produkciju luksuznih nekretnina: dron-videografija, FPV ture i AI vizualizacija. Video kao alat za prodaju nekretnina i jačanje brenda agencija.",
+      "links": [
+        {
+          "label": "regalestate.media",
+          "href": "https://regalestate.media/"
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale"
+    "me": "machine"
   },
   "links": [
     {
