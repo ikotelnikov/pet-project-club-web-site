@@ -32,10 +32,16 @@
       ]
     },
     "de": {
-      "title": "regalestate.media",
+      "title": "Regal Estate Media",
       "status": "active",
       "stack": "Drohnenvideografie, FPV-Touren, KI-Visualisierung",
-      "summary": "Dies ist die Geschichte darüber, wie das Hobby des FPV-Drohnenfliegens zu einer Produktion für Luxusimmobilien wurde: Drohnenvideografie, FPV-Touren und KI-Visualisierung. Video als Werkzeug zum Verkauf von Immobilien und zur Stärkung der Marken von Agenturen."
+      "summary": "Dies ist die Geschichte, wie das Hobby des FPV-Drohnenfliegens zu einer Elite-Immobilienproduktion wurde: Drohnenvideografie, FPV-Touren und KI-Visualisierung. Video als Werkzeug für den Immobilienverkauf und zur Stärkung der Marken von Agenturen.",
+      "links": [
+        {
+          "label": "regalestate.media",
+          "href": "https://regalestate.media/"
+        }
+      ]
     },
     "me": {
       "title": "regalestate.media",
@@ -46,7 +52,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale",
+    "de": "machine",
     "me": "stale"
   },
   "links": [
