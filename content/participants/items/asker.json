@@ -15,9 +15,16 @@
       "name": "Asker",
       "role": "realtor and videographer",
       "bio": "My name is Asker. I grew up in a family of realtors, worked as an agent and an appraiser. Now I shoot real estate to make sure it is properly appreciated. I use an FPV drone for an immersive effect and classic aerial filming. I also use neural networks in my work, so I can create videos remotely based on your references."
+    },
+    "de": {
+      "handle": "asker",
+      "name": "Asker",
+      "role": "Makler und Videofilmer",
+      "bio": "Mein Name ist Asker. Ich bin in einer Maklerfamilie aufgewachsen, habe als Agent und Gutachter gearbeitet. Jetzt filme ich Immobilien so, dass sie ihren Wert angemessen präsentiert bekommen. Ich nutze FPV-Drohnen für den Tauch-Effekt und klassische Luftaufnahmen. Bei der Arbeit verwende ich auch neuronale Netze, sodass ich Videos sogar aus der Ferne nach Ihren Referenzen erstellen kann."
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
