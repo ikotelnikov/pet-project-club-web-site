@@ -24,9 +24,16 @@
       "status": "active",
       "stack": "drone videography, FPV tours, AI visualization",
       "summary": "This is a story about how a hobby of FPV drone filming grew into elite real estate production: drone videography, FPV tours, and AI visualization. Video as a tool for selling real estate and enhancing agency brands."
+    },
+    "de": {
+      "title": "regalestate.media",
+      "status": "active",
+      "stack": "Drohnenvideografie, FPV-Touren, KI-Visualisierung",
+      "summary": "Dies ist die Geschichte darüber, wie das Hobby des FPV-Drohnenfliegens zu einer Produktion für Luxusimmobilien wurde: Drohnenvideografie, FPV-Touren und KI-Visualisierung. Video als Werkzeug zum Verkauf von Immobilien und zur Stärkung der Marken von Agenturen."
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
