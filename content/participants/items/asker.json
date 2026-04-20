@@ -8,5 +8,16 @@
     "alt": "Аскер"
   },
   "slug": "asker",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "handle": "asker",
+      "name": "Asker",
+      "role": "realtor and videographer",
+      "bio": "My name is Asker. I grew up in a family of realtors, worked as an agent and an appraiser. Now I shoot real estate to make sure it is properly appreciated. I use an FPV drone for an immersive effect and classic aerial filming. I also use neural networks in my work, so I can create videos remotely based on your references."
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
