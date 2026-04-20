@@ -1,5 +1,5 @@
 {
-  "title": "regalestate.media",
+  "title": "Regal Estate Media",
   "status": "active",
   "stack": "drone videography, FPV tours, AI visualization",
   "summary": "Это история о том, как хобби съёмки на fpv дрон выросло в продакшн элитной недвижимости: дрон-видеография, FPV туры и Ai визуализация. Видео как инструмент продажи недвижимости и усиления бренда агентств.",
@@ -39,8 +39,14 @@
     }
   },
   "translationStatus": {
-    "en": "machine",
-    "de": "machine",
-    "me": "machine"
-  }
+    "en": "stale",
+    "de": "stale",
+    "me": "stale"
+  },
+  "links": [
+    {
+      "label": "regalestate.media",
+      "href": "https://regalestate.media/"
+    }
+  ]
 }
