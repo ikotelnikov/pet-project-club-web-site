@@ -30,8 +30,14 @@
     }
   },
   "translationStatus": {
-    "en": "machine",
-    "de": "machine",
-    "me": "machine"
-  }
+    "en": "stale",
+    "de": "stale",
+    "me": "stale"
+  },
+  "links": [
+    {
+      "label": "telegram",
+      "href": "https://t.me/asprofpv"
+    }
+  ]
 }
