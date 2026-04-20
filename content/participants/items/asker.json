@@ -18,9 +18,9 @@
     },
     "de": {
       "handle": "asker",
-      "name": "Asker",
-      "role": "Makler und Videofilmer",
-      "bio": "Mein Name ist Asker. Ich bin in einer Maklerfamilie aufgewachsen, habe als Agent und Gutachter gearbeitet. Jetzt filme ich Immobilien so, dass sie ihren Wert angemessen präsentiert bekommen. Ich nutze FPV-Drohnen für den Tauch-Effekt und klassische Luftaufnahmen. Bei der Arbeit verwende ich auch neuronale Netze, sodass ich Videos sogar aus der Ferne nach Ihren Referenzen erstellen kann."
+      "name": "Аскер",
+      "role": "Drohnenpilot und Immobilienvideograf",
+      "bio": "Mein Name ist Asker. Ich bin in einer Familie von Immobilienmaklern aufgewachsen, habe als Makler und Gutachter gearbeitet. Jetzt filme ich Immobilien so, dass sie angemessen geschätzt werden. Ich verwende FPV-Drohnen für den Eintaucheffekt und klassische Luftaufnahmen. Ich nutze auch neuronale Netze in meiner Arbeit, deshalb kann ich Videos sogar aus der Ferne anhand Ihrer Referenzen erstellen."
     },
     "me": {
       "handle": "asker",
@@ -31,7 +31,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale",
+    "de": "machine",
     "me": "stale"
   }
 }
