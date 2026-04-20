@@ -30,10 +30,17 @@
       "status": "active",
       "stack": "Drohnenvideografie, FPV-Touren, KI-Visualisierung",
       "summary": "Dies ist die Geschichte darüber, wie das Hobby des FPV-Drohnenfliegens zu einer Produktion für Luxusimmobilien wurde: Drohnenvideografie, FPV-Touren und KI-Visualisierung. Video als Werkzeug zum Verkauf von Immobilien und zur Stärkung der Marken von Agenturen."
+    },
+    "me": {
+      "title": "regalestate.media",
+      "status": "active",
+      "stack": "drone videography, FPV tours, AI visualization",
+      "summary": "Ovo je priča o tome kako je hobi snimanja FPV dronom prerastao u produkciju elitnih nekretnina: dron-videografija, FPV ture i AI vizualizacija. Video kao alat za prodaju nekretnina i jačanje brenda agenata."
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
