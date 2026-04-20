@@ -25,13 +25,13 @@
     "me": {
       "handle": "asker",
       "name": "Asker",
-      "role": "agent i snimatelj video materijala",
-      "bio": "Moje ime je Asker. Odrastao sam u porodici agenata za nekretnine, radio sam kao agent i procjenitelj. Sada snimam nekretnine tako da budu zasluženo cijenjene. Koristim FPV-drone za efekt uranjanja i klasično aerofotografisanje. U radu koristim i neuronske mreže, pa mogu čak i na daljinu kreirati video prema vašim referencama."
+      "role": "operator drona i snimatelj nekretnina",
+      "bio": "Moje ime je Asker. Odrastao sam u porodici agenata za nekretnine, radio sam kao agent i procjenitelj. Sada snimam nekretnine tako da ih pravilno vrednuju. Koristim FPV dron za efekat uranjanja i klasično snimanje iz vazduha. U radu koristim i neuronske mreže, tako da mogu napraviti video čak i na daljinu prema vašim referencama."
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale"
+    "me": "machine"
   }
 }
