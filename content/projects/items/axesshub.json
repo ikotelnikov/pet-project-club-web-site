@@ -33,10 +33,18 @@
       "stack": "paspberypi5 + 7 Modems + 7 USB-Anschlüsse",
       "summary": "Geräte auf Basis von paspberypi5 mit 7 integrierten Modems und 7 USB-Anschlüssen zum Routing von SMS mit 7 SIM-Karten an den ausgewählten Messenger/Email und sicherem Fernzugriff auf USB-Geräte, einschließlich geschützter Token.",
       "detailsHtml": "<ul><li>Routing von SMS mit 7 SIM-Karten an den ausgewählten Messenger oder E-Mail.</li><li>Sicherer Fernzugriff auf USB-Geräte, einschließlich geschützter Token, die an das Gerät angeschlossen sind.</li><li>Zusätzliche Funktionen für die Gruppenarbeit: Passwortmanager, Speicherung und Zugriff auf Dateien, Cloud-Drucker und Scanner.</li></ul>"
+    },
+    "me": {
+      "title": "AxessHub",
+      "status": "planned",
+      "stack": "paspberypi5 + 7 modema + 7 USB porta",
+      "summary": "Uređaji na paspberypi5 sa 7 modema na brodu i 7 USB portova za usmjeravanje SMS poruka sa 7 sim kartica u odabrani messenger/poštu i siguran daljinski pristup USB uređajima, uključujući zaštićene tokene.",
+      "detailsHtml": "<ul><li>Usmjeravanje SMS poruka sa 7 sim kartica u odabrani messenger ili poštu.</li><li>Siguran daljinski pristup USB uređajima, uključujući zaštićene tokene povezane sa uređajem.</li><li>Dodatne mogućnosti za grupni rad: menadžer lozinki, skladištenje i pristup fajlovima, oblak štampač i skener.</li></ul>"
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
