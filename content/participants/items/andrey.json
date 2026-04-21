@@ -42,5 +42,12 @@
         "alt": "Andrey"
       }
     }
-  }
+  },
+  "links": [
+    {
+      "label": "Andycorner",
+      "href": "https://t.me/andycorner"
+    }
+  ],
+  "translationStatus": {}
 }
