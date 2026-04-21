@@ -18,5 +18,17 @@
     "andrey"
   ],
   "slug": "axesshub",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "AxessHub",
+      "status": "planned",
+      "stack": "paspberypi5 + 7 modems + 7 USB ports",
+      "summary": "Devices on paspberypi5 with 7 modems onboard and 7 USB ports for routing SMS from 7 SIM cards to the selected messenger/email and secure remote access to USB devices, including protected tokens.",
+      "detailsHtml": "<ul><li>Routing SMS from 7 SIM cards to the selected messenger or email.</li><li>Secure remote access to USB devices, including protected tokens connected to the device.</li><li>Additional features for group work: password manager, file storage and access, cloud printer, and scanner.</li></ul>"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
