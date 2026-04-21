@@ -76,6 +76,14 @@ const pageLoaders = {
   "participant-detail": renderParticipantDetailPage,
   news: renderNewsPage,
 };
+const PRERENDER_COMPATIBLE_PAGES = new Set([
+  "main",
+  "meetings",
+  "meeting-detail",
+  "participants",
+  "participant-detail",
+  "project-detail",
+]);
 
 const localeState = initLocaleState();
 
@@ -701,6 +709,10 @@ async function renderPage() {
     return;
   }
 
+  if (shouldKeepPrerenderedPage()) {
+    return;
+  }
+
   if (!hasRenderableInitialContent(pageContent)) {
     pageContent.innerHTML = `<section class="empty-state loading-state reveal"><p>${t("common.loadingContent", "Loading content from repository...")}</p></section>`;
   }
@@ -1275,7 +1287,6 @@ async function renderParticipantsPage() {
     readJson("participants/page.json"),
     readIndexedItems("participants"),
   ]);
-  const sortedParticipantItems = sortItemsByFeaturedRank(participantItems);
   const title = participantsData.title || t("participants.title", "Pet Project Club participants");
   const description = participantsData.description || t("participants.description", "To join the participants list, edit your data, or remove it, contact the organizer.");
 
@@ -1288,7 +1299,7 @@ async function renderParticipantsPage() {
         <h1>${title}</h1>
         <p class="card-copy">${description}</p>
       </div>
-      <div class="people-grid" id="participants-grid">${sortedParticipantItems.map(renderPersonCard).join("")}</div>
+      <div class="people-grid" id="participants-grid">${participantItems.map(renderPersonCard).join("")}</div>
     </section>
   `;
 
@@ -2434,6 +2445,24 @@ function hasRenderableInitialContent(node) {
   }
 
   return node.textContent.trim().length > 0;
+}
+
+function shouldKeepPrerenderedPage() {
+  if (!PRERENDER_COMPATIBLE_PAGES.has(page)) {
+    return false;
+  }
+
+  if (!hasRenderableInitialContent(pageContent)) {
+    return false;
+  }
+
+  const query = new URLSearchParams(window.location.search);
+
+  if (page === "meetings") {
+    return !query.has("page");
+  }
+
+  return true;
 }
 
 function scoreRenderableLinkLabel(label) {
