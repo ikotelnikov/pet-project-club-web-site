@@ -23,12 +23,19 @@
       "stack": "Flutter (iOS/Android), Laravel, Python/Telethon, GPT-4o-mini, OneSignal",
       "summary": "Conoted je drugi mozak vašeg tima: mesto gde se razgovori pretvaraju u znanje, a znanje pronalazi prave ljude. Aplikacija se povezuje sa grupnim chatovima na Telegramu, automatski kreira AI sažetke, označava teme i pravi mapu ekspertize.",
       "detailsHtml": "Conoted pretvara haos grupnih chatova na Telegramu u strukturiranu bazu znanja. Aplikacija automatski kreira AI sažetke iz poruka, označava sadržaj, pronalazi eksperte po temama i pravi društveni graf kontakata. Zettelkasten pristup: sistem sam pronalazi neočekivane veze između starih i novih beleški, pomažući u generisanju ideja na preseku tema.<br><br>Oko 800 korisnika. Među ključnim funkcijama su pametne oznake sa AI klasterizacijom i hijerarhijom kategorija, uvoz i AI profilisanje kontakata iz telefona/Gmail-a, glasovna transkripcija preko Whisper-a, rangiranje učesnika po ekspertizi.<br><br>Projekat je u aktivnom razvoju, priprema se za objavljivanje u App Store-u."
+    },
+    "es": {
+      "title": "Conoted — «Quién sabe qué» en tu equipo",
+      "stack": "Flutter (iOS/Android), Laravel, Python/Telethon, GPT-4o-mini, OneSignal",
+      "summary": "Conoted es el segundo cerebro de tu equipo: un lugar donde las conversaciones se convierten en conocimientos, y los conocimientos encuentran a las personas adecuadas. La aplicación se conecta a los chats grupales de Telegram, crea automáticamente resúmenes AI, etiqueta temas y construye un mapa de expertos.",
+      "detailsHtml": "Conoted transforma el caos de los chats grupales de Telegram en una base de conocimientos estructurada. La aplicación crea automáticamente resúmenes AI de los mensajes, etiqueta contenido, encuentra expertos por tema y construye un gráfico social de contactos. Enfoque Zettelkasten: el sistema encuentra conexiones inesperadas entre notas antiguas y nuevas, ayudando a generar ideas en la intersección de temas.<br><br>Alrededor de 800 usuarios. Entre las características clave están etiquetas inteligentes con clusterización AI y jerarquía de categorías, importación y perfilado AI de contactos desde teléfono/Gmail, transcripción de voz vía Whisper, clasificación de participantes según su expertise.<br><br>Proyecto en desarrollo activo, preparándose para su publicación en App Store."
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   },
   "ownerSlugs": [
     "evgeniy-streltsov"
