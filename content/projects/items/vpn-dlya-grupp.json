@@ -26,9 +26,17 @@
       "stack": "Telegram bot, virtual servers, proxy",
       "summary": "VPN service for groups with two virtual servers and a convenient Telegram bot for user management.",
       "detailsHtml": "<p>1. The client purchases two virtual servers: one in Russia, the other abroad from a recommended provider (cost 1,000 rubles per month).<br>2. Server setup and provision of a Telegram bot to the client for independent management of adding and removing users with the ability to support up to 200 simultaneous connections.<br>3. Ability to work through a tunnel to office resources and remote servers with access management via the bot.<br>4. Support for Telegram proxy for distribution.<br>5. My income from the service is 5,000 rubles per month for support.<br>6. Low probability of blocking due to the limited number of users.</p>"
+    },
+    "de": {
+      "title": "VPN für Gruppen",
+      "status": "active",
+      "stack": "Telegram-Bot, virtuelle Server, Proxy",
+      "summary": "VPN-Dienst für Gruppen mit zwei virtuellen Servern und einem benutzerfreundlichen Telegram-Bot zur Benutzerverwaltung.",
+      "detailsHtml": "<p>1. Der Kunde kauft zwei virtuelle Server: einen in Russland und einen im Ausland bei einem empfohlenen Anbieter (Kosten 1.000 Rubel pro Monat).<br>2. Einrichtung der Server und Bereitstellung eines Telegram-Bots für den Kunden zur eigenständigen Verwaltung der Benutzer mit der Möglichkeit von bis zu 200 gleichzeitigen Verbindungen.<br>3. Möglichkeit, über einen Tunnel auf Büroressourcen und entfernte Server zuzugreifen, mit Zugriffssteuerung über den Bot.<br>4. Unterstützung von Telegram-Proxys zur Verbreitung.<br>5. Mein Einkommen aus dem Dienst beträgt 5.000 Rubel pro Monat für den Support.<br>6. Geringe Wahrscheinlichkeit einer Sperrung durch begrenzte Benutzeranzahl.</p>"
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
