@@ -16,7 +16,7 @@
   <link rel="alternate" hreflang="de" href="https://petprojectclub.me/de/news/">
   <link rel="alternate" hreflang="me" href="https://petprojectclub.me/me/news/">
   <link rel="alternate" hreflang="es" href="https://petprojectclub.me/es/news/">
-  <script type="application/ld+json" data-seo-schema>[{"@context":"https://schema.org","@type":"CollectionPage","name":"Новости проектов","description":"Новости проектов, демо, релизы и связанные встречи сообщества.","url":"https://petprojectclub.me/news/","isPartOf":{"@type":"WebSite","name":"Pet Project Club Budva","url":"https://petprojectclub.me"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Новости","item":"https://petprojectclub.me/news/"}]}]</script>
+  <script type="application/ld+json" data-seo-schema>[{"@context":"https://schema.org","@type":"CollectionPage","name":"Новости проектов","description":"Новости проектов, демо, релизы и связанные встречи сообщества.","url":"https://petprojectclub.me/news/","isPartOf":{"@type":"WebSite","name":"Pet Project Club Budva","url":"https://petprojectclub.me"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Новости","item":"https://petprojectclub.me/news/"}]}]</script>
   <meta property="og:site_name" content="Pet Project Club Budva">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Новости | Pet Project Club Budva">
@@ -80,7 +80,13 @@
       <div class="section-heading">
         <h1>Новости проектов</h1>
       </div>
-      <div class="meeting-feed">
+      <div class="project-toolbar">
+        <label class="project-search-shell" for="news-search">
+          <input id="news-search" class="project-search-input" type="search" placeholder="Поиск: проект, технология, название..." value="">
+        </label>
+      </div>
+      <div class="project-results-meta" id="news-results-meta"></div>
+      <div class="meeting-feed" id="news-feed">
         
     <article class="meeting-preview reveal visible">
       <a class="meeting-preview-media" href="/meetings/meeting-2023-02-25-club-report/"><img src="/assets/uploads/272981189/156-photo-156-AQADsRNrG5XqYUp-.jpg" alt="Практика создания сайта с помощью AI — создаем сайт от и до"></a>
@@ -94,6 +100,9 @@
       </div>
     </article>
   
+      </div>
+      <div class="pagination-nav" id="news-pagination" aria-label="News pagination">
+        
       </div>
     </section>
     

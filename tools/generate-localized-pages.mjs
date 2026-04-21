@@ -183,8 +183,12 @@ function localizeSiteContent(content, locale) {
   const projectsPage = localizeContentNode(content.projectsPage, locale);
   const participantsPage = localizeContentNode(content.participantsPage, locale);
   const newsPage = localizeContentNode(content.newsPage, locale);
-  const projectItems = Object.values(content.projectItems).map((item) => localizeContentNode(item, locale));
-  const participantItems = Object.values(content.participantItems).map((item) => localizeContentNode(item, locale));
+  const projectItems = sortByFeaturedRank(
+    Object.values(content.projectItems).map((item) => localizeContentNode(item, locale))
+  );
+  const participantItems = sortByFeaturedRank(
+    Object.values(content.participantItems).map((item) => localizeContentNode(item, locale))
+  );
   const meetingItems = Object.values(content.meetingItems).map((item) => localizeContentNode(item, locale));
 
   return {
@@ -692,13 +696,27 @@ function renderMeetingDetail(item, pageData, locale) {
 }
 
 function renderProjectsHub(pageData, projects, participantMap, locale) {
+  const listCopy = pageData.list || {};
+  const pageSize = Number(listCopy.pageSize || 6);
+  const firstPageItems = projects.slice(0, pageSize);
+  const totalPages = Math.max(1, Math.ceil(projects.length / pageSize));
+
   return `
     <section class="section-shell reveal visible project-page-shell">
       <div class="section-heading">
-        <h1>${escapeHtml(pageData.list?.title || "Projects")}</h1>
+        <h1>${escapeHtml(listCopy.title || "Projects")}</h1>
       </div>
-      <div class="project-feed">
-        ${projects.length ? projects.map((item) => renderProjectPreviewCard(item, participantMap, locale)).join("") : `<article class="item-card reveal visible"><h3>Nothing found</h3><p class="item-copy">${escapeHtml(pageData.list?.empty || "No matching projects yet.")}</p></article>`}
+      <div class="project-toolbar">
+        <label class="project-search-shell" for="project-search">
+          <input id="project-search" class="project-search-input" type="search" placeholder="${escapeAttribute(listCopy.searchPlaceholder || "Search: project, technology, author...")}" value="">
+        </label>
+      </div>
+      <div class="project-results-meta" id="project-results-meta"></div>
+      <div class="project-feed" id="project-feed">
+        ${firstPageItems.length ? firstPageItems.map((item) => renderProjectPreviewCard(item, participantMap, locale)).join("") : `<article class="item-card reveal visible"><h3>${escapeHtml(listCopy.emptyTitle || "Nothing found")}</h3><p class="item-copy">${escapeHtml(listCopy.empty || "No matching projects yet.")}</p></article>`}
+      </div>
+      <div class="pagination-nav" id="project-pagination" aria-label="Projects pagination">
+        ${totalPages > 1 ? renderStaticPagination(listCopy.pagination, 1, totalPages) : ""}
       </div>
     </section>
     ${renderNotesSection(pageData.notes)}
@@ -729,9 +747,7 @@ function renderProjectPreviewCard(item, participantMap = new Map(), locale = def
 }
 
 function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
-  const links = (item.links || [])
-    .map((link) => `<a class="meta-pill meta-pill-link" href="${escapeAttribute(link.href || "#")}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(link.label || link.href || "")}</a>`)
-    .join("");
+  const contactTags = renderEntityContactTags(item);
 
   return `
     <section class="project-detail-shell reveal visible">
@@ -743,7 +759,7 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
           ${item.status ? `<span class="meta-pill">${escapeHtml(item.status)}</span>` : ""}
           ${item.stack ? `<span class="meta-pill">${escapeHtml(item.stack)}</span>` : ""}
           ${owners.map((owner) => `<a class="meta-pill" href="${absoluteSitePath(locale, `participants/${owner.slug}/`)}">${escapeHtml(owner.name || owner.slug)}</a>`).join("")}
-          ${links}
+          ${contactTags}
         </div>
       </div>
       <section class="section-shell reveal visible">
@@ -764,6 +780,119 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
       </section>
     </section>
   `;
+}
+
+function renderEntityContactTags(item) {
+  const tags = [];
+  const seen = new Set();
+
+  const pushTag = (key, markup) => {
+    if (!markup || seen.has(key)) {
+      return;
+    }
+
+    seen.add(key);
+    tags.push(markup);
+  };
+
+  const telegramHandle = normalizeTelegramHandle(item.handle);
+  if (telegramHandle) {
+    pushTag(
+      `telegram:${telegramHandle}`,
+      `<a class="meta-pill meta-pill-link" href="https://t.me/${telegramHandle}" target="_blank" rel="noopener noreferrer">@${telegramHandle}</a>`
+    );
+  } else if (item.handle) {
+    pushTag(`handle:${item.handle}`, `<span class="meta-pill">${escapeHtml(item.handle)}</span>`);
+  }
+
+  for (const link of dedupeRenderableLinks(Array.isArray(item.links) ? item.links : [])) {
+    if (!link?.href || !link?.label) {
+      continue;
+    }
+
+    const normalizedHref = resolveRenderableHref(link.href);
+    if (telegramHandle && normalizedHref === `https://t.me/${telegramHandle}`) {
+      continue;
+    }
+
+    pushTag(
+      `link:${normalizedHref}`,
+      `<a class="meta-pill meta-pill-link" href="${escapeAttribute(normalizedHref)}"${link.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(link.label)}</a>`
+    );
+  }
+
+  return tags.join("");
+}
+
+function normalizeTelegramHandle(value) {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const cleaned = value.trim().replace(/^@+/, "");
+  return /^[A-Za-z0-9_]{4,}$/.test(cleaned) ? cleaned : null;
+}
+
+function dedupeRenderableLinks(links) {
+  const deduped = [];
+  const seenByKey = new Map();
+
+  for (const link of Array.isArray(links) ? links : []) {
+    if (!link?.href || !link?.label) {
+      continue;
+    }
+
+    const key = buildRenderableLinkKey(link.href);
+    const existingIndex = seenByKey.get(key);
+
+    if (existingIndex == null) {
+      seenByKey.set(key, deduped.length);
+      deduped.push(link);
+      continue;
+    }
+
+    if (scoreRenderableLinkLabel(link.label) > scoreRenderableLinkLabel(deduped[existingIndex].label)) {
+      deduped[existingIndex] = link;
+    }
+  }
+
+  return deduped;
+}
+
+function buildRenderableLinkKey(href) {
+  try {
+    const url = new URL(resolveRenderableHref(href), siteUrl);
+    const normalizedPath = url.pathname.replace(/\/+$/, "") || "/";
+    return `${url.hostname.replace(/^www\./i, "").toLowerCase()}${normalizedPath}${url.search}`;
+  } catch {
+    return String(href).trim().toLowerCase();
+  }
+}
+
+function resolveRenderableHref(href) {
+  try {
+    return new URL(String(href), siteUrl).href;
+  } catch {
+    return String(href || "").trim();
+  }
+}
+
+function scoreRenderableLinkLabel(label) {
+  const normalized = String(label || "").trim().toLowerCase();
+
+  if (!normalized) {
+    return 0;
+  }
+
+  if (normalized === "telegram" || normalized === "instagram" || normalized === "linkedin" || normalized === "github" || normalized === "x / twitter") {
+    return 3;
+  }
+
+  if (normalized.includes(".com") || normalized.includes(".me") || normalized.includes(".org") || normalized.includes(".net")) {
+    return 1;
+  }
+
+  return 2;
 }
 
 function renderParticipantsHub(pageData, participants, locale) {
@@ -820,16 +949,45 @@ function renderParticipantDetail(item, pageData, relatedProjects, locale) {
 }
 
 function renderNewsHub(pageData, items, projectMap, locale) {
+  const listCopy = pageData.list || {};
+  const pageSize = Number(listCopy.pageSize || 8);
+  const firstPageItems = items.slice(0, pageSize);
+  const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
+
   return `
     <section class="section-shell reveal visible project-page-shell">
       <div class="section-heading">
-        <h1>${escapeHtml(pageData.list?.title || "News")}</h1>
+        <h1>${escapeHtml(listCopy.title || "News")}</h1>
       </div>
-      <div class="meeting-feed">
-        ${items.length ? items.map((item) => renderNewsCard(item, projectMap, locale)).join("") : `<article class="item-card reveal visible"><h3>Nothing found</h3><p class="item-copy">${escapeHtml(pageData.list?.empty || "No matching news yet.")}</p></article>`}
+      <div class="project-toolbar">
+        <label class="project-search-shell" for="news-search">
+          <input id="news-search" class="project-search-input" type="search" placeholder="${escapeAttribute(listCopy.searchPlaceholder || "Search: project, technology, title...")}" value="">
+        </label>
+      </div>
+      <div class="project-results-meta" id="news-results-meta"></div>
+      <div class="meeting-feed" id="news-feed">
+        ${firstPageItems.length ? firstPageItems.map((item) => renderNewsCard(item, projectMap, locale)).join("") : `<article class="item-card reveal visible"><h3>${escapeHtml(listCopy.emptyTitle || "Nothing found")}</h3><p class="item-copy">${escapeHtml(listCopy.empty || "No matching news yet.")}</p></article>`}
+      </div>
+      <div class="pagination-nav" id="news-pagination" aria-label="News pagination">
+        ${totalPages > 1 ? renderStaticPagination(listCopy.pagination, 1, totalPages) : ""}
       </div>
     </section>
     ${renderNotesSection(pageData.notes)}
+  `;
+}
+
+function renderStaticPagination(copy = {}, currentPage, totalPages) {
+  const prevPage = currentPage > 1 ? currentPage - 1 : null;
+  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+
+  return `
+    ${prevPage
+      ? `<button class="pagination-link" type="button" data-project-page="${prevPage}">${escapeHtml(copy.prev || "← Previous")}</button>`
+      : `<span class="pagination-link is-disabled">${escapeHtml(copy.prev || "← Previous")}</span>`}
+    <span class="pagination-status">${escapeHtml(copy.page || "Page")} ${currentPage} / ${totalPages}</span>
+    ${nextPage
+      ? `<button class="pagination-link" type="button" data-project-page="${nextPage}">${escapeHtml(copy.next || "Next →")}</button>`
+      : `<span class="pagination-link is-disabled">${escapeHtml(copy.next || "Next →")}</span>`}
   `;
 }
 
@@ -1192,6 +1350,23 @@ function latestDateFromProjects(projectItems) {
 
 function sortByDateDesc(items) {
   return [...items].sort((left, right) => String(right?.date || "").localeCompare(String(left?.date || "")));
+}
+
+function sortByFeaturedRank(items) {
+  return [...items].sort((left, right) => {
+    const leftRank = Number.isFinite(Number(left?.featuredRank)) ? Number(left.featuredRank) : Number.POSITIVE_INFINITY;
+    const rightRank = Number.isFinite(Number(right?.featuredRank)) ? Number(right.featuredRank) : Number.POSITIVE_INFINITY;
+
+    if (leftRank !== rightRank) {
+      return leftRank - rightRank;
+    }
+
+    return String(left?.title || left?.name || left?.slug || "").localeCompare(
+      String(right?.title || right?.name || right?.slug || ""),
+      undefined,
+      { sensitivity: "base" }
+    );
+  });
 }
 
 function firstPrimaryLink(links = []) {

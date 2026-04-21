@@ -1155,25 +1155,28 @@ async function renderProjectsPage() {
   const initialPage = Number(query.get("page") || "1");
   let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? Math.floor(initialPage) : 1;
   let currentSearch = (query.get("q") || "").trim();
+  const hydrateExisting = shouldHydrateInteractivePrerender(query);
 
   document.title = buildDocumentTitle(listCopy.title || t("projects.title", "Club projects"));
 
-  pageContent.innerHTML = `
-    <section class="section-shell reveal project-page-shell">
-      <div class="section-heading">
-        <h1>${listCopy.title || "Проекты клуба"}</h1>
-      </div>
-      <div class="project-toolbar">
-        <label class="project-search-shell" for="project-search">
-          <input id="project-search" class="project-search-input" type="search" placeholder="${searchPlaceholder}" value="${escapeHtml(currentSearch)}">
-        </label>
-      </div>
-      <div class="project-results-meta" id="project-results-meta"></div>
-      <div class="project-feed" id="project-feed"></div>
-      <div class="pagination-nav" id="project-pagination" aria-label="${t("aria.projectsPagination", "Projects pagination")}"></div>
-    </section>
-    ${renderStatusSection(projectsData.notes)}
-  `;
+  if (!hydrateExisting) {
+    pageContent.innerHTML = `
+      <section class="section-shell reveal project-page-shell">
+        <div class="section-heading">
+          <h1>${listCopy.title || "Проекты клуба"}</h1>
+        </div>
+        <div class="project-toolbar">
+          <label class="project-search-shell" for="project-search">
+            <input id="project-search" class="project-search-input" type="search" placeholder="${searchPlaceholder}" value="${escapeHtml(currentSearch)}">
+          </label>
+        </div>
+        <div class="project-results-meta" id="project-results-meta"></div>
+        <div class="project-feed" id="project-feed"></div>
+        <div class="pagination-nav" id="project-pagination" aria-label="${t("aria.projectsPagination", "Projects pagination")}"></div>
+      </section>
+      ${renderStatusSection(projectsData.notes)}
+    `;
+  }
 
   const searchInput = document.getElementById("project-search");
   const feed = document.getElementById("project-feed");
@@ -1278,6 +1281,12 @@ async function renderProjectsPage() {
     currentPage = 1;
     renderProjectPageState();
   });
+
+  if (hydrateExisting) {
+    searchInput.value = currentSearch;
+    updateUrl();
+    return;
+  }
 
   renderProjectPageState();
 }
@@ -1550,6 +1559,7 @@ async function renderNewsPage() {
   const initialPage = Number(query.get("page") || "1");
   let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? Math.floor(initialPage) : 1;
   let currentSearch = (query.get("q") || "").trim();
+  const hydrateExisting = shouldHydrateInteractivePrerender(query);
   const allItems = sortMeetingsByDateDesc(
     [...announcementItems, ...archiveItems].filter(
       (item) => Array.isArray(item.projectSlugs) && item.projectSlugs.length > 0
@@ -1558,22 +1568,24 @@ async function renderNewsPage() {
 
   document.title = buildDocumentTitle(listCopy.title || t("news.title", "Project news"));
 
-  pageContent.innerHTML = `
-    <section class="section-shell reveal project-page-shell">
-      <div class="section-heading">
-        <h1>${listCopy.title || t("news.title", "Project news")}</h1>
-      </div>
-      <div class="project-toolbar">
-        <label class="project-search-shell" for="news-search">
-          <input id="news-search" class="project-search-input" type="search" placeholder="${listCopy.searchPlaceholder || t("news.searchPlaceholder", "Search: project, technology, title...")}" value="${escapeHtml(currentSearch)}">
-        </label>
-      </div>
-      <div class="project-results-meta" id="news-results-meta"></div>
-      <div class="meeting-feed" id="news-feed"></div>
-      <div class="pagination-nav" id="news-pagination" aria-label="${t("aria.newsPagination", "News pagination")}"></div>
-    </section>
-    ${pageData.notes ? renderStatusSection(pageData.notes) : ""}
-  `;
+  if (!hydrateExisting) {
+    pageContent.innerHTML = `
+      <section class="section-shell reveal project-page-shell">
+        <div class="section-heading">
+          <h1>${listCopy.title || t("news.title", "Project news")}</h1>
+        </div>
+        <div class="project-toolbar">
+          <label class="project-search-shell" for="news-search">
+            <input id="news-search" class="project-search-input" type="search" placeholder="${listCopy.searchPlaceholder || t("news.searchPlaceholder", "Search: project, technology, title...")}" value="${escapeHtml(currentSearch)}">
+          </label>
+        </div>
+        <div class="project-results-meta" id="news-results-meta"></div>
+        <div class="meeting-feed" id="news-feed"></div>
+        <div class="pagination-nav" id="news-pagination" aria-label="${t("aria.newsPagination", "News pagination")}"></div>
+      </section>
+      ${pageData.notes ? renderStatusSection(pageData.notes) : ""}
+    `;
+  }
 
   const searchInput = document.getElementById("news-search");
   const feed = document.getElementById("news-feed");
@@ -1677,6 +1689,12 @@ async function renderNewsPage() {
     updateUrl();
     renderNewsState();
   });
+
+  if (hydrateExisting) {
+    searchInput.value = currentSearch;
+    updateUrl();
+    return;
+  }
 
   renderNewsState();
 }
@@ -2463,6 +2481,17 @@ function shouldKeepPrerenderedPage() {
   }
 
   return true;
+}
+
+function shouldHydrateInteractivePrerender(query = new URLSearchParams(window.location.search)) {
+  if (!hasRenderableInitialContent(pageContent)) {
+    return false;
+  }
+
+  const hasSearch = Boolean((query.get("q") || "").trim());
+  const requestedPage = Number.parseInt(query.get("page") || "1", 10);
+
+  return !hasSearch && (!Number.isFinite(requestedPage) || requestedPage <= 1);
 }
 
 function scoreRenderableLinkLabel(label) {
