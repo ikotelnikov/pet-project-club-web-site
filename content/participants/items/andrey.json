@@ -41,12 +41,19 @@
       ]
     },
     "me": {
-      "name": "Andrey",
-      "role": "IT specijalista",
-      "bio": "Oblast rada: administracija i odrzavanje udaljenih servera, podrska korisnicima i IT bezbjednost. U IT-u je oko 30 godina, a posljednjih 15 godina radi za sebe. Pet projekti ukljucuju VPN servis u obliku Telegram bota, koji je prvobitno planirao da prodaje, a sada ga razvija prema aplikacijama za trzista van postsovjetskog prostora, kao i uredjaj na Raspberry Pi za prosljedjivanje dolaznih SMS poruka u Telegram, pri cemu je softverski dio jos u razvoju. U radu koristi Visual Studio Code sa Copilotom, Docker, Mikrotik, Python, PowerShell i ChatGPT. Ciljevi ucesca u klubu su profesionalna komunikacija i upoznavanje sa novim tehnologijama. Malo i o njemu: voli nargilu, pliva kraul i preplivao je Bosfor, ne voli trcanje, voli putovanja, zivio je na Baliju i u Gruziji i obozava badminton.",
+      "name": "Andrej",
+      "role": "IT Specijalista",
+      "bio": "Oblast djelovanja: Administracija i održavanje udaljenih servera (🏠), Tehnička podrška korisnicima, IT bezbjednost. U IT industriji oko 30 godina, zadnjih 15 godina sam samostalni preduzetnik. Pet projekti: VPN servis u obliku Telegram bota (planirao sam prodavati, trenutno radim na aplikacijama za ne-bivši postsovjetski prostor), Uređaj na Raspberry Pi za preusmjeravanje dolaznih SMS poruka u Telegram (softverski dio je u razvoju). U poslu koristi Visual Studio Code + Copilot, Docker, Mikrotik, Python, PowerShell, ChatGPT. Ciljevi učešća u klubu: profesionalna komunikacija, upoznavanje sa novim tehnologijama. Malo o sebi: voli da puši nargilu, zna plivati kraulem (preplivao Bosfor), ne voli trčati, voli putovanja (živio na Baliju i u Gruziji), obožava badminton.",
       "photo": {
         "alt": "Andrey"
-      }
+      },
+      "handle": "andrey",
+      "links": [
+        {
+          "label": "Andycorner",
+          "href": "https://t.me/andycorner"
+        }
+      ]
     },
     "es": {
       "name": "Andrey",
@@ -65,6 +72,7 @@
   ],
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
