@@ -18,5 +18,17 @@
     "andrey"
   ],
   "slug": "vpn-dlya-grupp",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "VPN for Groups",
+      "status": "active",
+      "stack": "Telegram bot, virtual servers, proxy",
+      "summary": "VPN service for groups with two virtual servers and a convenient Telegram bot for user management.",
+      "detailsHtml": "<p>1. The client purchases two virtual servers: one in Russia, another abroad from a recommended provider (cost 1,000 rubles per month).<br>2. Server setup and provision of a Telegram bot to the client for independent management of adding and removing users with support for up to 200 simultaneous connections.<br>3. Ability to work through a tunnel to office resources and remote servers with access management via the bot.<br>4. Support for Telegram proxy for distribution.<br>5. My income from the service is 5,000 rubles per month for maintenance.<br>6. Low risk of blocking due to the limited number of users.</p>"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
