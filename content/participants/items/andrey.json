@@ -57,11 +57,18 @@
     },
     "es": {
       "name": "Andrey",
-      "role": "Especialista en IT",
-      "bio": "Area de trabajo: administracion y mantenimiento de servidores remotos, soporte a usuarios y seguridad IT. Lleva alrededor de 30 anos en IT y durante los ultimos 15 ha trabajado por cuenta propia. Entre sus pet projects estan un servicio VPN en forma de bot de Telegram, pensado al principio para venderse y ahora orientado a aplicaciones para mercados fuera del espacio postsovietico, y un dispositivo con Raspberry Pi para reenviar SMS entrantes a Telegram, cuya parte de software sigue en desarrollo. En el trabajo usa Visual Studio Code con Copilot, Docker, Mikrotik, Python, PowerShell y ChatGPT. Se unio al club para tener conversacion profesional y conocer nuevas tecnologias. Un poco mas sobre el: le gusta fumar hookah, nada crol y ha cruzado el Bosforo, no le gusta correr, disfruta viajar, ha vivido en Bali y Georgia, y le encanta el badminton.",
+      "role": "Especialista en TI",
+      "bio": "Área de actividad: Administración y mantenimiento de servidores remotos (🏠), Soporte técnico, Seguridad informática. Lleva cerca de 30 años en TI, y los últimos 15 años trabaja por cuenta propia. Proyectos personales: servicio VPN en forma de bot de Telegram (planeaba venderlo, ahora desarrolla aplicaciones para fuera del espacio postsoviético), dispositivo en Raspberry Pi para reenviar SMS entrantes a Telegram (la parte de software está en desarrollo). En su trabajo usa Visual Studio Code + Copilot, Docker, Mikrotik, Python, PowerShell, ChatGPT. Objetivos en el club: comunicación profesional, conocer nuevas tecnologías. Un poco sobre él: le gusta fumar shisha, puede nadar estilo crol (cruzó el Bósforo), no le gusta correr, le encanta viajar (vivió en Bali y Georgia), adora el bádminton.",
       "photo": {
         "alt": "Andrey"
-      }
+      },
+      "handle": "andrey",
+      "links": [
+        {
+          "label": "Andycorner",
+          "href": "https://t.me/andycorner"
+        }
+      ]
     }
   },
   "links": [
@@ -73,6 +80,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
