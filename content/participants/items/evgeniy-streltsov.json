@@ -23,12 +23,19 @@
       "role": "Osnivač i samostalni programer",
       "bio": "Izgradjujem Conoted - servis koji odgovara na pitanje „ko šta zna?“ u svakom timu. Ideja je nastala iz lične potrebe: stotine Telegram čatova, hiljade poruka dnevno - a pronaći pravog eksperta ili se sjetiti neke diskusije je nemoguće. Conoted to rješava: AI čita čatove, strukturira znanje, pronalazi ljude. Živim u Crnoj Gori, vjerujem da su najbolja znanja već u razgovorima — potrebno je samo naučiti ih pronaći.",
       "location": "Crna Gora"
+    },
+    "es": {
+      "name": "Евгений Стрельцов",
+      "role": "Fundador y desarrollador en solitario",
+      "bio": "Estoy construyendo Conoted, un servicio que responde a la pregunta «¿quién sabe qué?» en cualquier equipo. La idea surgió de un dolor personal: cientos de chats en Telegram, miles de mensajes al día, y es imposible encontrar al experto adecuado o recordar una discusión. Conoted resuelve esto: la IA lee los chats, estructura el conocimiento y encuentra a las personas. Vivo en Montenegro, y creo que el mejor conocimiento ya está en las conversaciones, solo hay que aprender a encontrarlo.",
+      "location": "Montenegro"
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   },
   "photo": {
     "src": "assets/uploads/272981189/274-photo-274-AQADSBVrG6ygwUp9.jpg",
