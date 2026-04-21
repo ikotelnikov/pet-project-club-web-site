@@ -26,12 +26,19 @@
       ]
     },
     "de": {
-      "name": "Andrey",
+      "name": "Andrej",
       "role": "IT-Spezialist",
-      "bio": "Taetigkeitsfeld: Administration und Wartung entfernter Server, User-Support und IT-Sicherheit. Er ist seit rund 30 Jahren in der IT und arbeitet seit den letzten 15 Jahren selbststaendig. Zu seinen Pet-Projekten gehoeren ein VPN-Service als Telegram-Bot, der urspruenglich verkauft werden sollte und sich nun in Richtung Apps fuer Maerkte ausserhalb des postsowjetischen Raums entwickelt, sowie ein Raspberry-Pi-Geraet zum Weiterleiten eingehender SMS an Telegram, dessen Softwareteil noch in Entwicklung ist. Im Alltag nutzt er Visual Studio Code mit Copilot, Docker, Mikrotik, Python, PowerShell und ChatGPT. Im Club sucht er fachlichen Austausch und Kontakt zu neuen Technologien. Persoenlich: Er raucht gern Shisha, kann Kraul schwimmen und hat den Bosporus ueberquert, laeuft nicht gern, reist sehr gern, hat auf Bali und in Georgien gelebt und liebt Badminton.",
+      "bio": "Tätigkeitsbereich: Verwaltung und Wartung von Remote-Servern (🏠), Benutzer-Support, IT-Sicherheit. Etwa 30 Jahre Erfahrung in der IT, davon die letzten 15 Jahre selbstständig. Pet-Projekte: VPN-Dienst in Form eines Telegram-Bots (geplant zum Verkauf, derzeit Entwicklung von Anwendungen für nicht postsowjetische Länder), Gerät auf Raspberry Pi zur Weiterleitung eingehender SMS an Telegram (Software wird entwickelt). Verwendet bei der Arbeit Visual Studio Code + Copilot, Docker, Mikrotik, Python, PowerShell, ChatGPT. Ziele der Clubteilnahme: fachlicher Austausch, Kennenlernen neuer Technologien. Ein wenig über sich: Liebt es, Shisha zu rauchen, kann Kraul schwimmen (hat den Bosporus überquert), läuft nicht gern, reist gern (hat auf Bali und in Georgien gelebt), liebt Badminton.",
       "photo": {
         "alt": "Andrey"
-      }
+      },
+      "handle": "andrey",
+      "links": [
+        {
+          "label": "Andycorner",
+          "href": "https://t.me/andycorner"
+        }
+      ]
     },
     "me": {
       "name": "Andrey",
@@ -57,6 +64,7 @@
     }
   ],
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
