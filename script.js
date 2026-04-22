@@ -1087,7 +1087,9 @@ async function renderMeetingsPage() {
     (announcementsIndex.items || [])
       .map((slug) => readJson(`meetings/items/${slug}.json`))
   );
-  const sortedAnnouncementItems = sortMeetingsByDateDesc(allAnnouncementItems);
+  const sortedAnnouncementItems = sortMeetingsByDateDesc(
+    allAnnouncementItems.filter((item) => item?.format !== "news")
+  );
   const announcementItems = sortedAnnouncementItems.slice(0, data.announcements?.limit || 2);
 
   const allArchiveItems = await Promise.all(

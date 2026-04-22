@@ -2,9 +2,9 @@ import { ContentValidationError } from "../shared/errors.js";
 import { SLUG_PATTERN } from "../shared/constants.js";
 
 const ENTITY_FIELD_RULES = {
-  announcement: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
-  announce: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
-  meeting: new Set(["date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
+  announcement: new Set(["type", "date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "projectSlugs", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
+  announce: new Set(["type", "date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "projectSlugs", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
+  meeting: new Set(["type", "date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "projectSlugs", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
   participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
   project: new Set(["title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "gallery", "slug", "locale", "sourceLocale"]),
 };
@@ -94,6 +94,14 @@ function validateFieldShapes(entity, fields) {
 
   if ((entity === "project" || entity === "participant") && fields.tags && !isNonEmptyStringArray(fields.tags)) {
     throw new ContentValidationError("Field 'tags' must be a non-empty array of strings.");
+  }
+
+  if ((entity === "announce" || entity === "announcement" || entity === "meeting") && fields.projectSlugs && !isNonEmptyStringArray(fields.projectSlugs)) {
+    throw new ContentValidationError("Field 'projectSlugs' must be a non-empty array of strings.");
+  }
+
+  if ((entity === "announce" || entity === "announcement" || entity === "meeting") && fields.type && !["announce", "meeting"].includes(fields.type)) {
+    throw new ContentValidationError("Field 'type' must be 'announce' or 'meeting'.");
   }
 
   if (entity === "project") {

@@ -173,6 +173,74 @@ test("deletes an announcement and removes it from the index", async () => {
   assert.deepEqual(index.items, []);
 });
 
+test("moves an announcement into the meetings archive when type changes to meeting", async () => {
+  const fixture = await createFixture({
+    entity: "announce",
+    slug: "announce-existing",
+    item: {
+      slug: "announce-existing",
+      type: "announce",
+      date: "2026-04-03",
+      title: "Announcement",
+      place: "Budva",
+      format: "offline",
+      paragraphs: ["One"],
+    },
+  });
+  const repository = new FilesystemContentRepository(fixture);
+
+  const preview = await repository.previewCommand(
+    {
+      entity: "announce",
+      action: "update",
+      fields: {
+        slug: "announce-existing",
+      },
+    },
+    {
+      item: {
+        slug: "announce-existing",
+        type: "meeting",
+      },
+    }
+  );
+
+  assert.deepEqual(
+    preview.paths.extraIndexPaths.sort(),
+    [path.join(fixture.contentRoot, "meetings", "archive", "index.json")].sort()
+  );
+
+  await repository.applyCommand(
+    {
+      entity: "announce",
+      action: "update",
+      fields: {
+        slug: "announce-existing",
+      },
+    },
+    {
+      item: {
+        slug: "announce-existing",
+        type: "meeting",
+      },
+    }
+  );
+
+  const announcementIndex = JSON.parse(
+    await fs.readFile(path.join(fixture.contentRoot, "meetings", "announcements", "index.json"), "utf8")
+  );
+  const archiveIndex = JSON.parse(
+    await fs.readFile(path.join(fixture.contentRoot, "meetings", "archive", "index.json"), "utf8")
+  );
+  const item = JSON.parse(
+    await fs.readFile(path.join(fixture.contentRoot, "meetings", "items", "announce-existing.json"), "utf8")
+  );
+
+  assert.deepEqual(announcementIndex.items, []);
+  assert.deepEqual(archiveIndex.items, ["announce-existing"]);
+  assert.equal(item.type, "meeting");
+});
+
 async function createFixture(seed = null) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "ppc-bot-"));
   const contentRoot = path.join(root, "content");

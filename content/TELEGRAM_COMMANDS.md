@@ -167,6 +167,8 @@ Optional fields:
 - `photoalt`
 - `section`
 - `link`
+- `projectslugs`
+- `type`
 
 Canonical example:
 
@@ -194,6 +196,28 @@ link: Write in Telegram | https://t.me/PetProjectClubMNE
 photoalt: Participants during a project review session
 ```
 
+Project news or project updates should also be published through `/announce create`.
+
+Rules:
+
+- use `format: news`
+- use `projectslugs: slug-one, slug-two` when the post belongs to one or more projects
+- keep `type: announce` or omit `type` unless the item should move into the meetings archive
+
+Project news example:
+
+```text
+/announce create
+slug: doveritelnoe-upravlenie-airbnb-update
+title: Airbnb still wins for a careful launch
+place: Доверительное управление в Черногории
+format: news
+projectslugs: doveritelnoe-upravlenie-v-chernogorii
+paragraphs:
+- Short project update with one key lesson from current operating work.
+link: Project Telegram | https://t.me/airbnbtop
+```
+
 ### `/announce update`
 
 Same format as create.
@@ -203,6 +227,8 @@ Rules:
 - must include `slug`
 - may send all fields again for simplicity
 - first implementation should prefer full replacement of item content over partial patching
+- set `type: meeting` to move an existing announcement into the meetings archive
+- set `type: announce` to move an existing meeting article back into announcements or project news
 
 Canonical example:
 

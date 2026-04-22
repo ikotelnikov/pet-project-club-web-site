@@ -22,7 +22,7 @@ export function mapOperationToContent(operation, options = {}) {
         slug: fields.slug,
         item: toLocalizedItemPatch(entity, pruneEmpty({
           slug: fields.slug,
-          type: "announce",
+          type: fields.type || "announce",
           date: fields.date,
           title: fields.title,
           place: fields.place,
@@ -40,7 +40,7 @@ export function mapOperationToContent(operation, options = {}) {
         slug: fields.slug,
         item: toLocalizedItemPatch(entity, pruneEmpty({
           slug: fields.slug,
-          type: "meeting",
+          type: fields.type || "meeting",
           date: fields.date,
           title: fields.title,
           place: fields.place,

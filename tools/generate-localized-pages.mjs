@@ -240,7 +240,13 @@ function buildRoutesForLocale(locale, content, ui) {
       publicPath: localePath(locale, "meetings/"),
       title: ui.meta?.meetings?.title || `Meetings | ${siteName}`,
       description: ui.meta?.meetings?.description || summarizePlainText(content.meetingsPage.announcements?.description),
-      pageContent: renderMeetingsHub(content.meetingsPage, content.announcementItems, content.archiveItems, ui, locale),
+      pageContent: renderMeetingsHub(
+        content.meetingsPage,
+        content.announcementItems.filter((item) => item?.format !== "news"),
+        content.archiveItems,
+        ui,
+        locale
+      ),
       schema: buildCollectionSchema({
         siteName,
         title: content.meetingsPage.announcements?.title || navLabel(ui, "meetings"),
@@ -249,7 +255,10 @@ function buildRoutesForLocale(locale, content, ui) {
         breadcrumb: [{ name: navLabel(ui, "meetings"), path: localePath(locale, "meetings/") }],
       }),
       alternates: buildAlternateUrls("meetings/"),
-      lastmod: latestDateFromItems(content.announcementItems, content.archiveItems),
+      lastmod: latestDateFromItems(
+        content.announcementItems.filter((item) => item?.format !== "news"),
+        content.archiveItems
+      ),
     }),
     createRoute({
       locale,

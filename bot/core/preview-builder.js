@@ -37,6 +37,10 @@ function resolvePreviewFiles(repositoryPreview) {
     files.push(repositoryPreview.paths.indexPath);
   }
 
+  if (Array.isArray(repositoryPreview.paths?.extraIndexPaths)) {
+    files.push(...repositoryPreview.paths.extraIndexPaths);
+  }
+
   if (Array.isArray(repositoryPreview.paths?.assetPaths)) {
     files.push(...repositoryPreview.paths.assetPaths);
   }

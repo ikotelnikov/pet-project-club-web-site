@@ -1,8 +1,9 @@
 {
   "entity": "announcement",
   "required": ["slug", "date", "title", "place", "format"],
-  "optional": ["placeUrl", "paragraphs", "sections", "links", "photoAlt", "photoStagedPath"],
+  "optional": ["type", "placeUrl", "paragraphs", "sections", "links", "projectSlugs", "photoAlt", "photoStagedPath"],
   "fieldTypes": {
+    "type": "announce | meeting",
     "slug": "string",
     "date": "string",
     "title": "string",
@@ -12,6 +13,7 @@
     "paragraphs": "string[]",
     "sections": "Section[]",
     "links": "Link[]",
+    "projectSlugs": "string[]",
     "photoAlt": "string",
     "photoStagedPath": "string"
   },

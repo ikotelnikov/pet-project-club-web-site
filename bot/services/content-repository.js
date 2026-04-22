@@ -165,14 +165,20 @@ export class FilesystemContentRepository {
       throw new ContentRepositoryError(`Cannot ${action} '${slug}' because it does not exist.`);
     }
 
-    const currentIndex = await this.readIndex(entity);
-    const nextIndex = updateIndexItems(currentIndex, slug, action);
     const { itemPath, indexPath } = this.getEntityPaths(entity, slug);
     const existingItem = exists ? await this.readItem(entity, slug) : null;
     const assetPaths = action === "delete" ? resolveManagedAssetPaths(existingItem) : [];
     const nextItem = action === "update"
       ? mergeContentItems(existingItem, item, { entity })
       : item;
+    const indexPreview = await buildIndexPreview({
+      repository: this,
+      entity,
+      action,
+      slug,
+      existingItem,
+      nextItem,
+    });
 
     if (action === "delete") {
       await fs.rm(itemPath, { force: true });
@@ -182,8 +188,10 @@ export class FilesystemContentRepository {
       await writeJsonFile(itemPath, nextItem);
     }
 
-    await fs.mkdir(path.dirname(indexPath), { recursive: true });
-    await writeJsonFile(indexPath, nextIndex);
+    for (const indexWrite of indexPreview.indexWrites) {
+      await fs.mkdir(path.dirname(indexWrite.path), { recursive: true });
+      await writeJsonFile(indexWrite.path, indexWrite.next);
+    }
 
     return {
       action,
@@ -191,10 +199,13 @@ export class FilesystemContentRepository {
       slug,
       paths: {
         itemPath,
-        indexPath,
+        indexPath: indexPreview.primaryIndexPath || indexPath,
+        extraIndexPaths: indexPreview.indexWrites
+          .map((entry) => entry.path)
+          .filter((entry) => entry !== (indexPreview.primaryIndexPath || indexPath)),
         assetPaths,
       },
-      indexChanged: JSON.stringify(currentIndex) !== JSON.stringify(nextIndex),
+      indexChanged: indexPreview.indexWrites.some((entry) => JSON.stringify(entry.current) !== JSON.stringify(entry.next)),
     };
   }
 
@@ -202,12 +213,19 @@ export class FilesystemContentRepository {
     const { entity, action } = parsedCommand;
     const slug = parsedCommand.fields.slug;
     const exists = await this.itemExists(entity, slug);
-    const currentIndex = await this.readIndex(entity);
     const existingItem = exists ? await this.readItem(entity, slug) : null;
     const assetPaths = action === "delete" ? resolveManagedAssetPaths(existingItem) : [];
     const nextItem = action === "update"
       ? mergeContentItems(existingItem, item, { entity })
       : item;
+    const indexPreview = await buildIndexPreview({
+      repository: this,
+      entity,
+      action,
+      slug,
+      existingItem,
+      nextItem,
+    });
 
     if (action === "create" && exists) {
       throw new ContentRepositoryError(`Cannot create '${slug}' because it already exists.`);
@@ -222,13 +240,19 @@ export class FilesystemContentRepository {
       entity,
       slug,
       exists,
-      currentIndex,
-      nextIndex: updateIndexItems(currentIndex, slug, action),
+      currentIndex: indexPreview.indexWrites[0]?.current ?? null,
+      nextIndex: indexPreview.indexWrites[0]?.next ?? null,
+      currentItem: existingItem,
       nextItem,
       paths: {
         ...this.getEntityPaths(entity, slug),
+        indexPath: indexPreview.primaryIndexPath || this.resolveIndexPath(entity),
+        extraIndexPaths: indexPreview.indexWrites
+          .map((entry) => entry.path)
+          .filter((entry) => entry !== (indexPreview.primaryIndexPath || this.resolveIndexPath(entity))),
         assetPaths,
       },
+      indexWrites: indexPreview.indexWrites,
     };
   }
 }
@@ -273,6 +297,67 @@ function updateIndexItems(indexData, slug, action) {
 
   nextIndex.items = items;
   return nextIndex;
+}
+
+async function buildIndexPreview({
+  repository,
+  entity,
+  action,
+  slug,
+  existingItem,
+  nextItem,
+}) {
+  const currentIndexEntity = resolveMeetingIndexEntity(entity, existingItem) || entity;
+  const nextIndexEntity = action === "delete"
+    ? currentIndexEntity
+    : (resolveMeetingIndexEntity(entity, nextItem) || entity);
+
+  if (currentIndexEntity === nextIndexEntity) {
+    const currentIndex = await repository.readIndex(currentIndexEntity);
+    return {
+      primaryIndexPath: repository.resolveIndexPath(currentIndexEntity),
+      indexWrites: [{
+        path: repository.resolveIndexPath(currentIndexEntity),
+        current: currentIndex,
+        next: updateIndexItems(currentIndex, slug, action),
+      }],
+    };
+  }
+
+  const sourceIndex = await repository.readIndex(currentIndexEntity);
+  const targetIndex = await repository.readIndex(nextIndexEntity);
+
+  return {
+    primaryIndexPath: repository.resolveIndexPath(currentIndexEntity),
+    indexWrites: [
+      {
+        path: repository.resolveIndexPath(currentIndexEntity),
+        current: sourceIndex,
+        next: updateIndexItems(sourceIndex, slug, "delete"),
+      },
+      {
+        path: repository.resolveIndexPath(nextIndexEntity),
+        current: targetIndex,
+        next: updateIndexItems(targetIndex, slug, "update"),
+      },
+    ],
+  };
+}
+
+function resolveMeetingIndexEntity(entity, item) {
+  if (entity !== "announce" && entity !== "meeting") {
+    return null;
+  }
+
+  if (item?.type === "meeting") {
+    return "meeting";
+  }
+
+  if (item?.type === "announce") {
+    return "announce";
+  }
+
+  return entity;
 }
 
 function buildCandidate(entity, slug, item) {
