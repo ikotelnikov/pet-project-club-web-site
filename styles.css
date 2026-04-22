@@ -1445,11 +1445,24 @@ body.lightbox-open {
 }
 
 .person-photo {
+  position: relative;
   margin: -18px -18px 16px;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: 22px 22px 18px 18px;
   background: rgba(255, 255, 255, 0.04);
+}
+
+.person-photo-badge {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 1;
+  margin: 0;
+  background: rgba(7, 18, 12, 0.82);
+  border-color: rgba(141, 246, 198, 0.35);
+  color: #8df6c6;
+  backdrop-filter: blur(8px);
 }
 
 .person-photo img {
@@ -1703,7 +1716,8 @@ body.lightbox-open {
 }
 
 .participant-detail-badge {
-  margin-bottom: 14px;
+  left: 18px;
+  bottom: 18px;
 }
 
 .participant-detail-meta {
@@ -1714,6 +1728,7 @@ body.lightbox-open {
 }
 
 .participant-detail-media {
+  position: relative;
   float: right;
   width: min(30vw, 360px);
   margin: 0 0 18px 24px;

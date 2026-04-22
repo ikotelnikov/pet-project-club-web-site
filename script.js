@@ -2086,6 +2086,7 @@ function renderPersonCard(item) {
     ? `
       <a class="person-photo" href="${href}">
         <img src="${resolveHref(item.photo.src)}" alt="${item.photo.alt || name}">
+        ${badge ? `<span class="person-badge person-photo-badge">${badge}</span>` : ""}
       </a>
     `
     : "";
@@ -2094,7 +2095,6 @@ function renderPersonCard(item) {
   return `
     <article class="person-card reveal">
       ${photo}
-      ${badge ? `<span class="person-badge">${badge}</span>` : ""}
       <h3><a class="person-name-link" href="${href}">${name}</a></h3>
       <p class="person-role">${role}</p>
       ${previewBio ? `<p class="person-copy">${previewBio}${bio.length > previewBio.length ? ` <a class="read-more-link" href="${href}">${t("participants.card.readMore", "more -->")}</a>` : ""}</p>` : ""}
@@ -2166,13 +2166,11 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
     ? `
       <figure class="participant-detail-media">
         <img src="${resolveHref(item.photo.src)}" alt="${item.photo.alt || item.name || item.slug}">
+        ${item.badge ? `<span class="person-badge person-photo-badge participant-detail-badge">${item.detailBadge || item.badge}</span>` : ""}
       </figure>
     `
     : "";
   const footerBits = renderEntityContactTags(item, { includeTags: true });
-  const detailBadge = item.badge
-    ? `<span class="person-badge participant-detail-badge">${item.detailBadge || t("participant-detail.founderBadge", "Founder of Pet Project Club")}</span>`
-    : "";
   const bioHtml = normalizeParticipantDetailText(item);
 
   return `
@@ -2180,7 +2178,6 @@ function renderParticipantDetail(item, pageData, relatedProjects) {
       <div class="participant-detail-head">
         <a class="detail-back-link" href="${backHref}">${pageData.detail?.backLabel || t("participants.detail.backLabel", "← Back to participants")}</a>
         ${photo}
-        ${detailBadge}
         <h1 class="participant-detail-title">${item.name || item.slug}</h1>
         ${item.role ? `<p class="person-role participant-detail-role">${item.role}</p>` : ""}
         ${footerBits ? `<div class="participant-detail-meta">${footerBits}</div>` : ""}

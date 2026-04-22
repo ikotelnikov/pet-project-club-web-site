@@ -927,7 +927,7 @@ function renderPersonCard(item, locale) {
 
   return `
     <article class="person-card reveal visible">
-      ${item.photo?.src ? `<a class="person-photo" href="${href}"><img src="${escapeAttribute(assetPath(item.photo.src))}" alt="${escapeAttribute(item.photo.alt || item.name || item.slug || "")}"></a>` : ""}
+      ${item.photo?.src ? `<a class="person-photo" href="${href}"><img src="${escapeAttribute(assetPath(item.photo.src))}" alt="${escapeAttribute(item.photo.alt || item.name || item.slug || "")}">${item.badge ? `<span class="person-badge person-photo-badge">${escapeHtml(item.badge)}</span>` : ""}</a>` : ""}
       <h3><a class="person-name-link" href="${href}">${escapeHtml(item.name || item.slug || "")}</a></h3>
       ${item.role ? `<p class="person-role">${escapeHtml(item.role)}</p>` : ""}
       ${previewBio ? `<p class="person-copy">${escapeHtml(previewBio)}</p>` : ""}
@@ -941,7 +941,7 @@ function renderParticipantDetail(item, pageData, relatedProjects, locale) {
     <section class="participant-detail-shell reveal visible">
       <div class="participant-detail-head">
         <a class="detail-back-link" href="${absoluteSitePath(locale, "participants/")}">${escapeHtml(pageData.detail?.backLabel || "← Back to participants")}</a>
-        ${item.photo?.src ? `<figure class="participant-detail-media"><img src="${escapeAttribute(assetPath(item.photo.src))}" alt="${escapeAttribute(item.photo.alt || item.name || item.slug || "")}"></figure>` : ""}
+        ${item.photo?.src ? `<figure class="participant-detail-media"><img src="${escapeAttribute(assetPath(item.photo.src))}" alt="${escapeAttribute(item.photo.alt || item.name || item.slug || "")}">${item.badge ? `<span class="person-badge person-photo-badge participant-detail-badge">${escapeHtml(item.detailBadge || item.badge)}</span>` : ""}</figure>` : ""}
         <h1 class="participant-detail-title">${escapeHtml(item.name || item.slug || "")}</h1>
         ${item.role ? `<p class="person-role participant-detail-role">${escapeHtml(item.role)}</p>` : ""}
         ${item.bio ? `<p class="person-copy participant-detail-bio">${escapeHtml(item.bio)}</p>` : ""}
