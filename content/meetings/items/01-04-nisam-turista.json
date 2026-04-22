@@ -75,5 +75,8 @@
         "Venid. Sera una charla viva, practica y util para cualquiera que quiera mejorar el mundo que le rodea."
       ]
     }
-  }
+  },
+  "projectSlugs": [
+    "archive-news"
+  ]
 }
