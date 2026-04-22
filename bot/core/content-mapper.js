@@ -1,5 +1,6 @@
 import { ContentValidationError } from "../shared/errors.js";
 import { buildLocalizedItemPatch, DEFAULT_SOURCE_LOCALE, normalizeContentLocale } from "./content-localization.js";
+import { dedupeLinks } from "./link-normalization.js";
 
 export function mapOperationToContent(operation, options = {}) {
   const { entity, action, fields } = operation;
@@ -33,6 +34,7 @@ export function mapOperationToContent(operation, options = {}) {
           detailsHtml: fields.detailsHtml,
           sections: fields.section ?? fields.sections,
           links,
+          projectSlugs: fields.projectSlugs,
         }), fields, options),
       };
     case "meeting":
@@ -51,6 +53,7 @@ export function mapOperationToContent(operation, options = {}) {
           detailsHtml: fields.detailsHtml,
           sections: fields.section ?? fields.sections,
           links,
+          projectSlugs: fields.projectSlugs,
         }), fields, options),
       };
     case "participant":
@@ -238,7 +241,8 @@ function buildLinks(linkEntries) {
     return undefined;
   }
 
-  return linkEntries;
+  const deduped = dedupeLinks(linkEntries);
+  return Array.isArray(deduped) && deduped.length > 0 ? deduped : undefined;
 }
 
 function resolveAssetFolder(entity) {

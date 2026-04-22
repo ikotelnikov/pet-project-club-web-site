@@ -172,6 +172,14 @@ function validateFieldShapes(entity, fields) {
     throw new ContentValidationError("Extraction field 'ownerSlugs' must be an array of non-empty strings.");
   }
 
+  if ((entity === "announcement" || entity === "meeting") && fields.projectSlugs && !isStringArray(fields.projectSlugs)) {
+    throw new ContentValidationError("Extraction field 'projectSlugs' must be an array of non-empty strings.");
+  }
+
+  if ((entity === "announcement" || entity === "meeting") && fields.type && !["announce", "meeting"].includes(fields.type)) {
+    throw new ContentValidationError("Extraction field 'type' must be one of announce or meeting.");
+  }
+
   if (fields.sections) {
     if (!Array.isArray(fields.sections)) {
       throw new ContentValidationError("Extraction field 'sections' must be an array.");
