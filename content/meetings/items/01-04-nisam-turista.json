@@ -20,18 +20,22 @@
   ],
   "translations": {
     "en": {
-      "title": "Wednesday meetup on 01.04 about the Nisam Turista and Cista Gora communities",
+      "title": "Meeting on Wednesday 01.04 about the “Nisam Turista” and Čista Gora communities",
       "photo": {
-        "alt": "Wednesday meetup on 01.04 about the Nisam Turista and Cista Gora communities"
+        "alt": "Meeting on Wednesday 01.04 about the “Nisam Turista” and Čista Gora communities",
+        "src": "assets/uploads/272981189/112-photo-112-AQADiRNrG5XqYUp-.jpg"
       },
       "paragraphs": [
-        "This Wednesday Matvey is joining us again. He is a volunteer and organizer of the Nisam Turista and Cista Gora communities. Last time he came in August, right in the middle of the wildfire period, so the conversation then was largely about immediate response and help.",
-        "Now the situation is calmer, which makes it the right time to talk about preparation for the season and the next stage of the project. The team plans to submit registration documents in April and then launch training and more systematic work.",
-        "One of the new ideas is a Cista Gora media initiative, including a website and content, where IT help will definitely be useful.",
-        "We will discuss:\n— which tasks are the priority right now\n— where and why people can get involved\n— how a community like this develops",
+        "This Wednesday we have Matvey again — a volunteer and organizer of the Nisam Turista and Čista Gora communities. Last time he visited us was in August — right in the middle of the fires. That conversation was mostly about reaction and assistance in the moment.",
+        "Now the situation is calmer — and this is the best time to discuss season preparation and project development. The guys plan to submit registration documents in April, after which they will launch training and systematic work.",
+        "A fresh idea — launching the Čista Gora media (website and content), where IT help will definitely be needed.",
+        "We will discuss:\n— which tasks are currently priorities\n— where and why you can get involved\n— how the development of such a community is organized",
         "🕡 Wednesday, 18:30",
-        "Come by. It should be lively, practical, and useful for everyone who wants to improve the world around them."
-      ]
+        "Come by — it will be lively, practical, and to the point for everyone who wants to make the world around them better 👍"
+      ],
+      "date": "2026-04-01",
+      "place": "Monteco",
+      "format": "in-person"
     },
     "de": {
       "title": "Treffen am Mittwoch, 01.04, ueber die Communities Nisam Turista und Cista Gora",
@@ -78,5 +82,8 @@
   },
   "projectSlugs": [
     "archive-news"
-  ]
+  ],
+  "translationStatus": {
+    "en": "machine"
+  }
 }
