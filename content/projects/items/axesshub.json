@@ -57,11 +57,17 @@
     },
     "me": {
       "title": "AxessHub",
-      "status": "planned",
-      "stack": "raspberrypi5 + 7 modema + 7 USB porta",
-      "summary": "Uređaji na raspberrypi5 sa 7 modema na brodu i 7 USB portova za usmjeravanje SMS poruka sa 7 SIM kartica u odabrani messenger/poštu i siguran daljinski pristup USB uređajima, uključujući zaštićene tokene.",
-      "detailsHtml": "<ul><li>Usmjeravanje SMS poruka sa 7 SIM kartica u odabrani messenger ili poštu.</li><li>Siguran daljinski pristup USB uređajima, uključujući zaštićene tokene povezane sa uređajem.</li><li>Dodatne mogućnosti za grupni rad: menadžer lozinki, skladištenje i pristup fajlovima, oblak štampač i skener.</li></ul>",
-      "links": []
+      "status": "active build",
+      "stack": "raspberrypi5 + 7 modema + 7 USB portova",
+      "summary": "Uređaji na raspberrypi5 s 7 modemima na brodu i 7 USB portova za rutiranje SMS-a sa 7 SIM kartica u odabrani messenger/e-poštu i siguran udaljeni pristup USB uređajima, uključujući zaštićene tokene.",
+      "detailsHtml": "<ul><li>Rutiranje SMS-a sa 7 SIM kartica u odabrani messenger ili e-poštu.</li><li>Siguran udaljeni pristup USB uređajima, uključujući zaštićene tokene povezane na uređaj.</li><li>Dodatne mogućnosti za grupni rad: upravitelj lozinki, čuvanje i pristup fajlovima, oblak štampač i skener.</li></ul>",
+      "links": [
+        {
+          "label": "websajt",
+          "href": "https://axesshub.com/",
+          "external": true
+        }
+      ]
     },
     "es": {
       "title": "AxessHub",
@@ -75,7 +81,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   }
 }
