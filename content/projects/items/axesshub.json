@@ -1,6 +1,6 @@
 {
   "title": "AxessHub",
-  "status": "planned",
+  "status": "active build",
   "stack": "raspberrypi5 + 7 modems + 7 USB ports",
   "summary": "Устройства на raspberrypi5 с 7 модемами на борту и 7 USB портами для роутинга SMS с 7 SIM-карт в выбранный мессенджер/почту и безопасного удаленного доступа к USB-устройствам, включая защищенные токены.",
   "detailsHtml": "<ul><li>Роутинг смс с 7 симкарт в выбранный мессенджер или почту.</li><li>Безопасный удаленный доступ к USB устройствам, включая защищённые токены, подключённые к устройству.</li><li>Дополнительные возможности для групповой работы: менеджер паролей, хранение и доступ к файлам, облачный принтер и сканер.</li></ul>",
@@ -33,11 +33,7 @@
       "stack": "raspberrypi5 + 7 modems + 7 USB ports",
       "summary": "Devices on raspberrypi5 with 7 modems onboard and 7 USB ports for routing SMS from 7 SIM cards to the selected messenger/email and secure remote access to USB devices, including protected tokens.",
       "detailsHtml": "<ul><li>Routing SMS from 7 SIM cards to the selected messenger or email.</li><li>Secure remote access to USB devices, including protected tokens connected to the device.</li><li>Additional features for group work: password manager, file storage and access, cloud printer, and scanner.</li></ul>",
-      "links": [
-        {
-          "label": "website"
-        }
-      ]
+      "links": []
     },
     "de": {
       "title": "AxessHub",
@@ -45,11 +41,7 @@
       "stack": "raspberrypi5 + 7 Modems + 7 USB-Anschlüsse",
       "summary": "Geräte auf Basis von raspberrypi5 mit 7 integrierten Modems und 7 USB-Anschlüssen zum Routing von SMS mit 7 SIM-Karten an den ausgewählten Messenger/Email und sicherem Fernzugriff auf USB-Geräte, einschließlich geschützter Token.",
       "detailsHtml": "<ul><li>Routing von SMS mit 7 SIM-Karten an den ausgewählten Messenger oder E-Mail.</li><li>Sicherer Fernzugriff auf USB-Geräte, einschließlich geschützter Token, die an das Gerät angeschlossen sind.</li><li>Zusätzliche Funktionen für die Gruppenarbeit: Passwortmanager, Speicherung und Zugriff auf Dateien, Cloud-Drucker und Scanner.</li></ul>",
-      "links": [
-        {
-          "label": "Website"
-        }
-      ]
+      "links": []
     },
     "me": {
       "title": "AxessHub",
@@ -57,11 +49,7 @@
       "stack": "raspberrypi5 + 7 modema + 7 USB porta",
       "summary": "Uređaji na raspberrypi5 sa 7 modema na brodu i 7 USB portova za usmjeravanje SMS poruka sa 7 SIM kartica u odabrani messenger/poštu i siguran daljinski pristup USB uređajima, uključujući zaštićene tokene.",
       "detailsHtml": "<ul><li>Usmjeravanje SMS poruka sa 7 SIM kartica u odabrani messenger ili poštu.</li><li>Siguran daljinski pristup USB uređajima, uključujući zaštićene tokene povezane sa uređajem.</li><li>Dodatne mogućnosti za grupni rad: menadžer lozinki, skladištenje i pristup fajlovima, oblak štampač i skener.</li></ul>",
-      "links": [
-        {
-          "label": "website"
-        }
-      ]
+      "links": []
     },
     "es": {
       "title": "AxessHub",
@@ -69,17 +57,13 @@
       "stack": "raspberrypi5 + 7 modems + 7 USB ports",
       "summary": "Dispositivos basados en raspberrypi5 con 7 módems integrados y 7 puertos USB para enrutar SMS desde 7 tarjetas SIM al mensajero o correo electrónico seleccionado, y acceso remoto seguro a dispositivos USB, incluidos tokens protegidos.",
       "detailsHtml": "<ul><li>Enrutamiento de SMS desde 7 tarjetas SIM al mensajero o correo electrónico elegido.</li><li>Acceso remoto seguro a dispositivos USB, incluidos tokens protegidos conectados al dispositivo.</li><li>Funciones adicionales para el trabajo en grupo: gestor de contraseñas, almacenamiento y acceso a archivos, impresora y escáner en la nube.</li></ul>",
-      "links": [
-        {
-          "label": "sitio web"
-        }
-      ]
+      "links": []
     }
   },
   "translationStatus": {
-    "en": "machine",
-    "de": "machine",
-    "me": "machine",
-    "es": "machine"
+    "en": "stale",
+    "de": "stale",
+    "me": "stale",
+    "es": "stale"
   }
 }
