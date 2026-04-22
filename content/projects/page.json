@@ -2,7 +2,7 @@
   "sourceLocale": "ru",
   "list": {
     "title": "Проекты Pet Project Club",
-    "pageSize": 6,
+    "pageSize": 20,
     "searchPlaceholder": "Поиск: проект, технология, автор...",
     "resultsLabel": "Проектов найдено",
     "emptyTitle": "Подходящих проектов пока нет",

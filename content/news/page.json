@@ -2,7 +2,7 @@
   "sourceLocale": "ru",
   "list": {
     "title": "Новости проектов",
-    "pageSize": 8,
+    "pageSize": 20,
     "searchPlaceholder": "Поиск: проект, технология, название...",
     "resultsLabel": "Новостей найдено",
     "emptyTitle": "Подходящих новостей пока нет",

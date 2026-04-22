@@ -703,7 +703,7 @@ function renderMeetingDetail(item, pageData, locale) {
 
 function renderProjectsHub(pageData, projects, participantMap, ui, locale) {
   const listCopy = pageData.list || {};
-  const pageSize = Number(listCopy.pageSize || 6);
+  const pageSize = Number(listCopy.pageSize || 20);
   const firstPageItems = projects.slice(0, pageSize);
 
   return `
@@ -921,7 +921,7 @@ function scoreRenderableLinkLabel(label) {
 }
 
 function renderParticipantsHub(pageData, participants, ui, locale) {
-  const pageSize = Number(pageData.pageSize || 9);
+  const pageSize = Number(pageData.pageSize || 20);
   const firstPageItems = participants.slice(0, pageSize);
 
   return `
@@ -981,7 +981,7 @@ function renderParticipantDetail(item, pageData, relatedProjects, locale) {
 
 function renderNewsHub(pageData, items, projectMap, ui, locale) {
   const listCopy = pageData.list || {};
-  const pageSize = Number(listCopy.pageSize || 8);
+  const pageSize = Number(listCopy.pageSize || 20);
   const firstPageItems = items.slice(0, pageSize);
 
   return `

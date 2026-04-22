@@ -3,7 +3,7 @@
   "tag": "Participants",
   "title": "Участники Pet Project Club",
   "description": "Для включения в список учасников, редактирования данных или удаления из него напишите <a href=\"#footer-contact-organizer\">организатору</a>.",
-  "pageSize": 9,
+  "pageSize": 20,
   "translations": {
     "en": {
       "tag": "Participants",

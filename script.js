@@ -1177,7 +1177,7 @@ async function renderProjectsPage() {
   const sortedProjectItems = sortItemsByFeaturedRank(projectItems);
   const ownerMap = new Map(participantItems.map((item) => [item.slug, item]));
   const listCopy = projectsData.list || {};
-  const pageSize = Number(listCopy.pageSize || 6);
+  const pageSize = Number(listCopy.pageSize || 20);
   const searchPlaceholder = listCopy.searchPlaceholder || t("projects.searchPlaceholder", "Find a project, stack, owner, or request");
   const emptyText = listCopy.empty || t("projects.emptyText", "There are no projects matching this request yet.");
   const query = new URLSearchParams(window.location.search);
@@ -1309,7 +1309,7 @@ async function renderParticipantsPage() {
   ]);
   const title = participantsData.title || t("participants.title", "Pet Project Club participants");
   const description = participantsData.description || t("participants.description", "To join the participants list, edit your data, or remove it, contact the organizer.");
-  const pageSize = Number(participantsData.pageSize || 9);
+  const pageSize = Number(participantsData.pageSize || 20);
   let visibleCount = pageSize;
 
   document.title = buildDocumentTitle(title);
@@ -1589,7 +1589,7 @@ async function renderNewsPage() {
   ]);
   const projectTitleBySlug = new Map(projectItems.map((item) => [item.slug, item.title || item.slug]));
   const listCopy = pageData.list || {};
-  const pageSize = Number(listCopy.pageSize || 8);
+  const pageSize = Number(listCopy.pageSize || 20);
   const query = new URLSearchParams(window.location.search);
   let currentSearch = (query.get("q") || "").trim();
   let visibleCount = pageSize;
