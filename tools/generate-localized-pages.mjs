@@ -753,6 +753,9 @@ function renderProjectPreviewCard(item, participantMap = new Map(), locale = def
 
 function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
   const contactTags = renderEntityContactTags(item);
+  const gallery = Array.isArray(item.gallery) && item.gallery.length
+    ? item.gallery.filter((entry) => entry?.src)
+    : (item.photo?.src ? [item.photo] : []);
 
   return `
     <section class="project-detail-shell reveal visible">
@@ -767,6 +770,23 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
           ${contactTags}
         </div>
       </div>
+      ${gallery.length ? `
+        <section class="project-detail-gallery reveal visible">
+          <div class="gallery-shell">
+            <button class="gallery-nav prev" type="button" aria-label="Previous photo">‹</button>
+            <div class="gallery-viewport">
+              <div class="gallery-track">
+                ${gallery.map((entry) => `
+                  <figure class="gallery-slide reveal visible">
+                    <img src="${escapeAttribute(assetPath(entry.src))}" alt="${escapeAttribute(entry.alt || item.title || "")}">
+                  </figure>
+                `).join("")}
+              </div>
+            </div>
+            <button class="gallery-nav next" type="button" aria-label="Next photo">›</button>
+          </div>
+        </section>
+      ` : ""}
       <section class="section-shell reveal visible">
         <div class="section-heading">
           <h2>${escapeHtml(pageData.detail?.detailsTitle || "Project details")}</h2>
