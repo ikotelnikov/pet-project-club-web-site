@@ -74,17 +74,23 @@
     },
     "es": {
       "title": "AxessHub",
-      "status": "planned",
-      "stack": "raspberrypi5 + 7 modems + 7 USB ports",
-      "summary": "Dispositivos basados en raspberrypi5 con 7 módems integrados y 7 puertos USB para enrutar SMS desde 7 tarjetas SIM al mensajero o correo electrónico seleccionado, y acceso remoto seguro a dispositivos USB, incluidos tokens protegidos.",
-      "detailsHtml": "<ul><li>Enrutamiento de SMS desde 7 tarjetas SIM al mensajero o correo electrónico elegido.</li><li>Acceso remoto seguro a dispositivos USB, incluidos tokens protegidos conectados al dispositivo.</li><li>Funciones adicionales para el trabajo en grupo: gestor de contraseñas, almacenamiento y acceso a archivos, impresora y escáner en la nube.</li></ul>",
-      "links": []
+      "status": "construcción activa",
+      "stack": "raspberrypi5 + 7 módems + 7 puertos USB",
+      "summary": "Dispositivos basados en raspberrypi5 con 7 módems integrados y 7 puertos USB para el enrutamiento de SMS de 7 tarjetas SIM al mensajero/correo elegido y acceso remoto seguro a dispositivos USB, incluyendo tokens protegidos.",
+      "detailsHtml": "<ul><li>Enrutamiento de SMS de 7 tarjetas SIM al mensajero o correo elegido.</li><li>Acceso remoto seguro a dispositivos USB, incluyendo tokens protegidos conectados al dispositivo.</li><li>Funciones adicionales para trabajo en grupo: gestor de contraseñas, almacenamiento y acceso a archivos, impresora y escáner en la nube.</li></ul>",
+      "links": [
+        {
+          "label": "sitio web",
+          "href": "https://axesshub.com/",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
     "me": "machine",
-    "es": "stale"
+    "es": "machine"
   }
 }
