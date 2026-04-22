@@ -25,7 +25,9 @@
     "pagination": {
       "prev": "← Anterior",
       "next": "Siguiente →",
-      "page": "Pagina"
+      "page": "Pagina",
+      "loadMore": "Cargar mas",
+      "status": "Mostrando {shown} de {total}"
     }
   },
   "aria": {
@@ -34,9 +36,10 @@
     "languageSwitcher": "Selector de idioma",
     "storyCards": "Tarjetas de historia",
     "flowCards": "Tarjetas de flujo",
-    "projectsPagination": "Paginacion de proyectos",
-    "newsPagination": "Paginacion de noticias",
-    "meetingsPagination": "Paginacion de encuentros",
+    "projectsPagination": "Controles de la lista de proyectos",
+    "newsPagination": "Controles de la lista de noticias",
+    "meetingsPagination": "Controles de la lista de encuentros",
+    "participantsPagination": "Controles de la lista de participantes",
     "previousPhoto": "Foto anterior",
     "nextPhoto": "Foto siguiente",
     "previousImage": "Imagen anterior",

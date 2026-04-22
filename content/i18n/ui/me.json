@@ -25,7 +25,9 @@
     "pagination": {
       "prev": "← Nazad",
       "next": "Naprijed →",
-      "page": "Stranica"
+      "page": "Stranica",
+      "loadMore": "Prikazi jos",
+      "status": "Prikazano {shown} od {total}"
     }
   },
   "aria": {
@@ -34,9 +36,10 @@
     "languageSwitcher": "Prekidac jezika",
     "storyCards": "Kartice price",
     "flowCards": "Kartice toka",
-    "projectsPagination": "Paginacija projekata",
-    "newsPagination": "Paginacija novosti",
-    "meetingsPagination": "Paginacija susreta",
+    "projectsPagination": "Kontrole liste projekata",
+    "newsPagination": "Kontrole liste novosti",
+    "meetingsPagination": "Kontrole liste susreta",
+    "participantsPagination": "Kontrole liste ucesnika",
     "previousPhoto": "Prethodna fotografija",
     "nextPhoto": "Sljedeca fotografija",
     "previousImage": "Prethodna slika",

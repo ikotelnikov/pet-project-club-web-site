@@ -1095,18 +1095,47 @@ async function renderMeetingsPage() {
   );
   const sortedArchiveItems = sortMeetingsByDateDesc(allArchiveItems);
   const pageSize = data.archive?.pageSize || archiveIndex.pageSize || 10;
-  const pageParam = Number.parseInt(new URLSearchParams(window.location.search).get("page") || "1", 10);
-  const currentPage = Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1;
-  const totalPages = Math.max(1, Math.ceil(sortedArchiveItems.length / pageSize));
-  const safePage = Math.min(currentPage, totalPages);
-  const start = (safePage - 1) * pageSize;
-  const archiveItems = sortedArchiveItems.slice(start, start + pageSize);
+  let visibleCount = pageSize;
 
   pageContent.innerHTML = `
     ${renderMeetingCollection(data.announcements, announcementItems, "announcements")}
     ${renderTimelineSection(data.formats)}
-    ${renderMeetingsFeed(data.archive, archiveItems, safePage, totalPages)}
+    ${renderMeetingsFeed(data.archive, sortedArchiveItems.slice(0, visibleCount), sortedArchiveItems.length, visibleCount)}
   `;
+
+  const archiveFeed = document.getElementById("meetings-archive-feed");
+  const archivePagination = document.getElementById("meetings-archive-pagination");
+
+  if (!archiveFeed || !archivePagination) {
+    return;
+  }
+
+  const renderArchiveState = () => {
+    const archiveItems = sortedArchiveItems.slice(0, visibleCount);
+
+    archiveFeed.innerHTML = archiveItems.length
+      ? archiveItems.map((item) => renderMeetingPreviewCard(item)).join("")
+      : `<p class="card-copy">${data.archive?.empty || t("meetings.emptyText", "There are no meetings here yet.")}</p>`;
+
+    archiveFeed.querySelectorAll(".reveal").forEach((node) => {
+      node.classList.add("visible");
+    });
+
+    archivePagination.innerHTML = sortedArchiveItems.length > pageSize
+      ? renderLoadMoreWidget(
+          getLoadMoreCopy("meetings", data.archive?.pagination),
+          Math.min(visibleCount, sortedArchiveItems.length),
+          sortedArchiveItems.length
+        )
+      : "";
+
+    archivePagination.querySelector("[data-load-more]")?.addEventListener("click", () => {
+      visibleCount = Math.min(visibleCount + pageSize, sortedArchiveItems.length);
+      renderArchiveState();
+    });
+  };
+
+  renderArchiveState();
 }
 
 function sortMeetingsByDateDesc(items = []) {
@@ -1152,9 +1181,8 @@ async function renderProjectsPage() {
   const searchPlaceholder = listCopy.searchPlaceholder || t("projects.searchPlaceholder", "Find a project, stack, owner, or request");
   const emptyText = listCopy.empty || t("projects.emptyText", "There are no projects matching this request yet.");
   const query = new URLSearchParams(window.location.search);
-  const initialPage = Number(query.get("page") || "1");
-  let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? Math.floor(initialPage) : 1;
   let currentSearch = (query.get("q") || "").trim();
+  let visibleCount = pageSize;
   const hydrateExisting = shouldHydrateInteractivePrerender(query);
 
   document.title = buildDocumentTitle(listCopy.title || t("projects.title", "Club projects"));
@@ -1172,7 +1200,7 @@ async function renderProjectsPage() {
         </div>
         <div class="project-results-meta" id="project-results-meta"></div>
         <div class="project-feed" id="project-feed"></div>
-        <div class="pagination-nav" id="project-pagination" aria-label="${t("aria.projectsPagination", "Projects pagination")}"></div>
+        <div class="pagination-nav" id="project-pagination" aria-label="${t("aria.projectsPagination", "Projects list controls")}"></div>
       </section>
       ${renderStatusSection(projectsData.notes)}
     `;
@@ -1192,10 +1220,6 @@ async function renderProjectsPage() {
 
     if (currentSearch) {
       nextQuery.set("q", currentSearch);
-    }
-
-    if (currentPage > 1) {
-      nextQuery.set("page", String(currentPage));
     }
 
     const nextUrl = nextQuery.toString()
@@ -1235,9 +1259,8 @@ async function renderProjectsPage() {
 
   const renderProjectPageState = () => {
     const filteredProjects = getFilteredProjects();
-    const totalPages = Math.max(1, Math.ceil(filteredProjects.length / pageSize));
-    currentPage = Math.min(currentPage, totalPages);
-    const pageItems = filteredProjects.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    const safeVisibleCount = Math.min(visibleCount, filteredProjects.length);
+    const visibleItems = filteredProjects.slice(0, safeVisibleCount);
 
     resultsMeta.innerHTML = currentSearch
       ? `
@@ -1245,32 +1268,25 @@ async function renderProjectsPage() {
       `
       : "";
 
-    feed.innerHTML = pageItems.length
-      ? pageItems.map((item) => renderProjectPreviewCard(item, ownerMap)).join("")
+    feed.innerHTML = visibleItems.length
+      ? visibleItems.map((item) => renderProjectPreviewCard(item, ownerMap)).join("")
       : `<article class="item-card reveal"><h3>${listCopy.emptyTitle || t("common.emptyTitle", "Nothing found")}</h3><p class="item-copy">${emptyText}</p></article>`;
 
     feed.querySelectorAll(".reveal").forEach((node) => {
       node.classList.add("visible");
     });
 
-    pagination.innerHTML = totalPages > 1
-      ? renderGenericPagination(
-          {
-            prev: listCopy.pagination?.prev || "← Previous",
-            next: listCopy.pagination?.next || "Next →",
-            page: listCopy.pagination?.page || "Page",
-          },
-          currentPage,
-          totalPages
+    pagination.innerHTML = filteredProjects.length > pageSize
+      ? renderLoadMoreWidget(
+          getLoadMoreCopy("projects", listCopy.pagination),
+          safeVisibleCount,
+          filteredProjects.length
         )
       : "";
 
-    pagination.querySelectorAll("[data-project-page]").forEach((button) => {
-      button.addEventListener("click", () => {
-        currentPage = Number(button.dataset.projectPage);
-        updateUrl();
-        renderProjectPageState();
-      });
+    pagination.querySelector("[data-load-more]")?.addEventListener("click", () => {
+      visibleCount = Math.min(visibleCount + pageSize, filteredProjects.length);
+      renderProjectPageState();
     });
 
     updateUrl();
@@ -1278,16 +1294,11 @@ async function renderProjectsPage() {
 
   searchInput.addEventListener("input", () => {
     currentSearch = searchInput.value.trim();
-    currentPage = 1;
+    visibleCount = pageSize;
     renderProjectPageState();
   });
 
-  if (hydrateExisting) {
-    searchInput.value = currentSearch;
-    updateUrl();
-    return;
-  }
-
+  searchInput.value = currentSearch;
   renderProjectPageState();
 }
 
@@ -1298,6 +1309,8 @@ async function renderParticipantsPage() {
   ]);
   const title = participantsData.title || t("participants.title", "Pet Project Club participants");
   const description = participantsData.description || t("participants.description", "To join the participants list, edit your data, or remove it, contact the organizer.");
+  const pageSize = Number(participantsData.pageSize || 9);
+  let visibleCount = pageSize;
 
   document.title = buildDocumentTitle(title);
 
@@ -1308,19 +1321,41 @@ async function renderParticipantsPage() {
         <h1>${title}</h1>
         <p class="card-copy">${description}</p>
       </div>
-      <div class="people-grid" id="participants-grid">${participantItems.map(renderPersonCard).join("")}</div>
+      <div class="people-grid" id="participants-grid">${participantItems.slice(0, visibleCount).map(renderPersonCard).join("")}</div>
+      <div class="pagination-nav" id="participants-pagination" aria-label="${t("aria.participantsPagination", "Participants list controls")}"></div>
     </section>
   `;
 
   const grid = document.getElementById("participants-grid");
+  const pagination = document.getElementById("participants-pagination");
 
-  if (!grid) {
+  if (!grid || !pagination) {
     return;
   }
 
-  grid.querySelectorAll(".reveal").forEach((node) => {
-    node.classList.add("visible");
-  });
+  const renderParticipantState = () => {
+    const visibleItems = participantItems.slice(0, visibleCount);
+
+    grid.innerHTML = visibleItems.map(renderPersonCard).join("");
+    grid.querySelectorAll(".reveal").forEach((node) => {
+      node.classList.add("visible");
+    });
+
+    pagination.innerHTML = participantItems.length > pageSize
+      ? renderLoadMoreWidget(
+          getLoadMoreCopy("participants", participantsData.pagination),
+          visibleItems.length,
+          participantItems.length
+        )
+      : "";
+
+    pagination.querySelector("[data-load-more]")?.addEventListener("click", () => {
+      visibleCount = Math.min(visibleCount + pageSize, participantItems.length);
+      renderParticipantState();
+    });
+  };
+
+  renderParticipantState();
 }
 
 async function renderParticipantDetailPage() {
@@ -1556,9 +1591,8 @@ async function renderNewsPage() {
   const listCopy = pageData.list || {};
   const pageSize = Number(listCopy.pageSize || 8);
   const query = new URLSearchParams(window.location.search);
-  const initialPage = Number(query.get("page") || "1");
-  let currentPage = Number.isFinite(initialPage) && initialPage > 0 ? Math.floor(initialPage) : 1;
   let currentSearch = (query.get("q") || "").trim();
+  let visibleCount = pageSize;
   const hydrateExisting = shouldHydrateInteractivePrerender(query);
   const allItems = sortMeetingsByDateDesc(
     [...announcementItems, ...archiveItems].filter(
@@ -1581,7 +1615,7 @@ async function renderNewsPage() {
         </div>
         <div class="project-results-meta" id="news-results-meta"></div>
         <div class="meeting-feed" id="news-feed"></div>
-        <div class="pagination-nav" id="news-pagination" aria-label="${t("aria.newsPagination", "News pagination")}"></div>
+        <div class="pagination-nav" id="news-pagination" aria-label="${t("aria.newsPagination", "News list controls")}"></div>
       </section>
       ${pageData.notes ? renderStatusSection(pageData.notes) : ""}
     `;
@@ -1601,10 +1635,6 @@ async function renderNewsPage() {
 
     if (currentSearch) {
       nextQuery.set("q", currentSearch);
-    }
-
-    if (currentPage > 1) {
-      nextQuery.set("page", String(currentPage));
     }
 
     const nextUrl = nextQuery.toString()
@@ -1643,9 +1673,8 @@ async function renderNewsPage() {
 
   const renderNewsState = () => {
     const filteredItems = getFilteredItems();
-    const totalPages = Math.max(1, Math.ceil(filteredItems.length / pageSize));
-    currentPage = Math.min(currentPage, totalPages);
-    const pageItems = filteredItems.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    const safeVisibleCount = Math.min(visibleCount, filteredItems.length);
+    const visibleItems = filteredItems.slice(0, safeVisibleCount);
 
     resultsMeta.innerHTML = currentSearch
       ? `
@@ -1653,49 +1682,36 @@ async function renderNewsPage() {
       `
       : "";
 
-    feed.innerHTML = pageItems.length
-      ? pageItems.map((item) => renderMeetingPreviewCard(item)).join("")
+    feed.innerHTML = visibleItems.length
+      ? visibleItems.map((item) => renderMeetingPreviewCard(item)).join("")
       : `<article class="item-card reveal"><h3>${listCopy.emptyTitle || t("common.emptyTitle", "Nothing found")}</h3><p class="item-copy">${listCopy.empty || t("news.emptyText", "Try changing the search query.")}</p></article>`;
 
     feed.querySelectorAll(".reveal").forEach((node) => {
       node.classList.add("visible");
     });
 
-    pagination.innerHTML = totalPages > 1
-      ? renderGenericPagination(
-          {
-            prev: listCopy.pagination?.prev || getUiPaginationCopy("news").prev,
-            next: listCopy.pagination?.next || getUiPaginationCopy("news").next,
-            page: listCopy.pagination?.page || getUiPaginationCopy("news").page,
-          },
-          currentPage,
-          totalPages
+    pagination.innerHTML = filteredItems.length > pageSize
+      ? renderLoadMoreWidget(
+          getLoadMoreCopy("news", listCopy.pagination),
+          safeVisibleCount,
+          filteredItems.length
         )
       : "";
 
-    pagination.querySelectorAll("[data-project-page]").forEach((button) => {
-      button.addEventListener("click", () => {
-        currentPage = Number(button.dataset.projectPage);
-        updateUrl();
-        renderNewsState();
-        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
-      });
+    pagination.querySelector("[data-load-more]")?.addEventListener("click", () => {
+      visibleCount = Math.min(visibleCount + pageSize, filteredItems.length);
+      renderNewsState();
     });
   };
 
   searchInput.addEventListener("input", () => {
     currentSearch = searchInput.value.trim();
-    currentPage = 1;
+    visibleCount = pageSize;
     updateUrl();
     renderNewsState();
   });
 
-  if (hydrateExisting) {
-    searchInput.value = currentSearch;
-    updateUrl();
-    return;
-  }
-
+  searchInput.value = currentSearch;
   renderNewsState();
 }
 
@@ -2474,12 +2490,6 @@ function shouldKeepPrerenderedPage() {
     return false;
   }
 
-  const query = new URLSearchParams(window.location.search);
-
-  if (page === "meetings") {
-    return !query.has("page");
-  }
-
   return true;
 }
 
@@ -2489,9 +2499,7 @@ function shouldHydrateInteractivePrerender(query = new URLSearchParams(window.lo
   }
 
   const hasSearch = Boolean((query.get("q") || "").trim());
-  const requestedPage = Number.parseInt(query.get("page") || "1", 10);
-
-  return !hasSearch && (!Number.isFinite(requestedPage) || requestedPage <= 1);
+  return !hasSearch;
 }
 
 function scoreRenderableLinkLabel(label) {
@@ -2580,19 +2588,30 @@ function looksLikeHtml(value) {
   return /<[^>]+>/.test(value);
 }
 
-function renderGenericPagination(copy = {}, currentPage, totalPages) {
-  const prevPage = currentPage > 1 ? currentPage - 1 : null;
-  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
+function renderLoadMoreWidget(copy = {}, visibleCount, totalCount) {
+  if (!totalCount) {
+    return "";
+  }
 
   return `
-    ${prevPage
-      ? `<button class="pagination-link" type="button" data-project-page="${prevPage}">${copy.prev || t("common.pagination.prev", "← Previous")}</button>`
-      : `<span class="pagination-link is-disabled">${copy.prev || t("common.pagination.prev", "← Previous")}</span>`}
-    <span class="pagination-status">${copy.page || t("common.pagination.page", "Page")} ${currentPage} / ${totalPages}</span>
-    ${nextPage
-      ? `<button class="pagination-link" type="button" data-project-page="${nextPage}">${copy.next || t("common.pagination.next", "Next →")}</button>`
-      : `<span class="pagination-link is-disabled">${copy.next || t("common.pagination.next", "Next →")}</span>`}
+    <span class="pagination-status">${formatLoadMoreStatus(copy.status, visibleCount, totalCount)}</span>
+    ${visibleCount < totalCount
+      ? `<button class="pagination-link" type="button" data-load-more>${copy.loadMore || t("common.pagination.loadMore", "Load more")}</button>`
+      : ""}
   `;
+}
+
+function getLoadMoreCopy(scope, overrides = {}) {
+  return {
+    loadMore: overrides?.loadMore || t(`${scope}.pagination.loadMore`, t("common.pagination.loadMore", "Load more")),
+    status: overrides?.status || t(`${scope}.pagination.status`, t("common.pagination.status", "Showing {shown} of {total}")),
+  };
+}
+
+function formatLoadMoreStatus(template, shown, total) {
+  return String(template || t("common.pagination.status", "Showing {shown} of {total}"))
+    .replace(/\{shown\}/g, String(shown))
+    .replace(/\{total\}/g, String(total));
 }
 
 function renderStatusSection(section) {
@@ -2632,7 +2651,7 @@ function renderMeetingCollection(section, items, kind = "archive") {
   `;
 }
 
-function renderMeetingsFeed(section, items, currentPage, totalPages) {
+function renderMeetingsFeed(section, items, totalCount, visibleCount) {
   return `
     <section class="section-shell reveal">
       <div class="section-heading">
@@ -2640,28 +2659,15 @@ function renderMeetingsFeed(section, items, currentPage, totalPages) {
         <h2>${section.title}</h2>
         <p class="card-copy">${section.description}</p>
       </div>
-      <div class="meeting-feed">
+      <div class="meeting-feed" id="meetings-archive-feed">
         ${items.length ? items.map((item) => renderMeetingPreviewCard(item)).join("") : `<p class="card-copy">${section.empty || t("meetings.emptyText", "There are no meetings here yet.")}</p>`}
       </div>
-      ${totalPages > 1 ? renderMeetingsPagination(section.pagination, currentPage, totalPages) : ""}
+      <div class="pagination-nav" id="meetings-archive-pagination" aria-label="${t("aria.meetingsPagination", "Meetings list controls")}">
+        ${totalCount > visibleCount
+          ? renderLoadMoreWidget(getLoadMoreCopy("meetings", section.pagination), visibleCount, totalCount)
+          : ""}
+      </div>
     </section>
-  `;
-}
-
-function renderMeetingsPagination(copy = {}, currentPage, totalPages) {
-  const prevHref = currentPage > 1 ? `?page=${currentPage - 1}` : "";
-  const nextHref = currentPage < totalPages ? `?page=${currentPage + 1}` : "";
-
-  return `
-    <nav class="pagination-nav" aria-label="${t("aria.meetingsPagination", "Meetings pagination")}">
-      ${prevHref
-        ? `<a class="pagination-link" href="${prevHref}">${copy.prev || t("common.pagination.prev", "← Previous")}</a>`
-        : `<span class="pagination-link is-disabled">${copy.prev || t("common.pagination.prev", "← Previous")}</span>`}
-      <span class="pagination-status">${copy.page || t("common.pagination.page", "Page")} ${currentPage} / ${totalPages}</span>
-      ${nextHref
-        ? `<a class="pagination-link" href="${nextHref}">${copy.next || t("common.pagination.next", "Next →")}</a>`
-        : `<span class="pagination-link is-disabled">${copy.next || t("common.pagination.next", "Next →")}</span>`}
-    </nav>
   `;
 }
 

@@ -25,7 +25,9 @@
     "pagination": {
       "prev": "← Zurueck",
       "next": "Weiter →",
-      "page": "Seite"
+      "page": "Seite",
+      "loadMore": "Mehr laden",
+      "status": "{shown} von {total} angezeigt"
     }
   },
   "aria": {
@@ -34,9 +36,10 @@
     "languageSwitcher": "Sprachumschalter",
     "storyCards": "Story-Karten",
     "flowCards": "Ablauf-Karten",
-    "projectsPagination": "Projekt-Paginierung",
-    "newsPagination": "News-Paginierung",
-    "meetingsPagination": "Treffen-Paginierung",
+    "projectsPagination": "Steuerung der Projektliste",
+    "newsPagination": "Steuerung der News-Liste",
+    "meetingsPagination": "Steuerung der Treffenliste",
+    "participantsPagination": "Steuerung der Teilnehmerliste",
     "previousPhoto": "Vorheriges Foto",
     "nextPhoto": "Naechstes Foto",
     "previousImage": "Vorheriges Bild",

@@ -25,7 +25,9 @@
     "pagination": {
       "prev": "← Previous",
       "next": "Next →",
-      "page": "Page"
+      "page": "Page",
+      "loadMore": "Load more",
+      "status": "Showing {shown} of {total}"
     }
   },
   "aria": {
@@ -34,9 +36,10 @@
     "languageSwitcher": "Language switcher",
     "storyCards": "Story cards",
     "flowCards": "Flow cards",
-    "projectsPagination": "Projects pagination",
-    "newsPagination": "News pagination",
-    "meetingsPagination": "Meetings pagination",
+    "projectsPagination": "Projects list controls",
+    "newsPagination": "News list controls",
+    "meetingsPagination": "Meetings list controls",
+    "participantsPagination": "Participants list controls",
     "previousPhoto": "Previous photo",
     "nextPhoto": "Next photo",
     "previousImage": "Previous image",

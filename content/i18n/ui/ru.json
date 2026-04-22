@@ -25,7 +25,9 @@
     "pagination": {
       "prev": "← Назад",
       "next": "Вперед →",
-      "page": "Страница"
+      "page": "Страница",
+      "loadMore": "Показать еще",
+      "status": "Показано {shown} из {total}"
     }
   },
   "aria": {
@@ -34,9 +36,10 @@
     "languageSwitcher": "Переключение языка",
     "storyCards": "Карточки истории",
     "flowCards": "Карточки форматов",
-    "projectsPagination": "Пагинация проектов",
-    "newsPagination": "Пагинация новостей",
-    "meetingsPagination": "Пагинация встреч",
+    "projectsPagination": "Управление списком проектов",
+    "newsPagination": "Управление списком новостей",
+    "meetingsPagination": "Управление списком встреч",
+    "participantsPagination": "Управление списком участников",
     "previousPhoto": "Предыдущее фото",
     "nextPhoto": "Следующее фото",
     "previousImage": "Предыдущее изображение",

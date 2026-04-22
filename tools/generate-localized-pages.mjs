@@ -257,7 +257,7 @@ function buildRoutesForLocale(locale, content, ui) {
       publicPath: localePath(locale, "projects/"),
       title: ui.meta?.projects?.title || `${content.projectsPage.list?.title || "Projects"} | ${siteName}`,
       description: ui.meta?.projects?.description || summarizePlainText(content.projectsPage.notes?.description),
-      pageContent: renderProjectsHub(content.projectsPage, content.projectItems, participantMap, locale),
+      pageContent: renderProjectsHub(content.projectsPage, content.projectItems, participantMap, ui, locale),
       schema: buildCollectionSchema({
         siteName,
         title: content.projectsPage.list?.title || navLabel(ui, "projects"),
@@ -274,7 +274,7 @@ function buildRoutesForLocale(locale, content, ui) {
       publicPath: localePath(locale, "participants/"),
       title: ui.meta?.participants?.title || `${content.participantsPage.title || "Participants"} | ${siteName}`,
       description: ui.meta?.participants?.description || summarizePlainText(content.participantsPage.description),
-      pageContent: renderParticipantsHub(content.participantsPage, content.participantItems, locale),
+      pageContent: renderParticipantsHub(content.participantsPage, content.participantItems, ui, locale),
       schema: buildCollectionSchema({
         siteName,
         title: content.participantsPage.title || navLabel(ui, "participants"),
@@ -291,7 +291,7 @@ function buildRoutesForLocale(locale, content, ui) {
       publicPath: localePath(locale, "news/"),
       title: ui.meta?.news?.title || `${content.newsPage.list?.title || "News"} | ${siteName}`,
       description: ui.meta?.news?.description || summarizePlainText(content.newsPage.notes?.description),
-      pageContent: renderNewsHub(content.newsPage, projectNews, projectMap, locale),
+      pageContent: renderNewsHub(content.newsPage, projectNews, projectMap, ui, locale),
       schema: buildCollectionSchema({
         siteName,
         title: content.newsPage.list?.title || navLabel(ui, "news"),
@@ -603,6 +603,9 @@ function renderMainPage(data, locale) {
 }
 
 function renderMeetingsHub(pageData, announcementItems, archiveItems, ui, locale) {
+  const archivePageSize = Number(pageData.archive?.pageSize || 10);
+  const initialArchiveItems = archiveItems.slice(0, archivePageSize);
+
   return `
     ${renderMeetingCollection(pageData.announcements, announcementItems, ui, locale)}
     <section class="section-shell reveal visible">
@@ -621,7 +624,7 @@ function renderMeetingsHub(pageData, announcementItems, archiveItems, ui, locale
         `).join("")}
       </div>
     </section>
-    ${renderMeetingArchive(pageData.archive, archiveItems, ui, locale)}
+    ${renderMeetingArchive(pageData.archive, initialArchiveItems, archiveItems.length, archivePageSize, ui, locale)}
   `;
 }
 
@@ -640,15 +643,18 @@ function renderMeetingCollection(section, items, ui, locale) {
   `;
 }
 
-function renderMeetingArchive(section, items, ui, locale) {
+function renderMeetingArchive(section, items, totalCount, visibleCount, ui, locale) {
   return `
     <section class="section-shell reveal visible">
       <div class="section-heading">
         <p class="section-kicker">${escapeHtml(section?.tag || "")}</p>
         <h2>${escapeHtml(section?.title || "Archive")}</h2>
       </div>
-      <div class="meeting-feed">
+      <div class="meeting-feed" id="meetings-archive-feed">
         ${items.length ? items.map((item) => renderMeetingPreviewCard(item, locale)).join("") : `<article class="item-card reveal visible"><h3>${escapeHtml(ui.common?.emptyTitle || "Nothing found")}</h3><p class="item-copy">${escapeHtml(section?.empty || ui.meetings?.emptyText || "There are no meetings here yet.")}</p></article>`}
+      </div>
+      <div class="pagination-nav" id="meetings-archive-pagination" aria-label="${escapeAttribute(ui.aria?.meetingsPagination || "Meetings list controls")}">
+        ${totalCount > visibleCount ? renderStaticLoadMore(getLoadMoreCopy(ui, "meetings", section?.pagination), visibleCount, totalCount) : ""}
       </div>
     </section>
   `;
@@ -695,11 +701,10 @@ function renderMeetingDetail(item, pageData, locale) {
   `;
 }
 
-function renderProjectsHub(pageData, projects, participantMap, locale) {
+function renderProjectsHub(pageData, projects, participantMap, ui, locale) {
   const listCopy = pageData.list || {};
   const pageSize = Number(listCopy.pageSize || 6);
   const firstPageItems = projects.slice(0, pageSize);
-  const totalPages = Math.max(1, Math.ceil(projects.length / pageSize));
 
   return `
     <section class="section-shell reveal visible project-page-shell">
@@ -715,8 +720,8 @@ function renderProjectsHub(pageData, projects, participantMap, locale) {
       <div class="project-feed" id="project-feed">
         ${firstPageItems.length ? firstPageItems.map((item) => renderProjectPreviewCard(item, participantMap, locale)).join("") : `<article class="item-card reveal visible"><h3>${escapeHtml(listCopy.emptyTitle || "Nothing found")}</h3><p class="item-copy">${escapeHtml(listCopy.empty || "No matching projects yet.")}</p></article>`}
       </div>
-      <div class="pagination-nav" id="project-pagination" aria-label="Projects pagination">
-        ${totalPages > 1 ? renderStaticPagination(listCopy.pagination, 1, totalPages) : ""}
+      <div class="pagination-nav" id="project-pagination" aria-label="${escapeAttribute(ui.aria?.projectsPagination || "Projects list controls")}">
+        ${projects.length > pageSize ? renderStaticLoadMore(getLoadMoreCopy(ui, "projects", listCopy.pagination), firstPageItems.length, projects.length) : ""}
       </div>
     </section>
     ${renderNotesSection(pageData.notes)}
@@ -895,7 +900,10 @@ function scoreRenderableLinkLabel(label) {
   return 2;
 }
 
-function renderParticipantsHub(pageData, participants, locale) {
+function renderParticipantsHub(pageData, participants, ui, locale) {
+  const pageSize = Number(pageData.pageSize || 9);
+  const firstPageItems = participants.slice(0, pageSize);
+
   return `
     <section class="section-shell reveal visible participants-page-shell">
       <div class="section-heading">
@@ -903,8 +911,11 @@ function renderParticipantsHub(pageData, participants, locale) {
         <h1>${escapeHtml(pageData.title || "Participants")}</h1>
         <p class="card-copy">${pageData.description || ""}</p>
       </div>
-      <div class="people-grid">
-        ${participants.map((item) => renderPersonCard(item, locale)).join("")}
+      <div class="people-grid" id="participants-grid">
+        ${firstPageItems.map((item) => renderPersonCard(item, locale)).join("")}
+      </div>
+      <div class="pagination-nav" id="participants-pagination" aria-label="${escapeAttribute(ui.aria?.participantsPagination || "Participants list controls")}">
+        ${participants.length > pageSize ? renderStaticLoadMore(getLoadMoreCopy(ui, "participants", pageData.pagination), firstPageItems.length, participants.length) : ""}
       </div>
     </section>
   `;
@@ -948,11 +959,10 @@ function renderParticipantDetail(item, pageData, relatedProjects, locale) {
   `;
 }
 
-function renderNewsHub(pageData, items, projectMap, locale) {
+function renderNewsHub(pageData, items, projectMap, ui, locale) {
   const listCopy = pageData.list || {};
   const pageSize = Number(listCopy.pageSize || 8);
   const firstPageItems = items.slice(0, pageSize);
-  const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
 
   return `
     <section class="section-shell reveal visible project-page-shell">
@@ -968,27 +978,32 @@ function renderNewsHub(pageData, items, projectMap, locale) {
       <div class="meeting-feed" id="news-feed">
         ${firstPageItems.length ? firstPageItems.map((item) => renderNewsCard(item, projectMap, locale)).join("") : `<article class="item-card reveal visible"><h3>${escapeHtml(listCopy.emptyTitle || "Nothing found")}</h3><p class="item-copy">${escapeHtml(listCopy.empty || "No matching news yet.")}</p></article>`}
       </div>
-      <div class="pagination-nav" id="news-pagination" aria-label="News pagination">
-        ${totalPages > 1 ? renderStaticPagination(listCopy.pagination, 1, totalPages) : ""}
+      <div class="pagination-nav" id="news-pagination" aria-label="${escapeAttribute(ui.aria?.newsPagination || "News list controls")}">
+        ${items.length > pageSize ? renderStaticLoadMore(getLoadMoreCopy(ui, "news", listCopy.pagination), firstPageItems.length, items.length) : ""}
       </div>
     </section>
     ${renderNotesSection(pageData.notes)}
   `;
 }
 
-function renderStaticPagination(copy = {}, currentPage, totalPages) {
-  const prevPage = currentPage > 1 ? currentPage - 1 : null;
-  const nextPage = currentPage < totalPages ? currentPage + 1 : null;
-
+function renderStaticLoadMore(copy = {}, visibleCount, totalCount) {
   return `
-    ${prevPage
-      ? `<button class="pagination-link" type="button" data-project-page="${prevPage}">${escapeHtml(copy.prev || "← Previous")}</button>`
-      : `<span class="pagination-link is-disabled">${escapeHtml(copy.prev || "← Previous")}</span>`}
-    <span class="pagination-status">${escapeHtml(copy.page || "Page")} ${currentPage} / ${totalPages}</span>
-    ${nextPage
-      ? `<button class="pagination-link" type="button" data-project-page="${nextPage}">${escapeHtml(copy.next || "Next →")}</button>`
-      : `<span class="pagination-link is-disabled">${escapeHtml(copy.next || "Next →")}</span>`}
+    <span class="pagination-status">${escapeHtml(formatLoadMoreStatus(copy.status, visibleCount, totalCount))}</span>
+    ${visibleCount < totalCount ? `<button class="pagination-link" type="button" data-load-more>${escapeHtml(copy.loadMore || "Load more")}</button>` : ""}
   `;
+}
+
+function getLoadMoreCopy(ui, scope, overrides = {}) {
+  return {
+    loadMore: overrides?.loadMore || ui?.[scope]?.pagination?.loadMore || ui?.common?.pagination?.loadMore || "Load more",
+    status: overrides?.status || ui?.[scope]?.pagination?.status || ui?.common?.pagination?.status || "Showing {shown} of {total}",
+  };
+}
+
+function formatLoadMoreStatus(template, shown, total) {
+  return String(template || "Showing {shown} of {total}")
+    .replace(/\{shown\}/g, String(shown))
+    .replace(/\{total\}/g, String(total));
 }
 
 function renderNewsCard(item, projectMap, locale) {
