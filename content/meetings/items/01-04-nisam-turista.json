@@ -38,18 +38,22 @@
       "format": "in-person"
     },
     "de": {
-      "title": "Treffen am Mittwoch, 01.04, ueber die Communities Nisam Turista und Cista Gora",
+      "title": "Treffen am Mittwoch, den 01.04, über die Gemeinschaften „Nisam Turista“ und Чиста Гора",
       "photo": {
-        "alt": "Treffen am Mittwoch, 01.04, ueber die Communities Nisam Turista und Cista Gora"
+        "alt": "Treffen am Mittwoch, den 01.04, über die Gemeinschaften „Nisam Turista“ und Чиста Гора",
+        "src": "assets/uploads/272981189/112-photo-112-AQADiRNrG5XqYUp-.jpg"
       },
       "paragraphs": [
-        "An diesem Mittwoch ist Matvey wieder bei uns. Er ist Freiwilliger und Organisator der Communities Nisam Turista und Cista Gora. Beim letzten Mal war er im August dabei, mitten in der Zeit der Braende, und damals ging es im Gespraech vor allem um schnelle Reaktion und Hilfe im Moment.",
-        "Jetzt ist die Lage ruhiger, und genau deshalb ist es ein guter Zeitpunkt, ueber die Vorbereitung auf die Saison und die Weiterentwicklung des Projekts zu sprechen. Das Team plant, im April die Registrierungsunterlagen einzureichen und danach Schulungen und systematische Arbeit zu starten.",
-        "Zu den neuen Ideen gehoert ein Medienprojekt fuer Cista Gora mit Website und Content, bei dem IT-Unterstuetzung definitiv gebraucht wird.",
-        "Wir besprechen:\n— welche Aufgaben jetzt Prioritaet haben\n— wo und warum man sich einbringen kann\n— wie sich eine solche Community entwickelt",
-        "🕡 Mittwoch, 18:30",
-        "Kommt vorbei. Es wird lebendig, praktisch und relevant fuer alle, die die Welt um sich herum zum Besseren veraendern wollen."
-      ]
+        "An diesem Mittwoch haben wir wieder Matwei – Freiwilliger und Organisator der Gemeinschaften Nisam Turista und Чиста Гора. Beim letzten Mal kam er im August zu uns – genau inmitten der Brände. Damals ging es vor allem um Reaktionen und Hilfe im Moment.",
+        "Jetzt ist die Lage ruhiger – und das ist die beste Zeit, um über die Vorbereitung auf die Saison und die Weiterentwicklung des Projekts zu sprechen. Die Leute planen, im April die Unterlagen für die Registrierung einzureichen, danach starten sie Schulungen und systematische Arbeit.",
+        "Eine der neuesten Ideen ist der Start der Medien „Чиста Гора“ (Website und Inhalte), wofür auf jeden Fall IT-Hilfe benötigt wird.",
+        "Wir besprechen:\n– welche Aufgaben derzeit Priorität haben\n– wo und warum man sich einbringen kann\n– wie die Entwicklung einer solchen Gemeinschaft organisiert ist",
+        "🕡 Mittwoch, 18:30 Uhr",
+        "Kommt vorbei – es wird lebendig, praktisch und sachlich für alle, die die Welt um sich herum zum Besseren verändern wollen 👍"
+      ],
+      "date": "2026-04-01",
+      "place": "Monteco",
+      "format": "in-person"
     },
     "me": {
       "title": "Susret u srijedu 01.04 o zajednicama Nisam Turista i Cista Gora",
@@ -84,6 +88,7 @@
     "archive-news"
   ],
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
