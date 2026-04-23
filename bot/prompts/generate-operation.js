@@ -121,6 +121,8 @@ export function buildOperationGenerationMessages({ turn, resolved, entitySchema 
         "Never use projectSlugs for archive, status, category, workflow, or synthetic concepts such as archive-news.",
         "If the user asks to move or transfer an existing announcement into archive, history, past meetings, or a meeting article, prefer patch.type='meeting'.",
         "If the user asks to move an archived meeting article back into announcements or current items, prefer patch.type='announce'.",
+        "If resolved.target exists and resolved.entity='announcement', and the user asks to move the item to archive, history, past meetings, or out of announcements, generate patch.type='meeting' without asking for extra clarification.",
+        "If resolved.target exists and resolved.entity='meeting', and the user asks to move the item back into announcements or current items, generate patch.type='announce' without asking for extra clarification.",
         "If the user asks to publish or update project news, prefer entity='announcement', patch.format='news', and patch.projectSlugs only when a real project is identified.",
         "If the request mixes archive words with news words but no real project is identified, do not invent projectSlugs. Prefer a type transition when the target is an existing announcement or meeting item.",
         "Preserve user formatting when relevant.",

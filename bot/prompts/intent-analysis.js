@@ -265,6 +265,7 @@ export function buildIntentAnalysisMessages({ turn }) {
         "Do not treat archive words such as archive, news archive, history, old posts, or past events as project references.",
         "If the user asks to move an existing announcement into archive, history, or a meeting article, keep the same target item instead of inventing a project link.",
         "If the user asks to move an archived meeting back into announcements or current items, keep the same target item instead of inventing a project link.",
+        "If the target is already resolved to an existing announcement or meeting item, requests like move to archive, archive this, remove from announcements, move out of announcements, сделай встречей, or перенеси в архив are specific enough and do not require clarification.",
         "target.ref is the best currently available human identifier for the target entity. It does not need to be a final repository slug.",
         "target.ref may be a slug, title, name, handle, heading, or short identifying phrase in the user's language, including Cyrillic and spaces.",
         "For create operations, prefer extracting target.ref from the strongest identifying phrase in the turn rather than leaving it null.",
