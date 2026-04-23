@@ -74,18 +74,22 @@
       "format": "in-person"
     },
     "es": {
-      "title": "Encuentro del miercoles 01.04 sobre las comunidades Nisam Turista y Cista Gora",
+      "title": "Encuentro el miércoles 01.04 sobre las comunidades “Nisam Turista” y Chista Gora",
       "photo": {
-        "alt": "Encuentro del miercoles 01.04 sobre las comunidades Nisam Turista y Cista Gora"
+        "alt": "Encuentro el miércoles 01.04 sobre las comunidades “Nisam Turista” y Chista Gora",
+        "src": "assets/uploads/272981189/112-photo-112-AQADiRNrG5XqYUp-.jpg"
       },
       "paragraphs": [
-        "Este miercoles vuelve a acompanarnos Matvey, voluntario y organizador de las comunidades Nisam Turista y Cista Gora. La ultima vez vino en agosto, justo en plena temporada de incendios, y entonces la conversacion fue sobre todo acerca de reaccion inmediata y ayuda en el momento.",
-        "Ahora la situacion esta mas tranquila, y por eso es el mejor momento para hablar sobre la preparacion de la temporada y el desarrollo del proyecto. El equipo planea presentar los documentos de registro en abril y despues lanzar formacion y trabajo sistematico.",
-        "Entre las ideas nuevas esta el lanzamiento de un medio llamado Cista Gora, con sitio web y contenido, donde la ayuda IT sin duda sera util.",
-        "Hablaremos de:\n— que tareas son prioridad ahora\n— donde y por que se puede colaborar\n— como se desarrolla una comunidad de este tipo",
-        "🕡 Miercoles, 18:30",
-        "Venid. Sera una charla viva, practica y util para cualquiera que quiera mejorar el mundo que le rodea."
-      ]
+        "Este miércoles tenemos de nuevo a Matvey — voluntario y organizador de las comunidades Nisam Turista y Chista Gora. La última vez que vino fue en agosto — justo en pleno apogeo de los incendios. Entonces la conversación fue en gran parte sobre la reacción y la ayuda inmediata.",
+        "Ahora la situación está más tranquila — y es el mejor momento para discutir la preparación para la temporada y el desarrollo del proyecto. Los chicos planean en abril presentar los documentos para la registro, después de lo cual iniciarán la capacitación y el trabajo sistemático.",
+        "Entre las ideas recientes está el lanzamiento de un medio “Chista Gora” (sitio web y contenido), donde seguramente se necesitará ayuda de TI.",
+        "Discutiremos:\n— cuáles son las tareas prioritarias ahora\n— dónde y por qué se puede participar\n— cómo se organiza el desarrollo de una comunidad así",
+        "🕡 Miércoles, 18:30",
+        "Vengan — será animado, práctico y al grano para todos los que quieran cambiar el mundo que los rodea para mejor 👍"
+      ],
+      "date": "2026-04-01",
+      "place": "Monteco",
+      "format": "in-person"
     }
   },
   "projectSlugs": [
@@ -94,6 +98,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
