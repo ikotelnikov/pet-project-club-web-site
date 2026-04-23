@@ -56,18 +56,22 @@
       "format": "in-person"
     },
     "me": {
-      "title": "Susret u srijedu 01.04 o zajednicama Nisam Turista i Cista Gora",
+      "title": "Sastanak u srijedu 01.04 o zajednicama „Nisam Turista“ i Čista Gora",
       "photo": {
-        "alt": "Susret u srijedu 01.04 o zajednicama Nisam Turista i Cista Gora"
+        "alt": "Sastanak u srijedu 01.04 o zajednicama „Nisam Turista“ i Čista Gora",
+        "src": "assets/uploads/272981189/112-photo-112-AQADiRNrG5XqYUp-.jpg"
       },
       "paragraphs": [
-        "Ove srijede nam ponovo dolazi Matvej, volonter i organizator zajednica Nisam Turista i Cista Gora. Prosli put je bio kod nas u avgustu, bas usred pozara, pa je razgovor tada uglavnom bio o brzoj reakciji i pomoci u tom trenutku.",
-        "Sada je situacija mirnija i to je najbolji trenutak da razgovaramo o pripremi za sezonu i razvoju projekta. Ekipa planira da u aprilu preda dokumenta za registraciju, a nakon toga da pokrene obuku i sistemski rad.",
-        "Jedna od novih ideja je pokretanje medija Cista Gora, odnosno sajta i sadrzaja, gdje ce IT pomoc sigurno biti potrebna.",
-        "Razgovaracemo o tome:\n— koji su zadaci sada prioritet\n— gdje i zasto moze da se ukljuci\n— kako izgleda razvoj ovakve zajednice",
+        "Ove srijede ponovo imamo Matveja — volontera i organizatora zajednica Nisam Turista i Čista Gora. Prošli put je bio kod nas u avgustu — baš usred požara. Tada je razgovor uglavnom bio o reakciji i pomoći u datom trenutku.",
+        "Sada je situacija mirnija — i ovo je najbolje vrijeme da razgovaramo o pripremama za sezonu i razvoju projekta. Momci planiraju u aprilu podnijeti dokumente za registraciju, nakon čega će pokrenuti obuku i sistemski rad.",
+        "Među svježim idejama je pokretanje medija „Čista Gora“ (sajt i sadržaj), gdje će sigurno trebati IT pomoć.",
+        "Razgovaraćemo:\n— koje su sada najvažnije zadatke\n— gdje i zašto se možete uključiti\n— kako je organizovan razvoj takve zajednice",
         "🕡 Srijeda, 18:30",
-        "Dodjite. Bice zivo, prakticno i korisno za sve koji zele da mijenjaju svijet oko sebe nabolje."
-      ]
+        "Dođite — biće živo, praktično i korisno za svakoga ko želi da mijenja svijet oko sebe na bolje 👍"
+      ],
+      "date": "2026-04-01",
+      "place": "Monteco",
+      "format": "in-person"
     },
     "es": {
       "title": "Encuentro del miercoles 01.04 sobre las comunidades Nisam Turista y Cista Gora",
@@ -89,6 +93,7 @@
   ],
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
