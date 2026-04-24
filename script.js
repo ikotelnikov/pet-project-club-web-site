@@ -2908,60 +2908,62 @@ function initGallery() {
     next.addEventListener("click", () => scrollBySlide(1));
 
     slides.forEach((slide, index) => {
-      let touchStartX = null;
-      let touchStartY = null;
-      let lastTouchOpenAt = 0;
+      let pointerStartX = null;
+      let pointerStartY = null;
 
-      slide.addEventListener("click", () => {
-        if (Date.now() - lastTouchOpenAt < 500) {
+      slide.draggable = false;
+
+      slide.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0 && event.pointerType !== "touch") {
+          pointerStartX = null;
+          pointerStartY = null;
+          return;
+        }
+
+        pointerStartX = event.clientX;
+        pointerStartY = event.clientY;
+      });
+
+      slide.addEventListener("pointerup", (event) => {
+        if (pointerStartX == null || pointerStartY == null) {
+          return;
+        }
+
+        const deltaX = event.clientX - pointerStartX;
+        const deltaY = event.clientY - pointerStartY;
+        pointerStartX = null;
+        pointerStartY = null;
+
+        if (Math.abs(deltaX) > 12 || Math.abs(deltaY) > 12) {
           return;
         }
 
         openGalleryLightbox(slides, index);
       });
-      slide.addEventListener(
-        "touchstart",
-        (event) => {
-          touchStartX = event.changedTouches[0]?.clientX ?? null;
-          touchStartY = event.changedTouches[0]?.clientY ?? null;
-        },
-        { passive: true }
-      );
-      slide.addEventListener(
-        "touchend",
-        (event) => {
-          const touchEndX = event.changedTouches[0]?.clientX ?? null;
-          const touchEndY = event.changedTouches[0]?.clientY ?? null;
-          if (
-            touchStartX == null ||
-            touchStartY == null ||
-            touchEndX == null ||
-            touchEndY == null
-          ) {
-            return;
-          }
 
-          const deltaX = touchEndX - touchStartX;
-          const deltaY = touchEndY - touchStartY;
-          if (Math.abs(deltaX) > 12 || Math.abs(deltaY) > 12) {
-            return;
-          }
-
-          lastTouchOpenAt = Date.now();
-          openGalleryLightbox(slides, index);
-        },
-        { passive: true }
-      );
+      slide.addEventListener("pointercancel", () => {
+        pointerStartX = null;
+        pointerStartY = null;
+      });
     });
 
     viewport.addEventListener(
       "wheel",
       (event) => {
-        if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+        event.preventDefault();
+
+        if (Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.shiftKey) {
+          viewport.scrollBy({
+            left: event.deltaX || event.deltaY,
+            behavior: "auto",
+          });
           return;
         }
 
-        event.preventDefault();
+        window.scrollBy({
+          top: event.deltaY,
+          behavior: "auto",
+        });
       },
       { passive: false }
     );
