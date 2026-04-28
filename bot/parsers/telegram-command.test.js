@@ -79,6 +79,24 @@ photoalt: Participants during the March meeting
   ]);
 });
 
+test("parses participant create command with detailshtml block", () => {
+  const parsed = parseTelegramCommand(`
+/participant create
+slug: participant-ivan-kotelnikov
+handle: @ikotelnikov
+name: Ivan Kotelnikov
+role: Founder / Product / Engineering
+bio:
+Builds the club.
+detailshtml:
+<p><strong>Builds</strong> the club.</p>
+points:
+- Can help shape product direction.
+  `);
+
+  assert.equal(parsed.fields.detailsHtml, "<p><strong>Builds</strong> the club.</p>");
+});
+
 test("rejects unknown field", () => {
   assert.throws(
     () =>

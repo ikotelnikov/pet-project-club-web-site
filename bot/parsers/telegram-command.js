@@ -81,13 +81,13 @@ function parseFields(lines, entity, action) {
       continue;
     }
 
-    const fieldMatch = line.match(/^([a-z]+):(.*)$/);
+    const fieldMatch = line.match(/^([a-zA-Z]+):(.*)$/);
 
     if (!fieldMatch) {
       throw new CommandParseError(`Unexpected line '${line}'.`);
     }
 
-    const fieldName = fieldMatch[1];
+    const fieldName = normalizeFieldName(fieldMatch[1]);
     const inlineValue = fieldMatch[2].trim();
 
     if (!allowedFields.has(fieldName)) {
@@ -281,9 +281,17 @@ function validateFields(entity, action, fields) {
 }
 
 function isFieldDeclaration(line) {
-  return /^[a-z]+:/.test(line);
+  return /^[a-zA-Z]+:/.test(line);
 }
 
 function isBullet(line) {
   return line.startsWith("- ");
+}
+
+function normalizeFieldName(value) {
+  if (value === "detailshtml") {
+    return "detailsHtml";
+  }
+
+  return value;
 }

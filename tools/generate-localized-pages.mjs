@@ -240,13 +240,7 @@ function buildRoutesForLocale(locale, content, ui) {
       publicPath: localePath(locale, "meetings/"),
       title: ui.meta?.meetings?.title || `Meetings | ${siteName}`,
       description: ui.meta?.meetings?.description || summarizePlainText(content.meetingsPage.announcements?.description),
-      pageContent: renderMeetingsHub(
-        content.meetingsPage,
-        content.announcementItems.filter((item) => item?.format !== "news"),
-        content.archiveItems,
-        ui,
-        locale
-      ),
+      pageContent: renderMeetingsHub(content.meetingsPage, content.announcementItems, content.archiveItems, ui, locale),
       schema: buildCollectionSchema({
         siteName,
         title: content.meetingsPage.announcements?.title || navLabel(ui, "meetings"),
@@ -255,10 +249,7 @@ function buildRoutesForLocale(locale, content, ui) {
         breadcrumb: [{ name: navLabel(ui, "meetings"), path: localePath(locale, "meetings/") }],
       }),
       alternates: buildAlternateUrls("meetings/"),
-      lastmod: latestDateFromItems(
-        content.announcementItems.filter((item) => item?.format !== "news"),
-        content.archiveItems
-      ),
+      lastmod: latestDateFromItems(content.announcementItems, content.archiveItems),
     }),
     createRoute({
       locale,
@@ -361,7 +352,7 @@ function buildRoutesForLocale(locale, content, ui) {
         templateKey: "participantDetail",
         publicPath: localePath(locale, `participants/${item.slug}/`),
         title: `${item.name || item.slug} | ${siteName}`,
-        description: summarizePlainText(firstNonEmpty(item.bio, item.role, item.name, item.slug)),
+        description: summarizePlainText(firstNonEmpty(item.bio, item.detailsHtml, item.role, item.name, item.slug)),
         pageContent: renderParticipantDetail(item, content.participantsPage, relatedProjects, locale),
         schema: buildParticipantSchema(item, siteName, localePath(locale, `participants/${item.slug}/`), ui),
         alternates: buildAlternateUrls(`participants/${item.slug}/`),
@@ -712,7 +703,7 @@ function renderMeetingDetail(item, pageData, locale) {
 
 function renderProjectsHub(pageData, projects, participantMap, ui, locale) {
   const listCopy = pageData.list || {};
-  const pageSize = Number(listCopy.pageSize || 20);
+  const pageSize = Number(listCopy.pageSize || 6);
   const firstPageItems = projects.slice(0, pageSize);
 
   return `
@@ -762,9 +753,6 @@ function renderProjectPreviewCard(item, participantMap = new Map(), locale = def
 
 function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
   const contactTags = renderEntityContactTags(item);
-  const gallery = Array.isArray(item.gallery) && item.gallery.length
-    ? item.gallery.filter((entry) => entry?.src)
-    : (item.photo?.src ? [item.photo] : []);
 
   return `
     <section class="project-detail-shell reveal visible">
@@ -779,23 +767,6 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
           ${contactTags}
         </div>
       </div>
-      ${gallery.length ? `
-        <section class="project-detail-gallery reveal visible">
-          <div class="gallery-shell">
-            <button class="gallery-nav prev" type="button" aria-label="Previous photo">‹</button>
-            <div class="gallery-viewport">
-              <div class="gallery-track">
-                ${gallery.map((entry) => `
-                  <figure class="gallery-slide reveal visible">
-                    <img src="${escapeAttribute(assetPath(entry.src))}" alt="${escapeAttribute(entry.alt || item.title || "")}">
-                  </figure>
-                `).join("")}
-              </div>
-            </div>
-            <button class="gallery-nav next" type="button" aria-label="Next photo">›</button>
-          </div>
-        </section>
-      ` : ""}
       <section class="section-shell reveal visible">
         <div class="section-heading">
           <h2>${escapeHtml(pageData.detail?.detailsTitle || "Project details")}</h2>
@@ -930,7 +901,7 @@ function scoreRenderableLinkLabel(label) {
 }
 
 function renderParticipantsHub(pageData, participants, ui, locale) {
-  const pageSize = Number(pageData.pageSize || 20);
+  const pageSize = Number(pageData.pageSize || 9);
   const firstPageItems = participants.slice(0, pageSize);
 
   return `
@@ -952,7 +923,7 @@ function renderParticipantsHub(pageData, participants, ui, locale) {
 
 function renderPersonCard(item, locale) {
   const href = absoluteSitePath(locale, `participants/${item.slug}/`);
-  const previewBio = summarizePlainText(item.bio, 180);
+  const previewBio = summarizePlainText(firstNonEmpty(item.bio, item.detailsHtml), 180);
 
   return `
     <article class="person-card reveal visible">
@@ -966,6 +937,8 @@ function renderPersonCard(item, locale) {
 }
 
 function renderParticipantDetail(item, pageData, relatedProjects, locale) {
+  const contactTags = renderEntityContactTags(item);
+
   return `
     <section class="participant-detail-shell reveal visible">
       <div class="participant-detail-head">
@@ -973,8 +946,9 @@ function renderParticipantDetail(item, pageData, relatedProjects, locale) {
         ${item.photo?.src ? `<figure class="participant-detail-media"><img src="${escapeAttribute(assetPath(item.photo.src))}" alt="${escapeAttribute(item.photo.alt || item.name || item.slug || "")}">${item.badge ? `<span class="person-badge person-photo-badge participant-detail-badge">${escapeHtml(item.detailBadge || item.badge)}</span>` : ""}</figure>` : ""}
         <h1 class="participant-detail-title">${escapeHtml(item.name || item.slug || "")}</h1>
         ${item.role ? `<p class="person-role participant-detail-role">${escapeHtml(item.role)}</p>` : ""}
-        ${item.bio ? `<p class="person-copy participant-detail-bio">${escapeHtml(item.bio)}</p>` : ""}
+        ${contactTags ? `<div class="participant-detail-meta">${contactTags}</div>` : ""}
       </div>
+      ${renderParticipantBody(item)}
       ${Array.isArray(item.points) && item.points.length ? `<div class="detail-list-shell"><ul class="detail-list">${item.points.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}</ul></div>` : ""}
     </section>
     <section class="section-shell reveal visible">
@@ -990,7 +964,7 @@ function renderParticipantDetail(item, pageData, relatedProjects, locale) {
 
 function renderNewsHub(pageData, items, projectMap, ui, locale) {
   const listCopy = pageData.list || {};
-  const pageSize = Number(listCopy.pageSize || 20);
+  const pageSize = Number(listCopy.pageSize || 8);
   const firstPageItems = items.slice(0, pageSize);
 
   return `
@@ -1106,7 +1080,16 @@ function renderRichText(item) {
   }
 
   if (Array.isArray(item.paragraphs) && item.paragraphs.length) {
-    return item.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("");
+    return item.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`).join("");
+  }
+
+  if (typeof item.bio === "string" && item.bio.trim() !== "") {
+    return item.bio
+      .split(/\n{2,}/)
+      .map((paragraph) => paragraph.trim())
+      .filter(Boolean)
+      .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`)
+      .join("");
   }
 
   if (Array.isArray(item.points) && item.points.length) {
@@ -1114,6 +1097,23 @@ function renderRichText(item) {
   }
 
   return "";
+}
+
+function renderParticipantBody(item) {
+  const richText = renderRichText({
+    detailsHtml: item.detailsHtml,
+    bio: item.bio,
+  });
+
+  if (!richText) {
+    return "";
+  }
+
+  return `
+    <div class="participant-detail-copy participant-richtext">
+      ${richText}
+    </div>
+  `;
 }
 
 function renderFallbackDetail(message) {
@@ -1237,7 +1237,7 @@ function buildParticipantSchema(item, siteName, publicPath, ui) {
       "@context": "https://schema.org",
       "@type": "Person",
       name: item.name || item.slug,
-      description: summarizePlainText(firstNonEmpty(item.bio, item.role, item.name, item.slug), 300),
+      description: summarizePlainText(firstNonEmpty(item.bio, item.detailsHtml, item.role, item.name, item.slug), 300),
       image: item.photo?.src ? toAbsoluteUrl(item.photo.src) : undefined,
       jobTitle: item.role || undefined,
       url: toAbsoluteUrl(publicPath),

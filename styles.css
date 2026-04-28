@@ -1680,6 +1680,35 @@ body.lightbox-open {
   padding-left: 22px;
 }
 
+.participant-richtext {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.participant-richtext > *:first-child {
+  margin-top: 0;
+}
+
+.participant-richtext > *:last-child {
+  margin-bottom: 0;
+}
+
+.participant-richtext a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(141, 246, 198, 0.35);
+}
+
+.participant-richtext strong,
+.participant-richtext b {
+  color: var(--text);
+}
+
+.participant-richtext ul,
+.participant-richtext ol {
+  padding-left: 22px;
+}
+
 .participant-detail-shell {
   overflow: hidden;
   border-radius: 24px;
@@ -1746,11 +1775,6 @@ body.lightbox-open {
   height: auto;
   max-height: 360px;
   object-fit: cover;
-}
-
-.participant-detail-bio {
-  margin: 0;
-  max-width: 78ch;
 }
 
 .list-sentinel {

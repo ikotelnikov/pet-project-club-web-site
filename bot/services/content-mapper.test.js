@@ -81,3 +81,36 @@ test("maps locale-specific translation edits into translations block", () => {
     },
   });
 });
+
+test("maps participant rich text into detailsHtml while keeping bio summary", () => {
+  const result = mapCommandToContent({
+    entity: "participant",
+    action: "update",
+    fields: {
+      slug: "participant-ivan-kotelnikov",
+      bio: "Builds the club.",
+      detailsHtml: "<p><strong>Builds</strong> the club.</p><p><a href=\"https://t.me/ikotelnikov\">Telegram</a></p>",
+    },
+  });
+
+  assert.deepEqual(result.item, {
+    slug: "participant-ivan-kotelnikov",
+    sourceLocale: "ru",
+    bio: "Builds the club.",
+    detailsHtml: "<p><strong>Builds</strong> the club.</p><p><a href=\"https://t.me/ikotelnikov\">Telegram</a></p>",
+  });
+});
+
+test("promotes multiline participant bio into detailsHtml automatically", () => {
+  const result = mapCommandToContent({
+    entity: "participant",
+    action: "update",
+    fields: {
+      slug: "participant-ivan-kotelnikov",
+      bio: "First paragraph.\n\nSecond paragraph with https://example.com",
+    },
+  });
+
+  assert.equal(result.item.bio, "First paragraph.\n\nSecond paragraph with https://example.com");
+  assert.equal(result.item.detailsHtml, "<p>First paragraph.</p><p>Second paragraph with https://example.com</p>");
+});

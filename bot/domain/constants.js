@@ -24,7 +24,7 @@ export const ENTITY_CONFIG = {
       update: ["slug", "handle", "name", "role", "bio", "points"],
       delete: ["slug"],
     },
-    optionalFields: ["photoalt", "location", "tags", "link"],
+    optionalFields: ["detailsHtml", "photoalt", "location", "tags", "link"],
   },
   project: {
     requiredFields: {
@@ -32,7 +32,7 @@ export const ENTITY_CONFIG = {
       update: ["slug", "title", "status", "stack", "points"],
       delete: ["slug"],
     },
-    optionalFields: ["summary", "photoalt", "location", "tags", "owners", "link"],
+    optionalFields: ["summary", "detailsHtml", "photoalt", "location", "tags", "owners", "link"],
   },
 };
 
@@ -47,7 +47,7 @@ export const FIELD_ALIASES = {
   link: "link",
 };
 
-export const BLOCK_FIELDS = new Set(["bio", "summary"]);
+export const BLOCK_FIELDS = new Set(["bio", "summary", "detailsHtml"]);
 export const LIST_FIELDS = new Set(["paragraphs", "points"]);
 export const CSV_FIELDS = new Set(["tags", "owners"]);
 export const REPEATABLE_FIELDS = new Set(["section", "link"]);

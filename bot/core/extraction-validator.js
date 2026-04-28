@@ -31,7 +31,7 @@ const CONFIDENCE_VALUES = new Set([
 const ENTITY_FIELD_RULES = {
   announcement: new Set(["slug", "type", "date", "title", "place", "placeUrl", "format", "paragraphs", "detailsHtml", "sections", "links", "projectSlugs", "photoAlt", "photoStagedPath", "photoAction", "locale", "sourceLocale"]),
   meeting: new Set(["slug", "type", "date", "title", "place", "placeUrl", "format", "paragraphs", "detailsHtml", "sections", "links", "projectSlugs", "photoAlt", "photoStagedPath", "photoAction", "locale", "sourceLocale"]),
-  participant: new Set(["slug", "handle", "name", "role", "bio", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "photoAction", "locale", "sourceLocale"]),
+  participant: new Set(["slug", "handle", "name", "role", "bio", "detailsHtml", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "photoAction", "locale", "sourceLocale"]),
   project: new Set(["slug", "title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "links", "photoAlt", "photoStagedPath", "photoAction", "gallery", "locale", "sourceLocale"]),
 };
 
@@ -222,14 +222,6 @@ function validateFieldShapes(entity, fields) {
 
   if (entity === "participant" && fields.handle && typeof fields.handle !== "string") {
     throw new ContentValidationError("Extraction field 'handle' must be a string.");
-  }
-
-  if ((entity === "announcement" || entity === "meeting") && fields.projectSlugs && !isStringArray(fields.projectSlugs)) {
-    throw new ContentValidationError("Extraction field 'projectSlugs' must be an array of non-empty strings.");
-  }
-
-  if ((entity === "announcement" || entity === "meeting") && fields.type && !["announce", "meeting"].includes(fields.type)) {
-    throw new ContentValidationError("Extraction field 'type' must be 'announce' or 'meeting'.");
   }
 }
 

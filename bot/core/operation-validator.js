@@ -5,7 +5,7 @@ const ENTITY_FIELD_RULES = {
   announcement: new Set(["type", "date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "projectSlugs", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
   announce: new Set(["type", "date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "projectSlugs", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
   meeting: new Set(["type", "date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "projectSlugs", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
-  participant: new Set(["handle", "name", "role", "bio", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
+  participant: new Set(["handle", "name", "role", "bio", "detailsHtml", "points", "location", "tags", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
   project: new Set(["title", "status", "stack", "summary", "detailsHtml", "points", "location", "tags", "ownerSlugs", "owners", "links", "link", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "gallery", "slug", "locale", "sourceLocale"]),
 };
 
@@ -101,7 +101,7 @@ function validateFieldShapes(entity, fields) {
   }
 
   if ((entity === "announce" || entity === "announcement" || entity === "meeting") && fields.type && !["announce", "meeting"].includes(fields.type)) {
-    throw new ContentValidationError("Field 'type' must be 'announce' or 'meeting'.");
+    throw new ContentValidationError("Field 'type' must be one of announce or meeting.");
   }
 
   if (entity === "project") {

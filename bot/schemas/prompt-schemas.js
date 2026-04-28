@@ -2,13 +2,14 @@ export const ENTITY_SCHEMAS = {
   participant: {
     entity: "participant",
     required: ["slug", "handle", "name", "role", "bio"],
-    optional: ["slug", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
+    optional: ["slug", "detailsHtml", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
     fieldTypes: {
       slug: "string",
       handle: "string",
       name: "string",
       role: "string",
       bio: "string",
+      detailsHtml: "string",
       points: "string[]",
       location: "string",
       tags: "string[]",

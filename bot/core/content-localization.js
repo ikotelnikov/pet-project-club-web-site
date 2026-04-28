@@ -1,3 +1,5 @@
+import { dedupeLinks } from "./link-normalization.js";
+
 export const SUPPORTED_LOCALES = ["ru", "en", "de", "me", "es"];
 export const DEFAULT_SOURCE_LOCALE = "ru";
 
@@ -5,7 +7,7 @@ const LOCALIZABLE_FIELDS = {
   announce: ["date", "title", "place", "format", "paragraphs", "detailsHtml", "sections", "links", "photo"],
   announcement: ["date", "title", "place", "format", "paragraphs", "detailsHtml", "sections", "links", "photo"],
   meeting: ["date", "title", "place", "format", "paragraphs", "detailsHtml", "sections", "links", "photo"],
-  participant: ["handle", "name", "role", "bio", "points", "location", "links"],
+  participant: ["handle", "name", "role", "bio", "detailsHtml", "points", "location", "links"],
   project: ["title", "status", "stack", "summary", "detailsHtml", "points", "location", "links"],
 };
 
@@ -88,7 +90,7 @@ export function buildLocalizedItemPatch(entity, fields, options = {}) {
       continue;
     }
 
-    result[key] = value;
+    result[key] = key === "links" ? dedupeLinks(value) : value;
   }
 
   result.slug = fields.slug;
@@ -99,7 +101,7 @@ export function buildLocalizedItemPatch(entity, fields, options = {}) {
 
     for (const [key, value] of Object.entries(fields)) {
       if (localizableFields.has(key)) {
-        translationFields[key] = value;
+        translationFields[key] = key === "links" ? dedupeLinks(value) : value;
       }
     }
 
@@ -122,6 +124,7 @@ export function mergeContentItems(existingItem, nextItem, options = {}) {
   const sourceLocale = normalizeContentLocale(nextItem.sourceLocale || existingItem.sourceLocale || options.sourceLocale || DEFAULT_SOURCE_LOCALE) || DEFAULT_SOURCE_LOCALE;
   const merged = deepMerge(existingItem, nextItem);
   merged.sourceLocale = sourceLocale;
+  normalizeItemLinksInPlace(merged);
 
   const nextTranslations = nextItem.translations;
   if (nextTranslations && typeof nextTranslations === "object") {
@@ -151,7 +154,7 @@ export function applyTranslationToItem(entity, item, locale, translatedFields, s
     return item;
   }
 
-  return {
+  const nextItem = {
     ...item,
     translations: deepMerge(item.translations || {}, {
       [normalizedLocale]: translatedFields,
@@ -161,6 +164,9 @@ export function applyTranslationToItem(entity, item, locale, translatedFields, s
       [normalizedLocale]: status,
     },
   };
+
+  normalizeItemLinksInPlace(nextItem);
+  return nextItem;
 }
 
 export function extractLocalizableFields(entity, item) {
@@ -311,4 +317,24 @@ function mergeArrayByIndex(baseArray, overrideArray) {
 
 function isPlainObject(value) {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function normalizeItemLinksInPlace(item) {
+  if (!item || typeof item !== "object") {
+    return item;
+  }
+
+  if (Array.isArray(item.links)) {
+    item.links = dedupeLinks(item.links);
+  }
+
+  if (item.translations && typeof item.translations === "object") {
+    for (const translation of Object.values(item.translations)) {
+      if (translation && typeof translation === "object" && Array.isArray(translation.links)) {
+        translation.links = dedupeLinks(translation.links);
+      }
+    }
+  }
+
+  return item;
 }

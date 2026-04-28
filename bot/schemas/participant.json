@@ -1,13 +1,14 @@
 {
   "entity": "participant",
   "required": ["slug", "handle", "name", "role", "bio"],
-  "optional": ["points", "location", "tags", "links", "photoAlt", "photoStagedPath"],
+  "optional": ["detailsHtml", "points", "location", "tags", "links", "photoAlt", "photoStagedPath"],
   "fieldTypes": {
     "slug": "string",
     "handle": "string",
     "name": "string",
     "role": "string",
     "bio": "string",
+    "detailsHtml": "string",
     "points": "string[]",
     "location": "string",
     "tags": "string[]",

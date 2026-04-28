@@ -19,6 +19,7 @@ export function mapOperationToContent(operation, options = {}) {
   switch (entity) {
     case "announce":
     case "announcement":
+      const normalizedAnnouncementText = normalizeParagraphRichTextFields(fields);
       return {
         slug: fields.slug,
         item: toLocalizedItemPatch(entity, pruneEmpty({
@@ -30,14 +31,15 @@ export function mapOperationToContent(operation, options = {}) {
           placeUrl: fields.placeurl ?? fields.placeUrl,
           format: fields.format,
           photo,
-          paragraphs: fields.paragraphs,
-          detailsHtml: fields.detailsHtml,
+          paragraphs: normalizedAnnouncementText.paragraphs,
+          detailsHtml: normalizedAnnouncementText.detailsHtml,
           sections: fields.section ?? fields.sections,
           links,
           projectSlugs: fields.projectSlugs,
         }), fields, options),
       };
     case "meeting":
+      const normalizedMeetingText = normalizeParagraphRichTextFields(fields);
       return {
         slug: fields.slug,
         item: toLocalizedItemPatch(entity, pruneEmpty({
@@ -49,14 +51,15 @@ export function mapOperationToContent(operation, options = {}) {
           placeUrl: fields.placeurl ?? fields.placeUrl,
           format: fields.format,
           photo,
-          paragraphs: fields.paragraphs,
-          detailsHtml: fields.detailsHtml,
+          paragraphs: normalizedMeetingText.paragraphs,
+          detailsHtml: normalizedMeetingText.detailsHtml,
           sections: fields.section ?? fields.sections,
           links,
           projectSlugs: fields.projectSlugs,
         }), fields, options),
       };
     case "participant":
+      const normalizedParticipantText = normalizeParticipantTextFields(fields);
       return {
         slug: fields.slug,
         item: toLocalizedItemPatch(entity, pruneEmpty({
@@ -64,7 +67,8 @@ export function mapOperationToContent(operation, options = {}) {
           handle: fields.handle,
           name: fields.name,
           role: fields.role,
-          bio: fields.bio,
+          bio: normalizedParticipantText.bio,
+          detailsHtml: normalizedParticipantText.detailsHtml,
           points: fields.points,
           photo,
           links,
@@ -123,7 +127,7 @@ function normalizeProjectTextFields(fields) {
     };
   }
 
-  if (rawSummary.length > 320) {
+  if (shouldPromotePlainTextToHtml(rawSummary, 320)) {
     return {
       summary: summarizePlainText(rawSummary),
       detailsHtml: textToHtmlParagraphs(rawSummary),
@@ -133,6 +137,57 @@ function normalizeProjectTextFields(fields) {
   return {
     summary: rawSummary || undefined,
     detailsHtml: undefined,
+  };
+}
+
+function normalizeParticipantTextFields(fields) {
+  const rawBio = typeof fields.bio === "string" ? fields.bio.trim() : "";
+  const rawDetailsHtml = typeof fields.detailsHtml === "string" ? fields.detailsHtml.trim() : "";
+
+  if (rawDetailsHtml) {
+    const normalizedDetailsHtml = looksLikeHtml(rawDetailsHtml)
+      ? rawDetailsHtml
+      : textToHtmlParagraphs(rawDetailsHtml);
+
+    return {
+      bio: rawBio || summarizeRichText(rawDetailsHtml),
+      detailsHtml: normalizedDetailsHtml,
+    };
+  }
+
+  if (shouldPromotePlainTextToHtml(rawBio, 220)) {
+    return {
+      bio: rawBio,
+      detailsHtml: textToHtmlParagraphs(rawBio),
+    };
+  }
+
+  return {
+    bio: rawBio || undefined,
+    detailsHtml: undefined,
+  };
+}
+
+function normalizeParagraphRichTextFields(fields) {
+  const rawParagraphs = Array.isArray(fields.paragraphs)
+    ? fields.paragraphs.map((entry) => String(entry).trim()).filter(Boolean)
+    : [];
+  const rawDetailsHtml = typeof fields.detailsHtml === "string" ? fields.detailsHtml.trim() : "";
+
+  if (!rawDetailsHtml) {
+    return {
+      paragraphs: rawParagraphs.length > 0 ? rawParagraphs : undefined,
+      detailsHtml: undefined,
+    };
+  }
+
+  return {
+    paragraphs: rawParagraphs.length > 0
+      ? rawParagraphs
+      : extractParagraphsFromPlainText(rawDetailsHtml),
+    detailsHtml: looksLikeHtml(rawDetailsHtml)
+      ? rawDetailsHtml
+      : textToHtmlParagraphs(rawDetailsHtml),
   };
 }
 
@@ -158,6 +213,23 @@ function summarizePlainText(text) {
   }
 
   return `${normalized.slice(0, 217).trimEnd()}...`;
+}
+
+function shouldPromotePlainTextToHtml(text, minLength = 220) {
+  return typeof text === "string" && text.trim() !== "" && (text.includes("\n") || text.length > minLength);
+}
+
+function extractParagraphsFromPlainText(text) {
+  if (typeof text !== "string" || text.trim() === "" || looksLikeHtml(text)) {
+    return undefined;
+  }
+
+  const paragraphs = text
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  return paragraphs.length > 0 ? paragraphs : undefined;
 }
 
 function textToHtmlParagraphs(text) {

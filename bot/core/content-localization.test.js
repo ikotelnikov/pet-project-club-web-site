@@ -116,3 +116,21 @@ test("tracks which top-level fields were localized", () => {
   assert.equal(localized.__sourceLocale, "ru");
   assert.deepEqual(localized.__localizedKeys, ["title", "detailsHtml"]);
 });
+
+test("overlays translated participant rich text fields", () => {
+  const localized = localizeContentNode({
+    sourceLocale: "ru",
+    bio: "Русское краткое био",
+    detailsHtml: "<p>Русский <strong>текст</strong></p>",
+    translations: {
+      en: {
+        bio: "English short bio",
+        detailsHtml: "<p>English <strong>text</strong></p>",
+      },
+    },
+  }, "en");
+
+  assert.equal(localized.bio, "English short bio");
+  assert.equal(localized.detailsHtml, "<p>English <strong>text</strong></p>");
+  assert.deepEqual(localized.__localizedKeys, ["bio", "detailsHtml"]);
+});
