@@ -14,9 +14,9 @@
     },
     "de": {
       "handle": "svyatoslav",
-      "name": "Svyatoslav Tvardovsky",
+      "name": "Swiatoslaw Twardowski",
       "role": "Musikgeschäft, Produktion, digitale Distribution, Entwickler von B2B-Systemen",
-      "bio": "Mein Name ist Svyatoslav.\nIch komme aus der Musikbranche. Von der Produktion bis hin zu komplexen Systemen der digitalen Distribution, das Parsen von CSV-Dateien mit einer Million Zeilen, DDEX XML, Metadaten, Audio-/Video-Konvertierung und vieles mehr.\nLeider ist das Musikgeschäft im Zeitalter endloser Betrügereien, wo KI Musik generiert und KI-Bots sie auf Streaming-Plattformen anhören, faktisch tot. Nur Major-Labels können darin noch etwas verdienen.\n\nZurzeit arbeite ich an eigenen Projekten:\n\nIch habe eine kleine Agentur eröffnet \nhttps://systema.works\n\nIch entwickle einen Hub von Services für Montenegro: https://monte.guide\n\nUnd ich beschäftige mich mit der Pre-Production eines B2B-Systems für Autovermietungsunternehmen https://rentcore.app\nhttps://demo.rentcore.app\nIch suche Investitionen und habe mich bei mehreren Acceleratoren beworben.\n\nIch bin offen für Gespräche und Zusammenarbeit. Nach sechs Monaten erfolgloser Jobsuche habe ich verstanden, dass sich das Leben rasant verändert und man mit ihm verändern muss.\n\nFalls jemand Interesse hat, hier sind meine sozialen Netzwerke und musikalischen Profile:\nhttps://tvardovsky.music"
+      "bio": "Mein Name ist Swiatoslaw.\n\nIch komme aus dem Musikgeschäft. Von der Produktion bis hin zu komplexen digitalen Distributionssystemen, CSV-Dateien mit einer Million Zeilen parsen, DDEX XML, Metadaten, Audio- und Videokonvertierung und vieles mehr.\nLeider ist das Musikgeschäft im Zeitalter des endlosen Betrugs, in dem KI Musik generiert und KI-Bots sie auf Streaming-Plattformen hören, faktisch tot. Nur Major-Labels können darin noch etwas verdienen.\n\nDerzeit arbeite ich an meinen eigenen Projekten:\n\nIch habe eine kleine Agentur gegründet \nhttps://systema.works\n\nIch entwickle einen Service-Hub für Montenegro: https://monte.guide\n\nUnd ich bin mit dem Pre-Production einer B2B-Plattform für Autovermietungsunternehmen beschäftigt https://rentcore.app\nhttps://demo.rentcore.app\nIch suche Investitionen und habe mich bei mehreren Acceleratoren beworben.\n\nIch bin offen für Kommunikation und Zusammenarbeit. Nach 6 Monaten ergebnisloser Jobsuche habe ich verstanden, dass sich das Leben rasant verändert und man sich mit ihm wandeln muss.\n\nFalls jemand interessiert ist, hier sind meine sozialen Netzwerke und Musikprofile:\nhttps://tvardovsky.music"
     },
     "me": {
       "handle": "svyatoslav",
@@ -27,7 +27,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale",
+    "de": "machine",
     "me": "stale"
   }
 }
