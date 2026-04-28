@@ -2910,6 +2910,7 @@ function initGallery() {
     slides.forEach((slide, index) => {
       let pointerStartX = null;
       let pointerStartY = null;
+      let suppressClick = false;
 
       slide.draggable = false;
 
@@ -2922,29 +2923,39 @@ function initGallery() {
 
         pointerStartX = event.clientX;
         pointerStartY = event.clientY;
+        suppressClick = false;
       });
 
-      slide.addEventListener("pointerup", (event) => {
+      slide.addEventListener("pointermove", (event) => {
         if (pointerStartX == null || pointerStartY == null) {
           return;
         }
 
         const deltaX = event.clientX - pointerStartX;
         const deltaY = event.clientY - pointerStartY;
-        pointerStartX = null;
-        pointerStartY = null;
 
         if (Math.abs(deltaX) > 12 || Math.abs(deltaY) > 12) {
+          suppressClick = true;
+        }
+      });
+
+      slide.addEventListener("click", (event) => {
+        if (suppressClick) {
+          event.preventDefault();
+          suppressClick = false;
           return;
         }
 
         openGalleryLightbox(slides, index);
       });
 
-      slide.addEventListener("pointercancel", () => {
+      const resetPointerState = () => {
         pointerStartX = null;
         pointerStartY = null;
-      });
+      };
+
+      slide.addEventListener("pointerup", resetPointerState);
+      slide.addEventListener("pointercancel", resetPointerState);
     });
 
     viewport.addEventListener(
