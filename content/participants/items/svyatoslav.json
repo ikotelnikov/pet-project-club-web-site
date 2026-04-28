@@ -8,9 +8,9 @@
   "translations": {
     "en": {
       "handle": "svyatoslav",
-      "name": "Svyatoslav",
+      "name": "Svyatoslav Tvardovsky",
       "role": "Music business, production, digital distribution, B2B systems developer",
-      "bio": "A background in the music business. Experience in production, digital distribution systems, parsing csv files, DDEX XML, metadata, audio and video conversion. Founder of the agency https://systema.works. Developing a hub of services for Montenegro https://monte.guide. Engaged in pre-production of a B2B system for car rental companies https://rentcore.app https://demo.rentcore.app. Seeking investments and open to collaboration. Social media and music profiles are available via the link https://tvardovsky.music."
+      "bio": "My name is Svyatoslav.\nI come from the music business. From production to complex digital distribution systems, parsing CSV files with millions of lines, DDEX XML, metadata, audio\\video conversion, and much more.\nUnfortunately, in this age of endless scams, when AI generates music and AI bots listen to it on streaming platforms, the music business is effectively dead. Only major labels can make any money in it.\n\nI am currently working on my own projects:\n\nI opened a small agency\nhttps://systema.works\n\nI am developing a hub of services for Montenegro: https://monte.guide\n\nAnd I am working on pre-production of a B2B system for car rental companies https://rentcore.app\nhttps://demo.rentcore.app\nI am looking for investments and have applied to several accelerators.\n\nI am open to communication and collaboration. After 6 months of unsuccessful job searching, I realized that life is rapidly changing and it is necessary to change along with it.\n\nIf anyone is interested, here are my social networks and music profiles:\nhttps://tvardovsky.music"
     },
     "de": {
       "handle": "svyatoslav",
@@ -26,7 +26,7 @@
     }
   },
   "translationStatus": {
-    "en": "stale",
+    "en": "machine",
     "de": "stale",
     "me": "stale"
   }
