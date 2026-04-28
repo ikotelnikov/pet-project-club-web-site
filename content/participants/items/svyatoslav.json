@@ -4,5 +4,16 @@
   "role": "Музыкальный бизнес, продакшн, цифровая дистрибуция, разработчик B2B систем",
   "bio": "Выходец из музыкального бизнеса. Опыт в продакшне, системах цифровой дистрибуции, парсинге csv файлов, DDEX XML, метаданных, аудио и видео конвертации. Основатель агентства https://systema.works. Разрабатывает хаб сервисов для Черногории https://monte.guide. Занимается пре-продакшеном B2B системы для компаний по аренде автомобилей https://rentcore.app https://demo.rentcore.app. Ищет инвестиции и открыт к сотрудничеству. Соц.сети и музыкальные профили доступны по ссылке https://tvardovsky.music.",
   "slug": "svyatoslav",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "handle": "svyatoslav",
+      "name": "Svyatoslav",
+      "role": "Music business, production, digital distribution, B2B systems developer",
+      "bio": "A background in the music business. Experience in production, digital distribution systems, parsing csv files, DDEX XML, metadata, audio and video conversion. Founder of the agency https://systema.works. Developing a hub of services for Montenegro https://monte.guide. Engaged in pre-production of a B2B system for car rental companies https://rentcore.app https://demo.rentcore.app. Seeking investments and open to collaboration. Social media and music profiles are available via the link https://tvardovsky.music."
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
