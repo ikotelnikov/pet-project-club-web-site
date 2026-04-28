@@ -17,10 +17,17 @@
       "name": "Svyatoslav",
       "role": "Musikbusiness, Produktion, digitale Distribution, Entwickler von B2B-Systemen",
       "bio": "Stammend aus dem Musikbusiness. Erfahrung in Produktion, digitalen Distributionssystemen, Parsing von CSV-Dateien, DDEX XML, Metadaten, Audio- und Videokonvertierung. Gründer der Agentur https://systema.works. Entwickelt einen Service-Hub für Montenegro https://monte.guide. Beschäftigt sich mit Pre-Production eines B2B-Systems für Autovermietungsfirmen https://rentcore.app https://demo.rentcore.app. Sucht Investitionen und ist offen für Zusammenarbeit. Soziale Netzwerke und Musikprofile sind über den Link https://tvardovsky.music erreichbar."
+    },
+    "me": {
+      "handle": "svyatoslav",
+      "name": "Svyatoslav",
+      "role": "Muzikbiznis, produkcija, digitalna distribucija, developer B2B sistema",
+      "bio": "Poreklo iz muzičkog biznisa. Iskustvo u produkciji, sistemima digitalne distribucije, parsiranju csv fajlova, DDEX XML, metapodacima, audio i video konverziji. Osnivač agencije https://systema.works. Razvija hub servisa za Crnu Goru https://monte.guide. Bavi se pre-produkcijom B2B sistema za kompanije za iznajmljivanje automobila https://rentcore.app https://demo.rentcore.app. Traži investicije i otvoren je za saradnju. Društvene mreže i muzički profili dostupni su na linku https://tvardovsky.music."
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
