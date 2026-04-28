@@ -20,14 +20,14 @@
     },
     "me": {
       "handle": "svyatoslav",
-      "name": "Svyatoslav",
-      "role": "Muzikbiznis, produkcija, digitalna distribucija, developer B2B sistema",
-      "bio": "Poreklo iz muzičkog biznisa. Iskustvo u produkciji, sistemima digitalne distribucije, parsiranju csv fajlova, DDEX XML, metapodacima, audio i video konverziji. Osnivač agencije https://systema.works. Razvija hub servisa za Crnu Goru https://monte.guide. Bavi se pre-produkcijom B2B sistema za kompanije za iznajmljivanje automobila https://rentcore.app https://demo.rentcore.app. Traži investicije i otvoren je za saradnju. Društvene mreže i muzički profili dostupni su na linku https://tvardovsky.music."
+      "name": "Sviatoslav Tvardovski",
+      "role": "Muzički biznis, produkcija, digitalna distribucija, developer B2B sistema",
+      "bio": "Moje ime je Sviatoslav.\nDolazim iz muzičkog biznisa. Od produkcije do složenih sistema digitalne distribucije, parsiranje CSV fajlova od milion redova, DDEX XML, metapodaci, audio\\video konverzija i mnogo toga više.\nNažalost, u dobu beskrajnog skama, kada AI generiše muziku, a AI botovi je slušaju na streaming servisima, muzički biznis je praktično mrtav. Samo glavni muzički izdavači mogu nešto zaraditi.\n\nTrenutno radim na svojim projektima:\n\nOtvorio sam malu agenciju \nhttps://systema.works\n\nRazvijam hub servisa za Crnu Goru: https://monte.guide\n\nI radim na pre-produkciji B2B sistema za kompanije za rentanje automobila https://rentcore.app\nhttps://demo.rentcore.app\nTražim investicije, prijavio sam se u nekoliko akceleratora.\n\nOtvoren sam za komunikaciju i saradnju. Nakon 6 mjeseci neuspešnog traženja posla shvatio sam da se život brzo menja i treba se menjati zajedno s njim.\n\nAko je nekome zanimljivo, evo mojih društvenih mreža i muzičkih profila:\nhttps://tvardovsky.music"
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale"
+    "me": "machine"
   }
 }
