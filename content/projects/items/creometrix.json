@@ -14,12 +14,18 @@
       "title": "CreometriX",
       "status": "active",
       "stack": "AI assistants, targeting, creative generation",
-      "summary": "Modern AI assistants for targetologists solve one single problem – the first round of creatives. No existing machine is capable of making conclusions and repeating results; CreometriX offers a different approach to the feedback loop.",
-      "detailsHtml": "<p>Modern AI assistants for targetologists solve one single problem – the first round of creatives. The first round is always testing.</p><p>But after testing, there is always either a new round of tests or scaling of the obtained results. And here the problem begins. No existing machine is capable of making conclusions, repeating results, or capturing the logic of why something worked and something didn’t. CreometriX offers a completely different approach to the feedback loop problem.</p><p>First, it is a full process from strategy generation to packaging it into creatives.</p><p>Second, it is a managerial space to keep all projects in order.</p><p>Third, it is an AI creative generator based on context, not just a link to a website.</p><p>CreometriX replaces 5 disparate tools with a single interface, which saves time and brings discipline to user projects.</p><p>Thus, in your hands is a full-fledged AI targetologist, which costs between $850 and $3000 when hired, and only from $54 by subscription.</p>"
+      "summary": "Modern AI assistants for targeting solve one single problem - the first round of creatives. No existing machine can draw conclusions and replicate results; CreometriX offers a different approach to the feedback loop.",
+      "detailsHtml": "<p>Modern AI assistants for targeting solve one single problem - the first round of creatives. The first round is always testing.</p><p>But after testing, there is always either a new round of tests or scaling of the obtained results. And here the problem begins. No existing machine can draw conclusions, replicate the result, or fix the logic of why something worked and something did not. CreometriX offers a completely different approach to the feedback loop problem.</p><p>First, it is a full process from strategy generation to packaging it into creatives.</p><p>Second, it is a managerial space to keep all projects organized.</p><p>Third, it is an AI creative generator based on context, not just a link to a website.</p><p>CreometriX replaces 5 separate tools with one interface, which saves time and brings discipline to user projects.</p><p>Thus, you have a full-fledged AI targetologist in your hands, which costs from $850 to $3000 when hired, but only from $54 by subscription.</p>",
+      "links": [
+        {
+          "label": "CreometriX",
+          "href": "https://creometrix.cc/biz"
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "stale"
+    "en": "machine"
   },
   "photo": null,
   "gallery": [],
