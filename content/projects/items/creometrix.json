@@ -19,6 +19,14 @@
     }
   },
   "translationStatus": {
-    "en": "machine"
-  }
+    "en": "stale"
+  },
+  "photo": null,
+  "gallery": [],
+  "links": [
+    {
+      "label": "CreometriX",
+      "href": "https://creometrix.cc/biz"
+    }
+  ]
 }
