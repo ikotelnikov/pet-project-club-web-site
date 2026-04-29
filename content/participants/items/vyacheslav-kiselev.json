@@ -23,9 +23,22 @@
           "href": "https://t.me/fmc_atom"
         }
       ]
+    },
+    "de": {
+      "handle": "@fmc_atom",
+      "name": "Вячеслав Киселев",
+      "role": "CEO, Mitgründer, Marketingexperte",
+      "bio": "12 Jahre Erfahrung mit zielgerichteter Werbung bei Meta.",
+      "links": [
+        {
+          "label": "@fmc_atom",
+          "href": "https://t.me/fmc_atom"
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
