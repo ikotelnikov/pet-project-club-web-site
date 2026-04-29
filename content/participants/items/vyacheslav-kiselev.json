@@ -1,0 +1,14 @@
+{
+  "handle": "@fmc_atom",
+  "name": "Вячеслав Киселев",
+  "role": "CEO, co-founder, маркетолог",
+  "bio": "12 лет опыта работы с таргетированной рекламой в Мета.",
+  "links": [
+    {
+      "label": "@fmc_atom",
+      "href": "https://t.me/fmc_atom"
+    }
+  ],
+  "slug": "vyacheslav-kiselev",
+  "sourceLocale": "ru"
+}
