@@ -3,8 +3,16 @@ main = "bot/worker/index.js"
 compatibility_date = "2026-03-30"
 
 kv_namespaces = [
-  { binding = "PENDING_STATE_KV", id = "REPLACE_WITH_KV_NAMESPACE_ID" }
+  { binding = "PENDING_STATE_KV", id = "REPLACE_WITH_KV_NAMESPACE_ID" },
+  { binding = "BOT_LOGS_KV", id = "1869bcfd17424e7a93c1bb4d578016ae" }
 ]
+
+[observability]
+enabled = true
+
+[observability.logs]
+invocation_logs = true
+head_sampling_rate = 1
 
 [vars]
 TELEGRAM_ALLOWED_USER_ID = "272981189"
@@ -18,5 +26,6 @@ EXTRACTION_BACKEND = "openai"
 # Store these with `wrangler secret put`, not here:
 # TELEGRAM_BOT_TOKEN
 # TELEGRAM_WEBHOOK_SECRET
+# WORKER_ADMIN_TOKEN
 # OPENAI_API_KEY
 # GITHUB_WRITE_TOKEN

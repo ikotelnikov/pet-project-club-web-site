@@ -1,19 +1,30 @@
 import { buildTelegramReply } from "./reply-text.js";
 
+const TELEGRAM_PROCESSING_ACK_TEXT = "Processing...";
+
 export async function handleTelegramWebhookRequest({
   request,
   runtime,
   webhookSecret = null,
+  adminToken = null,
   dryRun = true,
   executionCtx = null,
 }) {
-  if (request.method === "GET") {
-    const url = new URL(request.url);
+  const url = new URL(request.url);
 
+  if (request.method === "GET") {
     if (url.pathname === "/health") {
       return jsonResponse(200, {
         ok: true,
         mode: "webhook",
+      });
+    }
+
+    if (url.pathname === "/admin/logs") {
+      return handleAdminLogsRequest({
+        request,
+        runtime,
+        adminToken,
       });
     }
   }
@@ -24,8 +35,6 @@ export async function handleTelegramWebhookRequest({
       error: "Method not allowed.",
     });
   }
-
-  const url = new URL(request.url);
 
   if (url.pathname !== "/telegram/webhook") {
     return jsonResponse(404, {
@@ -84,20 +93,20 @@ export async function handleTelegramWebhookRequest({
       : update;
 
   try {
-    console.log(
-      JSON.stringify({
-        event: "telegram_webhook_received",
-        updateId: update.update_id,
-        messageId: normalizedUpdate.message?.message_id ?? null,
-        chatId: normalizedUpdate.message?.chat?.id ?? null,
-        fromUserId: normalizedUpdate.message?.from?.id ?? update.callback_query?.from?.id ?? null,
+    await writeRuntimeLog(runtime, "info", {
+      event: "telegram_webhook_received",
+      updateId: update.update_id,
+      messageId: normalizedUpdate.message?.message_id ?? null,
+      chatId: normalizedUpdate.message?.chat?.id ?? null,
+      fromUserId: normalizedUpdate.message?.from?.id ?? update.callback_query?.from?.id ?? null,
+      payload: {
         hasText: typeof normalizedUpdate.message?.text === "string",
         hasCaption: typeof normalizedUpdate.message?.caption === "string",
         hasPhoto: Array.isArray(normalizedUpdate.message?.photo) && normalizedUpdate.message.photo.length > 0,
         hasCallbackQuery: Boolean(update.callback_query),
         callbackData,
-      })
-    );
+      },
+    });
 
     let callbackAnswered = false;
 
@@ -108,14 +117,49 @@ export async function handleTelegramWebhookRequest({
         });
         callbackAnswered = true;
       } catch (callbackError) {
-        console.error(
-          JSON.stringify({
-            event: "telegram_callback_answer_failed",
-            updateId: update.update_id,
+        await writeRuntimeLog(runtime, "error", {
+          event: "telegram_callback_answer_failed",
+          updateId: update.update_id,
+          payload: {
             stage: "before_processing",
             error: callbackError instanceof Error ? callbackError.message : String(callbackError),
-          })
-        );
+          },
+        });
+      }
+    }
+
+    if (
+      runtime.telegramClient &&
+      !update.callback_query &&
+      normalizedUpdate.message?.chat?.id != null &&
+      normalizedUpdate.message?.message_id != null
+    ) {
+      try {
+        await runtime.telegramClient.sendMessage({
+          chatId: normalizedUpdate.message.chat.id,
+          text: TELEGRAM_PROCESSING_ACK_TEXT,
+          replyToMessageId: normalizedUpdate.message.message_id,
+        });
+
+        await writeRuntimeLog(runtime, "info", {
+          event: "telegram_processing_ack_sent",
+          updateId: update.update_id,
+          messageId: normalizedUpdate.message.message_id,
+          chatId: normalizedUpdate.message.chat.id,
+          payload: {
+            replyLength: TELEGRAM_PROCESSING_ACK_TEXT.length,
+          },
+        });
+      } catch (ackError) {
+        await writeRuntimeLog(runtime, "error", {
+          event: "telegram_processing_ack_failed",
+          updateId: update.update_id,
+          messageId: normalizedUpdate.message?.message_id ?? null,
+          chatId: normalizedUpdate.message?.chat?.id ?? null,
+          payload: {
+            error: ackError instanceof Error ? ackError.message : String(ackError),
+          },
+        });
       }
     }
 
@@ -126,10 +170,13 @@ export async function handleTelegramWebhookRequest({
     });
     const replyText = reply.text;
 
-    console.log(
-      JSON.stringify({
-        event: "telegram_webhook_result",
-        updateId: update.update_id,
+    await writeRuntimeLog(runtime, result?.status === "failed" ? "error" : "info", {
+      event: "telegram_webhook_result",
+      updateId: update.update_id,
+      messageId: normalizedUpdate.message?.message_id ?? null,
+      chatId: normalizedUpdate.message?.chat?.id ?? null,
+      fromUserId: normalizedUpdate.message?.from?.id ?? update.callback_query?.from?.id ?? null,
+      payload: {
         status: result?.status ?? null,
         reason: result?.reason ?? null,
         error: result?.error ?? null,
@@ -140,8 +187,9 @@ export async function handleTelegramWebhookRequest({
         extractionIntent: result?.extraction?.intent ?? null,
         extractionConfidence: result?.extraction?.confidence ?? null,
         replyPlanned: Boolean(replyText),
-      })
-    );
+        ...buildResultLogDetails(result),
+      },
+    });
 
     if (!callbackAnswered && runtime.telegramClient && update.callback_query?.id) {
       try {
@@ -149,14 +197,14 @@ export async function handleTelegramWebhookRequest({
           callbackQueryId: update.callback_query.id,
         });
       } catch (callbackError) {
-        console.error(
-          JSON.stringify({
-            event: "telegram_callback_answer_failed",
-            updateId: update.update_id,
+        await writeRuntimeLog(runtime, "error", {
+          event: "telegram_callback_answer_failed",
+          updateId: update.update_id,
+          payload: {
             stage: "after_processing",
             error: callbackError instanceof Error ? callbackError.message : String(callbackError),
-          })
-        );
+          },
+        });
       }
     }
 
@@ -167,14 +215,14 @@ export async function handleTelegramWebhookRequest({
         replyMarkup: reply.replyMarkup,
       });
 
-      console.log(
-        JSON.stringify({
-          event: "telegram_reply_sent",
-          updateId: update.update_id,
-          chatId: normalizedUpdate.message.chat.id,
+      await writeRuntimeLog(runtime, "info", {
+        event: "telegram_reply_sent",
+        updateId: update.update_id,
+        chatId: normalizedUpdate.message.chat.id,
+        payload: {
           replyLength: replyText.length,
-        })
-      );
+        },
+      });
     }
 
     if (
@@ -182,15 +230,15 @@ export async function handleTelegramWebhookRequest({
       result?.translationPlan &&
       typeof runtime.runPostConfirmTranslations === "function"
     ) {
-      const translationTask = runtime.runPostConfirmTranslations(result).catch((translationError) => {
-        console.error(
-          JSON.stringify({
-            event: "telegram_post_confirm_translation_failed",
-            updateId: update.update_id,
+      const translationTask = runtime.runPostConfirmTranslations(result).catch((translationError) =>
+        writeRuntimeLog(runtime, "error", {
+          event: "telegram_post_confirm_translation_failed",
+          updateId: update.update_id,
+          payload: {
             error: translationError instanceof Error ? translationError.message : String(translationError),
-          })
-        );
-      });
+          },
+        })
+      );
 
       if (executionCtx && typeof executionCtx.waitUntil === "function") {
         executionCtx.waitUntil(translationTask);
@@ -207,13 +255,15 @@ export async function handleTelegramWebhookRequest({
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
 
-    console.error(
-      JSON.stringify({
-        event: "telegram_webhook_error",
-        updateId: update.update_id,
+    await writeRuntimeLog(runtime, "error", {
+      event: "telegram_webhook_error",
+      updateId: update.update_id,
+      chatId: incomingMessage?.chat?.id ?? null,
+      fromUserId: incomingMessage?.from?.id ?? update.callback_query?.from?.id ?? null,
+      payload: {
         error: errorMessage,
-      })
-    );
+      },
+    });
 
     if (runtime.telegramClient && update.callback_query?.id) {
       try {
@@ -244,13 +294,14 @@ export async function handleTelegramWebhookRequest({
             replyMarkup: failureReply.replyMarkup,
           });
         } catch (replyError) {
-          console.error(
-            JSON.stringify({
-              event: "telegram_webhook_error_reply_failed",
-              updateId: update.update_id,
+          await writeRuntimeLog(runtime, "error", {
+            event: "telegram_webhook_error_reply_failed",
+            updateId: update.update_id,
+            chatId: incomingMessage.chat.id,
+            payload: {
               error: replyError instanceof Error ? replyError.message : String(replyError),
-            })
-          );
+            },
+          });
         }
       }
     }
@@ -260,6 +311,265 @@ export async function handleTelegramWebhookRequest({
       handled: true,
       error: errorMessage,
     });
+  }
+}
+
+async function handleAdminLogsRequest({ request, runtime, adminToken }) {
+  if (!isAuthorizedAdminRequest(request, adminToken)) {
+    return jsonResponse(401, {
+      ok: false,
+      error: "Invalid admin token.",
+    });
+  }
+
+  const url = new URL(request.url);
+  const logs = await runtime.logStore.listRecent({
+    limit: url.searchParams.get("limit") || undefined,
+    level: url.searchParams.get("level") || undefined,
+    event: url.searchParams.get("event") || undefined,
+    since: url.searchParams.get("since") || undefined,
+  });
+
+  return jsonResponse(200, {
+    ok: true,
+    count: logs.length,
+    logs,
+  });
+}
+
+function isAuthorizedAdminRequest(request, adminToken) {
+  if (!adminToken) {
+    return false;
+  }
+
+  const headerToken = request.headers.get("x-admin-token");
+  const bearerToken = request.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
+
+  return headerToken === adminToken || bearerToken === adminToken;
+}
+
+function buildResultLogDetails(result) {
+  if (!result || typeof result !== "object") {
+    return {};
+  }
+
+  return {
+    preview: summarizePreview(result.operation),
+    pendingOperation: summarizePendingOperation(result.pendingState?.operation),
+    appliedOperation: summarizeAppliedOperation(result.operation),
+    writeResult: summarizeWriteResult(result.writeResult),
+    translationPlan: summarizeTranslationPlan(result.translationPlan),
+  };
+}
+
+function summarizePreview(operation) {
+  if (!operation || typeof operation !== "object") {
+    return null;
+  }
+
+  return {
+    entity: operation.entity ?? null,
+    action: operation.action ?? null,
+    slug: operation.slug ?? null,
+    files: Array.isArray(operation.files) ? operation.files.slice(0, 10) : [],
+    fields: summarizeFields(operation.fields),
+    changes: summarizeChanges(operation.changes),
+    hasPhoto: operation.hasPhoto ?? null,
+    attachments: summarizeAttachments(operation.attachments),
+  };
+}
+
+function summarizePendingOperation(operation) {
+  if (!operation || typeof operation !== "object") {
+    return null;
+  }
+
+  return {
+    type: operation.type ?? "content_operation",
+    entity: operation.entity ?? null,
+    action: operation.action ?? null,
+    slug: operation.slug ?? null,
+    confidence: operation.confidence ?? null,
+    summary: operation.summary ?? null,
+    fields: summarizeFields(operation.fields),
+    preview: summarizePreview(operation.preview),
+    continuationOf: operation.continuationOf ?? null,
+  };
+}
+
+function summarizeAppliedOperation(operation) {
+  if (!operation || typeof operation !== "object") {
+    return null;
+  }
+
+  return {
+    entity: operation.entity ?? null,
+    action: operation.action ?? null,
+    slug: operation.fields?.slug ?? null,
+    fields: summarizeFields(operation.fields),
+  };
+}
+
+function summarizeChanges(changes) {
+  if (!Array.isArray(changes)) {
+    return [];
+  }
+
+  return changes.slice(0, 10).map((change) => ({
+    field: change?.field ?? null,
+    before: change?.before ?? null,
+    after: change?.after ?? null,
+    beforeCount: typeof change?.beforeCount === "number" ? change.beforeCount : null,
+    afterCount: typeof change?.afterCount === "number" ? change.afterCount : null,
+    added: Array.isArray(change?.added) ? change.added.slice(0, 6) : [],
+    removed: Array.isArray(change?.removed) ? change.removed.slice(0, 6) : [],
+  }));
+}
+
+function summarizeWriteResult(writeResult) {
+  if (!writeResult || typeof writeResult !== "object") {
+    return null;
+  }
+
+  return {
+    action: writeResult.action ?? null,
+    entity: writeResult.entity ?? null,
+    slug: writeResult.slug ?? null,
+    commitSha: writeResult.commitSha ?? null,
+    commitMessage: writeResult.commitMessage ?? null,
+    pageUrl: writeResult.pageUrl ?? null,
+    translationLinks: Array.isArray(writeResult.translationLinks)
+      ? writeResult.translationLinks.slice(0, 10)
+      : null,
+    paths: writeResult.paths
+      ? {
+          itemPath: writeResult.paths.itemPath ?? null,
+          indexPath: writeResult.paths.indexPath ?? null,
+          assetPaths: Array.isArray(writeResult.paths.assetPaths) ? writeResult.paths.assetPaths.slice(0, 10) : [],
+        }
+      : null,
+  };
+}
+
+function summarizeTranslationPlan(plan) {
+  if (!plan || typeof plan !== "object") {
+    return null;
+  }
+
+  return {
+    entity: plan.entity ?? null,
+    slug: plan.slug ?? null,
+    sourceLocale: plan.sourceLocale ?? null,
+    targetLocales: Array.isArray(plan.targetLocales) ? plan.targetLocales.slice(0, 10) : null,
+  };
+}
+
+function summarizeFields(fields) {
+  if (!fields || typeof fields !== "object") {
+    return null;
+  }
+
+  const summary = {};
+
+  for (const [key, value] of Object.entries(fields)) {
+    if (key === "requestText" || key === "detailsHtml") {
+      summary[key] = summarizeString(value, key === "detailsHtml" ? 220 : 140);
+      continue;
+    }
+
+    if (typeof value === "string") {
+      summary[key] = summarizeString(value, 140);
+      continue;
+    }
+
+    if (Array.isArray(value)) {
+      if (key === "links") {
+        summary[key] = value
+          .filter((entry) => entry && typeof entry === "object")
+          .slice(0, 10)
+          .map((entry) => ({
+            label: entry.label ?? null,
+            href: entry.href ?? null,
+          }));
+      } else if (key === "gallery") {
+        summary[key] = value
+          .filter((entry) => entry && typeof entry === "object")
+          .slice(0, 10)
+          .map((entry) => ({
+            src: entry.src ?? null,
+            alt: entry.alt ?? null,
+          }));
+      } else if (value.every((entry) => typeof entry === "string")) {
+        summary[key] = value.slice(0, 10);
+      } else {
+        summary[key] = {
+          count: value.length,
+          sample: value.slice(0, 3),
+        };
+      }
+      continue;
+    }
+
+    if (value && typeof value === "object") {
+      summary[key] = value;
+      continue;
+    }
+
+    summary[key] = value;
+  }
+
+  return summary;
+}
+
+function summarizeAttachments(attachments) {
+  if (!Array.isArray(attachments)) {
+    return [];
+  }
+
+  return attachments.slice(0, 10).map((attachment) => ({
+    kind: attachment?.kind ?? null,
+    fileName: attachment?.fileName ?? null,
+    mimeType: attachment?.mimeType ?? null,
+  }));
+}
+
+function summarizeString(value, limit = 140) {
+  if (typeof value !== "string") {
+    return value ?? null;
+  }
+
+  const normalized = value.replace(/\s+/g, " ").trim();
+
+  if (normalized.length <= limit) {
+    return normalized;
+  }
+
+  return `${normalized.slice(0, Math.max(0, limit - 3)).trimEnd()}...`;
+}
+
+async function writeRuntimeLog(runtime, level, entry) {
+  const payload = {
+    level,
+    ...entry,
+  };
+  const line = JSON.stringify({
+    event: payload.event,
+    level: payload.level,
+    updateId: payload.updateId ?? null,
+    messageId: payload.messageId ?? null,
+    chatId: payload.chatId ?? null,
+    fromUserId: payload.fromUserId ?? null,
+    ...(payload.payload || {}),
+  });
+
+  if (level === "error") {
+    console.error(line);
+  } else {
+    console.log(line);
+  }
+
+  if (runtime?.logStore && typeof runtime.logStore.write === "function") {
+    await runtime.logStore.write(payload);
   }
 }
 

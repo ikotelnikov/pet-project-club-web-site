@@ -8,9 +8,24 @@ import { TelegramClient } from "../adapters/telegram/telegram-client.js";
 import { handleTelegramMessage } from "../adapters/telegram/message-handler.js";
 import { buildContentPageUrl } from "../core/content-links.js";
 import { runPostConfirmationTranslations } from "../services/post-confirmation-translation.js";
+import { NoopWorkerLogStore, WorkerKvLogStore } from "../services/worker-log-store.js";
 
 export function createWorkerRuntime(env = {}, options = {}) {
   const fetchImpl = normalizeFetchImpl(options.fetchImpl);
+  const debugLlmLogs = env.BOT_DEBUG_LLM_LOGS == null
+    ? env.DEV_MODE === "true"
+    : env.BOT_DEBUG_LLM_LOGS === "true";
+  const logStore =
+    options.logStore ||
+    (env.BOT_LOGS_KV
+      ? new WorkerKvLogStore({
+          namespace: env.BOT_LOGS_KV,
+        })
+      : new NoopWorkerLogStore());
+  const debugLog = createRuntimeDebugLogger({
+    enabled: debugLlmLogs,
+    logStore,
+  });
   const publicSiteBaseUrl = resolvePublicSiteBaseUrl(env);
   const repository = new GitHubContentRepository({
     owner: env.GITHUB_REPO_OWNER || null,
@@ -25,6 +40,7 @@ export function createWorkerRuntime(env = {}, options = {}) {
           apiKey: env.OPENAI_API_KEY || null,
           model: env.OPENAI_MODEL || undefined,
           fetchImpl,
+          debugLogger: debugLog,
         })
       : new PrototypeExtractionClient();
   const translationClient = env.OPENAI_API_KEY
@@ -50,7 +66,6 @@ export function createWorkerRuntime(env = {}, options = {}) {
           fetchImpl,
         })
       : null);
-
   return {
     repository,
     extractionClient,
@@ -58,12 +73,24 @@ export function createWorkerRuntime(env = {}, options = {}) {
     pendingStore,
     photoStore,
     telegramClient,
+    logStore,
+    debugLlmLogs,
     devMode: env.DEV_MODE === "true",
+    useIntentPipeline: env.BOT_USE_INTENT_PIPELINE !== "false",
+    telegramUpdateCoalesceDelayMs: resolveUpdateCoalesceDelayMs(env),
+    telegramPendingContextCoalesceDelayMs: resolvePendingContextCoalesceDelayMs(env),
     publicSiteBaseUrl,
     async handleTelegramUpdate(update, runtimeOptions = {}) {
       const result = await handleTelegramMessage({
         message: update.message,
         updateId: update.update_id,
+        useIntentPipeline: env.BOT_USE_INTENT_PIPELINE !== "false",
+        coalesceDelayMs: Number.isInteger(runtimeOptions.coalesceDelayMs)
+          ? runtimeOptions.coalesceDelayMs
+          : resolveUpdateCoalesceDelayMs(env),
+        pendingCoalesceDelayMs: Number.isInteger(runtimeOptions.pendingCoalesceDelayMs)
+          ? runtimeOptions.pendingCoalesceDelayMs
+          : resolvePendingContextCoalesceDelayMs(env),
         allowedUserId: env.TELEGRAM_ALLOWED_USER_ID
           ? Number.parseInt(env.TELEGRAM_ALLOWED_USER_ID, 10)
           : null,
@@ -73,6 +100,7 @@ export function createWorkerRuntime(env = {}, options = {}) {
         extractionClient,
         translationClient,
         telegramClient,
+        debugLog,
         dryRun: runtimeOptions.dryRun ?? true,
       });
 
@@ -98,6 +126,44 @@ export function createWorkerRuntime(env = {}, options = {}) {
       });
     },
   };
+}
+
+function createRuntimeDebugLogger({ enabled, logStore }) {
+  if (!enabled || !logStore || typeof logStore.write !== "function") {
+    return null;
+  }
+
+  return async ({ event, payload = {}, updateId = null, messageId = null, chatId = null, fromUserId = null }) => {
+    await logStore.write({
+      level: "debug",
+      event,
+      updateId,
+      messageId,
+      chatId,
+      fromUserId,
+      payload,
+    });
+  };
+}
+
+function resolveUpdateCoalesceDelayMs(env) {
+  const raw = env.TELEGRAM_UPDATE_COALESCE_DELAY_MS;
+  if (raw == null || raw === "") {
+    return 1000;
+  }
+
+  const parsed = Number.parseInt(raw, 10);
+  return Number.isInteger(parsed) && parsed >= 0 ? parsed : 1000;
+}
+
+function resolvePendingContextCoalesceDelayMs(env) {
+  const raw = env.TELEGRAM_PENDING_CONTEXT_COALESCE_DELAY_MS;
+  if (raw == null || raw === "") {
+    return 20000;
+  }
+
+  const parsed = Number.parseInt(raw, 10);
+  return Number.isInteger(parsed) && parsed >= 0 ? parsed : 20000;
 }
 
 function normalizeFetchImpl(fetchImpl) {

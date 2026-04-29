@@ -6,16 +6,57 @@ import {
   isPendingExpired,
   normalizeConfirmationDecision,
 } from "../../core/confirmation-flow.js";
-import { validateOperation } from "../../core/operation-validator.js";
-import { buildOperationPreview } from "../../core/preview-builder.js";
 import { mapOperationToContent } from "../../core/content-mapper.js";
-import { resolvePendingTranslationLocales } from "../../services/post-confirmation-translation.js";
 import { extractTelegramAttachments } from "./attachments.js";
-import { inferHeuristicExtraction } from "./heuristic-intent.js";
+import { handleBufferedV2PendingTurn, handleTelegramMessageV2, handleV2PendingResponse } from "./handle-message-v2.js";
+import { collectTurn, appendTurnMessage } from "../../orchestration/collect-turn.js";
+
+const RECENT_SESSION_TTL_HOURS = 72;
+
+function buildV2RecentContext(recentEntity) {
+  return {
+    lastConfirmedObject: recentEntity
+      ? {
+          entity: recentEntity.entity,
+          slug: recentEntity.slug,
+          summary: recentEntity.summary || recentEntity.fields?.title || recentEntity.fields?.name || recentEntity.slug,
+        }
+      : null,
+    pendingDraft: null,
+  };
+}
+
+function isV2PendingOperation(pending) {
+  return typeof pending?.operation?.type === "string" && pending.operation.type.startsWith("v2_");
+}
+
+function isLegacyPendingState(pending) {
+  if (!pending || !pending.operation) {
+    return false;
+  }
+
+  if (isV2PendingOperation(pending)) {
+    return false;
+  }
+
+  if (pending.state === "awaiting_confirmation") {
+    return pending.operation.type !== "undo" && pending.operation.type !== "translation_batch";
+  }
+
+  if (pending.state === "awaiting_clarification") {
+    return true;
+  }
+
+  return false;
+}
 
 export async function handleTelegramMessage({
   message,
   updateId,
+  batchedMessages = null,
+  useIntentPipeline = process.env.BOT_USE_INTENT_PIPELINE !== "false",
+  coalesceDelayMs = 0,
+  pendingCoalesceDelayMs = 0,
   allowedUserId,
   repository,
   pendingStore,
@@ -23,11 +64,13 @@ export async function handleTelegramMessage({
   extractionClient,
   translationClient,
   telegramClient,
+  debugLog = null,
   dryRun = true,
 }) {
   const fromUserId = message.from?.id || null;
   const chatId = message.chat?.id || fromUserId;
   const rawAttachments = extractTelegramAttachments(message);
+  let existingPending = await pendingStore.getPending(chatId);
 
   if (allowedUserId != null && fromUserId !== allowedUserId) {
     return {
@@ -38,10 +81,37 @@ export async function handleTelegramMessage({
     };
   }
 
-  const text = extractMessageText(message);
+  const rawText = extractMessageText(message);
   const formattedTextHtml = extractFormattedMessageHtml(message);
+  const text = isEditRequest(rawText) ? extractEditInstruction(rawText) || rawText : rawText;
 
-  if (!text) {
+  if (existingPending && isPendingExpired(existingPending)) {
+    await pendingStore.deletePending(chatId);
+    existingPending = null;
+  }
+
+  const command = extractBotCommand(rawText);
+  if (command) {
+    return handleBotCommand({
+      command,
+      chatId,
+      fromUserId,
+      pending: existingPending,
+      pendingStore,
+      repository,
+    });
+  }
+
+  const attachments = await stageTelegramAttachments({
+    attachments: rawAttachments,
+    chatId,
+    messageId: message.message_id ?? updateId,
+    repository,
+    telegramClient,
+  });
+  const recentEntity = getRecentEntity(existingPending);
+
+  if (!text && attachments.length === 0) {
     return {
       status: "ignored",
       reason: "no-command",
@@ -50,13 +120,18 @@ export async function handleTelegramMessage({
     };
   }
 
-  const existingPending = await pendingStore.getPending(chatId);
+  if (text && isConfirmationDecision(text)) {
+    if (useIntentPipeline && isCollectingTurnPending(existingPending)) {
+      return handleCollectingTurnDecision({
+        text,
+        chatId,
+        fromUserId,
+        pendingStore,
+        pending: existingPending,
+        repository,
+      });
+    }
 
-  if (existingPending && isPendingExpired(existingPending)) {
-    await pendingStore.deletePending(chatId);
-  }
-
-  if (isConfirmationDecision(text)) {
     return handleConfirmationDecision({
       text,
       chatId,
@@ -70,36 +145,7 @@ export async function handleTelegramMessage({
     });
   }
 
-  if (existingPending?.state === "awaiting_edit") {
-    return handleEditInstruction({
-      instruction: text,
-      chatId,
-      fromUserId,
-      updateId,
-      messageId: message.message_id ?? null,
-      pendingStore,
-      pending: existingPending,
-      repository,
-      extractionClient,
-    });
-  }
-
-  if (isEditRequest(text)) {
-    return handleEditRequest({
-      text,
-      chatId,
-      fromUserId,
-      updateId,
-      messageId: message.message_id ?? null,
-      pendingStore,
-      pending: existingPending,
-      repository,
-      extractionClient,
-      dryRun,
-    });
-  }
-
-  if (isUndoRequest(text)) {
+  if (text && isUndoRequest(text)) {
     return handleUndoRequest({
       chatId,
       fromUserId,
@@ -110,312 +156,387 @@ export async function handleTelegramMessage({
     });
   }
 
-  const attachments = await stageTelegramAttachments({
-    attachments: rawAttachments,
-    chatId,
-    messageId: message.message_id ?? updateId,
-    repository,
-    telegramClient,
-  });
-
-  const heuristicExtraction = inferHeuristicExtraction(text);
-  const extractionResult = heuristicExtraction
-    ? {
-        ok: true,
-        usedModel: "heuristic",
-        attempts: 0,
-        extraction: heuristicExtraction,
-      }
-    : await extractionClient.extractIntent({
-        messageText: text,
-        formattedTextHtml,
-        hasPhoto: Boolean(message.photo?.length),
-        photoCount: Array.isArray(message.photo) ? message.photo.length : 0,
-        attachments,
-        pendingState: existingPending ? existingPending.state : null,
-        allowedEntityTypes: ["announcement", "meeting", "participant", "project"],
-        allowedActions: ["create", "update", "delete"],
-      });
-
-  if (!extractionResult.ok) {
-    return {
-      status: "failed",
-      reason: extractionResult.reason,
-      error: extractionResult.error ?? null,
-      rawText: extractionResult.rawText ?? null,
-      usedModel: extractionResult.usedModel ?? null,
-      attempts: extractionResult.attempts ?? null,
-      chatId,
-      fromUserId,
-    };
+  if (useIntentPipeline && isLegacyPendingState(existingPending)) {
+    await pendingStore.deletePending(chatId);
+    existingPending = null;
   }
 
-  const extraction = extractionResult.extraction;
-
-  if (extraction.intent === "translation_operation") {
-    const translationRouting = routeTranslationOperation(extraction, {
+  if (useIntentPipeline && isCollectingTurnPending(existingPending)) {
+    const nextTurn = appendTurnMessage(existingPending.operation.turn, {
+      message,
+      updateId,
+      text,
+      formattedTextHtml,
+      attachments,
+    });
+    const bufferedPending = createBufferedTurnPending({
+      pending: existingPending,
+      turn: nextTurn,
       chatId,
       fromUserId,
+      updateId,
+      messageId: message.message_id ?? null,
+    });
+    await pendingStore.setPending(chatId, bufferedPending);
+
+    const stablePending = await waitForBufferedTurnStability({
+      pendingStore,
+      chatId,
+      pendingType: "v2_turn_context",
+      waitMs: coalesceDelayMs,
     });
 
-    if (translationRouting.status === "batch") {
-      return handleTranslationBatchRequest({
-        extraction,
-        routing: translationRouting,
-        chatId,
+    if (!isLatestBufferedMessage(stablePending, updateId, message.message_id ?? null)) {
+      return {
+        status: "ignored",
+        reason: "batched-into-turn-context",
         fromUserId,
-        updateId,
-        messageId: message.message_id ?? null,
-        pendingStore,
+        chatId,
+      };
+    }
+
+    const stableTurn = stablePending?.operation?.turn ?? nextTurn;
+    return handleTelegramMessageV2({
+      message,
+      updateId,
+      pendingStore,
+      repository,
+      extractionClient,
+      text: null,
+      formattedTextHtml: null,
+      attachments: [],
+      recentContext: stableTurn.recentContext || buildV2RecentContext(recentEntity),
+      debugLog,
+      dryRun,
+      existingTurn: stableTurn,
+    });
+  }
+
+  if (existingPending && isV2PendingOperation(existingPending)) {
+    const nextTurn = appendTurnMessage(existingPending.operation.turn, {
+      message,
+      updateId,
+      text,
+      formattedTextHtml,
+      attachments,
+    });
+    const bufferedPending = createBufferedTurnPending({
+      pending: existingPending,
+      turn: nextTurn,
+      chatId,
+      fromUserId,
+      updateId,
+      messageId: message.message_id ?? null,
+    });
+    await pendingStore.setPending(chatId, bufferedPending);
+
+    const stablePending = await waitForBufferedTurnStability({
+      pendingStore,
+      chatId,
+      pendingType: existingPending.operation.type,
+      waitMs: pendingCoalesceDelayMs || coalesceDelayMs,
+    });
+
+    if (!isLatestBufferedMessage(stablePending, updateId, message.message_id ?? null)) {
+      return {
+        status: "ignored",
+        reason: "batched-into-pending-context",
+        fromUserId,
+        chatId,
+      };
+    }
+
+    return handleBufferedV2PendingTurn({
+      message,
+      updateId,
+      pendingStore,
+      pending: stablePending,
+      repository,
+      extractionClient,
+      debugLog,
+      dryRun,
+    });
+  }
+
+  if (
+    useIntentPipeline &&
+    Array.isArray(batchedMessages) &&
+    batchedMessages.length > 0
+  ) {
+    let turn = null;
+
+    for (const entry of batchedMessages) {
+      const batchMessage = entry.message;
+      const batchText = extractMessageText(batchMessage);
+      const batchFormattedTextHtml = extractFormattedMessageHtml(batchMessage);
+      const batchAttachments = await stageTelegramAttachments({
+        attachments: extractTelegramAttachments(batchMessage),
+        chatId,
+        messageId: batchMessage.message_id ?? entry.updateId,
         repository,
-        extractionClient,
-        messageText: text,
+        telegramClient,
       });
+
+      turn = turn
+        ? appendTurnMessage(turn, {
+            message: batchMessage,
+            updateId: entry.updateId,
+            text: batchText,
+            formattedTextHtml: batchFormattedTextHtml,
+            attachments: batchAttachments,
+          })
+        : collectTurn({
+            message: batchMessage,
+            updateId: entry.updateId,
+            text: batchText,
+            formattedTextHtml: batchFormattedTextHtml,
+            recentContext: buildV2RecentContext(recentEntity),
+            attachments: batchAttachments,
+          });
     }
 
-    if (translationRouting.status !== "ok") {
-      return translationRouting.result;
-    }
-
-    extraction.intent = "content_operation";
-    extraction.action = extraction.action || "update";
-    extraction.fields = {
-      ...extraction.fields,
-      locale: translationRouting.locale,
-    };
+    const lastEntry = batchedMessages[batchedMessages.length - 1];
+    return handleTelegramMessageV2({
+      message: lastEntry.message,
+      updateId: lastEntry.updateId,
+      pendingStore,
+      repository,
+      extractionClient,
+      text: null,
+      formattedTextHtml: null,
+      attachments: [],
+      recentContext: turn?.recentContext || null,
+      debugLog,
+      dryRun,
+      existingTurn: turn,
+    });
   }
 
-  if (extraction.intent !== "content_operation") {
+  if (!useIntentPipeline) {
     return {
-      status: "ignored",
-      reason: extraction.intent === "non_actionable" ? "no-command" : extraction.intent,
+      status: "failed",
+      reason: "legacy_handler_retired",
+      error: "Legacy Telegram handler flow has been retired. Use the intent pipeline or omit useIntentPipeline=false.",
       chatId,
       fromUserId,
-      extraction,
     };
   }
 
-  const normalizedOperationResult = await buildOperationFromExtraction({
-    extraction,
-    repository,
-    extractionClient,
-    messageText: text,
-  });
-
-  if (!normalizedOperationResult.ok) {
-    return {
-      status: "clarification",
-      chatId,
-      fromUserId,
-      question: normalizedOperationResult.question,
-      extraction,
-    };
-  }
-
-  const normalizedOperation = normalizedOperationResult.operation;
-  const validated = validateOperation(normalizedOperation);
-  const photo = await planOrApplyStagedPhoto({
-    photoStore,
-    entity: validated.entity,
-    slug: validated.fields.slug,
-    stagedPath: validated.fields.photoStagedPath ?? null,
-    dryRun,
-  });
-  const mapped = mapOperationToContent(validated, {
-    photoFilename: photo?.filename || null,
-  });
-  const repositoryPreview = dryRun
-    ? await repository.previewCommand(validated, mapped)
-    : await repository.previewCommand(validated, mapped);
-  const preview = buildOperationPreview(validated, repositoryPreview, {
+  const initialTurn = collectTurn({
+    message,
+    updateId,
+    text,
+    formattedTextHtml,
+    recentContext: buildV2RecentContext(recentEntity),
     attachments,
   });
-  const newPending = createPendingRecord({
+  const bufferedPending = createBufferedTurnPending({
+    pending: null,
+    turn: initialTurn,
     chatId,
-    userId: fromUserId,
-    state: "awaiting_confirmation",
-    sourceMessageId: message.message_id ?? null,
-    sourceUpdateId: updateId,
-    operation: {
-      entity: validated.entity,
-      action: validated.action,
-      slug: validated.fields.slug,
-      confidence: extraction.confidence,
-      summary: extraction.summary,
-      requestText: text,
-      fields: validated.fields,
-      warnings: extraction.warnings,
-      attachments,
-      photo: {
-        hasPhoto: Boolean(photo) || attachments.some((attachment) => attachment.kind === "photo"),
-        telegramFileIds: attachments.map((attachment) => attachment.fileId).filter(Boolean),
-      },
-      preview,
-    },
+    fromUserId,
+    updateId,
+    messageId: message.message_id ?? null,
+  });
+  await pendingStore.setPending(chatId, bufferedPending);
+
+  const stablePending = await waitForBufferedTurnStability({
+    pendingStore,
+    chatId,
+    pendingType: "v2_turn_context",
+    waitMs: coalesceDelayMs,
   });
 
-  await pendingStore.setPending(chatId, newPending);
-
-  return {
-    status: "processed",
-    fromUserId,
-    chatId,
-    parsed: validated,
-    extraction,
-    operation: repositoryPreview,
-    pendingState: newPending,
-  };
-}
-
-function routeTranslationOperation(extraction, { chatId, fromUserId }) {
-  const locale = normalizeTranslationLocale(extraction?.fields?.locale);
-  const hasManualFields = hasTranslationContentFields(extraction?.fields);
-
-  if (!hasManualFields) {
+  if (!isLatestBufferedMessage(stablePending, updateId, message.message_id ?? null)) {
     return {
-      status: "batch",
-      locales: locale ? [locale] : null,
+      status: "ignored",
+      reason: "batched-into-turn-context",
+      fromUserId,
+      chatId,
     };
   }
 
-  if (!locale) {
-    return {
-      status: "clarification",
-      result: {
-        status: "clarification",
-        chatId,
-        fromUserId,
-        question:
-          extraction?.questions?.[0] ||
-          "Which locale should I update for this translation: ru, en, de, me, or es?",
-        extraction,
-      },
-    };
-  }
-
-  return {
-    status: "ok",
-    locale,
-  };
+  const stableTurn = stablePending?.operation?.turn ?? initialTurn;
+  return handleTelegramMessageV2({
+    message,
+    updateId,
+    pendingStore,
+    repository,
+    extractionClient,
+    text: null,
+    formattedTextHtml: null,
+    attachments: [],
+    recentContext: stableTurn.recentContext || buildV2RecentContext(recentEntity),
+    debugLog,
+    dryRun,
+    existingTurn: stableTurn,
+  });
 }
 
-async function handleTranslationBatchRequest({
-  extraction,
-  routing,
+function createBufferedTurnPending({
+  pending,
+  turn,
   chatId,
   fromUserId,
   updateId,
   messageId,
-  pendingStore,
-  repository,
-  extractionClient,
-  messageText,
 }) {
-  const resolution = await buildOperationFromExtraction({
-    extraction: {
-      ...extraction,
-      intent: "content_operation",
-      action: extraction.action || "update",
-      needsConfirmation: true,
-      fields: {
-        ...(extraction.fields || {}),
+  if (pending?.operation?.type === "v2_turn_context") {
+    return createPendingRecord({
+      chatId,
+      userId: fromUserId,
+      state: "collecting_turn",
+      sourceMessageId: messageId,
+      sourceUpdateId: updateId,
+      question: pending.question ?? null,
+      context: pending.context || {},
+      operation: {
+        ...pending.operation,
+        turn,
       },
-    },
-    repository,
-    extractionClient,
-    messageText,
-  });
-
-  if (!resolution.ok) {
-    return {
-      status: "clarification",
-      chatId,
-      fromUserId,
-      question: resolution.question,
-      extraction,
-    };
+    });
   }
 
-  const entity = resolution.operation.entity;
-  const slug = resolution.operation.fields.slug;
-  const currentItem = await repository.readItem(entity, slug);
-  const sourceLocale = currentItem?.sourceLocale || "ru";
-  const targetLocales = Array.isArray(routing.locales) && routing.locales.length > 0
-    ? routing.locales.filter((locale) => locale !== sourceLocale)
-    : resolvePendingTranslationLocales(currentItem, sourceLocale);
-
-  if (targetLocales.length === 0) {
-    return {
-      status: "clarification",
+  if (pending?.operation?.type?.startsWith("v2_")) {
+    return createPendingRecord({
       chatId,
-      fromUserId,
-      question: "There are no auto-updatable locales for this entity. Existing translations are already manual or only the source locale remains.",
-      extraction,
-    };
+      userId: fromUserId,
+      state: pending.state,
+      sourceMessageId: messageId,
+      sourceUpdateId: updateId,
+      question: pending.question ?? null,
+      context: pending.context || {},
+      operation: {
+        ...pending.operation,
+        turn,
+      },
+    });
   }
 
-  const preview = {
-    entity,
-    action: "translate",
-    slug,
-    fields: {
-      locales: targetLocales.join(", "),
-    },
-    files: [resolution.operation.fields.slug ? `${entity}:${slug}` : entity],
-    attachments: [],
-  };
-  const newPending = createPendingRecord({
+  return createPendingRecord({
     chatId,
     userId: fromUserId,
-    state: "awaiting_confirmation",
+    state: "collecting_turn",
     sourceMessageId: messageId,
     sourceUpdateId: updateId,
     operation: {
-      type: "translation_batch",
-      entity,
-      action: "translate",
-      slug,
-      fields: {
-        slug,
-      },
-      sourceLocale,
-      targetLocales,
-      preview,
-      attachments: [],
+      type: "v2_turn_context",
+      turn,
     },
   });
-
-  await pendingStore.setPending(chatId, newPending);
-
-  return {
-    status: "processed",
-    fromUserId,
-    chatId,
-    extraction,
-    pendingState: newPending,
-  };
 }
 
-function normalizeTranslationLocale(locale) {
-  if (typeof locale !== "string" || locale.trim() === "") {
+async function waitForBufferedTurnStability({
+  pendingStore,
+  chatId,
+  pendingType,
+  waitMs = 1000,
+  maxRounds = 3,
+}) {
+  let previousSignature = getPendingTurnSignature(await pendingStore.getPending(chatId), pendingType);
+
+  for (let round = 0; round < maxRounds; round += 1) {
+    if (!previousSignature || waitMs <= 0) {
+      return pendingStore.getPending(chatId);
+    }
+
+    await sleep(waitMs);
+    const currentPending = await pendingStore.getPending(chatId);
+    const currentSignature = getPendingTurnSignature(currentPending, pendingType);
+
+    if (currentSignature === previousSignature) {
+      return currentPending;
+    }
+
+    previousSignature = currentSignature;
+  }
+
+  return pendingStore.getPending(chatId);
+}
+
+function getPendingTurnSignature(pending, expectedType = null) {
+  if (!pending?.operation?.turn) {
     return null;
   }
 
-  const normalized = locale.trim().toLowerCase();
-
-  if (normalized === "ru" || normalized === "en" || normalized === "de" || normalized === "me" || normalized === "es") {
-    return normalized;
+  if (expectedType && pending.operation.type !== expectedType) {
+    return null;
   }
 
-  return null;
+  const messages = Array.isArray(pending.operation.turn.messages) ? pending.operation.turn.messages : [];
+  const latest = messages[messages.length - 1] || null;
+
+  return JSON.stringify({
+    state: pending.state || null,
+    type: pending.operation.type || null,
+    count: messages.length,
+    updateId: latest?.updateId ?? null,
+    messageId: latest?.messageId ?? null,
+  });
 }
 
-function hasTranslationContentFields(fields) {
-  if (!fields || typeof fields !== "object") {
-    return false;
+function isLatestBufferedMessage(pending, updateId, messageId) {
+  const messages = Array.isArray(pending?.operation?.turn?.messages) ? pending.operation.turn.messages : [];
+  const latest = messages[messages.length - 1] || null;
+
+  return Boolean(latest) && latest.updateId === updateId && latest.messageId === messageId;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isCollectingTurnPending(pending) {
+  return pending?.state === "collecting_turn" && pending?.operation?.type === "v2_turn_context";
+}
+
+async function handleCollectingTurnDecision({
+  text,
+  chatId,
+  fromUserId,
+  pendingStore,
+  pending,
+  repository,
+}) {
+  const decision = normalizeConfirmationDecision(text);
+
+  if (decision === "cancel") {
+    await cleanupStagedAttachments(repository, collectPendingTurnAttachments(pending));
+    await pendingStore.deletePending(chatId);
+    return {
+      status: "cancelled",
+      decision,
+      hasPending: true,
+      chatId,
+      fromUserId,
+    };
   }
 
-  return Object.keys(fields).some((key) => !["slug", "locale", "sourceLocale"].includes(key));
+  return {
+    status: "control",
+    decision,
+    hasPending: true,
+    chatId,
+    fromUserId,
+    reason: "pending-state-not-confirmable",
+  };
+}
+
+function collectPendingTurnAttachments(pending) {
+  const messages = Array.isArray(pending?.operation?.turn?.messages)
+    ? pending.operation.turn.messages
+    : [];
+
+  return messages.flatMap((entry) => Array.isArray(entry.attachments) ? entry.attachments : []);
+}
+
+function collectAllPendingAttachments(pending) {
+  const turnAttachments = collectPendingTurnAttachments(pending);
+  const operationAttachments = Array.isArray(pending?.operation?.attachments)
+    ? pending.operation.attachments
+    : [];
+
+  return [...turnAttachments, ...operationAttachments];
 }
 
 export function extractMessageText(message) {
@@ -440,6 +561,129 @@ export function extractFormattedMessageHtml(message) {
 export function extractCommandText(message) {
   const candidate = extractMessageText(message);
   return candidate && candidate.trim().startsWith("/") ? candidate : null;
+}
+
+function extractBotCommand(text) {
+  if (typeof text !== "string") {
+    return null;
+  }
+
+  const trimmed = text.trim();
+  if (!trimmed.startsWith("/")) {
+    return null;
+  }
+
+  const [head] = trimmed.split(/\s+/, 1);
+  const normalized = head.toLowerCase();
+  const command = normalized.includes("@") ? normalized.slice(0, normalized.indexOf("@")) : normalized;
+
+  switch (command) {
+    case "/new":
+    case "/state":
+    case "/help":
+      return command;
+    default:
+      return null;
+  }
+}
+
+async function handleBotCommand({
+  command,
+  chatId,
+  fromUserId,
+  pending,
+  pendingStore,
+  repository,
+}) {
+  switch (command) {
+    case "/new":
+      await cleanupStagedAttachments(repository, collectAllPendingAttachments(pending));
+      await pendingStore.deletePending(chatId);
+      return {
+        status: "command",
+        command: "new",
+        chatId,
+        fromUserId,
+        hadContext: Boolean(pending),
+      };
+    case "/state":
+      return {
+        status: "command",
+        command: "state",
+        chatId,
+        fromUserId,
+        contextState: summarizePendingContext(pending),
+      };
+    case "/help":
+      return {
+        status: "command",
+        command: "help",
+        chatId,
+        fromUserId,
+      };
+    default:
+      return {
+        status: "ignored",
+        reason: "no-command",
+        fromUserId,
+        chatId,
+      };
+  }
+}
+
+function summarizePendingContext(pending) {
+  if (!pending) {
+    return {
+      hasContext: false,
+      state: "idle",
+      operationType: null,
+      messageCount: 0,
+      fileCount: 0,
+      intentSummary: null,
+      doubt: null,
+    };
+  }
+
+  const turn = pending?.operation?.turn ?? null;
+  const messages = Array.isArray(turn?.messages) ? turn.messages : [];
+  const attachments = collectAllPendingAttachments(pending);
+  const activeSession = turn?.recentContext?.activeSession ?? null;
+  const operationType = pending?.operation?.type ?? null;
+  const previewOperation =
+    pending?.operation && !operationType
+      ? {
+          action: pending.operation.action ?? null,
+          entity: pending.operation.entity ?? null,
+          slug: pending.operation.slug ?? pending.operation.fields?.slug ?? null,
+        }
+      : null;
+
+  const intentSummary = activeSession
+    ? {
+        intent: activeSession.intent ?? null,
+        entity: activeSession.entity ?? null,
+        targetMode: activeSession.target?.mode ?? null,
+        targetRef: activeSession.target?.ref ?? null,
+      }
+    : previewOperation;
+
+  const doubt = pending.state === "awaiting_clarification"
+    ? {
+        reason: pending?.operation?.clarification?.kind ?? pending?.operation?.clarificationReason ?? null,
+        question: pending?.question ?? null,
+      }
+    : null;
+
+  return {
+    hasContext: true,
+    state: pending.state ?? "idle",
+    operationType,
+    messageCount: messages.length,
+    fileCount: attachments.length,
+    intentSummary,
+    doubt,
+    sourceMessageId: pending.sourceMessageId ?? null,
+  };
 }
 
 async function handleConfirmationDecision({
@@ -471,7 +715,7 @@ async function handleConfirmationDecision({
 
   if (decision === "cancel") {
     await cleanupStagedAttachments(repository, pending.operation?.attachments ?? []);
-    await pendingStore.deletePending(chatId);
+    await persistSessionState(pendingStore, chatId, clearActiveDraft(pending));
     return {
       status: "cancelled",
       decision,
@@ -497,7 +741,17 @@ async function handleConfirmationDecision({
       ? await repository.previewUndoLastChange(pending.operation.undoTarget)
       : await repository.applyUndoLastChange(pending.operation.undoTarget);
 
-    await pendingStore.deletePending(chatId);
+    await persistSessionState(
+      pendingStore,
+      chatId,
+      createRecentEntitySession(pending, {
+        entity: "content",
+        slug: pending.operation.slug,
+        action: "undo",
+        fields: pending.operation.fields,
+        summary: pending.operation.preview?.fields?.message || null,
+      })
+    );
 
     return {
       status: "confirmed",
@@ -511,7 +765,20 @@ async function handleConfirmationDecision({
   }
 
   if (pending.operation?.type === "translation_batch") {
-    await pendingStore.deletePending(chatId);
+    await persistSessionState(
+      pendingStore,
+      chatId,
+      createRecentEntitySession(pending, {
+        entity: pending.operation.entity,
+        slug: pending.operation.slug,
+        action: "translate",
+        fields: {
+          slug: pending.operation.slug,
+          sourceLocale: pending.operation.sourceLocale || "ru",
+        },
+        summary: pending.operation.preview?.fields?.locales || null,
+      })
+    );
 
     return {
       status: "confirmed",
@@ -545,7 +812,17 @@ async function handleConfirmationDecision({
     ? await repository.previewCommand(operation, mapped)
     : await repository.applyCommand(operation, mapped);
 
-  await pendingStore.deletePending(chatId);
+  await persistSessionState(
+    pendingStore,
+    chatId,
+    createRecentEntitySession(pending, {
+      entity: operation.entity,
+      slug: operation.fields.slug,
+      action: operation.action,
+      fields: operation.fields,
+      summary: pending.operation.summary || null,
+    })
+  );
 
   return {
     status: "confirmed",
@@ -646,176 +923,73 @@ function normalizeSourceLocale(locale) {
   return typeof locale === "string" && locale.trim() ? locale.trim().toLowerCase() : "ru";
 }
 
-async function handleEditRequest({
-  text,
-  chatId,
-  fromUserId,
-  updateId,
-  messageId,
-  pendingStore,
-  pending,
-  repository,
-  extractionClient,
-  dryRun,
-}) {
-  if (!pending || isPendingExpired(pending)) {
-    if (pending && isPendingExpired(pending)) {
-      await pendingStore.deletePending(chatId);
-    }
-
-    return {
-      status: "clarification",
-      chatId,
-      fromUserId,
-      question: "There is no active preview to edit. Start with a content change request first.",
-    };
+function getRecentEntity(pending) {
+  if (!pending?.context) {
+    return null;
   }
 
-  if (pending.state !== "awaiting_confirmation" || pending.operation?.type === "undo") {
-    return {
-      status: "clarification",
-      chatId,
-      fromUserId,
-      question: "This preview cannot be edited. Reply with confirm or cancel, or send a new content change request.",
-    };
+  if (Array.isArray(pending.context.recentEntities) && pending.context.recentEntities.length > 0) {
+    return pending.context.recentEntities[0];
   }
 
-  const instruction = extractEditInstruction(text);
+  return pending.context.recentEntity ?? null;
+}
 
-  if (!instruction) {
-    const editPending = createPendingRecord({
-      chatId,
-      userId: fromUserId,
-      state: "awaiting_edit",
-      sourceMessageId: messageId,
-      sourceUpdateId: updateId,
-      operation: pending.operation,
-      question: "Specify which field(s) should be edited.",
-    });
 
-    await pendingStore.setPending(chatId, editPending);
-
-    return {
-      status: "clarification",
-      chatId,
-      fromUserId,
-      question: "Specify which field(s) should be edited.",
-    };
+function clearActiveDraft(pending) {
+  if (!pending) {
+    return null;
   }
 
-  return handleEditInstruction({
-    instruction,
-    chatId,
-    fromUserId,
-    updateId,
-    messageId,
-    pendingStore,
-    pending,
-    repository,
-    extractionClient,
+  return createPendingRecord({
+    chatId: pending.chatId,
+    userId: pending.userId,
+    state: "idle",
+    sourceMessageId: pending.sourceMessageId ?? null,
+    sourceUpdateId: pending.sourceUpdateId ?? null,
+    operation: null,
+    context: {
+      ...(pending.context || {}),
+    },
+    ttlHours: RECENT_SESSION_TTL_HOURS,
   });
 }
 
-async function handleEditInstruction({
-  instruction,
-  chatId,
-  fromUserId,
-  updateId,
-  messageId,
-  pendingStore,
-  pending,
-  repository,
-  extractionClient,
-}) {
-  const extractionResult = await extractionClient.extractIntent({
-    messageText: instruction,
-    pendingState: "editing_pending_preview",
-    pendingOperation: {
-      entity: pending.operation.entity,
-      action: pending.operation.action,
-      slug: pending.operation.slug,
-      fields: pending.operation.fields,
-      summary: pending.operation.summary ?? null,
-      requestText: pending.operation.requestText ?? null,
-    },
-    allowedEntityTypes: ["announcement", "meeting", "participant", "project"],
-    allowedActions: ["create", "update", "delete"],
-  });
-
-  if (!extractionResult.ok) {
-    return {
-      status: "failed",
-      reason: extractionResult.reason,
-      error: extractionResult.error ?? null,
-      rawText: extractionResult.rawText ?? null,
-      usedModel: extractionResult.usedModel ?? null,
-      attempts: extractionResult.attempts ?? null,
-      chatId,
-      fromUserId,
-    };
-  }
-
-  const extraction = extractionResult.extraction;
-
-  if (extraction.intent !== "content_operation") {
-    return {
-      status: "clarification",
-      chatId,
-      fromUserId,
-      question: "I couldn't understand what to edit. Name the fields and new values you want to change.",
-    };
-  }
-
-  const pendingFields = pending.operation.fields || {};
-  const editFields = normalizeExtractionToOperation(extraction, instruction).fields || {};
-  const mergedFields = {
-    ...pendingFields,
-    ...editFields,
-    slug:
-      normalizeSlug(editFields.slug) ||
-      normalizeSlug(pendingFields.slug) ||
-      normalizeSlug(pending.operation.slug),
-  };
-
-  const editedOperation = validateOperation({
-    entity: pending.operation.entity,
-    action: pending.operation.action,
-    fields: mergedFields,
-  });
-  const mapped = mapOperationToContent(editedOperation);
-  const repositoryPreview = await repository.previewCommand(editedOperation, mapped);
-  const preview = buildOperationPreview(editedOperation, repositoryPreview, {
-    attachments: pending.operation.attachments ?? [],
-  });
-  const newPending = createPendingRecord({
-    chatId,
-    userId: fromUserId,
-    state: "awaiting_confirmation",
-    sourceMessageId: messageId,
-    sourceUpdateId: updateId,
-    operation: {
-      ...pending.operation,
-      entity: editedOperation.entity,
-      action: editedOperation.action,
-      slug: editedOperation.fields.slug,
-      summary: extraction.summary || pending.operation.summary || null,
-      requestText: pending.operation.requestText ?? null,
-      fields: editedOperation.fields,
-      preview,
-    },
-  });
-
-  await pendingStore.setPending(chatId, newPending);
+function createRecentEntitySession(pending, recentEntity) {
+  const cleared = clearActiveDraft(pending);
+  const stampedRecentEntity = recentEntity
+    ? {
+        ...recentEntity,
+        lastTouchedAt: new Date().toISOString(),
+      }
+    : null;
+  const previous = Array.isArray(cleared.context?.recentEntities)
+    ? cleared.context.recentEntities
+    : (cleared.context?.recentEntity ? [cleared.context.recentEntity] : []);
+  const nextRecentEntities = [
+    stampedRecentEntity,
+    ...previous.filter((entry) => !(entry?.entity === stampedRecentEntity?.entity && entry?.slug === stampedRecentEntity?.slug)),
+  ]
+    .filter(Boolean)
+    .slice(0, 5);
 
   return {
-    status: "processed",
-    fromUserId,
-    chatId,
-    parsed: editedOperation,
-    extraction,
-    operation: repositoryPreview,
-    pendingState: newPending,
+    ...cleared,
+    context: {
+      ...(cleared.context || {}),
+      recentEntity: stampedRecentEntity,
+      recentEntities: nextRecentEntities,
+    },
   };
+}
+
+async function persistSessionState(pendingStore, chatId, record) {
+  if (!record || (!record.operation && !record.context?.recentEntity)) {
+    await pendingStore.deletePending(chatId);
+    return;
+  }
+
+  await pendingStore.setPending(chatId, record);
 }
 
 function telegramEntitiesToHtml(text, entities) {
@@ -906,437 +1080,6 @@ function stripHtmlTags(value) {
   return String(value).replace(/<[^>]+>/g, "");
 }
 
-function normalizeExtractionToOperation(extraction, sourceText = "") {
-  const enrichedFields = enrichContactFields(extraction.entity, extraction.fields ?? {}, sourceText);
-  const photoAction = inferPhotoAction(sourceText, extraction.entity, enrichedFields);
-  const derivedSlug = normalizeSlug(extraction.slug ?? extraction.fields?.slug ?? null);
-
-  return {
-    entity: extraction.entity === "announcement" ? "announce" : extraction.entity,
-    action: extraction.action,
-    fields: {
-      ...enrichedFields,
-      ...(photoAction ? { photoAction } : {}),
-      photoStagedPath: enrichedFields.photoStagedPath ?? null,
-      slug:
-        derivedSlug ||
-        normalizeSlug(enrichedFields.handle) ||
-        normalizeSlug(enrichedFields.name) ||
-        normalizeSlug(enrichedFields.title),
-    },
-  };
-}
-
-function enrichContactFields(entity, fields, sourceText) {
-  const enriched = { ...fields };
-  const discoveredLinks = extractLinksFromText(sourceText);
-
-  if (entity === "participant" && !enriched.handle) {
-    const telegramLink = discoveredLinks.find((link) => /^https:\/\/t\.me\//i.test(link.href));
-    if (telegramLink?.href) {
-      const username = telegramLink.href.replace(/^https:\/\/t\.me\//i, "").replace(/\/+$/, "");
-      if (username) {
-        enriched.handle = `@${username}`;
-      }
-    }
-  }
-
-  const mergedLinks = mergeLinkEntries(enriched.links, discoveredLinks, enriched.handle);
-  if (mergedLinks.length) {
-    enriched.links = mergedLinks;
-  }
-
-  return enriched;
-}
-
-function extractLinksFromText(text) {
-  if (typeof text !== "string" || text.trim() === "") {
-    return [];
-  }
-
-  const results = [];
-  const urlPattern = /\bhttps?:\/\/[^\s<>()]+/gi;
-
-  for (const match of text.matchAll(urlPattern)) {
-    const href = match[0].replace(/[),.;:!?]+$/, "");
-    results.push({
-      label: inferLinkLabel(href),
-      href,
-      external: true,
-    });
-  }
-
-  const telegramHandlePattern = /(^|[\s(])@([A-Za-z0-9_]{4,})\b/g;
-  for (const match of text.matchAll(telegramHandlePattern)) {
-    const username = match[2];
-    results.push({
-      label: "Telegram",
-      href: `https://t.me/${username}`,
-      external: true,
-    });
-  }
-
-  return dedupeLinks(results);
-}
-
-function inferLinkLabel(href) {
-  const lower = href.toLowerCase();
-
-  if (lower.includes("t.me/")) {
-    return "Telegram";
-  }
-
-  if (lower.includes("linkedin.com/")) {
-    return "LinkedIn";
-  }
-
-  if (lower.includes("x.com/") || lower.includes("twitter.com/")) {
-    return "X / Twitter";
-  }
-
-  if (lower.includes("github.com/")) {
-    return "GitHub";
-  }
-
-  try {
-    const url = new URL(href);
-    return url.hostname.replace(/^www\./, "");
-  } catch {
-    return "Link";
-  }
-}
-
-function mergeLinkEntries(existingLinks, discoveredLinks, handle) {
-  const combined = [];
-
-  if (Array.isArray(existingLinks)) {
-    combined.push(...existingLinks);
-  }
-
-  if (Array.isArray(discoveredLinks)) {
-    combined.push(...discoveredLinks);
-  }
-
-  const username = typeof handle === "string" ? handle.trim().replace(/^@+/, "") : "";
-  const normalizedTelegramHref = username ? `https://t.me/${username}` : null;
-
-  return dedupeLinks(
-    combined.filter((link) => {
-      if (!link?.href || !link?.label) {
-        return false;
-      }
-
-      if (normalizedTelegramHref && link.href === normalizedTelegramHref && /^telegram$/i.test(link.label)) {
-        return false;
-      }
-
-      return true;
-    })
-  );
-}
-
-function dedupeLinks(links) {
-  const seen = new Set();
-  const deduped = [];
-
-  for (const link of links) {
-    const key = `${link.label}::${link.href}`;
-    if (seen.has(key)) {
-      continue;
-    }
-
-    seen.add(key);
-    deduped.push(link);
-  }
-
-  return deduped;
-}
-
-async function buildOperationFromExtraction({ extraction, repository, extractionClient, messageText }) {
-  let baseOperation = normalizeExtractionToOperation(extraction, messageText);
-
-  if (
-    repository &&
-    typeof repository.findEntityBySlug === "function" &&
-    baseOperation.action !== "create" &&
-    baseOperation.fields.slug
-  ) {
-    const actualEntity = await repository.findEntityBySlug(baseOperation.fields.slug);
-
-    if (actualEntity && actualEntity !== baseOperation.entity) {
-      baseOperation = {
-        ...baseOperation,
-        entity: actualEntity,
-      };
-    }
-  }
-
-  if (baseOperation.action === "create") {
-    return {
-      ok: true,
-      operation: baseOperation,
-    };
-  }
-
-  const resolvedSlug =
-    baseOperation.fields.slug ||
-    (await resolveExistingSlug({
-      repository,
-      entity: baseOperation.entity,
-      fields: extraction.fields,
-      targetRef: extraction.targetRef,
-      extractionClient,
-      messageText,
-    }));
-
-  if (!resolvedSlug) {
-    return {
-      ok: false,
-      question: `I couldn't find which ${baseOperation.entity} you want to ${baseOperation.action}. Tell me the exact name, handle, or slug.`,
-    };
-  }
-
-  const operationWithSlug = {
-    ...baseOperation,
-    fields: {
-      ...baseOperation.fields,
-      slug: resolvedSlug,
-    },
-  };
-
-  if (baseOperation.action !== "update") {
-    return {
-      ok: true,
-      operation: operationWithSlug,
-    };
-  }
-
-  const currentItem = await repository.readItem(operationWithSlug.entity, operationWithSlug.fields.slug);
-  const mergedFields = mergeExistingFields(operationWithSlug.entity, currentItem, operationWithSlug.fields);
-
-  return {
-    ok: true,
-    operation: {
-      ...operationWithSlug,
-      fields: {
-        ...mergedFields,
-        slug: operationWithSlug.fields.slug,
-      },
-    },
-  };
-}
-
-async function resolveExistingSlug({
-  repository,
-  entity,
-  fields,
-  targetRef,
-  extractionClient,
-  messageText,
-}) {
-  const candidates = await repository.listEntityCandidates(entity);
-
-  if (candidates.length === 0) {
-    return null;
-  }
-
-  const normalizedCandidates = new Set(
-    [
-      targetRef,
-      fields?.slug,
-      fields?.handle,
-      fields?.name,
-      fields?.title,
-    ]
-      .map((value) => normalizeSlug(value))
-      .filter(Boolean)
-  );
-
-  for (const candidate of candidates) {
-    const candidateKeys = [candidate.slug, candidate.label, candidate.handle, candidate.title]
-      .map((value) => normalizeSlug(value))
-      .filter(Boolean);
-
-    if (candidateKeys.some((candidateKey) => normalizedCandidates.has(candidateKey))) {
-      return candidate.slug;
-    }
-  }
-
-  if (extractionClient && typeof extractionClient.resolveTarget === "function") {
-    const resolutionResult = await extractionClient.resolveTarget({
-      entity,
-      targetRef:
-        targetRef ||
-        fields?.handle ||
-        fields?.name ||
-        fields?.title ||
-        messageText,
-      candidates,
-      messageText,
-    });
-
-    if (resolutionResult.ok && resolutionResult.resolution?.matchedSlug) {
-      return resolutionResult.resolution.matchedSlug;
-    }
-  }
-
-  return null;
-}
-
-function mergeExistingFields(entity, currentItem, newFields) {
-  const targetLocale =
-    typeof newFields?.locale === "string" && newFields.locale.trim() !== ""
-      ? newFields.locale.trim().toLowerCase()
-      : null;
-
-  if (targetLocale && targetLocale !== (currentItem?.sourceLocale || "ru")) {
-    return {
-      ...(currentItem?.translations?.[targetLocale] || {}),
-      sourceLocale: currentItem?.sourceLocale || "ru",
-      ...newFields,
-    };
-  }
-
-  switch (entity) {
-    case "participant":
-      return {
-        handle: currentItem.handle,
-        name: currentItem.name,
-        role: currentItem.role,
-        bio: currentItem.bio,
-        points: currentItem.points,
-        location: currentItem.location,
-        tags: currentItem.tags,
-        links: currentItem.links,
-        photoAlt: currentItem.photo?.alt,
-        photoStagedPath: currentItem.photo?.src,
-        ...newFields,
-      };
-    case "project":
-      const mergedProjectPhotos = mergeProjectPhotoFields(currentItem, newFields);
-      return {
-        title: currentItem.title,
-        status: currentItem.status,
-        stack: currentItem.stack,
-        summary: currentItem.summary,
-        detailsHtml: currentItem.detailsHtml,
-        points: currentItem.points,
-        location: currentItem.location,
-        tags: currentItem.tags,
-        ownerSlugs: currentItem.ownerSlugs,
-        links: currentItem.links,
-        photoAlt: currentItem.photo?.alt,
-        photoStagedPath: currentItem.photo?.src,
-        photoAction: null,
-        gallery: currentItem.gallery,
-        ...newFields,
-        ...mergedProjectPhotos,
-      };
-    case "meeting":
-    case "announce":
-      return {
-        date: currentItem.date,
-        title: currentItem.title,
-        place: currentItem.place,
-        placeUrl: currentItem.placeUrl,
-        format: currentItem.format,
-        paragraphs: currentItem.paragraphs,
-        sections: currentItem.sections,
-        links: currentItem.links,
-        photoAlt: currentItem.photo?.alt,
-        photoStagedPath: currentItem.photo?.src,
-        ...newFields,
-      };
-    default:
-      return {
-        ...currentItem,
-        ...newFields,
-      };
-  }
-}
-
-function inferPhotoAction(sourceText, entity, fields) {
-  if (typeof fields?.photoAction === "string" && fields.photoAction.trim() !== "") {
-    return fields.photoAction.trim().toLowerCase();
-  }
-
-  const normalizedText = typeof sourceText === "string" ? sourceText.toLowerCase() : "";
-  const hasIncomingPhoto = typeof fields?.photoStagedPath === "string" && fields.photoStagedPath.trim() !== "";
-
-  if (!normalizedText) {
-    return hasIncomingPhoto ? "replace" : null;
-  }
-
-  if (/\b(remove|delete|clear)\b/.test(normalizedText) && /\b(photo|image|picture|screenshot|cover|media)\b/.test(normalizedText)) {
-    return /\b(all|every)\b/.test(normalizedText) || /\bphotos\b/.test(normalizedText) ? "clear" : "remove";
-  }
-
-  if (hasIncomingPhoto && /\b(add|append|another|additional|extra|one more)\b/.test(normalizedText) && /\b(photo|image|picture|screenshot)\b/.test(normalizedText)) {
-    return "append";
-  }
-
-  if (hasIncomingPhoto && /\b(change|replace|update|swap|set)\b/.test(normalizedText) && /\b(photo|image|picture|screenshot|cover)\b/.test(normalizedText)) {
-    return "replace";
-  }
-
-  if (entity === "project" && hasIncomingPhoto) {
-    return "replace";
-  }
-
-  return null;
-}
-
-function mergeProjectPhotoFields(currentItem, newFields) {
-  const photoAction = typeof newFields?.photoAction === "string" ? newFields.photoAction.toLowerCase() : null;
-  const stagedPath = typeof newFields?.photoStagedPath === "string" && newFields.photoStagedPath.trim() !== ""
-    ? newFields.photoStagedPath
-    : null;
-  const photoAlt = newFields?.photoAlt ?? newFields?.photoalt ?? currentItem?.photo?.alt ?? currentItem?.title ?? currentItem?.slug;
-  const existingGallery = getExistingProjectGallery(currentItem);
-
-  if (!photoAction && !stagedPath) {
-    return {};
-  }
-
-  let nextGallery = existingGallery.map((entry) => ({ ...entry }));
-
-  if (photoAction === "clear") {
-    nextGallery = [];
-  } else if (photoAction === "remove") {
-    nextGallery = nextGallery.slice(1);
-  } else if (stagedPath) {
-    const nextEntry = {
-      src: stagedPath,
-      alt: photoAlt,
-    };
-
-    if (photoAction === "append") {
-      nextGallery.push(nextEntry);
-    } else {
-      if (nextGallery.length > 0) {
-        nextGallery[0] = nextEntry;
-      } else {
-        nextGallery = [nextEntry];
-      }
-    }
-  }
-
-  return {
-    gallery: nextGallery,
-    photoAlt: nextGallery[0]?.alt ?? undefined,
-    photoStagedPath: nextGallery[0]?.src ?? null,
-    photoAction,
-  };
-}
-
-function getExistingProjectGallery(item) {
-  if (Array.isArray(item?.gallery) && item.gallery.length > 0) {
-    return item.gallery.filter((entry) => entry?.src);
-  }
-
-  return item?.photo?.src ? [item.photo] : [];
-}
-
 async function stageTelegramAttachments({
   attachments,
   chatId,
@@ -1380,32 +1123,6 @@ async function stageTelegramAttachments({
   return stagedAttachments;
 }
 
-async function planOrApplyStagedPhoto({
-  photoStore,
-  entity,
-  slug,
-  stagedPath,
-  dryRun,
-}) {
-  if (!stagedPath) {
-    return null;
-  }
-
-  if (dryRun) {
-    if (typeof photoStore.planStagedPhoto === "function") {
-      return photoStore.planStagedPhoto(entity, slug, stagedPath);
-    }
-
-    return photoStore.planPhoto(entity, slug, stagedPath);
-  }
-
-  if (typeof photoStore.applyStagedPhoto === "function") {
-    return photoStore.applyStagedPhoto(entity, slug, stagedPath);
-  }
-
-  return photoStore.applyPhoto(entity, slug, stagedPath);
-}
-
 function deriveAttachmentName(attachment, filePath) {
   const extensionMatch = typeof filePath === "string" ? filePath.match(/(\.[a-zA-Z0-9]+)$/) : null;
   const extension = extensionMatch ? extensionMatch[1].toLowerCase() : "";
@@ -1422,21 +1139,6 @@ async function cleanupStagedAttachments(repository, attachments) {
       await repository.deleteStagedAttachment(attachment.stagedPath);
     }
   }
-}
-
-function normalizeSlug(value) {
-  if (typeof value !== "string" || value.trim() === "") {
-    return null;
-  }
-
-  const normalized = value
-    .trim()
-    .toLowerCase()
-    .replace(/^@+/, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-  return normalized || null;
 }
 
 function isUndoRequest(text) {

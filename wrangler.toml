@@ -3,8 +3,16 @@ main = "bot/worker/index.js"
 compatibility_date = "2026-03-30"
 
 kv_namespaces = [
-  { binding = "PENDING_STATE_KV", id = "c40cc7b08a174ebab1b0969ea75b130d" }
+  { binding = "PENDING_STATE_KV", id = "c40cc7b08a174ebab1b0969ea75b130d" },
+  { binding = "BOT_LOGS_KV", id = "1869bcfd17424e7a93c1bb4d578016ae" }
 ]
+
+[observability]
+enabled = true
+
+[observability.logs]
+invocation_logs = true
+head_sampling_rate = 1
 
 [vars]
 TELEGRAM_ALLOWED_USER_ID = "272981189"
@@ -12,10 +20,15 @@ GITHUB_REPO_OWNER = "ikotelnikov"
 GITHUB_REPO_NAME = "pet-project-club-web-site"
 GITHUB_BRANCH = "main"
 EXTRACTION_BACKEND = "openai"
+DRY_RUN = "false"
+DEV_MODE = "true"
+PUBLIC_SITE_BASE_URL = "https://petprojectclub.me"
+
 # OPENAI_MODEL = "gpt-4.1-mini"
 
 # Store these with `wrangler secret put`, not here:
 # TELEGRAM_BOT_TOKEN
 # TELEGRAM_WEBHOOK_SECRET
+# WORKER_ADMIN_TOKEN
 # OPENAI_API_KEY
 # GITHUB_WRITE_TOKEN

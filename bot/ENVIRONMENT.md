@@ -75,6 +75,23 @@ Cloudflare:
 
 - store as a Worker secret
 
+### `WORKER_ADMIN_TOKEN`
+
+Optional but strongly recommended if you want remote log inspection.
+
+Purpose:
+
+- authenticates requests to the private Worker admin log endpoint
+- allows local CLI access to recent bot logs without opening the dashboard
+
+Local:
+
+- optional in `bot/local-env.ps1`
+
+Cloudflare:
+
+- store as a Worker secret
+
 ## OpenAI
 
 ### `OPENAI_API_KEY`
@@ -240,6 +257,23 @@ Cloudflare:
 
 - Worker variable
 
+### `WORKER_BASE_URL`
+
+Optional locally.
+
+Purpose:
+
+- default base URL for helper scripts that call the deployed Worker
+- used by the worker log CLI so you do not need to pass `--base-url` every time
+
+Local:
+
+- optional in `bot/local-env.ps1`
+
+Cloudflare:
+
+- not required
+
 ## Optional Local Paths
 
 These variables are mainly useful for local tooling and transitional scripts.
@@ -322,6 +356,8 @@ $env:GITHUB_WRITE_TOKEN='PASTE_YOUR_GITHUB_WRITE_TOKEN_HERE'
 
 # Optional:
 # $env:PUBLIC_SITE_BASE_URL='https://petprojectclub.me'
+# $env:WORKER_BASE_URL='https://pet-project-club-bot.<subdomain>.workers.dev'
+# $env:WORKER_ADMIN_TOKEN='PASTE_YOUR_WORKER_ADMIN_TOKEN_HERE'
 # $env:OPENAI_MODEL='...'
 # $env:TELEGRAM_WEBHOOK_SECRET='...'
 # $env:TELEGRAM_OFFSET_STATE_PATH="$PWD\\bot\\state\\telegram-offset.json"
@@ -338,6 +374,7 @@ Secrets:
 
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_WEBHOOK_SECRET`
+- `WORKER_ADMIN_TOKEN`
 - `OPENAI_API_KEY`
 - `GITHUB_WRITE_TOKEN`
 - optionally `TELEGRAM_ALLOWED_USER_ID`
@@ -347,6 +384,7 @@ Non-secret vars:
 - `TELEGRAM_ALLOWED_USER_ID`
 - `OPENAI_MODEL`
 - `PUBLIC_SITE_BASE_URL`
+- `WORKER_BASE_URL`
 - `GITHUB_REPO_OWNER`
 - `GITHUB_REPO_NAME`
 - `GITHUB_BRANCH`
@@ -355,6 +393,9 @@ Cloudflare binding:
 
 - `PENDING_STATE_KV`
   - a KV namespace binding for durable pending confirmations between webhook requests
+  - this is a Worker binding, not a string env var
+- `BOT_LOGS_KV`
+  - a KV namespace binding for recent structured Worker logs
   - this is a Worker binding, not a string env var
 
 If you prefer simplicity over separation, all of them can be stored as secrets except the path-related local-only variables.

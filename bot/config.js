@@ -32,6 +32,27 @@ export function loadBotConfig(env = process.env) {
     throw new BotConfigError("TELEGRAM_ALLOWED_USER_ID must be an integer when provided.");
   }
 
+  const telegramUpdateCoalesceDelayMs = env.TELEGRAM_UPDATE_COALESCE_DELAY_MS == null
+    ? 1000
+    : Number.parseInt(env.TELEGRAM_UPDATE_COALESCE_DELAY_MS, 10);
+
+  if (!Number.isInteger(telegramUpdateCoalesceDelayMs) || telegramUpdateCoalesceDelayMs < 0) {
+    throw new BotConfigError("TELEGRAM_UPDATE_COALESCE_DELAY_MS must be a non-negative integer when provided.");
+  }
+
+  const telegramPendingContextCoalesceDelayMs = env.TELEGRAM_PENDING_CONTEXT_COALESCE_DELAY_MS == null
+    ? 20000
+    : Number.parseInt(env.TELEGRAM_PENDING_CONTEXT_COALESCE_DELAY_MS, 10);
+
+  if (!Number.isInteger(telegramPendingContextCoalesceDelayMs) || telegramPendingContextCoalesceDelayMs < 0) {
+    throw new BotConfigError("TELEGRAM_PENDING_CONTEXT_COALESCE_DELAY_MS must be a non-negative integer when provided.");
+  }
+
+  const devMode = env.DEV_MODE === "true";
+  const debugLlmLogs = env.BOT_DEBUG_LLM_LOGS == null
+    ? devMode
+    : env.BOT_DEBUG_LLM_LOGS === "true";
+
   return {
     repoRoot,
     contentRoot,
@@ -51,6 +72,12 @@ export function loadBotConfig(env = process.env) {
     githubBranch: env.GITHUB_BRANCH || null,
     githubWriteToken: env.GITHUB_WRITE_TOKEN || null,
     publicSiteBaseUrl: env.PUBLIC_SITE_BASE_URL || null,
-    devMode: env.DEV_MODE === "true",
+    workerBaseUrl: env.WORKER_BASE_URL || null,
+    workerAdminToken: env.WORKER_ADMIN_TOKEN || null,
+    useIntentPipeline: env.BOT_USE_INTENT_PIPELINE !== "false",
+    debugLlmLogs,
+    telegramUpdateCoalesceDelayMs,
+    telegramPendingContextCoalesceDelayMs,
+    devMode,
   };
 }

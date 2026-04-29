@@ -50,7 +50,7 @@ export function inferHeuristicExtraction(messageText) {
 
   if (updateMatch) {
     const targetRef = sanitizeTargetRef(updateMatch[1]);
-    if (!targetRef) {
+    if (!targetRef || !isSimpleHeuristicTarget(targetRef)) {
       return null;
     }
 
@@ -70,7 +70,7 @@ export function inferHeuristicExtraction(messageText) {
 
   if (createMatch) {
     const targetRef = sanitizeTargetRef(createMatch[1]);
-    if (!targetRef) {
+    if (!targetRef || !isSimpleHeuristicTarget(targetRef)) {
       return null;
     }
 
@@ -222,4 +222,24 @@ function normalizeLocaleHint(value) {
     default:
       return null;
   }
+}
+
+function isSimpleHeuristicTarget(targetRef) {
+  if (typeof targetRef !== "string") {
+    return false;
+  }
+
+  const normalized = targetRef.trim().toLowerCase();
+
+  if (!normalized || normalized.length > 80) {
+    return false;
+  }
+
+  return !(
+    normalized.includes("\n") ||
+    normalized.includes("http://") ||
+    normalized.includes("https://") ||
+    /\b(to|with|into|using)\b/.test(normalized) ||
+    /\b(bio|role|summary|details|title|description|link|photo|image)\b/.test(normalized)
+  );
 }

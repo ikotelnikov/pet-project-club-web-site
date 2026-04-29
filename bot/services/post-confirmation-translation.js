@@ -22,28 +22,28 @@ export async function runPostConfirmationTranslations({
     return;
   }
 
-  const currentItem = await repository.readItem(entity, slug);
+  let currentItem = await repository.readItem(entity, slug);
   const normalizedSourceLocale =
     normalizeContentLocale(sourceLocale || currentItem?.sourceLocale) || DEFAULT_SOURCE_LOCALE;
   const localesToUpdate = Array.isArray(targetLocales) && targetLocales.length > 0
-    ? targetLocales
+    ? [...new Set(targetLocales
         .map((locale) => normalizeContentLocale(locale))
         .filter((locale) => locale && locale !== normalizedSourceLocale)
-        .filter((locale) => currentItem?.translationStatus?.[locale] !== "edited")
+        .filter((locale) => currentItem?.translationStatus?.[locale] !== "edited"))]
     : resolvePendingTranslationLocales(currentItem, normalizedSourceLocale);
 
   const failures = [];
+  const successes = [];
 
   for (const targetLocale of localesToUpdate) {
     try {
-      const latestItem = await repository.readItem(entity, slug);
       const translatedFields = await translationClient.translateFields({
         entity,
         sourceLocale: normalizedSourceLocale,
         targetLocale,
-        fields: extractLocalizableFields(entity, latestItem),
+        fields: extractLocalizableFields(entity, currentItem),
       });
-      const nextItem = applyTranslationToItem(entity, latestItem, targetLocale, translatedFields, "machine");
+      const nextItem = applyTranslationToItem(entity, currentItem, targetLocale, translatedFields, "machine");
       const writeResult = await repository.applyCommand(
         {
           entity,
@@ -62,16 +62,11 @@ export async function runPostConfirmationTranslations({
         slug,
         locale: targetLocale,
       });
-
-      await telegramClient.sendMessage({
-        chatId,
-        text: [
-          `Translation to ${targetLocale} updated.`,
-          pageUrl ? `Link: ${pageUrl}` : null,
-          writeResult.commitSha ? `Commit: ${writeResult.commitSha}` : null,
-        ]
-          .filter(Boolean)
-          .join("\n"),
+      currentItem = nextItem;
+      successes.push({
+        locale: targetLocale,
+        pageUrl,
+        commitSha: writeResult?.commitSha ?? null,
       });
     } catch (error) {
       failures.push({
@@ -91,13 +86,27 @@ export async function runPostConfirmationTranslations({
     }
   }
 
-  if (failures.length) {
+  const lines = [];
+
+  if (successes.length > 0) {
+    lines.push("Translations updated:");
+    for (const success of successes) {
+      lines.push(`- ${success.locale}${success.pageUrl ? `: ${success.pageUrl}` : ""}`);
+    }
+  }
+
+  if (failures.length > 0) {
+    if (lines.length > 0) {
+      lines.push("");
+    }
+    lines.push("Some translations failed to update:");
+    lines.push(...failures.map((failure) => `- ${failure.locale}: ${failure.error}`));
+  }
+
+  if (lines.length > 0) {
     await telegramClient.sendMessage({
       chatId,
-      text: [
-        "Some translations failed to update:",
-        ...failures.map((failure) => `- ${failure.locale}: ${failure.error}`),
-      ].join("\n"),
+      text: lines.join("\n"),
     });
   }
 }
@@ -107,12 +116,34 @@ export function resolvePendingTranslationLocales(item, sourceLocale = DEFAULT_SO
   const translationStatus = item?.translationStatus && typeof item.translationStatus === "object"
     ? item.translationStatus
     : {};
+  const translations = item?.translations && typeof item.translations === "object"
+    ? item.translations
+    : {};
 
   return SUPPORTED_LOCALES.filter((locale) => {
     if (locale === normalizedSourceLocale) {
       return false;
     }
 
-    return translationStatus[locale] == null || translationStatus[locale] === "stale";
+    if (translationStatus[locale] === "edited") {
+      return false;
+    }
+
+    const translationPayload = translations[locale];
+    const hasTranslationPayload = hasNonEmptyTranslationPayload(translationPayload);
+
+    return !hasTranslationPayload || translationStatus[locale] == null || translationStatus[locale] === "stale";
   });
+}
+
+function hasNonEmptyTranslationPayload(value) {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  if (Array.isArray(value)) {
+    return value.length > 0;
+  }
+
+  return Object.keys(value).length > 0;
 }

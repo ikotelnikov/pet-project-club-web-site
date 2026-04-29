@@ -11,6 +11,8 @@ export function buildTelegramReply(result, options = {}) {
 
   const text = (() => {
   switch (result.status) {
+    case "command":
+      return buildCommandText(result);
     case "processed":
       return buildPreviewText(result, dryRun);
     case "confirmed":
@@ -44,6 +46,82 @@ export function buildTelegramReplyText(result, options = {}) {
   return buildTelegramReply(result, options).text;
 }
 
+function buildCommandText(result) {
+  switch (result.command) {
+    case "new":
+      return result.hadContext
+        ? "Context cleared. Start a fresh request with new messages, photos, or forwards."
+        : "There was no active context. You can start a fresh request now.";
+    case "state":
+      return buildStateText(result.contextState);
+    case "help":
+      return [
+        "Send normal text, forwards, links, and photos. The bot keeps an active context for the current task and reprocesses it as new messages arrive.",
+        "Main controls:",
+        "/new - clear the current context and start over",
+        "/state - show the current context: message count, file count, active intent, and current doubt",
+        "/help - show this help",
+        "Workflow:",
+        "- send one or more messages, files, or forwards for the same task",
+        "- reply with more details if the bot asks a clarification",
+        "- reply with confirm or cancel when you get a preview",
+        "- use undo to revert the last applied change when supported",
+      ].join("\n");
+    default:
+      return "Unknown command.";
+  }
+}
+
+function buildStateText(contextState) {
+  if (!contextState?.hasContext) {
+    return [
+      "Context state: idle",
+      "Messages: 0",
+      "Files: 0",
+      "Intent: none",
+      "Doubt: none",
+    ].join("\n");
+  }
+
+  const intentSummary = formatIntentSummary(contextState.intentSummary);
+  const doubt = formatDoubtSummary(contextState.doubt);
+
+  return [
+    `Context state: ${contextState.state || "idle"}`,
+    `Pending type: ${contextState.operationType || "none"}`,
+    `Messages: ${contextState.messageCount || 0}`,
+    `Files: ${contextState.fileCount || 0}`,
+    `Intent: ${intentSummary}`,
+    `Doubt: ${doubt}`,
+  ].join("\n");
+}
+
+function formatIntentSummary(intentSummary) {
+  if (!intentSummary) {
+    return "none";
+  }
+
+  const parts = [
+    intentSummary.intent || intentSummary.action || null,
+    intentSummary.entity || null,
+    intentSummary.targetRef || intentSummary.slug || null,
+  ].filter(Boolean);
+
+  return parts.length > 0 ? parts.join(" ") : "present, but incomplete";
+}
+
+function formatDoubtSummary(doubt) {
+  if (!doubt) {
+    return "none";
+  }
+
+  if (doubt.question && doubt.reason) {
+    return `${doubt.reason}: ${doubt.question}`;
+  }
+
+  return doubt.question || doubt.reason || "present, but unspecified";
+}
+
 function buildFailedText(result, devMode = false) {
   const safeError = sanitizeErrorMessage(result.error, devMode);
 
@@ -64,16 +142,22 @@ function buildFailedText(result, devMode = false) {
 
 function buildPreviewText(result, dryRun) {
   const preview = result.pendingState?.operation?.preview || null;
+  const continuation = result.pendingState?.operation?.continuationOf || null;
   const entity = preview?.entity || result.parsed?.entity || "content";
   const action = preview?.action || result.parsed?.action || "update";
   const slug = preview?.slug || result.parsed?.fields?.slug || "unknown-slug";
   const fields = preview?.fields || {};
+  const changes = Array.isArray(preview?.changes) ? preview.changes : [];
   const files = Array.isArray(preview?.files) ? preview.files : [];
   const attachments = Array.isArray(preview?.attachments) ? preview.attachments : [];
   const fieldLines = Object.entries(fields)
     .filter(([, value]) => value !== undefined && value !== null)
     .slice(0, 8)
     .map(([key, value]) => `- ${key}: ${formatValue(value)}`);
+  const changeLines = changes
+    .slice(0, 6)
+    .map((change) => `- ${formatPreviewChange(change)}`)
+    .filter(Boolean);
   const fileLines = files.slice(0, 4).map((file) => `- ${file}`);
   const attachmentLines = attachments
     .slice(0, 4)
@@ -81,10 +165,14 @@ function buildPreviewText(result, dryRun) {
 
   return [
     `${dryRun ? "Dry-run preview" : "Preview"}: ${action} ${entity} ${slug}`,
+    continuation
+      ? `Continuing: ${continuation.entity} ${continuation.slug}${continuation.summary ? ` (${continuation.summary})` : ""}`
+      : null,
+    changeLines.length > 0 ? `Changes:\n${changeLines.join("\n")}` : null,
     fieldLines.length > 0 ? `Fields:\n${fieldLines.join("\n")}` : null,
     attachmentLines.length > 0 ? `Attachments:\n${attachmentLines.join("\n")}` : null,
     fileLines.length > 0 ? `Files:\n${fileLines.join("\n")}` : null,
-    "Reply with confirm, edit <changes>, or cancel.",
+    "Reply with confirm or cancel. You can also send more details, links, or photos before confirming.",
   ]
     .filter(Boolean)
     .join("\n\n");
@@ -132,7 +220,6 @@ function buildReplyMarkup(result) {
       inline_keyboard: [
         [
           { text: "Confirm", callback_data: "confirm" },
-          { text: "Edit", callback_data: "edit" },
           { text: "Cancel", callback_data: "cancel" },
         ],
       ],
@@ -148,6 +235,28 @@ function formatValue(value) {
   }
 
   return String(value);
+}
+
+function formatPreviewChange(change) {
+  if (!change || typeof change !== "object" || !change.field) {
+    return null;
+  }
+
+  if (Array.isArray(change.added) || Array.isArray(change.removed)) {
+    const parts = [];
+    if (Array.isArray(change.removed) && change.removed.length > 0) {
+      parts.push(`removed ${change.removed.join(", ")}`);
+    }
+    if (Array.isArray(change.added) && change.added.length > 0) {
+      parts.push(`added ${change.added.join(", ")}`);
+    }
+    if (parts.length === 0 && typeof change.afterCount === "number" && typeof change.beforeCount === "number") {
+      parts.push(`count ${change.beforeCount} -> ${change.afterCount}`);
+    }
+    return `${change.field}: ${parts.join("; ")}`;
+  }
+
+  return `${change.field}: ${formatValue(change.before)} -> ${formatValue(change.after)}`;
 }
 
 function sanitizeErrorMessage(error, devMode = false) {

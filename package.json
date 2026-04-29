@@ -7,6 +7,8 @@
     "bot:parse": "node bot/cli/parse-command.js",
     "bot:poll": "node bot/cli/poll-updates.js",
     "bot:poll:env": "powershell -ExecutionPolicy Bypass -File ./bot/run-with-env.ps1 node ./bot/cli/poll-updates.js",
+    "bot:logs": "node bot/cli/get-worker-logs.js",
+    "bot:logs:env": "powershell -ExecutionPolicy Bypass -File ./bot/run-with-env.ps1 node ./bot/cli/get-worker-logs.js",
     "bot:webhook:info": "node bot/cli/get-webhook-info.js",
     "bot:webhook:register": "node bot/cli/register-webhook.js",
     "bot:webhook:simulate": "node bot/cli/simulate-webhook.js",

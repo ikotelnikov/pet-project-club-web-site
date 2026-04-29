@@ -7,6 +7,7 @@ export function createExtractionClient(config, options = {}) {
       apiKey: config.openAiApiKey,
       model: config.openAiModel || undefined,
       fetchImpl: options.fetchImpl,
+      debugLogger: options.debugLogger,
     });
   }
 

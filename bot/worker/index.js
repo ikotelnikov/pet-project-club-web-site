@@ -9,6 +9,7 @@ export default {
       request,
       runtime,
       webhookSecret: env.TELEGRAM_WEBHOOK_SECRET || null,
+      adminToken: env.WORKER_ADMIN_TOKEN || null,
       dryRun: env.DRY_RUN !== "false",
       executionCtx,
     });

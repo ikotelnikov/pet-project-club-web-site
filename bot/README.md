@@ -57,6 +57,7 @@ Not implemented yet:
 - `runtime/`: runtime composition utilities for local and hosted execution
 - `cli/register-webhook.js`: registers Telegram webhook against the deployed Worker URL
 - `cli/get-webhook-info.js`: inspects Telegram's currently configured webhook
+- `cli/get-worker-logs.js`: fetches recent structured Worker logs through the admin endpoint
 - `cli/parse-command.js`: local parser CLI
 - `cli/apply-command.js`: local content operation CLI
 - `cli/poll-updates.js`: one-shot Telegram polling CLI
@@ -174,6 +175,12 @@ node bot/cli/simulate-webhook.js --update .\bot\fixtures\sample-update.json
 ```
 
 The Cloudflare Worker runtime expects the same Telegram/OpenAI/GitHub env names as local development, plus a `PENDING_STATE_KV` binding for durable confirmation state between webhook requests.
+
+To fetch recent hosted Worker logs from your local shell:
+
+```powershell
+.\bot\run-with-env.ps1 node .\bot\cli\get-worker-logs.js --base-url https://your-worker-domain.example --limit 20
+```
 
 After deployment, register the Telegram webhook with:
 

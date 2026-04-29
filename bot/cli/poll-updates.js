@@ -28,6 +28,11 @@ try {
     stateFilePath: config.telegramOffsetStatePath,
   });
   const offset = await offsetStore.readOffset();
+
+  if (config.telegramUpdateCoalesceDelayMs > 0) {
+    await delay(config.telegramUpdateCoalesceDelayMs);
+  }
+
   const updates = await telegramClient.getUpdates({
     offset,
     limit: 20,
@@ -42,6 +47,7 @@ try {
     offsetStore,
     pendingStore,
     extractionClient,
+    useIntentPipeline: config.useIntentPipeline,
     dryRun,
   });
 
@@ -61,4 +67,8 @@ function createExtractionClient(config) {
   }
 
   return new PrototypeExtractionClient();
+}
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

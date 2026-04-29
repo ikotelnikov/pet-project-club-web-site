@@ -24,11 +24,12 @@ export class TelegramClient {
     });
   }
 
-  async sendMessage({ chatId, text, replyMarkup = null }) {
+  async sendMessage({ chatId, text, replyMarkup = null, replyToMessageId = null }) {
     return this.call("sendMessage", {
       chat_id: chatId,
       text,
       reply_markup: replyMarkup ?? undefined,
+      reply_to_message_id: replyToMessageId ?? undefined,
     });
   }
 
