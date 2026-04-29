@@ -753,9 +753,30 @@ function renderProjectPreviewCard(item, participantMap = new Map(), locale = def
 
 function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
   const contactTags = renderEntityContactTags(item);
+  const galleryEntries = Array.isArray(item.gallery) && item.gallery.length
+    ? item.gallery.filter((entry) => entry?.src)
+    : (item.photo?.src ? [item.photo] : []);
+  const mainGalleryEntry = galleryEntries[0] || null;
+  const extraGalleryEntries = galleryEntries.slice(1, 5);
 
   return `
     <section class="project-detail-shell reveal visible">
+      ${mainGalleryEntry ? `
+        <aside class="project-detail-gallery">
+          <a class="project-detail-gallery-main" href="${escapeAttribute(assetPath(mainGalleryEntry.src))}" target="_blank" rel="noopener noreferrer">
+            <img src="${escapeAttribute(assetPath(mainGalleryEntry.src))}" alt="${escapeAttribute(mainGalleryEntry.alt || item.title || "")}">
+          </a>
+          ${extraGalleryEntries.length ? `
+            <div class="project-detail-gallery-strip">
+              ${extraGalleryEntries.map((entry) => `
+                <a class="project-detail-gallery-thumb" href="${escapeAttribute(assetPath(entry.src))}" target="_blank" rel="noopener noreferrer">
+                  <img src="${escapeAttribute(assetPath(entry.src))}" alt="${escapeAttribute(entry.alt || item.title || "")}">
+                </a>
+              `).join("")}
+            </div>
+          ` : ""}
+        </aside>
+      ` : ""}
       <div class="project-detail-head">
         <a class="detail-back-link" href="${absoluteSitePath(locale, "projects/")}">${escapeHtml(pageData.detail?.backLabel || "← Back to projects")}</a>
         <h1 class="project-detail-title">${escapeHtml(item.title || "")}</h1>
@@ -767,8 +788,7 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
           ${contactTags}
         </div>
       </div>
-      ${item.photo?.src ? `<div class="project-detail-media"><img src="${escapeAttribute(assetPath(item.photo.src))}" alt="${escapeAttribute(item.photo.alt || item.title || "")}"></div>` : ""}
-      <section class="section-shell reveal visible">
+      <section class="section-shell reveal visible project-detail-copy-shell">
         <div class="section-heading">
           <h2>${escapeHtml(pageData.detail?.detailsTitle || "Project details")}</h2>
         </div>
@@ -776,7 +796,7 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
           ${renderRichText(item)}
         </div>
       </section>
-      <section class="section-shell reveal visible">
+      <section class="section-shell reveal visible project-detail-news">
         <div class="section-heading">
           <h2>${escapeHtml(pageData.detail?.newsTitle || "Project news")}</h2>
         </div>
