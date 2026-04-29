@@ -767,6 +767,7 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
           ${contactTags}
         </div>
       </div>
+      ${item.photo?.src ? `<div class="project-detail-media"><img src="${escapeAttribute(assetPath(item.photo.src))}" alt="${escapeAttribute(item.photo.alt || item.title || "")}"></div>` : ""}
       <section class="section-shell reveal visible">
         <div class="section-heading">
           <h2>${escapeHtml(pageData.detail?.detailsTitle || "Project details")}</h2>
