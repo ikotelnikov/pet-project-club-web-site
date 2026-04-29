@@ -10,5 +10,22 @@
     }
   ],
   "slug": "vyacheslav-kiselev",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "handle": "@fmc_atom",
+      "name": "Vyacheslav Kiselev",
+      "role": "CEO, co-founder, marketer",
+      "bio": "12 years of experience working with targeted advertising in Meta.",
+      "links": [
+        {
+          "label": "@fmc_atom",
+          "href": "https://t.me/fmc_atom"
+        }
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
