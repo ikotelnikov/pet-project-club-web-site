@@ -22,10 +22,52 @@
           "href": "https://creometrix.cc/biz"
         }
       ]
+    },
+    "de": {
+      "title": "CreometriX",
+      "status": "active",
+      "stack": "KI-Assistenten, Targeting, Erstellung von Kreativen",
+      "summary": "Moderne KI-Assistenten für Targeting-Spezialisten lösen ein einziges Problem – die erste Runde der Kreativen. Keine bestehende Maschine ist in der Lage, Schlussfolgerungen zu ziehen und Ergebnisse zu wiederholen, CreometriX bietet einen anderen Ansatz für den Feedback-Loop.",
+      "detailsHtml": "<p>Moderne KI-Assistenten für Targeting-Spezialisten lösen ein einziges Problem – die erste Runde der Kreativen. Die erste Runde ist immer ein Testlauf.</p><p>Doch nach dem Test folgt immer entweder eine neue Testphase oder die Skalierung der erzielten Ergebnisse. Und hier beginnt das Problem. Keine existierende Maschine ist fähig, Schlussfolgerungen zu ziehen, das Ergebnis zu reproduzieren oder die Logik zu erfassen, warum etwas funktioniert hat und etwas anderes nicht. CreometriX bietet einen völlig anderen Ansatz für das Problem des Feedback-Loops.</p><p>Erstens handelt es sich um einen vollständigen Prozess von der Strategieerstellung bis zur Verpackung in Kreative.</p><p>Zweitens ist es ein Management-Bereich, um alle Projekte ordentlich zu organisieren.</p><p>Drittens ist es ein KI-Generator für Kreative, der kontextbasiert arbeitet und nicht nur Links zur Website erstellt.</p><p>CreometriX ersetzt fünf separate Werkzeuge durch eine einzige Schnittstelle, was Zeit spart und Disziplin in die Nutzerprojekte bringt.</p><p>So haben Sie einen vollwertigen KI-Targeting-Spezialisten in der Hand, dessen Anstellung zwischen 850 und 3000 $ kostet, während das Abonnement bereits ab 54 $ erhältlich ist.</p>",
+      "links": [
+        {
+          "label": "CreometriX",
+          "href": "https://creometrix.cc/biz"
+        }
+      ]
+    },
+    "me": {
+      "title": "CreometriX",
+      "status": "active",
+      "stack": "AI asistenti, targetiranje, generisanje kreativnih materijala",
+      "summary": "Savremeni AI asistenti za targetere rješavaju jedan jedini problem - prvi krug kreativnih materijala. Nijedan postojeći alat ne može da donosi zaključke i ponavlja rezultate, CreometriX nudi drugačiji pristup feedback loop-u.",
+      "detailsHtml": "<p>Savremeni AI asistenti za targetere rješavaju jedan jedini problem - prvi krug kreativnih materijala. Prvi krug je uvijek testiranje.</p><p>Ali poslije testiranja uvijek slijedi ili novi krug testova, ili skaliranje dobijenih rezultata. I ovdje počinje problem. Nijedan postojeći alat ne može donijeti zaključke, ponoviti rezultat ili zabilježiti logiku zašto nešto funkcioniše, a nešto ne. CreometriX nudi sasvim drugačiji pristup problemu feedback loop-a.</p><p>Prvo, to je kompletan proces od generisanja strategije do pakovanja u kreativne materijale.</p><p>Drugo, to je menadžerski prostor za održavanje svih projekata urednim.</p><p>Treće, to je AI generator kreativnih materijala zasnovan na kontekstu, a ne samo na linku sajta.</p><p>CreometriX zamjenjuje 5 razjedinjenih alata jednim interfejsom, što štedi vrijeme i donosi disciplinu korisničkim projektima.</p><p>Na taj način, u vašim rukama je kompletan AI targeter koji u zapošljavanju košta od $850 do $3000, a na pretplatu svega od $54.</p>",
+      "links": [
+        {
+          "label": "CreometriX",
+          "href": "https://creometrix.cc/biz"
+        }
+      ]
+    },
+    "es": {
+      "title": "CreometriX",
+      "status": "active",
+      "stack": "Asistentes de IA, targeting, generación de creatividades",
+      "summary": "Los asistentes modernos de IA para especialistas en targeting resuelven un único problema: la primera ronda de creatividades. Ninguna máquina existente es capaz de sacar conclusiones y repetir resultados, CreometriX ofrece un enfoque diferente al ciclo de retroalimentación.",
+      "detailsHtml": "<p>Los asistentes modernos de IA para especialistas en targeting resuelven un único problema: la primera ronda de creatividades. La primera ronda siempre es una prueba.</p><p>Pero después de la prueba siempre viene otra ronda de tests o la escalada de los resultados obtenidos. Y aquí comienza el problema. Ninguna máquina existente es capaz de sacar conclusiones, repetir el resultado o fijar la lógica de por qué algo funcionó y otra cosa no. CreometriX ofrece un enfoque completamente distinto al problema del ciclo de retroalimentación.</p><p>En primer lugar, es un proceso completo desde la generación de la estrategia hasta su empaquetado en creatividades.</p><p>En segundo lugar, es un espacio de gestión para mantener todos los proyectos en orden.</p><p>En tercer lugar, es un generador de creatividades basado en IA que utiliza el contexto, no solo un enlace a un sitio web.</p><p>CreometriX reemplaza 5 herramientas separadas con una sola interfaz, lo que ahorra tiempo y disciplina los proyectos de los usuarios.</p><p>Así, tienes en tus manos un especialista en targeting con IA completo, cuyo costo de contratación va de $850 a $3000, y por suscripción desde solo $54.</p>",
+      "links": [
+        {
+          "label": "CreometriX",
+          "href": "https://creometrix.cc/biz"
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine",
+    "me": "machine",
+    "es": "machine"
   },
   "photo": null,
   "gallery": [],
