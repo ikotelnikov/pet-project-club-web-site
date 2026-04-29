@@ -1080,7 +1080,7 @@ function renderRichText(item) {
   }
 
   if (Array.isArray(item.paragraphs) && item.paragraphs.length) {
-    return item.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`).join("");
+    return item.paragraphs.map((paragraph) => `<p>${renderPlainTextWithLinks(paragraph).replace(/\n/g, "<br>")}</p>`).join("");
   }
 
   if (typeof item.bio === "string" && item.bio.trim() !== "") {
@@ -1088,7 +1088,7 @@ function renderRichText(item) {
       .split(/\n{2,}/)
       .map((paragraph) => paragraph.trim())
       .filter(Boolean)
-      .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`)
+      .map((paragraph) => `<p>${renderPlainTextWithLinks(paragraph).replace(/\n/g, "<br>")}</p>`)
       .join("");
   }
 
@@ -1097,6 +1097,24 @@ function renderRichText(item) {
   }
 
   return "";
+}
+
+function renderPlainTextWithLinks(text) {
+  const value = typeof text === "string" ? text : String(text ?? "");
+  const urlPattern = /(https?:\/\/[^\s<]+)/g;
+  const segments = value.split(urlPattern);
+
+  return segments
+    .map((segment, index) => {
+      if (index % 2 === 1) {
+        const href = escapeAttribute(segment);
+        const label = escapeHtml(segment);
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+      }
+
+      return escapeHtml(segment);
+    })
+    .join("");
 }
 
 function renderParticipantBody(item) {
