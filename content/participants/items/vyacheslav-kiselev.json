@@ -35,10 +35,23 @@
           "href": "https://t.me/fmc_atom"
         }
       ]
+    },
+    "me": {
+      "handle": "@fmc_atom",
+      "name": "Вячеслав Киселев",
+      "role": "CEO, suosnivač, marketar",
+      "bio": "12 godina iskustva u radu sa ciljanim reklamama na Meti.",
+      "links": [
+        {
+          "label": "@fmc_atom",
+          "href": "https://t.me/fmc_atom"
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
