@@ -69,8 +69,16 @@
     "me": "machine",
     "es": "machine"
   },
-  "photo": null,
-  "gallery": [],
+  "photo": {
+    "src": "assets/uploads/272981189/867-photo-867-AQAD8RJrG35-mUt-.jpg",
+    "alt": "CreometriX"
+  },
+  "gallery": [
+    {
+      "src": "assets/uploads/272981189/867-photo-867-AQAD8RJrG35-mUt-.jpg",
+      "alt": "CreometriX"
+    }
+  ],
   "links": [
     {
       "label": "CreometriX",
