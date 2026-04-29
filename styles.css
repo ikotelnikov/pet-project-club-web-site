@@ -1656,6 +1656,10 @@ body.lightbox-open {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.project-detail-gallery-main {
+  overflow: hidden;
+}
+
 .project-detail-gallery-main img,
 .project-detail-gallery-thumb img {
   display: block;
@@ -1670,7 +1674,7 @@ body.lightbox-open {
 
 .project-detail-gallery-strip {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
   gap: 8px;
   padding: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -1679,10 +1683,16 @@ body.lightbox-open {
 .project-detail-gallery-thumb {
   overflow: hidden;
   border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .project-detail-gallery-thumb img {
   aspect-ratio: 1 / 1;
+}
+
+.project-detail-gallery-thumb.is-current {
+  border-color: rgba(141, 246, 198, 0.34);
+  box-shadow: 0 0 0 1px rgba(141, 246, 198, 0.18);
 }
 
 .project-detail-shell > .section-shell {
@@ -2431,7 +2441,17 @@ body.lightbox-open {
   .project-detail-gallery {
     float: none;
     width: auto;
-    margin: 0 22px 18px;
+    margin: 14px 14px 18px;
+  }
+
+  .project-detail-gallery-main img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .project-detail-gallery-strip {
+    grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+    gap: 6px;
+    padding: 6px;
   }
 
   .participant-detail-media {

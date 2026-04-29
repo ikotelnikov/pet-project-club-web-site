@@ -753,11 +753,23 @@ function renderProjectPreviewCard(item, participantMap = new Map(), locale = def
 
 function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
   const contactTags = renderEntityContactTags(item);
-  const galleryEntries = Array.isArray(item.gallery) && item.gallery.length
-    ? item.gallery.filter((entry) => entry?.src)
-    : (item.photo?.src ? [item.photo] : []);
+  const galleryEntries = [];
+  const seenGallerySrc = new Set();
+  const pushGalleryEntry = (entry) => {
+    if (!entry?.src || seenGallerySrc.has(entry.src)) {
+      return;
+    }
+
+    seenGallerySrc.add(entry.src);
+    galleryEntries.push(entry);
+  };
+
+  pushGalleryEntry(item.photo);
+  for (const entry of Array.isArray(item.gallery) ? item.gallery : []) {
+    pushGalleryEntry(entry);
+  }
   const mainGalleryEntry = galleryEntries[0] || null;
-  const extraGalleryEntries = galleryEntries.slice(1, 5);
+  const galleryThumbEntries = galleryEntries.slice(0, 5);
 
   return `
     <section class="project-detail-shell reveal visible">
@@ -766,10 +778,10 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
           <a class="project-detail-gallery-main" href="${escapeAttribute(assetPath(mainGalleryEntry.src))}" target="_blank" rel="noopener noreferrer">
             <img src="${escapeAttribute(assetPath(mainGalleryEntry.src))}" alt="${escapeAttribute(mainGalleryEntry.alt || item.title || "")}">
           </a>
-          ${extraGalleryEntries.length ? `
+          ${galleryThumbEntries.length > 1 ? `
             <div class="project-detail-gallery-strip">
-              ${extraGalleryEntries.map((entry) => `
-                <a class="project-detail-gallery-thumb" href="${escapeAttribute(assetPath(entry.src))}" target="_blank" rel="noopener noreferrer">
+              ${galleryThumbEntries.map((entry, index) => `
+                <a class="project-detail-gallery-thumb${index === 0 ? " is-current" : ""}" href="${escapeAttribute(assetPath(entry.src))}" target="_blank" rel="noopener noreferrer">
                   <img src="${escapeAttribute(assetPath(entry.src))}" alt="${escapeAttribute(entry.alt || item.title || "")}">
                 </a>
               `).join("")}
