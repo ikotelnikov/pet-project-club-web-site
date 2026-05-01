@@ -2326,10 +2326,6 @@ body.lightbox-open {
     gap: 12px;
   }
 
-  .project-detail-gallery {
-    padding-inline: 14px;
-  }
-
   .gallery-slide img {
     height: 280px;
   }
