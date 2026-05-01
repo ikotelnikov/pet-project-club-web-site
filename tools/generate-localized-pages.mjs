@@ -773,32 +773,34 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
 
   return `
     <section class="project-detail-shell reveal visible">
-      ${mainGalleryEntry ? `
-        <aside class="project-detail-gallery" data-project-detail-gallery>
-          <a class="project-detail-gallery-main" href="${escapeAttribute(assetPath(mainGalleryEntry.src))}" data-project-gallery-main-link>
-            <img src="${escapeAttribute(assetPath(mainGalleryEntry.src))}" alt="${escapeAttribute(mainGalleryEntry.alt || item.title || "")}" data-project-gallery-main-image>
-          </a>
-          ${galleryThumbEntries.length > 1 ? `
-            <div class="project-detail-gallery-strip">
-              ${galleryThumbEntries.map((entry, index) => `
-                <a class="project-detail-gallery-thumb${index === 0 ? " is-current" : ""}" href="${escapeAttribute(assetPath(entry.src))}" data-project-gallery-thumb data-gallery-index="${index}" data-fullsrc="${escapeAttribute(assetPath(entry.src))}" data-alt="${escapeAttribute(entry.alt || item.title || "")}">
-                  <img src="${escapeAttribute(assetPath(entry.src))}" alt="${escapeAttribute(entry.alt || item.title || "")}">
-                </a>
-              `).join("")}
-            </div>
-          ` : ""}
-        </aside>
-      ` : ""}
-      <div class="project-detail-head">
-        <a class="detail-back-link" href="${absoluteSitePath(locale, "projects/")}">${escapeHtml(pageData.detail?.backLabel || "← Back to projects")}</a>
-        <h1 class="project-detail-title">${escapeHtml(item.title || "")}</h1>
-        ${item.summary ? `<p class="card-copy project-detail-summary">${escapeHtml(item.summary)}</p>` : ""}
-        <div class="project-detail-meta">
-          ${item.status ? `<span class="meta-pill">${escapeHtml(item.status)}</span>` : ""}
-          ${item.stack ? `<span class="meta-pill">${escapeHtml(item.stack)}</span>` : ""}
-          ${owners.map((owner) => `<a class="meta-pill" href="${absoluteSitePath(locale, `participants/${owner.slug}/`)}">${escapeHtml(owner.name || owner.slug)}</a>`).join("")}
-          ${contactTags}
+      <div class="project-detail-intro">
+        <div class="project-detail-head">
+          <a class="detail-back-link" href="${absoluteSitePath(locale, "projects/")}">${escapeHtml(pageData.detail?.backLabel || "← Back to projects")}</a>
+          <h1 class="project-detail-title">${escapeHtml(item.title || "")}</h1>
+          ${item.summary ? `<p class="card-copy project-detail-summary">${escapeHtml(item.summary)}</p>` : ""}
+          <div class="project-detail-meta">
+            ${item.status ? `<span class="meta-pill">${escapeHtml(item.status)}</span>` : ""}
+            ${item.stack ? `<span class="meta-pill">${escapeHtml(item.stack)}</span>` : ""}
+            ${owners.map((owner) => `<a class="meta-pill" href="${absoluteSitePath(locale, `participants/${owner.slug}/`)}">${escapeHtml(owner.name || owner.slug)}</a>`).join("")}
+            ${contactTags}
+          </div>
         </div>
+        ${mainGalleryEntry ? `
+          <aside class="project-detail-gallery" data-project-detail-gallery>
+            <a class="project-detail-gallery-main" href="${escapeAttribute(assetPath(mainGalleryEntry.src))}" data-project-gallery-main-link>
+              <img src="${escapeAttribute(assetPath(mainGalleryEntry.src))}" alt="${escapeAttribute(mainGalleryEntry.alt || item.title || "")}" data-project-gallery-main-image>
+            </a>
+            ${galleryThumbEntries.length > 1 ? `
+              <div class="project-detail-gallery-strip">
+                ${galleryThumbEntries.map((entry, index) => `
+                  <a class="project-detail-gallery-thumb${index === 0 ? " is-current" : ""}" href="${escapeAttribute(assetPath(entry.src))}" data-project-gallery-thumb data-gallery-index="${index}" data-fullsrc="${escapeAttribute(assetPath(entry.src))}" data-alt="${escapeAttribute(entry.alt || item.title || "")}">
+                    <img src="${escapeAttribute(assetPath(entry.src))}" alt="${escapeAttribute(entry.alt || item.title || "")}">
+                  </a>
+                `).join("")}
+              </div>
+            ` : ""}
+          </aside>
+        ` : ""}
       </div>
       <section class="section-shell reveal visible project-detail-copy-shell">
         <div class="section-heading">

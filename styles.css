@@ -1622,10 +1622,17 @@ body.lightbox-open {
   backdrop-filter: blur(16px);
 }
 
+.project-detail-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+  align-items: start;
+  gap: 22px;
+  padding: 22px;
+}
+
 .project-detail-head {
   display: grid;
   gap: 14px;
-  padding: 22px;
 }
 
 .project-state-label {
@@ -1644,9 +1651,8 @@ body.lightbox-open {
 }
 
 .project-detail-gallery {
-  float: right;
-  width: min(34%, 380px);
-  margin: 22px 22px 18px 24px;
+  width: 100%;
+  justify-self: end;
   background: rgba(9, 15, 24, 0.72);
 }
 
@@ -1701,10 +1707,6 @@ body.lightbox-open {
 
 .project-detail-shell > .section-shell {
   margin: 0 18px 18px;
-}
-
-.project-detail-news {
-  clear: both;
 }
 
 .project-richtext {
@@ -2443,13 +2445,13 @@ body.lightbox-open {
   }
 
   .project-detail-gallery {
-    float: none;
-    width: auto;
-    margin: 14px 14px 18px;
+    width: fit-content;
+    max-width: 100%;
+    justify-self: start;
   }
 
   .project-detail-gallery-main img {
-    aspect-ratio: 16 / 10;
+    max-height: 320px;
   }
 
   .project-detail-gallery-strip {
@@ -2463,6 +2465,12 @@ body.lightbox-open {
     float: none;
     width: 100%;
     margin: 0 0 18px;
+  }
+
+  .project-detail-intro {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 22px 14px 14px;
   }
 
   .pagination-nav {
