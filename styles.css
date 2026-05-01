@@ -1654,6 +1654,7 @@ body.lightbox-open {
 .project-detail-gallery-thumb {
   display: block;
   background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
 }
 
 .project-detail-gallery-main {

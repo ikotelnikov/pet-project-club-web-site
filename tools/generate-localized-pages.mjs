@@ -774,14 +774,14 @@ function renderProjectDetail(item, pageData, owners, relatedMeetings, locale) {
   return `
     <section class="project-detail-shell reveal visible">
       ${mainGalleryEntry ? `
-        <aside class="project-detail-gallery">
-          <a class="project-detail-gallery-main" href="${escapeAttribute(assetPath(mainGalleryEntry.src))}" target="_blank" rel="noopener noreferrer">
-            <img src="${escapeAttribute(assetPath(mainGalleryEntry.src))}" alt="${escapeAttribute(mainGalleryEntry.alt || item.title || "")}">
+        <aside class="project-detail-gallery" data-project-detail-gallery>
+          <a class="project-detail-gallery-main" href="${escapeAttribute(assetPath(mainGalleryEntry.src))}" data-project-gallery-main-link>
+            <img src="${escapeAttribute(assetPath(mainGalleryEntry.src))}" alt="${escapeAttribute(mainGalleryEntry.alt || item.title || "")}" data-project-gallery-main-image>
           </a>
           ${galleryThumbEntries.length > 1 ? `
             <div class="project-detail-gallery-strip">
               ${galleryThumbEntries.map((entry, index) => `
-                <a class="project-detail-gallery-thumb${index === 0 ? " is-current" : ""}" href="${escapeAttribute(assetPath(entry.src))}" target="_blank" rel="noopener noreferrer">
+                <a class="project-detail-gallery-thumb${index === 0 ? " is-current" : ""}" href="${escapeAttribute(assetPath(entry.src))}" data-project-gallery-thumb data-gallery-index="${index}" data-fullsrc="${escapeAttribute(assetPath(entry.src))}" data-alt="${escapeAttribute(entry.alt || item.title || "")}">
                   <img src="${escapeAttribute(assetPath(entry.src))}" alt="${escapeAttribute(entry.alt || item.title || "")}">
                 </a>
               `).join("")}

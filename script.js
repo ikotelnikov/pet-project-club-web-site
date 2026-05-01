@@ -119,6 +119,7 @@ async function startApp(locale) {
     initCounters();
     initTerminal();
     initGallery();
+    initProjectDetailGalleries();
     initStoryDeck();
     initFlowTabs();
     initTimelineTabs();
@@ -2980,6 +2981,65 @@ function initGallery() {
     );
 
     shell.dataset.galleryReady = "true";
+  });
+}
+
+function initProjectDetailGalleries() {
+  document.querySelectorAll("[data-project-detail-gallery]").forEach((gallery) => {
+    if (gallery.dataset.galleryReady === "true") {
+      return;
+    }
+
+    const mainLink = gallery.querySelector("[data-project-gallery-main-link]");
+    const mainImage = gallery.querySelector("[data-project-gallery-main-image]");
+    const thumbs = [...gallery.querySelectorAll("[data-project-gallery-thumb]")];
+
+    if (!mainLink || !mainImage || thumbs.length === 0) {
+      gallery.dataset.galleryReady = "true";
+      return;
+    }
+
+    const slides = thumbs.map((thumb) => {
+      const src = thumb.dataset.fullsrc || thumb.getAttribute("href") || "";
+      const alt = thumb.dataset.alt || thumb.querySelector("img")?.alt || "";
+      return { src, alt, thumb };
+    }).filter((slide) => slide.src);
+
+    const setCurrent = (index) => {
+      const current = slides[index];
+      if (!current) {
+        return;
+      }
+
+      mainLink.setAttribute("href", current.src);
+      mainImage.setAttribute("src", current.src);
+      mainImage.setAttribute("alt", current.alt);
+
+      thumbs.forEach((thumb, thumbIndex) => {
+        thumb.classList.toggle("is-current", thumbIndex === index);
+      });
+    };
+
+    thumbs.forEach((thumb, index) => {
+      thumb.addEventListener("click", (event) => {
+        event.preventDefault();
+        setCurrent(index);
+      });
+    });
+
+    mainLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      const slideImages = slides.map((slide) => {
+        const image = new Image();
+        image.src = slide.src;
+        image.alt = slide.alt;
+        return image;
+      });
+      const currentIndex = Math.max(0, thumbs.findIndex((thumb) => thumb.classList.contains("is-current")));
+      openGalleryLightbox(slideImages, currentIndex);
+    });
+
+    gallery.dataset.galleryReady = "true";
   });
 }
 
