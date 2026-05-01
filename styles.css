@@ -1665,6 +1665,9 @@ body.lightbox-open {
 
 .project-detail-gallery-main {
   overflow: hidden;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
 }
 
 .project-detail-gallery-main img,
@@ -1676,6 +1679,8 @@ body.lightbox-open {
 }
 
 .project-detail-gallery-main img {
+  width: auto;
+  max-width: 100%;
   height: auto;
   object-fit: contain;
   aspect-ratio: auto;
