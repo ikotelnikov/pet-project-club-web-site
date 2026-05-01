@@ -271,12 +271,7 @@ function ensureTopbarActions() {
   actions = document.createElement("div");
   actions.className = "topbar-actions";
 
-  const navCta = topbar.querySelector(".nav-cta");
   const menuToggle = topbar.querySelector("[data-menu-toggle]");
-
-  if (navCta) {
-    actions.append(navCta);
-  }
 
   if (menuToggle) {
     actions.append(menuToggle);
@@ -742,8 +737,8 @@ function setActiveNav() {
 function initTopbarMenu() {
   const toggle = document.querySelector("[data-menu-toggle]");
   const nav = document.getElementById("main-nav");
+  const actions = ensureTopbarActions();
   const topbar = document.querySelector(".topbar");
-  const actions = topbar?.querySelector(".topbar-actions");
   const navCta = topbar?.querySelector(".nav-cta");
 
   if (!toggle || !nav) {
