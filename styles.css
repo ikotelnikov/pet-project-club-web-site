@@ -2251,6 +2251,10 @@ body.lightbox-open {
     display: none;
   }
 
+  .topbar > .nav-cta {
+    display: none;
+  }
+
   .main-nav {
     display: none;
     grid-column: 1 / -1;
