@@ -1670,7 +1670,9 @@ body.lightbox-open {
 }
 
 .project-detail-gallery-main img {
-  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: contain;
+  aspect-ratio: auto;
 }
 
 .project-detail-gallery-strip {
