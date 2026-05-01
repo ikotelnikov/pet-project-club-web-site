@@ -1633,6 +1633,7 @@ body.lightbox-open {
 .project-detail-head {
   display: grid;
   gap: 14px;
+  min-width: 0;
 }
 
 .project-state-label {
@@ -1668,6 +1669,7 @@ body.lightbox-open {
   width: fit-content;
   max-width: 100%;
   margin-inline: auto;
+  background: transparent;
 }
 
 .project-detail-gallery-main img,
@@ -2452,6 +2454,7 @@ body.lightbox-open {
   .project-detail-gallery {
     width: fit-content;
     max-width: 100%;
+    margin-inline: auto;
     justify-self: start;
   }
 
@@ -2475,7 +2478,11 @@ body.lightbox-open {
   .project-detail-intro {
     grid-template-columns: 1fr;
     gap: 14px;
-    padding: 22px 14px 14px;
+    padding: 22px 0 14px;
+  }
+
+  .project-detail-head {
+    padding-inline: 14px;
   }
 
   .pagination-nav {
