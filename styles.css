@@ -1674,8 +1674,9 @@ body.lightbox-open {
 
 .project-detail-gallery-strip {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fit, 48px);
+  justify-content: start;
+  gap: 6px;
   padding: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -2449,8 +2450,9 @@ body.lightbox-open {
   }
 
   .project-detail-gallery-strip {
-    grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
-    gap: 6px;
+    grid-template-columns: repeat(auto-fit, 40px);
+    justify-content: start;
+    gap: 5px;
     padding: 6px;
   }
 
