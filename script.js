@@ -3004,6 +3004,9 @@ function initProjectDetailGalleries() {
       const alt = thumb.dataset.alt || thumb.querySelector("img")?.alt || "";
       return { src, alt, thumb };
     }).filter((slide) => slide.src);
+    let pointerStartX = null;
+    let pointerStartY = null;
+    let suppressMainClick = false;
 
     const setCurrent = (index) => {
       const current = slides[index];
@@ -3020,6 +3023,16 @@ function initProjectDetailGalleries() {
       });
     };
 
+    const stepCurrent = (direction) => {
+      if (slides.length <= 1) {
+        return;
+      }
+
+      const currentIndex = Math.max(0, thumbs.findIndex((thumb) => thumb.classList.contains("is-current")));
+      const nextIndex = (currentIndex + direction + slides.length) % slides.length;
+      setCurrent(nextIndex);
+    };
+
     thumbs.forEach((thumb, index) => {
       thumb.addEventListener("click", (event) => {
         event.preventDefault();
@@ -3027,7 +3040,61 @@ function initProjectDetailGalleries() {
       });
     });
 
+    mainLink.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0 && event.pointerType !== "touch") {
+        pointerStartX = null;
+        pointerStartY = null;
+        return;
+      }
+
+      pointerStartX = event.clientX;
+      pointerStartY = event.clientY;
+      suppressMainClick = false;
+    });
+
+    mainLink.addEventListener("pointermove", (event) => {
+      if (pointerStartX == null || pointerStartY == null) {
+        return;
+      }
+
+      const deltaX = event.clientX - pointerStartX;
+      const deltaY = event.clientY - pointerStartY;
+
+      if (Math.abs(deltaX) > 24 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+        suppressMainClick = true;
+      }
+    });
+
+    const resetPointerState = () => {
+      pointerStartX = null;
+      pointerStartY = null;
+    };
+
+    mainLink.addEventListener("pointerup", (event) => {
+      if (pointerStartX == null || pointerStartY == null) {
+        resetPointerState();
+        return;
+      }
+
+      const deltaX = event.clientX - pointerStartX;
+      const deltaY = event.clientY - pointerStartY;
+
+      if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+        stepCurrent(deltaX < 0 ? 1 : -1);
+      }
+
+      resetPointerState();
+    });
+
+    mainLink.addEventListener("pointercancel", resetPointerState);
+
     mainLink.addEventListener("click", (event) => {
+      if (suppressMainClick) {
+        event.preventDefault();
+        suppressMainClick = false;
+        return;
+      }
+
       event.preventDefault();
       const slideImages = slides.map((slide) => {
         const image = new Image();

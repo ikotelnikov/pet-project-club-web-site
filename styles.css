@@ -1670,6 +1670,7 @@ body.lightbox-open {
   max-width: 100%;
   margin-inline: auto;
   background: transparent;
+  touch-action: pan-y pinch-zoom;
 }
 
 .project-detail-gallery-main img,
