@@ -1,6 +1,6 @@
 {
   "type": "meeting",
-  "date": "2024-04-29",
+  "date": "2026-04-29",
   "title": "Отчёт о встрече Pet Project Club: Продвижение IT-продуктов 29.04",
   "place": "Pet Project Club",
   "format": "in-person",
@@ -25,6 +25,6 @@
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "stale"
   }
 }
