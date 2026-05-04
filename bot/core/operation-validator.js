@@ -1,5 +1,6 @@
 import { ContentValidationError } from "../shared/errors.js";
 import { SLUG_PATTERN } from "../shared/constants.js";
+import { normalizeLinks } from "./link-normalization.js";
 
 const ENTITY_FIELD_RULES = {
   announcement: new Set(["type", "date", "title", "place", "placeUrl", "placeurl", "format", "paragraphs", "detailsHtml", "sections", "section", "links", "link", "projectSlugs", "photoAlt", "photoalt", "photoStagedPath", "photoAction", "slug", "locale", "sourceLocale"]),
@@ -10,7 +11,8 @@ const ENTITY_FIELD_RULES = {
 };
 
 export function validateOperation(operation) {
-  const { entity, action, fields } = operation;
+  const normalizedOperation = normalizeOperationFieldDefaults(operation);
+  const { entity, action, fields } = normalizedOperation;
 
   if (!entity || !action || !fields || typeof fields !== "object") {
     throw new ContentValidationError("Operation must include entity, action, and fields.");
@@ -36,7 +38,7 @@ export function validateOperation(operation) {
     validateFieldShapes(entity, fields);
   }
 
-  return operation;
+  return normalizedOperation;
 }
 
 function validateFieldShapes(entity, fields) {
@@ -114,4 +116,25 @@ function validateFieldShapes(entity, fields) {
 
 function isNonEmptyStringArray(value) {
   return Array.isArray(value) && value.length > 0 && value.every((item) => typeof item === "string" && item.trim() !== "");
+}
+
+function normalizeOperationFieldDefaults(operation) {
+  if (!operation || typeof operation !== "object" || !operation.fields || typeof operation.fields !== "object") {
+    return operation;
+  }
+
+  const fields = { ...operation.fields };
+
+  if (Array.isArray(fields.links)) {
+    fields.links = normalizeLinks(fields.links);
+  }
+
+  if (Array.isArray(fields.link)) {
+    fields.link = normalizeLinks(fields.link);
+  }
+
+  return {
+    ...operation,
+    fields,
+  };
 }
