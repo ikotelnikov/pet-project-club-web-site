@@ -1,0 +1,19 @@
+{
+  "title": "SYSTEMA.WORKS",
+  "status": "active",
+  "stack": "Next.js 16, Supabase, OpenAI GPT-5-mini / GPT-5.2",
+  "summary": "SYSTEMA.WORKS — это сайт и внутренняя omnichannel AI-платформа цифрового агентства, работающего в Черногории и удаленно.",
+  "detailsHtml": "SYSTEMA.WORKS — это сайт и внутренняя omnichannel AI-платформа цифрового агентства, работающего в Черногории и удаленно. Платформа автоматически квалифицирует заявки через веб-чат, Telegram и Instagram/Facebook Messenger: извлекает бриф (имя, контакт, тип услуги, бюджет, сроки), анализирует намерения и эмоциональный тон, определяет язык собеседника и при необходимости передает разговор живому менеджеру.<br>Проект построен на стеке Next.js 16 + Supabase + OpenAI (GPT-5-mini / GPT-5.2) с мультиязычной поддержкой (EN/SR/RU/UKR), RLS-политиками, rate limiting, Cloudflare Turnstile и системой identity resolution между каналами. Включает админ-панель для управления разговорами, лидами и проектами. Это не просто лендинг, а production-ready AI sales platform.",
+  "links": [
+    {
+      "label": "systema.works",
+      "href": "https://systema.works/ru",
+      "external": true
+    }
+  ],
+  "ownerSlugs": [
+    "svyatoslav"
+  ],
+  "slug": "systema-works",
+  "sourceLocale": "ru"
+}
