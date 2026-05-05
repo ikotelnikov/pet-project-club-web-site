@@ -44,10 +44,25 @@
           "external": true
         }
       ]
+    },
+    "me": {
+      "title": "SYSTEMA.WORKS",
+      "status": "active",
+      "stack": "Next.js 16, Supabase, OpenAI GPT-5-mini / GPT-5.2",
+      "summary": "SYSTEMA.WORKS је сајт и унутрашња омниканална AI-платформа дигиталне агенције која ради у Црној Гори и удаљено.",
+      "detailsHtml": "SYSTEMA.WORKS је сајт и унутрашња омниканална AI-платформа дигиталне агенције која ради у Црној Гори и удаљено. Платформа аутоматски квалификује захтјеве кроз веб-ћаскање, Telegram и Instagram/Facebook Messenger: извлачи бриф (име, контакт, тип услуге, буџет, рокове), анализира намјере и емотивни тон, одређује језик саговорника и по потреби предаје разговор живом менаџеру.<br>Пројекат је изграђен на стеку Next.js 16 + Supabase + OpenAI (GPT-5-mini / GPT-5.2) са вишезначном подршком (EN/SR/RU/UKR), RLS политикама, ограничењем броја захтјева, Cloudflare Turnstile и системом идентификације између канала. Укључује админ-панел за управљање разговорима, лидерима и пројектима. Ово није само лендинг, већ production-ready AI платформа за продају.",
+      "links": [
+        {
+          "label": "systema.works",
+          "href": "https://systema.works/ru",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
