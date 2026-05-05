@@ -30,9 +30,24 @@
           "external": true
         }
       ]
+    },
+    "de": {
+      "title": "SYSTEMA.WORKS",
+      "status": "active",
+      "stack": "Next.js 16, Supabase, OpenAI GPT-5-mini / GPT-5.2",
+      "summary": "SYSTEMA.WORKS ist eine Website und eine interne Omnichannel-KI-Plattform einer Digitalagentur, die in Montenegro und remote arbeitet.",
+      "detailsHtml": "SYSTEMA.WORKS ist eine Website und eine interne Omnichannel-KI-Plattform einer Digitalagentur, die in Montenegro und remote arbeitet. Die Plattform qualifiziert Anfragen automatisch über Web-Chat, Telegram und Instagram/Facebook Messenger: Sie extrahiert das Briefing (Name, Kontakt, Dienstleistungstyp, Budget, Fristen), analysiert Absichten und emotionalen Ton, bestimmt die Sprache des Gesprächspartners und übergibt das Gespräch bei Bedarf an einen Live-Manager.<br>Das Projekt basiert auf dem Stack Next.js 16 + Supabase + OpenAI (GPT-5-mini / GPT-5.2) mit mehrsprachiger Unterstützung (EN/SR/RU/UKR), RLS-Richtlinien, Rate Limiting, Cloudflare Turnstile und einem Identity-Resolution-System zwischen den Kanälen. Es umfasst ein Admin-Panel zur Verwaltung von Gesprächen, Leads und Projekten. Es ist nicht nur eine Landingpage, sondern eine Produktionsreife KI-Verkaufsplattform.",
+      "links": [
+        {
+          "label": "systema.works",
+          "href": "https://systema.works/ru",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
