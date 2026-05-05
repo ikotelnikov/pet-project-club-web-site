@@ -1843,6 +1843,33 @@ body.lightbox-open {
   object-fit: cover;
 }
 
+body[data-page$="-detail"]::before {
+  opacity: 0.55;
+}
+
+body[data-page$="-detail"]::after {
+  inset: 0;
+  filter: none;
+  opacity: 0.9;
+  transform: none;
+}
+
+body[data-page$="-detail"] .site-glow {
+  display: none;
+}
+
+body[data-page$="-detail"] .topbar::before,
+body[data-page$="-detail"] .section-shell,
+body[data-page$="-detail"] .meeting-detail-shell,
+body[data-page$="-detail"] .project-detail-shell,
+body[data-page$="-detail"] .participant-detail-shell,
+body[data-page$="-detail"] .detail-list-shell,
+body[data-page$="-detail"] .item-card {
+  background: linear-gradient(180deg, rgba(14, 21, 31, 0.82), rgba(8, 12, 18, 0.72));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .list-sentinel {
   width: 100%;
   height: 1px;
