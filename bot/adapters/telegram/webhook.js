@@ -29,6 +29,15 @@ export async function handleTelegramWebhookRequest({
     }
   }
 
+  if (request.method === "POST" && url.pathname === "/admin/translation-job") {
+    return handleAdminTranslationJobRequest({
+      request,
+      runtime,
+      adminToken,
+      executionCtx,
+    });
+  }
+
   if (request.method !== "POST") {
     return jsonResponse(405, {
       ok: false,
@@ -230,15 +239,14 @@ export async function handleTelegramWebhookRequest({
       result?.translationPlan &&
       typeof runtime.runPostConfirmTranslations === "function"
     ) {
-      const translationTask = runtime.runPostConfirmTranslations(result).catch((translationError) =>
-        writeRuntimeLog(runtime, "error", {
-          event: "telegram_post_confirm_translation_failed",
-          updateId: update.update_id,
-          payload: {
-            error: translationError instanceof Error ? translationError.message : String(translationError),
-          },
-        })
-      );
+      const translationTask = runTranslationJobChunk({
+        request,
+        runtime,
+        adminToken,
+        executionCtx,
+        updateId: update.update_id,
+        job: buildTranslationJobFromResult(result),
+      });
 
       if (executionCtx && typeof executionCtx.waitUntil === "function") {
         executionCtx.waitUntil(translationTask);
@@ -314,6 +322,40 @@ export async function handleTelegramWebhookRequest({
   }
 }
 
+async function handleAdminTranslationJobRequest({ request, runtime, adminToken, executionCtx }) {
+  if (!isAuthorizedAdminRequest(request, adminToken)) {
+    return jsonResponse(401, {
+      ok: false,
+      error: "Invalid admin token.",
+    });
+  }
+
+  let job;
+
+  try {
+    job = normalizeTranslationJob(await request.json());
+  } catch (error) {
+    return jsonResponse(400, {
+      ok: false,
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
+  const result = await runTranslationJobChunk({
+    request,
+    runtime,
+    adminToken,
+    executionCtx,
+    updateId: null,
+    job,
+  });
+
+  return jsonResponse(200, {
+    ok: true,
+    result,
+  });
+}
+
 async function handleAdminLogsRequest({ request, runtime, adminToken }) {
   if (!isAuthorizedAdminRequest(request, adminToken)) {
     return jsonResponse(401, {
@@ -346,6 +388,163 @@ function isAuthorizedAdminRequest(request, adminToken) {
   const bearerToken = request.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
 
   return headerToken === adminToken || bearerToken === adminToken;
+}
+
+function buildTranslationJobFromResult(result) {
+  return normalizeTranslationJob({
+    chatId: result.chatId,
+    entity: result.translationPlan?.entity,
+    slug: result.translationPlan?.slug,
+    sourceLocale: result.translationPlan?.sourceLocale,
+    targetLocales: result.translationPlan?.targetLocales || null,
+  });
+}
+
+function normalizeTranslationJob(value) {
+  if (!value || typeof value !== "object") {
+    throw new Error("Translation job payload must be an object.");
+  }
+
+  const chatId = Number.parseInt(String(value.chatId), 10);
+  const targetLocales = Array.isArray(value.targetLocales)
+    ? value.targetLocales.filter((locale) => typeof locale === "string" && locale.trim() !== "")
+    : null;
+
+  if (!Number.isInteger(chatId)) {
+    throw new Error("Translation job requires chatId.");
+  }
+
+  if (typeof value.entity !== "string" || value.entity.trim() === "") {
+    throw new Error("Translation job requires entity.");
+  }
+
+  if (typeof value.slug !== "string" || value.slug.trim() === "") {
+    throw new Error("Translation job requires slug.");
+  }
+
+  return {
+    chatId,
+    entity: value.entity.trim(),
+    slug: value.slug.trim(),
+    sourceLocale: typeof value.sourceLocale === "string" && value.sourceLocale.trim()
+      ? value.sourceLocale.trim()
+      : null,
+    targetLocales,
+  };
+}
+
+async function runTranslationJobChunk({
+  request,
+  runtime,
+  adminToken,
+  executionCtx,
+  updateId,
+  job,
+}) {
+  try {
+    await writeRuntimeLog(runtime, "info", {
+      event: "telegram_translation_job_started",
+      updateId,
+      chatId: job.chatId,
+      payload: {
+        entity: job.entity,
+        slug: job.slug,
+        sourceLocale: job.sourceLocale,
+        targetLocales: job.targetLocales,
+      },
+    });
+
+    const result = await runtime.runPostConfirmTranslations(job, {
+      maxLocales: 1,
+      log: (level, event, payload) => writeRuntimeLog(runtime, level, {
+        event,
+        updateId,
+        chatId: payload?.chatId ?? job.chatId,
+        payload,
+      }),
+    });
+
+    const remainingLocales = Array.isArray(result?.remainingLocales) ? result.remainingLocales : [];
+
+    await writeRuntimeLog(runtime, "info", {
+      event: "telegram_translation_job_finished",
+      updateId,
+      chatId: job.chatId,
+      payload: {
+        entity: job.entity,
+        slug: job.slug,
+        successes: result?.successes || [],
+        failures: result?.failures || [],
+        remainingLocales,
+      },
+    });
+
+    if (remainingLocales.length > 0) {
+      scheduleNextTranslationJob({
+        request,
+        runtime,
+        adminToken,
+        executionCtx,
+        job: {
+          ...job,
+          targetLocales: remainingLocales,
+        },
+      });
+    }
+
+    return result;
+  } catch (translationError) {
+    await writeRuntimeLog(runtime, "error", {
+      event: "telegram_post_confirm_translation_failed",
+      updateId,
+      chatId: job?.chatId ?? null,
+      payload: {
+        entity: job?.entity ?? null,
+        slug: job?.slug ?? null,
+        error: translationError instanceof Error ? translationError.message : String(translationError),
+      },
+    });
+
+    throw translationError;
+  }
+}
+
+function scheduleNextTranslationJob({ request, runtime, adminToken, executionCtx, job }) {
+  if (!adminToken) {
+    return;
+  }
+
+  const url = new URL(request.url);
+  url.pathname = "/admin/translation-job";
+  url.search = "";
+
+  const task = fetch(url.toString(), {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-admin-token": adminToken,
+    },
+    body: JSON.stringify(job),
+  }).then(async (response) => {
+    if (!response.ok) {
+      throw new Error(`Translation job enqueue returned ${response.status}: ${await response.text()}`);
+    }
+  }).catch((error) =>
+    writeRuntimeLog(runtime, "error", {
+      event: "telegram_translation_job_enqueue_failed",
+      chatId: job.chatId,
+      payload: {
+        entity: job.entity,
+        slug: job.slug,
+        targetLocales: job.targetLocales,
+        error: error instanceof Error ? error.message : String(error),
+      },
+    })
+  );
+
+  if (executionCtx && typeof executionCtx.waitUntil === "function") {
+    executionCtx.waitUntil(task);
+  }
 }
 
 function buildResultLogDetails(result) {

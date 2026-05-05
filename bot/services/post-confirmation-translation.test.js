@@ -118,6 +118,69 @@ test("runPostConfirmationTranslations sends one summary for all auto locales and
   assert.match(messages[0], /- es: https:\/\/example\.com\/es\/meetings\/presentation-creometrix-0804\//);
 });
 
+test("runPostConfirmationTranslations can process one locale and return the remaining queue", async () => {
+  const writes = [];
+  const logs = [];
+  const messages = [];
+  const item = {
+    slug: "systema-works",
+    sourceLocale: "ru",
+    title: "Исходный текст",
+    summary: "Описание",
+    translations: {},
+    translationStatus: {},
+  };
+  const repository = {
+    async readItem() {
+      return structuredClone(item);
+    },
+    async applyCommand(parsedCommand, payload) {
+      item.translations = payload.item.translations;
+      item.translationStatus = payload.item.translationStatus;
+      writes.push(Object.keys(payload.item.translations || {}).slice(-1)[0] || null);
+      return {
+        entity: parsedCommand.entity,
+        slug: parsedCommand.fields.slug,
+        commitSha: `commit-${writes.length}`,
+      };
+    },
+  };
+  const translationClient = {
+    async translateFields({ targetLocale }) {
+      return {
+        title: `translated-${targetLocale}`,
+      };
+    },
+  };
+  const telegramClient = {
+    async sendMessage({ text }) {
+      messages.push(text);
+    },
+  };
+
+  const result = await runPostConfirmationTranslations({
+    repository,
+    translationClient,
+    telegramClient,
+    chatId: 1,
+    entity: "project",
+    slug: "systema-works",
+    sourceLocale: "ru",
+    targetLocales: ["en", "de", "me"],
+    maxLocales: 1,
+    siteBaseUrl: "https://example.com",
+    log(level, event, payload) {
+      logs.push({ level, event, payload });
+    },
+  });
+
+  assert.deepEqual(writes, ["en"]);
+  assert.deepEqual(result.remainingLocales, ["de", "me"]);
+  assert.equal(messages.length, 1);
+  assert.match(messages[0], /- en:/);
+  assert.ok(logs.some((entry) => entry.event === "telegram_translation_update_succeeded"));
+});
+
 test("runPostConfirmationTranslations sends one combined failure summary", async () => {
   const writes = [];
   const messages = [];

@@ -5,9 +5,11 @@ import { handleTelegramWebhookRequest } from "./webhook.js";
 
 function createRuntime({ result }) {
   const sentMessages = [];
+  const translationRuns = [];
 
   return {
     sentMessages,
+    translationRuns,
     telegramClient: {
       async sendMessage(payload) {
         sentMessages.push(payload);
@@ -23,6 +25,14 @@ function createRuntime({ result }) {
     },
     async handleTelegramUpdate() {
       return result;
+    },
+    async runPostConfirmTranslations(job, options) {
+      translationRuns.push({ job, options });
+      return {
+        successes: [],
+        failures: [],
+        remainingLocales: [],
+      };
     },
     devMode: false,
   };
@@ -104,4 +114,74 @@ test("webhook does not send processing ack for callback queries", async () => {
   assert.equal(runtime.sentMessages.length, 1);
   assert.equal(runtime.sentMessages[0].chatId, 555);
   assert.doesNotMatch(runtime.sentMessages[0].text, /Processing\.\.\./);
+});
+
+test("webhook schedules confirmed translation plan as a one-locale background job", async () => {
+  const waitUntilTasks = [];
+  const runtime = createRuntime({
+    result: {
+      status: "confirmed",
+      chatId: 555,
+      operation: {
+        entity: "project",
+        action: "create",
+        fields: {
+          slug: "systema-works",
+        },
+      },
+      writeResult: {
+        entity: "project",
+        slug: "systema-works",
+      },
+      translationPlan: {
+        entity: "project",
+        slug: "systema-works",
+        sourceLocale: "ru",
+        targetLocales: null,
+      },
+    },
+  });
+
+  const request = new Request("https://local.test/telegram/webhook", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      update_id: 3,
+      callback_query: {
+        id: "cb-2",
+        from: { id: 123 },
+        data: "confirm",
+        message: {
+          message_id: 102,
+          chat: { id: 555 },
+        },
+      },
+    }),
+  });
+
+  const response = await handleTelegramWebhookRequest({
+    request,
+    runtime,
+    adminToken: "secret",
+    executionCtx: {
+      waitUntil(task) {
+        waitUntilTasks.push(task);
+      },
+    },
+  });
+
+  assert.equal(response.status, 200);
+  assert.equal(waitUntilTasks.length, 1);
+  await Promise.all(waitUntilTasks);
+  assert.equal(runtime.translationRuns.length, 1);
+  assert.equal(runtime.translationRuns[0].options.maxLocales, 1);
+  assert.deepEqual(runtime.translationRuns[0].job, {
+    chatId: 555,
+    entity: "project",
+    slug: "systema-works",
+    sourceLocale: "ru",
+    targetLocales: null,
+  });
 });

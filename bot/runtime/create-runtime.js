@@ -69,21 +69,24 @@ export function createBotRuntime(config, overrides = {}) {
         publicSiteBaseUrl,
       });
     },
-    async runPostConfirmTranslations(result) {
-      if (!result?.translationPlan || !telegramClient) {
-        return;
+    async runPostConfirmTranslations(resultOrJob, options = {}) {
+      const translationPlan = resultOrJob?.translationPlan || resultOrJob;
+      if (!translationPlan || !telegramClient) {
+        return null;
       }
 
-      await runPostConfirmationTranslations({
+      return runPostConfirmationTranslations({
         repository,
         translationClient,
         telegramClient,
-        chatId: result.chatId,
-        entity: result.translationPlan.entity,
-        slug: result.translationPlan.slug,
-        sourceLocale: result.translationPlan.sourceLocale,
-        targetLocales: result.translationPlan.targetLocales || null,
+        chatId: resultOrJob.chatId,
+        entity: translationPlan.entity,
+        slug: translationPlan.slug,
+        sourceLocale: translationPlan.sourceLocale,
+        targetLocales: translationPlan.targetLocales || null,
         siteBaseUrl: publicSiteBaseUrl,
+        maxLocales: options.maxLocales || null,
+        log: options.log || null,
       });
     },
   };

@@ -17,9 +17,16 @@ export async function runPostConfirmationTranslations({
   sourceLocale,
   targetLocales = null,
   siteBaseUrl = null,
+  maxLocales = null,
+  log = null,
 }) {
   if (!repository || !translationClient || !telegramClient || chatId == null || !entity || !slug) {
-    return;
+    return {
+      successes: [],
+      failures: [],
+      remainingLocales: [],
+      skipped: true,
+    };
   }
 
   let currentItem = await repository.readItem(entity, slug);
@@ -31,12 +38,24 @@ export async function runPostConfirmationTranslations({
         .filter((locale) => locale && locale !== normalizedSourceLocale)
         .filter((locale) => currentItem?.translationStatus?.[locale] !== "edited"))]
     : resolvePendingTranslationLocales(currentItem, normalizedSourceLocale);
+  const normalizedMaxLocales = Number.isInteger(maxLocales) && maxLocales > 0
+    ? maxLocales
+    : localesToUpdate.length;
+  const localesToProcess = localesToUpdate.slice(0, normalizedMaxLocales);
+  const remainingLocales = localesToUpdate.slice(normalizedMaxLocales);
 
   const failures = [];
   const successes = [];
 
-  for (const targetLocale of localesToUpdate) {
+  for (const targetLocale of localesToProcess) {
     try {
+      await writeTranslationLog(log, "info", "telegram_translation_update_started", {
+        chatId,
+        entity,
+        slug,
+        targetLocale,
+        remainingLocales,
+      });
       const translatedFields = await translationClient.translateFields({
         entity,
         sourceLocale: normalizedSourceLocale,
@@ -68,6 +87,13 @@ export async function runPostConfirmationTranslations({
         pageUrl,
         commitSha: writeResult?.commitSha ?? null,
       });
+      await writeTranslationLog(log, "info", "telegram_translation_update_succeeded", {
+        chatId,
+        entity,
+        slug,
+        targetLocale,
+        commitSha: writeResult?.commitSha ?? null,
+      });
     } catch (error) {
       failures.push({
         locale: targetLocale,
@@ -83,6 +109,13 @@ export async function runPostConfirmationTranslations({
           error: error instanceof Error ? error.message : String(error),
         })
       );
+      await writeTranslationLog(log, "error", "telegram_translation_update_failed", {
+        chatId,
+        entity,
+        slug,
+        targetLocale,
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -109,6 +142,23 @@ export async function runPostConfirmationTranslations({
       text: lines.join("\n"),
     });
   }
+
+  await writeTranslationLog(log, failures.length > 0 ? "warn" : "info", "telegram_translation_update_chunk_finished", {
+    chatId,
+    entity,
+    slug,
+    processedLocales: localesToProcess,
+    remainingLocales,
+    successes,
+    failures,
+  });
+
+  return {
+    successes,
+    failures,
+    remainingLocales,
+    skipped: false,
+  };
 }
 
 export function resolvePendingTranslationLocales(item, sourceLocale = DEFAULT_SOURCE_LOCALE) {
@@ -146,4 +196,12 @@ function hasNonEmptyTranslationPayload(value) {
   }
 
   return Object.keys(value).length > 0;
+}
+
+async function writeTranslationLog(log, level, event, payload) {
+  if (typeof log !== "function") {
+    return;
+  }
+
+  await log(level, event, payload);
 }
