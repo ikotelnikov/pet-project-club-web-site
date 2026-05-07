@@ -52,12 +52,27 @@
           "external": true
         }
       ]
+    },
+    "es": {
+      "handle": "ilya",
+      "name": "Ilya",
+      "role": "CTO, Fundador / Co-fundador",
+      "bio": "He trabajado en TI durante unos 20 años: desarrollo, lanzo y desarrollo productos digitales. Mi proyecto principal es un portal médico importante con una audiencia de aproximadamente 400 mil visitantes diarios. He recorrido el camino desde el desarrollo hasta la gestión de la parte técnica y el desarrollo de productos de los proyectos. Actualmente me enfoco en buscar nuevas ideas y lanzar productos que puedan escalarse en el mercado internacional. Me interesan la IA, la automatización, el SaaS, los servicios para usuarios y los productos con un modelo de negocio claro.",
+      "detailsHtml": "<p>He trabajado en TI durante unos 20 años: desarrollo, lanzo y desarrollo productos digitales. Mi proyecto principal es un portal médico importante con una audiencia de aproximadamente 400 mil visitantes diarios. He recorrido el camino desde el desarrollo hasta la gestión de la parte técnica y el desarrollo de productos de los proyectos. Actualmente me enfoco en buscar nuevas ideas y lanzar productos que puedan escalarse en el mercado internacional. Me interesan la IA, la automatización, el SaaS, los servicios para usuarios y los productos con un modelo de negocio claro.</p>",
+      "links": [
+        {
+          "label": "Telegram",
+          "href": "https://t.me/Zenin_Ilya",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   },
   "links": [
     {
