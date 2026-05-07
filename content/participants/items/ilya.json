@@ -24,10 +24,25 @@
           "external": true
         }
       ]
+    },
+    "de": {
+      "handle": "ilya",
+      "name": "Ilya",
+      "role": "CTO, Gründer / Mitgründer",
+      "bio": "Ich arbeite seit etwa 20 Jahren in der IT: Ich entwickle, starte und entwickle digitale Produkte. Mein Hauptprojekt ist ein großes medizinisches Portal mit einer täglichen Nutzerzahl von etwa 400.000 Besuchern. Ich habe den Weg von der Entwicklung bis zur Leitung des technischen Bereichs und der Produktentwicklung durchlaufen. Derzeit konzentriere ich mich darauf, neue Ideen zu finden und Produkte zu starten, die international skaliert werden können. Ich interessiere mich für KI, Automatisierung, SaaS, nutzerorientierte Services und Produkte mit einem klaren Geschäftsmodell.",
+      "detailsHtml": "<p>Ich arbeite seit etwa 20 Jahren in der IT: Ich entwickle, starte und entwickle digitale Produkte. Mein Hauptprojekt ist ein großes medizinisches Portal mit einer täglichen Nutzerzahl von etwa 400.000 Besuchern. Ich habe den Weg von der Entwicklung bis zur Leitung des technischen Bereichs und der Produktentwicklung durchlaufen. Derzeit konzentriere ich mich darauf, neue Ideen zu finden und Produkte zu starten, die international skaliert werden können. Ich interessiere mich für KI, Automatisierung, SaaS, nutzerorientierte Services und Produkte mit einem klaren Geschäftsmodell.</p>",
+      "links": [
+        {
+          "label": "Telegram",
+          "href": "https://t.me/Zenin_Ilya",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   },
   "links": [
     {
