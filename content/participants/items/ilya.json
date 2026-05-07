@@ -20,6 +20,13 @@
     }
   },
   "translationStatus": {
-    "en": "machine"
-  }
+    "en": "stale"
+  },
+  "links": [
+    {
+      "label": "Telegram",
+      "href": "https://t.me/Zenin_Ilya",
+      "external": true
+    }
+  ]
 }
