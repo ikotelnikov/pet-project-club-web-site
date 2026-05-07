@@ -40,11 +40,19 @@
       "stack": "umjetna inteligencija, Viber, WhatsApp, čat-botovi",
       "summary": "Digitalna platforma za identifikaciju i rješavanje gradskih problema pomoću umjetne inteligencije.",
       "detailsHtml": "<p>MojiGrad je digitalna platforma za identifikaciju i rješavanje gradskih problema pomoću umjetne inteligencije. Stanovnici prijavljuju kvarove u urbanoj sredini — rupe na cestama, pokvareno osvjetljenje, smeće ili oštećenu infrastrukturu — slanjem fotografije i kratkog opisa.</p><p>Zahtjevi se mogu podnijeti direktno putem Viber ili WhatsApp bota, bez instalacije dodatnih aplikacija i registracije u složenim sistemima. Dovoljno je otvoriti uobičajeni messenger i napisati botu — maksimalno jednostavno i dostupno za sve.</p><p>UI automatski analizira svaki zahtjev: prepoznaje vrstu problema, precizira geolokaciju i određuje da li je prijava nova ili duplikat postojeće. Slični zahtjevi se grupišu, što smanjuje broj ponavljanja i omogućava gradskim službama bržu reakciju na stvarne prioritete.</p><p>MojiGrad pretvara razjedinjene poruke stanovnika u strukturirane podatke i transparentan radni proces. Za opštine, ovo je alat za analitiku i prioritizaciju, dok za stanovnike predstavlja praktičan način da stvarno utiču na kvalitetu gradske sredine i vide rezultate bez suvišnih prepreka.</p>"
+    },
+    "es": {
+      "title": "MiCiudad",
+      "status": "active",
+      "stack": "inteligencia artificial, Viber, WhatsApp, chatbots",
+      "summary": "Plataforma digital para identificar y resolver problemas urbanos mediante inteligencia artificial.",
+      "detailsHtml": "<p>MiCiudad es una plataforma digital para identificar y resolver problemas urbanos mediante inteligencia artificial. Los residentes reportan fallas en el entorno urbano — baches en las calles, alumbrado roto, basura o infraestructura dañada — enviando fotos y una breve descripción.</p><p>Las solicitudes se pueden enviar directamente a través de un bot de Viber o WhatsApp, sin necesidad de instalar ninguna aplicación ni registrarse en sistemas complejos. Basta con abrir el mensajero habitual y escribir al bot — de forma muy simple y accesible para todos.</p><p>La IA analiza automáticamente cada reporte: reconoce el tipo de problema, precisa la geolocalización y determina si la solicitud es nueva o duplica una existente. Reportes similares se agrupan, lo que reduce repeticiones y permite a los servicios municipales reaccionar más rápidamente a las prioridades reales.</p><p>MiCiudad convierte los mensajes dispersos de los residentes en datos estructurados y un proceso de trabajo transparente. Para los municipios es una herramienta de análisis y priorización, y para los ciudadanos una manera conveniente de influir realmente en la calidad del entorno urbano y ver resultados sin barreras innecesarias.</p>"
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
