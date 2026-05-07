@@ -18,5 +18,17 @@
     "ilya"
   ],
   "slug": "prekoplan",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "prekoplan",
+      "status": "active",
+      "stack": "CRM with AI Assistant",
+      "summary": "Prekoplan.me is a CRM system with an AI assistant for service businesses with appointment scheduling.",
+      "detailsHtml": "<a href=\"Prekoplan.me\">Prekoplan.me</a> is a CRM system (Customer Relationship Management) with a built-in AI assistant for service businesses with appointment scheduling. We automate the operations of beauty salons, grooming salons, tanning salons, SPA and massage salons, replacing paper logs and disparate Excel files with a unified smart CRM.<br><br>The system handles client appointments, payroll calculations, sales of services and products, finances, analytics, and inventory. The AI assistant analyzes visit history, predicts the timing of the next visit, and automatically sends a personalized invitation to the client via messenger. It also advises the administrator on which services or products to offer during the visit, increasing the average check and loyalty without intrusive sales.<br><br>The business owner can see the full picture of operations at any time—even while on vacation: staff workload, service efficiency, key financial indicators, and growth dynamics. Online booking 24/7, a loyalty program, and automatic notifications help retain customers and improve service quality.<br><br><a href=\"Prekoplan.me\">Prekoplan.me</a> is implemented in 15 minutes, requires no staff training, and ensures a high level of data security. It is a simple and scalable tool for revenue growth and effective management of service businesses.<br><br>The solution is fully completed and is currently being translated into other languages."
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
