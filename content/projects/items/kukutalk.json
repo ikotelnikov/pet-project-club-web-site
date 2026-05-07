@@ -40,11 +40,19 @@
       "stack": "not specified",
       "summary": "Kuku.talk es una aplicación para aprender idiomas que ayuda finalmente a empezar a hablar, y no solo a \"estudiar\".",
       "detailsHtml": "<a href=\"https://Kuku.talk\">Kuku.talk</a> es una aplicación para aprender idiomas que ayuda finalmente a empezar a hablar, y no solo a \"estudiar\". En lugar de largas lecciones y memorización de palabras, Kuku.talk utiliza el efecto de la \"canción pegajosa\" — cuando una frase gira en la cabeza sin esfuerzo por tu parte.<br><br>La aplicación funciona en segundo plano en el ordenador y cada 30-60 minutos reproduce frases cortas. El cerebro las capta automáticamente, las repasa una y otra vez — y así se fijan firmemente en la memoria. Esto es mucho más eficaz que las sesiones de una hora, de las que solo recordamos un par de minutos, generalmente al final de la lección.<br><br>Kuku.talk no enseña palabras sueltas, sino conjuntos de palabras, que en realidad conforman el habla viva. Al memorizar esos conjuntos, comienzas a formar frases automáticamente: recuerdas una plantilla lista, sustituyes la palabra necesaria — y hablas sin largas reflexiones. Poco a poco, en el diálogo interno aparece una \"pista de audio\" en el idioma extranjero.<br><br>El producto ya está en la etapa final de desarrollo, que demuestra la mecánica clave y el enfoque de enseñanza.<br><br>Kuku.talk es ideal para quienes:  + ya han estudiado el idioma, pero aún no hablan;  + tienen comprensión básica de la gramática;  + conocen palabras de uso común, pero no pueden usarlas con fluidez.<br><br>Kuku.talk es un idioma que se memoriza solo y empieza a sonar en la cabeza."
+    },
+    "me": {
+      "title": "Kuku.talk",
+      "status": "active",
+      "stack": "not specified",
+      "summary": "Kuku.talk — aplikacija za učenje jezika koja pomaže konačno početi govoriti, a ne samo „učiti“.",
+      "detailsHtml": "<a href=\"https://Kuku.talk\">Kuku.talk</a> — aplikacija za učenje jezika koja pomaže konačno početi govoriti, a ne samo „učiti“. Umjesto dugih lekcija i usvajanja riječi napamet, Kuku.talk koristi efekat „nametljive pjesme“ — kada se fraza sama vrti u glavi bez vašeg napora.<br><br>Aplikacija radi u pozadini na računaru i svako 30-60 minuta pušta kratke fraze. Mozak ih automatski preuzima, vrti iznova i iznova — i na taj način one se pouzdano usvajaju u pamćenje. Ovo je mnogo efikasnije od časova od sat vremena, od kojih ipak zapamtimo samo par minuta, najčešće na kraju lekcije.<br><br>Kuku.talk ne uči pojedinačne riječi, već veze riječi, od kojih se zapravo sastoji živi govor. Pamteći te veze, počinjete automatski graditi fraze: prisjećate se gotovog šablona, ubacujete potrebnu riječ — i govorite bez dugog razmišljanja. Postepeno u unutrašnjem dijalogu pojavljuje se „audio zapis“ na stranom jeziku.<br><br>Proizvod je već u završnoj fazi razvoja, koja prikazuje ključnu mehaniku i pristup učenju.<br><br>Kuku.talk savršeno odgovara onima koji:  + su već učili jezik, ali nisu počeli govoriti;  + imaju osnovno razumijevanje gramatike;  + poznaju često korištene riječi, ali ih ne mogu slobodno koristiti.<br><br>Kuku.talk je jezik koji se pamti sam i počinje zvučati u glavi."
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "es": "machine"
+    "es": "machine",
+    "me": "machine"
   }
 }
