@@ -26,9 +26,17 @@
       "stack": "not specified",
       "summary": "Kuku.talk is a language learning app that helps you finally start speaking, not just \"studying.\"",
       "detailsHtml": "<a href=\"https://Kuku.talk\">Kuku.talk</a> is a language learning app that helps you finally start speaking, not just \"studying.\" Instead of long lessons and rote memorization of words, Kuku.talk uses the \"earworm\" effect — when a phrase plays itself in your head effortlessly.<br><br>The app runs in the background on your computer and plays short phrases every 30-60 minutes. The brain automatically picks them up, plays them again and again — and that's how they are firmly fixed in memory. This is much more effective than hour-long sessions, from which we usually remember only a couple of minutes, mostly at the end of the lesson.<br><br>Kuku.talk teaches not separate words, but sets of words that actually make up spoken language. By memorizing such chunks, you start to form sentences automatically: you recall a ready-made template, insert the needed word — and speak without long hesitation. Gradually, an \"audio track\" in the foreign language appears in your inner dialogue.<br><br>The product is already in the final development stage, demonstrating the key mechanics and approach to learning.<br><br>Kuku.talk is perfect for those who:  + have already studied the language but never started speaking;  + have a basic understanding of grammar;  + know common words but cannot use them freely.<br><br>Kuku.talk is a language that memorizes itself and starts playing in your head."
+    },
+    "de": {
+      "title": "Kuku.talk",
+      "status": "active",
+      "stack": "not specified",
+      "summary": "Kuku.talk ist eine Sprachlern-App, die dabei hilft, endlich zu sprechen und nicht nur zu \"lernen\".",
+      "detailsHtml": "<a href=\"https://Kuku.talk\">Kuku.talk</a> ist eine Sprachlern-App, die dabei hilft, endlich zu sprechen und nicht nur zu „lernen“. Statt langer Lektionen und dem Auswendiglernen von Wörtern nutzt Kuku.talk den Effekt eines „lästigen Ohrwurms“ – wenn ein Satz ganz von selbst im Kopf herumgeht, ohne dass Sie sich anstrengen müssen.<br><br>Die App läuft im Hintergrund auf dem Computer und spielt alle 30-60 Minuten kurze Sätze ab. Das Gehirn nimmt sie automatisch auf, wiederholt sie immer wieder – und so werden sie zuverlässig im Gedächtnis verankert. Das ist viel effektiver als stundenlange Lektionen, aus denen wir sowieso meist nur ein paar Minuten, meist am Ende der Stunde, behalten.<br><br>Kuku.talk lehrt nicht einzelne Wörter, sondern Wortverbindungen, aus denen die lebendige Sprache tatsächlich besteht. Wenn man sich solche Wortverbindungen merkt, beginnt man automatisch Sätze zu bilden: Man erinnert sich an eine fertige Vorlage, setzt das passende Wort ein – und spricht ohne langes Nachdenken. Nach und nach entsteht im inneren Dialog eine „Audiopiste“ in der Fremdsprache.<br><br>Das Produkt befindet sich bereits in der finalen Entwicklungsphase, die die Schlüsselmechanik und den Lernansatz demonstriert.<br><br>Kuku.talk ist ideal für diejenigen, die:  + die Sprache bereits gelernt, aber nie gesprochen haben;  + ein Basisverständnis der Grammatik besitzen;  + gebräuchliche Wörter kennen, sie aber nicht frei verwenden können.<br><br>Kuku.talk ist eine Sprache, die sich von selbst einprägt und im Kopf zu klingen beginnt."
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
