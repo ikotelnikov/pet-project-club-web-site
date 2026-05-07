@@ -18,5 +18,17 @@
     "ilya"
   ],
   "slug": "mojgrad",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "MyCity",
+      "status": "active",
+      "stack": "artificial intelligence, Viber, WhatsApp, chatbots",
+      "summary": "A digital platform for identifying and solving urban problems using artificial intelligence.",
+      "detailsHtml": "<p>MyCity is a digital platform for identifying and solving urban problems using artificial intelligence. Residents report faults in the urban environment — potholes, broken lighting, litter, or damaged infrastructure — by sending photos and a brief description.</p><p>Requests can be submitted directly via Viber or WhatsApp bots, without installing any applications or registering in complex systems. You just need to open your regular messenger and message the bot — making it as simple and accessible as possible for everyone.</p><p>AI automatically analyzes each request: it recognizes the type of problem, clarifies the geolocation, and determines whether the request is new or duplicates an existing one. Similar reports are grouped together, reducing the number of duplicates and allowing city services to respond faster to real priorities.</p><p>MyCity turns scattered residents' messages into structured data and a transparent workflow. For municipalities, it is an analytics and prioritization tool; for residents, it is a convenient way to truly influence the quality of the urban environment and see results without unnecessary barriers.</p>"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
