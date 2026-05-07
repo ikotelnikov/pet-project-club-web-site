@@ -9,5 +9,17 @@
     "alt": "Илья"
   },
   "slug": "ilya",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "handle": "ilya",
+      "name": "Ilya",
+      "role": "CTO, Founder / Co-founder",
+      "bio": "I have been working in IT for about 20 years: developing, launching, and growing digital products. My main project is a large medical portal with an audience of about 400 thousand visitors per day. I have progressed from development to managing the technical side and product development of projects. Currently, I am focused on finding new ideas and launching products that can be scaled to the international market. I am interested in AI, automation, SaaS, user services, and products with a clear business model.",
+      "detailsHtml": "<p>I have been working in IT for about 20 years: developing, launching, and growing digital products. My main project is a large medical portal with an audience of about 400 thousand visitors per day. I have progressed from development to managing the technical side and product development of projects. Currently, I am focused on finding new ideas and launching products that can be scaled to the international market. I am interested in AI, automation, SaaS, user services, and products with a clear business model.</p>"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
