@@ -33,10 +33,18 @@
       "stack": "künstliche Intelligenz, Viber, WhatsApp, Chatbots",
       "summary": "Digitale Plattform zur Erkennung und Lösung städtischer Probleme mithilfe künstlicher Intelligenz.",
       "detailsHtml": "<p>MeinStadt ist eine digitale Plattform zur Erkennung und Lösung städtischer Probleme mithilfe künstlicher Intelligenz. Bewohner melden Fehler in der städtischen Umgebung – Schlaglöcher auf Straßen, defekte Beleuchtung, Müll oder beschädigte Infrastruktur – indem sie Fotos und eine kurze Beschreibung senden.</p><p>Anfragen können direkt über den Viber- oder WhatsApp-Bot eingereicht werden, ohne die Installation zusätzlicher Apps oder die Registrierung in komplexen Systemen. Es reicht, den gewohnten Messenger zu öffnen und dem Bot zu schreiben – so einfach und zugänglich wie möglich für alle.</p><p>Die KI analysiert automatisch jede Anfrage: Sie erkennt die Art des Problems, bestimmt die Geolokalisierung und stellt fest, ob es sich um eine neue Anfrage handelt oder ob diese eine bereits bestehende dupliziert. Ähnliche Anfragen werden zusammengeführt, was die Anzahl der Wiederholungen reduziert und den städtischen Diensten ermöglicht, schneller auf reale Prioritäten zu reagieren.</p><p>MeinStadt verwandelt die verstreuten Nachrichten der Bewohner in strukturierte Daten und einen transparenten Arbeitsprozess. Für Kommunen ist es ein Instrument zur Analyse und Priorisierung, für die Bewohner eine bequeme Möglichkeit, die Qualität der städtischen Umgebung tatsächlich zu beeinflussen und Ergebnisse ohne unnötige Hürden zu sehen.</p>"
+    },
+    "me": {
+      "title": "MojiGrad",
+      "status": "active",
+      "stack": "umjetna inteligencija, Viber, WhatsApp, čat-botovi",
+      "summary": "Digitalna platforma za identifikaciju i rješavanje gradskih problema pomoću umjetne inteligencije.",
+      "detailsHtml": "<p>MojiGrad je digitalna platforma za identifikaciju i rješavanje gradskih problema pomoću umjetne inteligencije. Stanovnici prijavljuju kvarove u urbanoj sredini — rupe na cestama, pokvareno osvjetljenje, smeće ili oštećenu infrastrukturu — slanjem fotografije i kratkog opisa.</p><p>Zahtjevi se mogu podnijeti direktno putem Viber ili WhatsApp bota, bez instalacije dodatnih aplikacija i registracije u složenim sistemima. Dovoljno je otvoriti uobičajeni messenger i napisati botu — maksimalno jednostavno i dostupno za sve.</p><p>UI automatski analizira svaki zahtjev: prepoznaje vrstu problema, precizira geolokaciju i određuje da li je prijava nova ili duplikat postojeće. Slični zahtjevi se grupišu, što smanjuje broj ponavljanja i omogućava gradskim službama bržu reakciju na stvarne prioritete.</p><p>MojiGrad pretvara razjedinjene poruke stanovnika u strukturirane podatke i transparentan radni proces. Za opštine, ovo je alat za analitiku i prioritizaciju, dok za stanovnike predstavlja praktičan način da stvarno utiču na kvalitetu gradske sredine i vide rezultate bez suvišnih prepreka.</p>"
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
