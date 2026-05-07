@@ -38,11 +38,26 @@
           "external": true
         }
       ]
+    },
+    "me": {
+      "handle": "ilya",
+      "name": "Ilja",
+      "role": "CTO, Osnivač / Ko-osnivač",
+      "bio": "Već oko 20 godina radim u IT-u: razvijam, pokrećem i unapređujem digitalne proizvode. Moj glavni projekat je veliki medicinski portal sa oko 400 hiljada poseta dnevno. Prošao sam put od razvoja do upravljanja tehničkim delom i razvojem proizvoda. Sada sam fokusiran na pronalaženje novih ideja i pokretanje proizvoda koje se mogu skalirati na internacionalno tržište. Zanimaju me AI, automatizacija, SaaS, korisničke usluge i proizvodi sa jasnim poslovnim modelom.",
+      "detailsHtml": "<p>Već oko 20 godina radim u IT-u: razvijam, pokrećem i unapređujem digitalne proizvode. Moj glavni projekat je veliki medicinski portal sa oko 400 hiljada poseta dnevno. Prošao sam put od razvoja do upravljanja tehničkim delom i razvojem proizvoda. Sada sam fokusiran na pronalaženje novih ideja i pokretanje proizvoda koje se mogu skalirati na internacionalno tržište. Zanimaju me AI, automatizacija, SaaS, korisničke usluge i proizvodi sa jasnim poslovnim modelom.</p>",
+      "links": [
+        {
+          "label": "Telegram",
+          "href": "https://t.me/Zenin_Ilya",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   },
   "links": [
     {
