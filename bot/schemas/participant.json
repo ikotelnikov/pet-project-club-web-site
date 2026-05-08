@@ -1,10 +1,10 @@
 {
   "entity": "participant",
-  "required": ["slug", "handle", "name", "role", "bio"],
-  "optional": ["detailsHtml", "points", "location", "tags", "links", "photoAlt", "photoStagedPath"],
+  "required": ["slug", "name", "role", "bio"],
+  "optional": ["handle", "detailsHtml", "points", "location", "tags", "links", "photoAlt", "photoStagedPath"],
   "fieldTypes": {
     "slug": "string",
-    "handle": "string",
+    "handle": "string, only when the user directly provides a Telegram-style @handle",
     "name": "string",
     "role": "string",
     "bio": "string",
