@@ -84,8 +84,8 @@ test("operation prompt includes exact entity schema and alias guidance", () => {
     },
     entitySchema: {
       entity: "participant",
-      required: ["slug", "handle", "name", "role", "bio"],
-      optional: ["photoAlt", "photoStagedPath"],
+      required: ["slug", "name", "role", "bio"],
+      optional: ["handle", "photoAlt", "photoStagedPath"],
       aliases: {
         description: "bio",
       },
@@ -97,5 +97,7 @@ test("operation prompt includes exact entity schema and alias guidance", () => {
   assert.match(systemPrompt, /entitySchema is the exact allowed field contract/i);
   assert.match(systemPrompt, /map it through entitySchema\.aliases/i);
   assert.match(systemPrompt, /Never return fields outside entitySchema/i);
+  assert.match(systemPrompt, /never derive a Telegram URL or @handle from a slug/i);
+  assert.match(systemPrompt, /Only set participant\.handle when the user directly provides/i);
   assert.match(userPrompt, /"aliases":\{"description":"bio"\}/);
 });
