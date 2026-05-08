@@ -83,11 +83,69 @@
           "external": true
         }
       ]
+    },
+    "me": {
+      "handle": "designer_konstantin_yugatov",
+      "name": "Konstantin Jugatov",
+      "role": "Arhitekta i dizajner",
+      "bio": "Arhitekta i dizajner sa 15 godina iskustva u projektovanju stambenih prostora.\n\nPredajem arhitekturu i dizajn djeci i odraslima — uživo u Che Design School (Crna Gora) i online.\nMoja metodologija nije samo o formi, već i o unutrašnjoj podršci.\n\nRazvijam autorske kurseve gdje spajam arhitektonsku praksu i psihologiju.\nIntegriram vještačku inteligenciju u projektovanje i obrazovne formate — kako bih proširio horizonte razmišljanja i unaprijedio vještine kroz svjestan pristup.\n\nVodim mentorske projekte:\n🔹 „Kreiraj enterijer iz snova“ — za one koji žele sami da dizajniraju prostor u kojem će uživati.\n🔹 „Izgradi kuću iz snova“ — korak-po-korak podrška od ideje do realizacije.\n\nTakođe držim konsultacije i analize projekata — pomažem da se vide slabe tačke, pronađu rješenja, dizajn učini razumljivim i iskrenim.\n\nVodim Instagram i Telegram — dijelim iskustva, vizuelno razmišljanje, trikove za enterijer i praktične alate za dizajnere i klijente.\n\nRadim na spoju estetike i smisla. Inspiraciju crpim iz skandinavskog i japanskog minimalizma, stvaram prostor u kojem je čovjeku lako da bude svoj.\n\nLično. Trčim. To je moja meditacija u pokretu. Dok trčim, čujem tišinu u kojoj se rađaju jasne misli i nove ideje.",
+      "links": [
+        {
+          "label": "Instagram (na ruskom)",
+          "href": "https://www.instagram.com/yugatov_design/profilecard/?igsh=N2Rnbnd4dGVpOTJ1",
+          "external": true
+        },
+        {
+          "label": "Instagram (na crnogorskom)",
+          "href": "https://www.instagram.com/iugatov.design?igsh=dmdrd2pnOHVxMXFi&utm_source=qr",
+          "external": true
+        },
+        {
+          "label": "Telegram kanal",
+          "href": "https://t.me/designer_konstantin_yugatov",
+          "external": true
+        },
+        {
+          "label": "Telegram chat (o enterijer dizajnu i renoviranju)",
+          "href": "https://t.me/+KE9yPxolVIczMmVi",
+          "external": true
+        }
+      ]
+    },
+    "es": {
+      "handle": "designer_konstantin_yugatov",
+      "name": "Konstantin Yugatov",
+      "role": "Arquitecto y diseñador",
+      "bio": "Arquitecto y diseñador con 15 años de experiencia en el diseño de espacios residenciales.\n\nEnseño arquitectura y diseño para niños y adultos — presencialmente en Che Design School (Montenegro) y en línea.\nMi metodología no trata solo de la forma, sino también de la fortaleza interior.\n\nDesarrollo cursos propios donde conecto la práctica arquitectónica y la psicología.\nIntegro la inteligencia artificial en el diseño y en los formatos educativos — para ampliar los horizontes del pensamiento y potenciar habilidades mediante un enfoque consciente.\n\nLidero programas de mentoría:\n🔹 «Crea el interior de tus sueños» — para quienes desean diseñar de manera independiente un espacio en el que sea agradable vivir.\n🔹 «Construye la casa de tus sueños» — acompañamiento paso a paso desde la idea hasta la realización.\n\nTambién ofrezco consultorías y análisis de proyectos — ayudo a detectar puntos débiles, encontrar soluciones y hacer que el diseño sea claro y honesto.\n\nGestiono Instagram y Telegram — comparto experiencia, pensamiento visual, trucos de interiorismo y herramientas prácticas para diseñadores y clientes.\n\nTrabajo en la intersección de la estética y el significado. Me inspiro en el minimalismo escandinavo y japonés, creando espacios en los que es fácil ser uno mismo.\n\nSobre lo personal. Corro. Es mi meditación en movimiento. Corriendo escucho el silencio donde nacen pensamientos claros e ideas nuevas.",
+      "links": [
+        {
+          "label": "Instagram (en ruso)",
+          "href": "https://www.instagram.com/yugatov_design/profilecard/?igsh=N2Rnbnd4dGVpOTJ1",
+          "external": true
+        },
+        {
+          "label": "Instagram (en montenegrino)",
+          "href": "https://www.instagram.com/iugatov.design?igsh=dmdrd2pnOHVxMXFi&utm_source=qr",
+          "external": true
+        },
+        {
+          "label": "Canal de Telegram",
+          "href": "https://t.me/designer_konstantin_yugatov",
+          "external": true
+        },
+        {
+          "label": "Chat de Telegram (sobre interiorismo y reformas)",
+          "href": "https://t.me/+KE9yPxolVIczMmVi",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine",
+    "es": "machine"
   },
   "photo": {
     "src": "assets/uploads/272981189/358-photo-358-AQADeRVrGw33yEp9.jpg",
