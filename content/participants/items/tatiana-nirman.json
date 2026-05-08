@@ -27,11 +27,18 @@
       "name": "Tatjana Nirman",
       "role": "Preduzetnica i Menadžerka Zajednice",
       "bio": "Preduzetnica sa 17 godina iskustva u prodaji i operativnom upravljanju (Telekom B2B/B2C). Od nule je stvorila i pet godina razvijala uspešan pozivni centar. Poslednjih 7 godina se profesionalno bavi upravljanjem nekretninama: gradi, izdaje svoje objekte i upravlja tuđim. Glavne kompetencije su izgradnja prodajnih odeljenja, korisnička služba i rad sa platformama za rezervacije (Airbnb, Booking). Voli temu automatizacije malog biznisa i ljude koji pretvaraju ideje u funkcionalne proizvode."
+    },
+    "es": {
+      "handle": "",
+      "name": "Tatyana Nirman",
+      "role": "Emprendedora y Gestora de Comunidad",
+      "bio": "Emprendedora con 17 años de experiencia en ventas y gestión operativa (Telecom B2B/B2C). Creó desde cero y desarrolló durante 5 años un exitoso centro de llamadas. En los últimos 7 años se dedica profesionalmente a la gestión inmobiliaria: construye, alquila sus propios inmuebles y gestiona propiedades de terceros. Sus principales competencias son la organización de equipos de ventas, el servicio al cliente y el trabajo con plataformas de reservas (Airbnb, Booking). Le apasiona la automatización de pequeñas empresas y las personas que convierten ideas en productos funcionales."
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
