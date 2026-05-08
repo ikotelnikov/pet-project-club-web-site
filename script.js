@@ -2359,7 +2359,13 @@ function normalizeTelegramHandle(value) {
     return null;
   }
 
-  const cleaned = value.trim().replace(/^@+/, "");
+  const trimmed = value.trim();
+
+  if (!trimmed.startsWith("@")) {
+    return null;
+  }
+
+  const cleaned = trimmed.replace(/^@+/, "");
 
   if (/^[A-Za-z0-9_]{4,}$/.test(cleaned)) {
     return cleaned;
