@@ -8,16 +8,6 @@
   },
   "links": [
     {
-      "label": "Играть тут",
-      "href": "https://t.me/iqPumpBot?startapp",
-      "external": true
-    },
-    {
-      "label": "Канал",
-      "href": "https://t.me/IQ_PUMP_RU",
-      "external": true
-    },
-    {
       "label": "Telegram",
       "href": "https://t.me/iqPumpBot?startapp",
       "external": true
@@ -40,16 +30,6 @@
       "detailsHtml": "This is my attempt to connect intelligence and Web3. The format is a game in Telegram where knowledge and quick thinking can literally be monetized. Players answer questions, participate in tournaments, and earn rewards in tokens. The idea is simple: to make intelligence an asset that can be developed and that begins to bring real value.<br><br>Play here:<br><a href=\"https://t.me/iqPumpBot?startapp\">https://t.me/iqPumpBot?startapp</a><br><br>Channel:<br><a href=\"https://t.me/IQ_PUMP_RU\">https://t.me/IQ_PUMP_RU</a>",
       "links": [
         {
-          "label": "Play here",
-          "href": "https://t.me/iqPumpBot?startapp",
-          "external": true
-        },
-        {
-          "label": "Channel",
-          "href": "https://t.me/IQ_PUMP_RU",
-          "external": true
-        },
-        {
           "label": "Telegram",
           "href": "https://t.me/iqPumpBot?startapp",
           "external": true
@@ -67,15 +47,39 @@
       "detailsHtml": "Dies ist mein Versuch, Intelligenz und Web3 zu verbinden. Das Format ist ein Spiel im Telegram, bei dem Wissen und Schnelligkeit im Denken buchstäblich monetarisiert werden können. Die Spieler beantworten Fragen, nehmen an Turnieren teil und erhalten Belohnungen in Token. Die Idee ist einfach: Intelligenz zu einem Vermögenswert zu machen, den man verbessern kann und der anfängt, echten Wert zu schaffen.<br><br>Hier spielen:<br><a href=\"https://t.me/iqPumpBot?startapp\">https://t.me/iqPumpBot?startapp</a><br><br>Kanal:<br><a href=\"https://t.me/IQ_PUMP_RU\">https://t.me/IQ_PUMP_RU</a>",
       "links": [
         {
-          "label": "Hier spielen",
+          "label": "Telegram",
           "href": "https://t.me/iqPumpBot?startapp",
           "external": true
         },
         {
-          "label": "Kanal",
+          "label": "Telegram",
           "href": "https://t.me/IQ_PUMP_RU",
           "external": true
+        }
+      ]
+    },
+    "me": {
+      "title": "IQ Pump",
+      "summary": "Ovo je moj pokušaj da povežem inteligenciju i Web3. Format je igra na Telegramu, gdje se znanje i brzina razmišljanja mogu bukvalno monetizovati. Igrači odgovaraju na pitanja, učestvuju u turnirima i dobijaju nagrade u tokenima. Ideja je jednostavna: učiniti da inteligencija postane aktiv koji možeš unapređivati i koji počinje da donosi stvarnu vrijednost.",
+      "detailsHtml": "Ovo je moj pokušaj da povežem inteligenciju i Web3. Format je igra na Telegramu, gdje se znanje i brzina razmišljanja mogu bukvalno monetizovati. Igrači odgovaraju na pitanja, učestvuju u turnirima i dobijaju nagrade u tokenima. Ideja je jednostavna: učiniti da inteligencija postane aktiv koji možeš unapređivati i koji počinje da donosi stvarnu vrijednost.<br><br>Igraj ovdje:<br><a href=\"https://t.me/iqPumpBot?startapp\">https://t.me/iqPumpBot?startapp</a><br><br>Kanal:<br><a href=\"https://t.me/IQ_PUMP_RU\">https://t.me/IQ_PUMP_RU</a>",
+      "links": [
+        {
+          "label": "Telegram",
+          "href": "https://t.me/iqPumpBot?startapp",
+          "external": true
         },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/IQ_PUMP_RU",
+          "external": true
+        }
+      ]
+    },
+    "es": {
+      "title": "IQ Pump",
+      "summary": "Este es mi intento de unir la inteligencia y Web3. El formato es un juego en Telegram donde el conocimiento y la rapidez mental pueden literalmente monetizarse. Los jugadores responden preguntas, participan en torneos y reciben recompensas en tokens. La idea es simple: hacer que la inteligencia se convierta en un activo que puede mejorarse y que empieza a aportar valor real.",
+      "detailsHtml": "Este es mi intento de unir la inteligencia y Web3. El formato es un juego en Telegram donde el conocimiento y la rapidez mental pueden literalmente monetizarse. Los jugadores responden preguntas, participan en torneos y reciben recompensas en tokens. La idea es simple: hacer que la inteligencia se convierta en un activo que puede mejorarse y que empieza a aportar valor real.<br><br>Juega aquí:<br><a href=\"https://t.me/iqPumpBot?startapp\">https://t.me/iqPumpBot?startapp</a><br><br>Canal:<br><a href=\"https://t.me/IQ_PUMP_RU\">https://t.me/IQ_PUMP_RU</a>",
+      "links": [
         {
           "label": "Telegram",
           "href": "https://t.me/iqPumpBot?startapp",
@@ -91,6 +95,8 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine",
+    "es": "machine"
   }
 }
