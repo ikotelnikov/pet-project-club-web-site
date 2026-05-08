@@ -54,11 +54,24 @@
           "external": true
         }
       ]
+    },
+    "es": {
+      "title": "Win-Win",
+      "summary": "Un juego descentralizado que funciona completamente en un contrato inteligente, utilizando aleatorización a través de Chainlink.",
+      "detailsHtml": "<p>Un juego descentralizado que funciona completamente en un contrato inteligente, utilizando aleatorización a través de Chainlink. Su base es una lógica de juego transparente, donde todas las reglas y resultados se determinan on-chain, sin un centro de control. Es un experimento con el formato de «economías de juego», en las que los participantes interactúan directamente con el código y la confianza se garantiza no por la plataforma, sino por la propia arquitectura.</p>",
+      "links": [
+        {
+          "label": "win.stt.market",
+          "href": "http://win.stt.market",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
