@@ -20,11 +20,11 @@ export const ENTITY_CONFIG = {
   },
   participant: {
     requiredFields: {
-      create: ["slug", "handle", "name", "role", "bio", "points"],
-      update: ["slug", "handle", "name", "role", "bio", "points"],
+      create: ["slug", "name", "role", "bio", "points"],
+      update: ["slug", "name", "role", "bio", "points"],
       delete: ["slug"],
     },
-    optionalFields: ["detailsHtml", "photoalt", "location", "tags", "link"],
+    optionalFields: ["handle", "detailsHtml", "photoalt", "location", "tags", "link"],
   },
   project: {
     requiredFields: {
