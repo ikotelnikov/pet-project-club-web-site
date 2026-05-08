@@ -18,7 +18,8 @@
       "links": [
         {
           "label": "telegram",
-          "href": "https://t.me/asprofpv"
+          "href": "https://t.me/asprofpv",
+          "external": true
         }
       ]
     },
@@ -30,7 +31,8 @@
       "links": [
         {
           "label": "Telegram",
-          "href": "https://t.me/asprofpv"
+          "href": "https://t.me/asprofpv",
+          "external": true
         }
       ]
     },
@@ -42,7 +44,21 @@
       "links": [
         {
           "label": "telegram",
-          "href": "https://t.me/asprofpv"
+          "href": "https://t.me/asprofpv",
+          "external": true
+        }
+      ]
+    },
+    "es": {
+      "handle": "asker",
+      "name": "Asker",
+      "role": "operador de dron y videógrafo inmobiliario",
+      "bio": "Me llamo Asker. Crecí en una familia de agentes inmobiliarios, trabajé como agente y tasador. Ahora filmo propiedades para que sean valoradas como merecen. Utilizo drones FPV para crear una experiencia inmersiva y tomas aéreas clásicas. También empleo inteligencia artificial en mi trabajo, por lo que puedo crear videos incluso a distancia según tus referencias.",
+      "links": [
+        {
+          "label": "telegram",
+          "href": "https://t.me/asprofpv",
+          "external": true
         }
       ]
     }
@@ -50,12 +66,14 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   },
   "links": [
     {
       "label": "telegram",
-      "href": "https://t.me/asprofpv"
+      "href": "https://t.me/asprofpv",
+      "external": true
     }
   ]
 }
