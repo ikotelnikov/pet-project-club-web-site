@@ -45,10 +45,38 @@
           "external": true
         }
       ]
+    },
+    "me": {
+      "title": "STT",
+      "stack": "L2 Arbitrum, Web3, pametni ugovori, tokenomika",
+      "summary": "Osnovni Web3 proizvod na kojem trenutno radim je STT.Market. To je set pametnih ugovora u L2 mreži Arbitrum, izgrađen oko nativnog STT tokena sa deflatornim modelom. Unutar projekta razvijam pristup u kojem decentralizovane finansije postaju ne samo transparentne, već i primjenjive: sistem omogućava projektima i biznisima (uključujući B2C segment) da uvode on-chain referalne programe, tokenizuju svoje proizvode i grade nove formate interakcije sa publikom. Poseban fokus je na kreiranju alata koji se mogu koristiti za privlačenje venture kapitala putem Web3 mehanike.",
+      "detailsHtml": "<p>Osnovni Web3 proizvod na kojem trenutno radim je STT.Market. To je set pametnih ugovora u L2 mreži Arbitrum, izgrađen oko nativnog STT tokena sa deflatornim modelom. Unutar projekta razvijam pristup u kojem decentralizovane finansije postaju ne samo transparentne, već i primjenjive: sistem omogućava projektima i biznisima (uključujući B2C segment) da uvode on-chain referalne programe, tokenizuju svoje proizvode i grade nove formate interakcije sa publikom. Poseban fokus je na kreiranju alata koji se mogu koristiti za privlačenje venture kapitala putem Web3 mehanike.</p>",
+      "links": [
+        {
+          "label": "Sajt",
+          "href": "http://stt.market",
+          "external": true
+        }
+      ]
+    },
+    "es": {
+      "title": "STT",
+      "stack": "L2 Arbitrum, Web3, contratos inteligentes, tokenomía",
+      "summary": "El producto Web3 principal en el que estoy trabajando actualmente es STT.Market. Es un conjunto de contratos inteligentes en la red L2 de Arbitrum, construido en torno al token nativo STT con un modelo deflacionario. Estoy desarrollando un enfoque que hace que las finanzas descentralizadas sean no solo transparentes, sino también aplicables en la práctica: el sistema permite a los proyectos y negocios (incluido el segmento B2C) implementar programas de referidos on-chain, tokenizar sus productos y establecer nuevos formatos de interacción con la audiencia. Un foco aparte es la creación de herramientas que puedan ser utilizadas para atraer capital de riesgo a través de mecánicas Web3.",
+      "detailsHtml": "<p>El producto Web3 principal en el que estoy trabajando actualmente es STT.Market. Es un conjunto de contratos inteligentes en la red L2 de Arbitrum, construido en torno al token nativo STT con un modelo deflacionario. Estoy desarrollando un enfoque que hace que las finanzas descentralizadas sean no solo transparentes, sino también aplicables en la práctica: el sistema permite a los proyectos y negocios (incluido el segmento B2C) implementar programas de referidos on-chain, tokenizar sus productos y establecer nuevos formatos de interacción con la audiencia. Un foco aparte es la creación de herramientas que puedan ser utilizadas para atraer capital de riesgo a través de mecánicas Web3.</p>",
+      "links": [
+        {
+          "label": "Sitio web",
+          "href": "http://stt.market",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine",
+    "es": "machine"
   }
 }
