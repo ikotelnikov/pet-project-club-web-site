@@ -46,17 +46,24 @@
       ]
     },
     "es": {
-      "handle": null,
-      "name": "Margarita Medonetskaya",
-      "role": "emprendedora, experta en economía digital y Web3, fundadora del club «Investeya»",
-      "bio": "Se especializa en el lanzamiento y desarrollo de proyectos en el ámbito de blockchain, tokenización y servicios digitales. Ha creado un ecosistema que une formación, herramientas cripto e implementación práctica de tecnologías a través de soluciones propias, incluyendo un simulador cripto basado en contratos inteligentes y productos digitales. Trabaja en la intersección de tecnología y educación, ayudando a las personas — especialmente mujeres de más de 45 años — a adaptarse a la nueva realidad digital, dominar Web3 y construir sus propias fuentes de ingresos. Posee experiencia práctica en el lanzamiento de proyectos IT, automatización de procesos empresariales, creación de embudos de venta y sistemas de socios. Lidera el desarrollo de un proyecto internacional con base legal en Montenegro y su propia infraestructura digital."
+      "handle": "@SuperDriver8",
+      "name": "Margarita Medoneckaya",
+      "role": "emprendedora, experta en economía digital y Web3, fundadora del club «Investea»",
+      "bio": "Se especializa en el lanzamiento y desarrollo de proyectos en el ámbito de blockchain, tokenización y servicios digitales. Ha creado un ecosistema que combina educación, herramientas cripto y la implementación práctica de tecnologías a través de sus propias soluciones, incluyendo un simulador cripto basado en contratos inteligentes y productos digitales.\n\nTrabaja en la intersección de la tecnología y la educación, ayudando a las personas —especialmente a mujeres mayores de 45 años— a adaptarse a la nueva realidad digital, dominar Web3 y construir sus propias fuentes de ingresos.\n\nTiene experiencia práctica en el lanzamiento de proyectos de TI, automatización de procesos empresariales, creación de embudos de ventas y sistemas de socios. Dirige el desarrollo de un proyecto internacional con base legal en Montenegro y su propia infraestructura digital.",
+      "links": [
+        {
+          "label": "Telegram",
+          "href": "https://t.me/SuperDriver8",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
     "me": "machine",
-    "es": "stale"
+    "es": "machine"
   },
   "photo": {
     "src": "assets/uploads/272981189/474-photo-474-AQADuxNrG_ojCEt-.jpg",
