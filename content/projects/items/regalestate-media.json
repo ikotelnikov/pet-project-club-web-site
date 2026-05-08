@@ -27,7 +27,8 @@
       "links": [
         {
           "label": "regalestate.media",
-          "href": "https://regalestate.media/"
+          "href": "https://regalestate.media/",
+          "external": true
         }
       ]
     },
@@ -39,7 +40,8 @@
       "links": [
         {
           "label": "regalestate.media",
-          "href": "https://regalestate.media/"
+          "href": "https://regalestate.media/",
+          "external": true
         }
       ]
     },
@@ -51,7 +53,21 @@
       "links": [
         {
           "label": "regalestate.media",
-          "href": "https://regalestate.media/"
+          "href": "https://regalestate.media/",
+          "external": true
+        }
+      ]
+    },
+    "es": {
+      "title": "Regal Estate Media",
+      "status": "active",
+      "stack": "videografía con drones, tours FPV, visualización con IA",
+      "summary": "Esta es la historia de cómo un hobby de filmación con drones FPV se convirtió en una productora de bienes raíces de lujo: videografía con drones, tours FPV y visualización con IA. El video como herramienta para la venta de propiedades y el fortalecimiento de la marca de las agencias.",
+      "links": [
+        {
+          "label": "regalestate.media",
+          "href": "https://regalestate.media/",
+          "external": true
         }
       ]
     }
@@ -59,12 +75,14 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   },
   "links": [
     {
       "label": "regalestate.media",
-      "href": "https://regalestate.media/"
+      "href": "https://regalestate.media/",
+      "external": true
     }
   ]
 }
