@@ -1,5 +1,4 @@
 {
-  "handle": "ilya",
   "name": "Илья",
   "role": "CTO, Founder / Co-founder",
   "bio": "Я занимаюсь IT уже около 20 лет: разрабатываю, запускаю и развиваю цифровые продукты. Мой основной проект — крупный медицинский портал с аудиторией около 400 тысяч посетителей в сутки. Прошёл путь от разработки до управления технической частью и продуктовым развитием проектов. Сейчас сфокусирован на поиске новых идей и запуске продуктов, которые можно масштабировать на международный рынок. Мне интересны AI, автоматизация, SaaS, пользовательские сервисы и продукты с понятной бизнес-моделью.",
@@ -12,7 +11,6 @@
   "sourceLocale": "ru",
   "translations": {
     "en": {
-      "handle": "ilya",
       "name": "Ilya",
       "role": "CTO, Founder / Co-founder",
       "bio": "I have been working in IT for about 20 years: developing, launching, and growing digital products. My main project is a large medical portal with an audience of about 400 thousand visitors per day. I have gone through the path from development to managing the technical part and product development of projects. Currently, I am focused on finding new ideas and launching products that can be scaled to the international market. I am interested in AI, automation, SaaS, user services, and products with a clear business model.",
@@ -26,7 +24,6 @@
       ]
     },
     "de": {
-      "handle": "ilya",
       "name": "Ilya",
       "role": "CTO, Gründer / Mitgründer",
       "bio": "Ich arbeite seit etwa 20 Jahren in der IT: Ich entwickle, starte und entwickle digitale Produkte. Mein Hauptprojekt ist ein großes medizinisches Portal mit einer täglichen Nutzerzahl von etwa 400.000 Besuchern. Ich habe den Weg von der Entwicklung bis zur Leitung des technischen Bereichs und der Produktentwicklung durchlaufen. Derzeit konzentriere ich mich darauf, neue Ideen zu finden und Produkte zu starten, die international skaliert werden können. Ich interessiere mich für KI, Automatisierung, SaaS, nutzerorientierte Services und Produkte mit einem klaren Geschäftsmodell.",
@@ -40,7 +37,6 @@
       ]
     },
     "me": {
-      "handle": "ilya",
       "name": "Ilja",
       "role": "CTO, Osnivač / Ko-osnivač",
       "bio": "Već oko 20 godina radim u IT-u: razvijam, pokrećem i unapređujem digitalne proizvode. Moj glavni projekat je veliki medicinski portal sa oko 400 hiljada poseta dnevno. Prošao sam put od razvoja do upravljanja tehničkim delom i razvojem proizvoda. Sada sam fokusiran na pronalaženje novih ideja i pokretanje proizvoda koje se mogu skalirati na internacionalno tržište. Zanimaju me AI, automatizacija, SaaS, korisničke usluge i proizvodi sa jasnim poslovnim modelom.",
@@ -54,7 +50,6 @@
       ]
     },
     "es": {
-      "handle": "ilya",
       "name": "Ilya",
       "role": "CTO, Fundador / Co-fundador",
       "bio": "He trabajado en TI durante unos 20 años: desarrollo, lanzo y desarrollo productos digitales. Mi proyecto principal es un portal médico importante con una audiencia de aproximadamente 400 mil visitantes diarios. He recorrido el camino desde el desarrollo hasta la gestión de la parte técnica y el desarrollo de productos de los proyectos. Actualmente me enfoco en buscar nuevas ideas y lanzar productos que puedan escalarse en el mercado internacional. Me interesan la IA, la automatización, el SaaS, los servicios para usuarios y los productos con un modelo de negocio claro.",
