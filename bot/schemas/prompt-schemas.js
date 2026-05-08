@@ -1,11 +1,11 @@
 export const ENTITY_SCHEMAS = {
   participant: {
     entity: "participant",
-    required: ["slug", "handle", "name", "role", "bio"],
-    optional: ["slug", "detailsHtml", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
+    required: ["slug", "name", "role", "bio"],
+    optional: ["slug", "handle", "detailsHtml", "points", "location", "tags", "links", "photoAlt", "photoStagedPath", "locale", "sourceLocale"],
     fieldTypes: {
       slug: "string",
-      handle: "string",
+      handle: "string, only when the user directly provides a Telegram-style @handle",
       name: "string",
       role: "string",
       bio: "string",
