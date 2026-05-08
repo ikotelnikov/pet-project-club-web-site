@@ -90,12 +90,35 @@
         "Regularnost, struktura, podrška i pritisak okruženja pomažu u napretku projekta"
       ],
       "location": "Monteko"
+    },
+    "es": {
+      "title": "Polako Acelerador",
+      "summary": "Un gimnasio para tus pet projects",
+      "detailsHtml": "<p>Polako Acelerador es un lugar donde vienes regularmente a “entrenar” tu proyecto, igual que la gente va al gimnasio a entrenar su cuerpo.</p><p><strong>📍 Presencial en Monteco</strong><br><strong>🕔 Por la tarde, de 17:00 a 20:00</strong><br><strong>📅 1–5 veces por semana — tú eliges</strong></p><p><strong>💡 Cómo funciona</strong><br>Vienes con tu idea o proyecto — y no te quedas solo con ello.</p><ul><li>Juntos discutimos tu idea</li><li>Con la ayuda de YPMO la convertimos en un plan claro</li><li>Sigues avanzando según el plan con mi apoyo</li><li>Y con el apoyo de otros participantes</li></ul><p>No son clases ni un curso.<br>Es trabajo regular en tu proyecto en el entorno adecuado.</p><p><strong>⚙️ Formato de trabajo (Scrum simple)</strong><br>Cada proyecto trabaja en iteraciones cortas:</p><ul><li>📅 Iteración = 5 sesiones de trabajo</li><li>🧠 Día 1 — planificación de tareas (backlog)</li><li>🛠 Días 2–4 — trabajo + discusiones cortas</li><li>🎤 Día 5 — demo para otros participantes</li></ul><p>Importante:<br>estos 5 días pueden ser:</p><ul><li>en 1 semana (si vienes a menudo)</li><li>o en un mes (si vienes 1–2 veces a la semana)</li></ul><p>👉 Tú marcas el ritmo — el sistema se adapta a ti.</p><p><strong>🎯 Qué obtienes</strong><br>Acceso ilimitado a YPMO<br>— tu asistente AI para el trabajo de producto</p><ul><li>Mi participación (Senior Product Manager) — hasta 2 horas al mes de trabajo personal en tu proyecto</li><li>Ambiente de coworking — hasta 5 días a la semana, 17:00–20:00 — puestos de trabajo + opción de calls</li><li>Ayuda en la planificación — convertimos el caos en un roadmap claro</li><li>Comunidad y apoyo — feedback, ideas, ayuda de otros participantes — ambiente laboral real, sin infonegocio</li></ul><p><strong>🤝 ¿Dónde está el valor?</strong><br>Trabajo habitual → te da dinero ahora<br>Pet project → te da una oportunidad para el futuro</p><p>Pero hay un problema:<br>👉 en solitario los proyectos casi siempre “mueren”</p><p>Polako Acelerador lo resuelve a través de:</p><ul><li>regularidad</li><li>estructura</li><li>apoyo</li><li>y la presión del entorno (en el buen sentido)</li></ul><p>🧠 En resumen<br>No es formación.<br>No es consultoría.<br>Es un sistema donde tu proyecto empieza a moverse.</p>",
+      "points": [
+        "Presencial en Monteco",
+        "Por la tarde, de 17:00 a 20:00",
+        "1–5 veces por semana — tú eliges",
+        "Formato de trabajo: Scrum simple",
+        "Iteración = 5 sesiones de trabajo",
+        "Día 1 — planificación de tareas (backlog)",
+        "Días 2–4 — trabajo + discusiones cortas",
+        "Día 5 — demo para otros participantes",
+        "Acceso ilimitado a YPMO — tu asistente AI para el trabajo de producto",
+        "Participación de Senior Product Manager — hasta 2 horas al mes de trabajo personal",
+        "Ambiente de coworking — hasta 5 días a la semana, 17:00–20:00",
+        "Ayuda en la planificación — convertimos el caos en un roadmap claro",
+        "Comunidad y apoyo — feedback, ideas, ayuda de otros participantes",
+        "La regularidad, estructura, apoyo y presión del entorno ayudan a mover tu proyecto"
+      ],
+      "location": "Monteco"
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   },
   "photo": {
     "src": "assets/uploads/272981189/533-photo-533-AQAD9RJrGzeGGUt-.jpg",
