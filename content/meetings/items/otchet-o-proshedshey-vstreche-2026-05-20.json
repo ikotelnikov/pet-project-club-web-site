@@ -56,11 +56,26 @@
         "Najvažnije — dogovorili smo se o konkretnim koracima kako možemo pomoći jedni drugima: podijeliti kontakte i napraviti intro u investicioni fond, obezbijediti račun za primanje internet uplata, i slično. I opet sam se uvjerio koliko su povjerenje i informacije dragocjeni resursi.",
         "Uglavnom, format \"slobodnih sastanaka\" je dobra tema, treba nastaviti dalje."
       ]
+    },
+    "es": {
+      "date": "2026-05-20",
+      "title": "Informe de la reunión 20.05.2026",
+      "place": "no especificado",
+      "format": "online",
+      "paragraphs": [
+        "Ayer éramos solo 4. Alguien se enfermó, otro no vino por el trabajo, otro por una reunión paralela, presentaciones de los niños y demás (gracias por avisarme, lo aprecio mucho 🤝), y además esta vez no pude activar la transmisión de Google Meet (como si hubieran limitado nuevamente la tarifa gratuita), pero...",
+        "Pero a pesar de todo esto, resultó MUY interesante. No sé cómo sucede, pero cuando somos pocos, cada uno recibe más tiempo y espacio, y a veces resulta realmente wow.",
+        "Discutimos problemas y preguntas que van desde cómo y quién podría resolver problemas de la comunidad de TI en Montenegro, como la conexión de cuentas de comercio electrónico en bancos y la búsqueda de inversiones 💸, hasta problemas de protección de cultivos contra babosas y la interacción adecuada con empleados hippie-pacifistas ☮️.",
+        "Hablamos de pet-proyectos: un acelerador para pet-proyectos, un juego para la compra/generación segura de cripto (me costó entender la mecánica), un mercadillo (con filtros adecuados y registro rápido), un huerto electrónico y la aplicación de IA en la vida agrícola real. Fue — ¡qué increíble! 🔥🔥🔥",
+        "Lo más importante — acordamos pasos concretos sobre cómo podemos ayudarnos mutuamente: compartir contactos, hacer introducciones a fondos de inversión, proporcionar cuentas para recibir pagos en línea, etc. Y una vez más me convencí de lo valiosos que son la confianza y la información.",
+        "En general, el formato de “reuniones libres” es un buen tema, hay que continuar."
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
