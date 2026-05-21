@@ -57,13 +57,17 @@
       "place": "nije navedeno",
       "format": "online",
       "paragraphs": [
-        "Jučer nas je bilo samo 4. Neko je bio bolestan, neko nije došao zbog posla, neko zbog paralelnog sastanka, dječjih nastupa i tako dalje (hvala što me obavještavate, jako cijenim 🤝), a još iz nekog razloga nisam uspio ovaj put uključiti Google Meet prenos (kao da su ponovo dodatno ograničili besplatni paket), ali...",
-        "Ipak, uprkos svemu tome, bilo je VRLO zanimljivo. Ne znam kako to izlazi, ali kao da kada nas je malo, svako dobije više vremena i prostora, i ponekad ispadne baš vau.",
-        "Razmotrili smo probleme i pitanja, počevši od toga kako i ko bi mogao riješiti probleme IT zajednice u Crnoj Gori, poput povezivanja e-commerce računa u bankama i pronalaska investicija💸, pa do problema zaštite useva od puževa i korektne saradnje sa hipi-pacifističkim zaposlenima ☮️.",
-        "Razmatrali smo Pet-projekte — akcelerator za pet-projekte, igru za sigurnu kupovinu/generisanje kripto valute (dugo sam se mučio da shvatim mehaniku), buvljak (sa normalnim filtrima i brzom registracijom), elektronsku baštu i primjenu AI u stvarnom farmerskom životu. Bilo je — vau kako sjajno🔥🔥🔥",
-        "Najvažnije — dogovorili smo se o konkretnim koracima kako možemo pomoći jedni drugima: podijeliti kontakte i napraviti intro u investicioni fond, obezbijediti račun za primanje internet uplata, i slično. I opet sam se uvjerio koliko su povjerenje i informacije dragocjeni resursi.",
-        "Uglavnom, format \"slobodnih sastanaka\" je dobra tema, treba nastaviti dalje."
-      ]
+        "Jučer je nas bilo samo 4. Neko je bio bolestan, neko nije došao zbog posla, neko zbog paralelnog sastanka, nastupa djece i tako dalje (hvala što me obavještavate, jako cijenim 🤝), a još mi nekako ovaj put nije uspjelo da uključim Google Meet prijenos (kao da su opet dodatno ograničili besplatni tarif), ali...",
+        "I pored svega toga, ispalo je VRLO zanimljivo. Ne znam kako to ide, ali kao da, kad nas je malo, svako dobije više vremena i prostora, i ponekad bude pravo vau.",
+        "Razgovarali smo o problemima i pitanjima počevši od toga kako i ko bi mogao riješiti probleme IT zajednice u Crnoj Gori kao što su povezivanje e-commerce računa u bankama i traženje investicija💸, pa do problema zaštite useva od puževa i korektne interakcije sa hippie-pacifističkim zaposlenima ☮️.",
+        "Razmotrili smo pet-projekte — akcelerator za pet-projekte, igru za sigurnu kupovinu/generisanje kripta (dugo sam se mučio i nisam mogao shvatiti mehaniku), buvljak (sa normalnim filterima i brzom registracijom), elektronsku gajbu i primjenu AI u stvarnom farmerskom životu. To je bilo — vau kako sjajno🔥🔥🔥",
+        "Najvažnije — dogovorili smo se o konkretnim koracima kako možemo pomoći jedni drugima: podijeliti kontakt, napraviti intro u invest fond, omogućiti račun za primanje internet uplata, i slično. I opet sam uvjeren koliko su povjerenje i informacije dragocjeni resursi.",
+        "Ukratko, format \"slobodnih sastanaka\" — odlična tema, treba nastaviti."
+      ],
+      "photo": {
+        "src": "assets/uploads/272981189/985-photo-985-AQADDh5rG-XreUh-.jpg",
+        "alt": "Fotografija priložena uz izvještaj sa sastanka 20.05.2026"
+      }
     },
     "es": {
       "date": "2026-05-20",
@@ -83,7 +87,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   },
   "photo": {
