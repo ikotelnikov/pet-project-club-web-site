@@ -21,13 +21,17 @@
       "place": "not specified",
       "format": "online",
       "paragraphs": [
-        "Yesterday there were only 4 of us. Someone was sick, someone didn't come because of work, someone because of a parallel meeting, children's performances, and so on (thank you for letting me know, I really appreciate it 🤝), and also for some reason I couldn’t start the Google Meet broadcast this time (as if they have additionally limited the free plan again), but...",
-        "But despite all that, it turned out to be VERY interesting. I don’t know how it happens, but it seems that when there are few of us, everyone gets more time and space, and sometimes it turns out to be really wow.",
-        "We discussed problems and questions ranging from how and who could solve the issues of the IT community in Montenegro, such as connecting e-commerce accounts in banks and finding investments💸, to problems of crop protection from slugs and proper interaction with hippie-pacifist employees ☮️.",
-        "We discussed Pet projects — an accelerator for pet projects, a game for safe buying/generating crypto (I was confused for a long time and couldn't understand the mechanics), a flea market (with decent filters and quick registration), an electronic garden bed, and the use of AI in real farming life. It was — wow, so cool🔥🔥🔥",
-        "Most importantly, we agreed on concrete steps on how we can help each other: share contacts, make intros to an investment fund, provide an account for receiving online payments, etc. And once again, I realized how valuable trust and information are as resources.",
-        "In general, the \"free meetings\" format is a good idea, we should continue."
-      ]
+        "Yesterday there were only 4 of us. Someone got sick, someone didn’t come because of work, someone because of a parallel meeting, children's performances, and so on (thank you for letting me know, I really appreciate it 🤝), and also for some reason I couldn’t enable the Google Meet broadcast this time (as if they have again limited the free tier), but...",
+        "Despite all that, it turned out VERY interesting. I don’t know how it works, but it’s like when there are fewer of us, everyone gets more time and space, and sometimes it turns out just wow.",
+        "We discussed problems and questions ranging from how and who could solve IT community issues in Montenegro such as connecting e-commerce accounts in banks and finding investments💸, to problems of protecting crops from slugs and proper interaction with hippie-pacifist employees ☮️.",
+        "We discussed pet projects — an accelerator for pet projects, a game for safe purchase/generation of crypto (I was slow to figure out the mechanics), a flea market (with decent filters and quick registration), an electronic garden bed, and the use of AI in real farming life. It was—wow, so cool🔥🔥🔥",
+        "The most important thing — we agreed on specific steps on how we can help each other: share contacts, make introductions to an investment fund, provide an account for receiving online payments, etc. And once again I realized how valuable trust and information are as resources.",
+        "In general, the format of “open meetings” is a good thing, we should continue."
+      ],
+      "photo": {
+        "src": "assets/uploads/272981189/985-photo-985-AQADDh5rG-XreUh-.jpg",
+        "alt": "Photo attached to meeting report 20.05.2026"
+      }
     },
     "de": {
       "date": "2026-05-20",
@@ -73,7 +77,7 @@
     }
   },
   "translationStatus": {
-    "en": "stale",
+    "en": "machine",
     "de": "stale",
     "me": "stale",
     "es": "stale"
