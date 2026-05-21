@@ -42,10 +42,25 @@
         "Am wichtigsten ist, dass wir konkrete Schritte vereinbart haben, wie wir uns gegenseitig helfen können: Kontakte austauschen, eine Einführung bei einem Investitionsfonds machen, ein Konto für den Erhalt von Internetzahlungen anbieten usw. Und ich wurde erneut überzeugt, wie wertvoll Vertrauen und Informationen sind.",
         "Insgesamt ist das Format der „freien Treffen“ ein gutes Thema, das man fortsetzen sollte."
       ]
+    },
+    "me": {
+      "date": "2026-05-20",
+      "title": "Izvještaj sa sastanka 20.05.2026",
+      "place": "nije navedeno",
+      "format": "online",
+      "paragraphs": [
+        "Jučer nas je bilo samo 4. Neko je bio bolestan, neko nije došao zbog posla, neko zbog paralelnog sastanka, dječjih nastupa i tako dalje (hvala što me obavještavate, jako cijenim 🤝), a još iz nekog razloga nisam uspio ovaj put uključiti Google Meet prenos (kao da su ponovo dodatno ograničili besplatni paket), ali...",
+        "Ipak, uprkos svemu tome, bilo je VRLO zanimljivo. Ne znam kako to izlazi, ali kao da kada nas je malo, svako dobije više vremena i prostora, i ponekad ispadne baš vau.",
+        "Razmotrili smo probleme i pitanja, počevši od toga kako i ko bi mogao riješiti probleme IT zajednice u Crnoj Gori, poput povezivanja e-commerce računa u bankama i pronalaska investicija💸, pa do problema zaštite useva od puževa i korektne saradnje sa hipi-pacifističkim zaposlenima ☮️.",
+        "Razmatrali smo Pet-projekte — akcelerator za pet-projekte, igru za sigurnu kupovinu/generisanje kripto valute (dugo sam se mučio da shvatim mehaniku), buvljak (sa normalnim filtrima i brzom registracijom), elektronsku baštu i primjenu AI u stvarnom farmerskom životu. Bilo je — vau kako sjajno🔥🔥🔥",
+        "Najvažnije — dogovorili smo se o konkretnim koracima kako možemo pomoći jedni drugima: podijeliti kontakte i napraviti intro u investicioni fond, obezbijediti račun za primanje internet uplata, i slično. I opet sam se uvjerio koliko su povjerenje i informacije dragocjeni resursi.",
+        "Uglavnom, format \"slobodnih sastanaka\" je dobra tema, treba nastaviti dalje."
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
