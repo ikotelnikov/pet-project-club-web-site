@@ -28,9 +28,24 @@
         "Most importantly, we agreed on concrete steps on how we can help each other: share contacts, make intros to an investment fund, provide an account for receiving online payments, etc. And once again, I realized how valuable trust and information are as resources.",
         "In general, the \"free meetings\" format is a good idea, we should continue."
       ]
+    },
+    "de": {
+      "date": "2026-05-20",
+      "title": "Bericht zum Treffen am 20.05.2026",
+      "place": "nicht angegeben",
+      "format": "online",
+      "paragraphs": [
+        "Gestern waren wir nur zu viert. Einige waren krank, andere kamen wegen der Arbeit nicht, wieder andere wegen paralleler Treffen, Auftritten der Kinder usw. (Danke, dass ihr mich informiert, ich schätze das sehr 🤝), außerdem konnte ich diesmal aus irgendeinem Grund die Google Meet-Übertragung nicht einschalten (als hätten sie das kostenlose Angebot erneut eingeschränkt), aber...",
+        "Trotz all dem war es SEHR interessant. Ich weiß nicht, wie das zustande kommt, aber wenn wir wenige sind, hat jeder scheinbar mehr Zeit und Raum, und manchmal entsteht dabei richtig Wow.",
+        "Wir haben Probleme und Fragen besprochen, angefangen damit, wer und wie die Probleme der IT-Community in Montenegro lösen könnte, wie das Verbinden von E-Commerce-Konten bei Banken und die Suche nach Investitionen💸, bis hin zu Problemen beim Schutz der Aussaat vor Schnecken und der korrekten Zusammenarbeit mit hippie-pazifistischen Mitarbeitern ☮️.",
+        "Wir diskutierten Pet-Projekte — einen Accelerator für Pet-Projekte, ein Spiel für sicheren Kauf/Generierung von Krypto (ich habe lange gebraucht, um die Mechanik zu verstehen), einen Flohmarkt (mit vernünftigen Filtern und schneller Registrierung), ein elektronisches Beet und den Einsatz von KI im echten Bauernleben. Das war — wow, wie cool🔥🔥🔥",
+        "Am wichtigsten ist, dass wir konkrete Schritte vereinbart haben, wie wir uns gegenseitig helfen können: Kontakte austauschen, eine Einführung bei einem Investitionsfonds machen, ein Konto für den Erhalt von Internetzahlungen anbieten usw. Und ich wurde erneut überzeugt, wie wertvoll Vertrauen und Informationen sind.",
+        "Insgesamt ist das Format der „freien Treffen“ ein gutes Thema, das man fortsetzen sollte."
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
