@@ -80,6 +80,14 @@
     "me": "machine",
     "es": "machine"
   },
-  "photo": null,
-  "gallery": []
+  "photo": {
+    "src": "assets/uploads/272981189/1002-photo-1002-AQADISJrGzuwgEh-.jpg",
+    "alt": "SYSTEMA.WORKS"
+  },
+  "gallery": [
+    {
+      "src": "assets/uploads/272981189/1002-photo-1002-AQADISJrGzuwgEh-.jpg",
+      "alt": "SYSTEMA.WORKS"
+    }
+  ]
 }
