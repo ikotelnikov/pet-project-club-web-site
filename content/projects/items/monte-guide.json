@@ -40,11 +40,19 @@
       "stack": "Next.js 16, React 19, TypeScript, Mantine, Tailwind CSS, Supabase (PostgreSQL, RLS, Realtime), Mapbox, OpenAI GPT-4o",
       "summary": "Interaktivni vodič kroz Crnu Goru sa preko 1.250 kartica usluga u više od 25 kategorija i pokrivenošću preko 15 gradova. Potpuna višejezičnost sa AI prevodima, sistemom ocenjivanja, korisničkim nalogom za provajdere, premium pretplatama, rezervacijama, četom sa automatskim prevodom i MonteCar ridesharing servisom.",
       "detailsHtml": "<p>Radi kao web aplikacija, PWA i Telegram Mini App.</p><p>Projekat je napisan u Next.js 16 + React 19 + TypeScript korišćenjem Mantine i Tailwind CSS, baza podataka je Supabase (PostgreSQL + RLS + Realtime), mape su preko Mapboxa, AI asistent je OpenAI GPT-4o sa web pretragom.</p><p>Izvorni kod sadrži preko 120 API endpointa, 426+ E2E testova (Playwright), 45 testova pristupačnosti i produkcioni roadmap do prvog kvartala 2027.</p>"
+    },
+    "es": {
+      "title": "Monte Guide",
+      "status": "active",
+      "stack": "Next.js 16, React 19, TypeScript, Mantine, Tailwind CSS, Supabase (PostgreSQL, RLS, Realtime), Mapbox, OpenAI GPT-4o",
+      "summary": "Guía interactiva de Montenegro con más de 1.250 fichas de servicios en más de 25 categorías y cobertura en más de 15 ciudades. Multilingüismo completo con traducciones AI, sistema de reseñas, panel del proveedor, suscripciones premium, reserva, chat con traducción automática y servicio de ridesharing MonteCar.",
+      "detailsHtml": "<p>Funciona como aplicación web, PWA y Mini App de Telegram.</p><p>El proyecto está desarrollado con Next.js 16 + React 19 + TypeScript usando Mantine y Tailwind CSS, base de datos — Supabase (PostgreSQL + RLS + Realtime), mapas — Mapbox, asistente AI — OpenAI GPT-4o con búsqueda web.</p><p>La base de código incluye más de 120 endpoints API, más de 426 pruebas E2E (Playwright), 45 pruebas de accesibilidad y una hoja de ruta de producción hasta el primer trimestre de 2027.</p>"
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
