@@ -71,10 +71,35 @@
           "external": true
         }
       ]
+    },
+    "me": {
+      "handle": "@katrixetto",
+      "name": "Jekaterina Ustinova",
+      "role": "Grafička dizajnerka i kreatorka događaja",
+      "bio": "Već 6 godina kreiram korporativni identitet, a u događajima imam 8 godina iskustva. Osnivačica sam zajednice dizajnera u Crnoj Gori Designers.mne: veb, grafičkih, produkt dizajnera i drugih stručnjaka. Iza mene je više od 50 događaja u različitim gradovima Rusije, a sada i 20 dizajn susreta i jedan dizajn festival u Crnoj Gori. U slobodno vrijeme, volim da kreiram promišljene i na ljude usmjerene događaje koji pomažu rast, pronalaženje istomišljenika i sticanje veće sigurnosti na svom putu. Designers.mne je projekt za koji sam strastvena. Već 2 godine zaredom okupljamo se svake treće nedjelje na tematskim susretima posvećenim različitim aktuelnim pitanjima iz oblasti dizajna. U oktobru 2025. godine organizovali smo čitav festival Design.mne.fest, koji je okupio više od 50 učesnika, bio uspješan finansijski, a naša zajednica je narasla na preko 195 aktivnih dizajnera. Pokazalo se da je potreba za ovakvim događajima ogromna.",
+      "detailsHtml": "<p>Već 6 godina kreiram korporativni identitet, a u događajima imam 8 godina iskustva. Osnivačica sam zajednice dizajnera u Crnoj Gori Designers.mne: veb, grafičkih, produkt dizajnera i drugih stručnjaka.</p><p>Iza mene je više od 50 događaja u različitim gradovima Rusije, a sada i 20 dizajn susreta i jedan dizajn festival u Crnoj Gori.</p><p>U slobodno vrijeme, volim da kreiram promišljene i na ljude usmjerene događaje koji pomažu rast, pronalaženje istomišljenika i sticanje veće sigurnosti na svom putu.</p><p>Designers.mne je projekt za koji sam strastvena.</p><p>Već 2 godine zaredom okupljamo se svake treće nedjelje na tematskim susretima posvećenim različitim aktuelnim pitanjima iz oblasti dizajna.</p><p>U oktobru 2025. godine organizovali smo čitav festival Design.mne.fest, koji je okupio više od 50 učesnika, bio uspješan finansijski, a naša zajednica je narasla na preko 195 aktivnih dizajnera. Pokazalo se da je potreba za ovakvim događajima ogromna.</p><p>Kako zajednica može biti korisna:</p><ul><li>Pronalaženje dizajnera. Imamo posebnu temu „Posao“ u kojoj možete pronaći stručnjaka za vaš projekat.</li><li>Komunikacija i uvidi. Možete doći na susret, saznati o trendovima i dobiti savjet za vaš proizvod.</li><li>Promocija projekata. Ako imate servis ili proizvod koji je aktuelan za dizajnersku publiku, možete ga predstaviti u ćaskanju ili na događaju.</li><li>Zajednički događaji. Otvoreni smo za saradnju na spoju dizajna i vašeg projekta.</li></ul><p>Gdje pratiti:</p><p>📱: @designers.mne</p><p>📱: @designersmne</p><p>Saјt: <a href=\"https://www.designersmne.space/\">www.designersmne.space</a></p><p>Moj kontakt: @katrixetto ⭐️</p>",
+      "links": [
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/designers.mne",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/designermne",
+          "external": true
+        },
+        {
+          "label": "designersmne.space",
+          "href": "https://www.designersmne.space/",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
