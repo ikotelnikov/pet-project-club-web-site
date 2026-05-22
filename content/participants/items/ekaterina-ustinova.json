@@ -22,5 +22,34 @@
     }
   ],
   "slug": "ekaterina-ustinova",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "handle": "@katrixetto",
+      "name": "Ekaterina Ustinova",
+      "role": "Graphic Designer and Event Creator",
+      "bio": "I have been creating brand identities for 6 years and working in events for 8 years. Founder of the designers' community in Montenegro, Designers.mne: web, graphic, product designers, and other specialists. Over 50 events organized in various Russian cities, and now 20 design meetings and 1 design festival in Montenegro. In my free time from design work, I enjoy creating thoughtful and human-centered events that help people grow, find like-minded individuals, and become more confident in their path. Designers.mne is a project I am passionate about. For 2 years running, we gather every 3 weeks on Sundays for themed meetings focused on various current design topics. In October 2025, we organized a full festival, Design.mne.fest, which attracted over 50 participants, was profitable, and our community grew to over 195 active designers. It turned out the demand for events of this kind is huge.",
+      "detailsHtml": "<p>I have been creating brand identities for 6 years and working in events for 8 years. Founder of the designers' community in Montenegro, Designers.mne: web, graphic, product designers, and other specialists.</p><p>Over 50 events organized in various Russian cities, and now 20 design meetings and 1 design festival in Montenegro.</p><p>In my free time from design work, I enjoy creating thoughtful and human-centered events that help people grow, find like-minded individuals, and become more confident in their path.</p><p>Designers.mne is a project I am passionate about.</p><p>For 2 years running, we gather every 3 weeks on Sundays for themed meetings focused on various current design topics.</p><p>In October 2025, we organized a full festival, Design.mne.fest, which attracted over 50 participants, was profitable, and our community grew to over 195 active designers. It turned out the demand for events of this kind is huge.</p><p>How the community can be useful:</p><ul><li>Finding designers. We have a separate “Jobs” thread where you can find a specialist for your project.</li><li>Communication and insights. You can come to a meeting, learn about trends, and get advice on your product.</li><li>Project promotion. If you have a service or product relevant to a design audience, you can present it in the chat or at an event.</li><li>Joint events. We are open to collaborations at the intersection of design and your project.</li></ul><p>Where to follow:</p><p>📱: @designers.mne</p><p>📱: @designersmne</p><p>Website: <a href=\"https://www.designersmne.space/\">www.designersmne.space</a></p><p>My contact: @katrixetto ⭐️</p>",
+      "links": [
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/designers.mne",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/designermne",
+          "external": true
+        },
+        {
+          "label": "designersmne.space",
+          "href": "https://www.designersmne.space/",
+          "external": true
+        }
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
