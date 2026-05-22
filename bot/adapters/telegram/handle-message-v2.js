@@ -178,6 +178,32 @@ function sanitizeTurnForDebug(turn) {
   };
 }
 
+function collectTurnAttachments(turn, fallbackAttachments = []) {
+  const seen = new Set();
+  const result = [];
+  const messages = Array.isArray(turn?.messages) ? turn.messages : [];
+  const candidates = [
+    ...messages.flatMap((entry) => Array.isArray(entry.attachments) ? entry.attachments : []),
+    ...(Array.isArray(fallbackAttachments) ? fallbackAttachments : []),
+  ];
+
+  for (const attachment of candidates) {
+    if (!attachment || typeof attachment !== "object") {
+      continue;
+    }
+
+    const key = attachment.stagedPath || attachment.fileUniqueId || attachment.fileId || `${attachment.kind}:${attachment.fileName}`;
+    if (seen.has(key)) {
+      continue;
+    }
+
+    seen.add(key);
+    result.push(attachment);
+  }
+
+  return result;
+}
+
 function getEntitySchema(entity) {
   return ENTITY_SCHEMAS[entity] || { entity };
 }
@@ -251,6 +277,8 @@ async function finalizeV2Operation({
   dryRun,
 }) {
   try {
+    const operationAttachments = collectTurnAttachments(turn, attachments);
+
     if (operation.action === "translate") {
       const turnWithSession = applyActiveSessionToTurn(
         turn,
@@ -301,7 +329,7 @@ async function finalizeV2Operation({
           sourceLocale,
           targetLocales,
           preview,
-          attachments: [],
+          attachments: operationAttachments,
           turn: turnWithSession,
           intentHint: buildIntentHint(intent || buildIntentHintFromResolved(resolved)),
         },
@@ -337,14 +365,14 @@ async function finalizeV2Operation({
     const legacyCommand = await operationToLegacyCommand({
       operation,
       resolved,
-      attachments,
+      attachments: operationAttachments,
     });
 
     const validated = validateOperation(legacyCommand);
     const mapped = mapOperationToContent(validated);
     const repositoryPreview = await repository.previewCommand(validated, mapped);
     const preview = buildOperationPreview(validated, repositoryPreview, {
-      attachments,
+      attachments: operationAttachments,
     });
 
     const pending = createPendingRecord({
@@ -360,7 +388,7 @@ async function finalizeV2Operation({
         slug: validated.fields.slug,
         fields: validated.fields,
         preview,
-        attachments,
+        attachments: operationAttachments,
         turn: turnWithSession,
         intentHint: buildIntentHint(intent || buildIntentHintFromResolved(resolved)),
         requestText: turnWithSession.messages.map((item) => item.text).filter(Boolean).join("\n"),

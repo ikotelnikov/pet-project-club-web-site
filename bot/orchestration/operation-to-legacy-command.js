@@ -82,7 +82,7 @@ function normalizeAttachmentEntries(attachments = [], indices = []) {
     }
 
     const attachment = attachments[index];
-    if (attachment?.kind === "photo" && typeof attachment.stagedPath === "string" && attachment.stagedPath.trim() !== "") {
+    if (isPhotoAttachment(attachment)) {
       normalized.push(attachment);
     }
   }
@@ -91,11 +91,20 @@ function normalizeAttachmentEntries(attachments = [], indices = []) {
 }
 
 function getPhotoAttachments(attachments = []) {
-  return attachments.filter((attachment) => (
-    attachment?.kind === "photo" &&
-    typeof attachment.stagedPath === "string" &&
-    attachment.stagedPath.trim() !== ""
-  ));
+  return attachments.filter(isPhotoAttachment);
+}
+
+function isPhotoAttachment(attachment) {
+  if (!attachment || typeof attachment.stagedPath !== "string" || attachment.stagedPath.trim() === "") {
+    return false;
+  }
+
+  if (attachment.kind === "photo") {
+    return true;
+  }
+
+  const mimeType = typeof attachment.mimeType === "string" ? attachment.mimeType.toLowerCase() : "";
+  return attachment.kind === "document" && ["image/jpeg", "image/png", "image/webp"].includes(mimeType);
 }
 
 function hasExplicitPhotoChange(entity, fields = {}) {

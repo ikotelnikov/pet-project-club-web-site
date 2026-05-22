@@ -55,6 +55,32 @@ test("maps project owners to ownerSlugs", () => {
   assert.equal(result.item.sourceLocale, "ru");
 });
 
+test("maps project photoStagedPath when gallery is present but empty", () => {
+  const result = mapCommandToContent({
+    entity: "project",
+    action: "update",
+    fields: {
+      slug: "systema-works",
+      title: "SYSTEMA.WORKS",
+      status: "active",
+      stack: "Next.js",
+      gallery: [],
+      photoStagedPath: "assets/uploads/272981189/1002-photo.jpg",
+      photoAlt: "SYSTEMA.WORKS",
+      photoAction: "append",
+    },
+  });
+
+  assert.deepEqual(result.item.photo, {
+    src: "assets/uploads/272981189/1002-photo.jpg",
+    alt: "SYSTEMA.WORKS",
+  });
+  assert.deepEqual(result.item.gallery, [{
+    src: "assets/uploads/272981189/1002-photo.jpg",
+    alt: "SYSTEMA.WORKS",
+  }]);
+});
+
 test("maps locale-specific translation edits into translations block", () => {
   const result = mapCommandToContent({
     entity: "participant",
@@ -113,4 +139,36 @@ test("promotes multiline participant bio into detailsHtml automatically", () => 
 
   assert.equal(result.item.bio, "First paragraph.\n\nSecond paragraph with https://example.com");
   assert.equal(result.item.detailsHtml, "<p>First paragraph.</p><p>Second paragraph with https://example.com</p>");
+});
+
+test("defaults project-linked announcement visibility out of meetings list", () => {
+  const result = mapCommandToContent({
+    entity: "announce",
+    action: "create",
+    fields: {
+      slug: "airbnb-moja-ljubov-skozi-goda",
+      date: "2026-04-17",
+      title: "Airbnb: moja ljubov skvozi goda",
+      place: "Online",
+      format: "news",
+      paragraphs: ["Update text"],
+      projectSlugs: ["doveritelnoe-upravlenie-v-chernogorii"],
+    },
+  });
+
+  assert.equal(result.item.showInMeetingsList, false);
+});
+
+test("keeps explicit meetings list visibility when provided", () => {
+  const result = mapCommandToContent({
+    entity: "announce",
+    action: "update",
+    fields: {
+      slug: "airbnb-moja-ljubov-skozi-goda",
+      projectSlugs: ["doveritelnoe-upravlenie-v-chernogorii"],
+      showInMeetingsList: true,
+    },
+  });
+
+  assert.equal(result.item.showInMeetingsList, true);
 });

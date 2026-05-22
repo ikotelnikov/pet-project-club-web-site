@@ -172,6 +172,7 @@ test("v2 pipeline updates announcement projectSlugs without project hijack", asy
     result.pendingState.operation.fields.projectSlugs,
     ["doveritelnoe-upravlenie-v-chernogorii"]
   );
+  assert.equal(result.pendingState.operation.fields.showInMeetingsList, false);
 });
 
 test("main handler routes through v2 pipeline when feature flag is enabled", async () => {
@@ -1421,6 +1422,89 @@ test("v2 pipeline appends attached photo on project update without explicit asse
   assert.equal(result.pendingState.operation.fields.photoAction, "append");
   assert.equal(result.pendingState.operation.fields.gallery.length, 2);
   assert.equal(result.pendingState.operation.fields.gallery[1].src, "assets/uploads/555/72-photo.jpg");
+});
+
+test("v2 pipeline uses staged attachments from buffered turns when final attachments argument is empty", async () => {
+  const pendingStore = new PendingMemoryStore();
+
+  const result = await handleTelegramMessageV2({
+    message: {
+      message_id: 999,
+      from: { id: 123 },
+      chat: { id: 555 },
+      caption: "добавь это фото к проекту doveritelnoe-upravlenie-v-chernogorii",
+    },
+    updateId: 999,
+    pendingStore,
+    repository: createRepository(),
+    extractionClient: {
+      async analyzeIntent({ turn }) {
+        assert.equal(turn.messages[0].attachments[0].stagedPath, "assets/uploads/555/999-capture.png");
+        return {
+          intent: "update",
+          entity: "project",
+          target: {
+            mode: "existing",
+            ref: "doveritelnoe-upravlenie-v-chernogorii",
+          },
+          relatedEntities: [],
+          requestedLocales: {
+            sourceLocale: null,
+            targetLocale: null,
+            targetLocales: [],
+          },
+          needsClarification: false,
+          clarificationReason: null,
+          clarificationQuestion: null,
+          confidence: "high",
+        };
+      },
+      async generateOperation() {
+        return {
+          entity: "project",
+          action: "update",
+          targetSlug: "doveritelnoe-upravlenie-v-chernogorii",
+          newObject: null,
+          patch: {},
+          translation: null,
+          assetActions: [],
+          warnings: [],
+        };
+      },
+    },
+    text: null,
+    formattedTextHtml: null,
+    attachments: [],
+    existingTurn: {
+      chatId: 555,
+      userId: 123,
+      recentContext: {
+        lastConfirmedObject: null,
+        pendingDraft: null,
+      },
+      messages: [{
+        messageId: 999,
+        updateId: 999,
+        text: "добавь это фото к проекту doveritelnoe-upravlenie-v-chernogorii",
+        formattedTextHtml: null,
+        attachments: [{
+          kind: "photo",
+          originalKind: "document",
+          stagedPath: "assets/uploads/555/999-capture.png",
+          fileName: "999-capture.png",
+          mimeType: "image/png",
+        }],
+        isForwarded: false,
+        hasQuote: false,
+      }],
+    },
+    dryRun: true,
+  });
+
+  assert.equal(result.status, "processed");
+  assert.equal(result.pendingState.operation.fields.photoStagedPath, "assets/uploads/555/999-capture.png");
+  assert.equal(result.pendingState.operation.fields.photoAction, "replace");
+  assert.equal(result.pendingState.operation.fields.gallery[0].src, "assets/uploads/555/999-capture.png");
 });
 
 test("v2 pipeline preserves attached photo on participant create without explicit asset actions", async () => {

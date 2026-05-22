@@ -36,6 +36,7 @@ export function mapOperationToContent(operation, options = {}) {
           sections: fields.section ?? fields.sections,
           links,
           projectSlugs: fields.projectSlugs,
+          showInMeetingsList: resolveMeetingsListVisibility(fields),
         }), fields, options),
       };
     case "meeting":
@@ -56,6 +57,7 @@ export function mapOperationToContent(operation, options = {}) {
           sections: fields.section ?? fields.sections,
           links,
           projectSlugs: fields.projectSlugs,
+          showInMeetingsList: resolveMeetingsListVisibility(fields),
         }), fields, options),
       };
     case "participant":
@@ -260,7 +262,9 @@ export function mapCommandToContent(parsedCommand, options = {}) {
 function buildPhoto(entity, fields, photoFilename) {
   if (entity === "project" && Array.isArray(fields.gallery)) {
     const firstEntry = fields.gallery.find((entry) => entry?.src);
-    return firstEntry ? normalizePhotoEntry(firstEntry) : null;
+    if (firstEntry) {
+      return normalizePhotoEntry(firstEntry);
+    }
   }
 
   const photoSrcPath = fields.photoStagedPath ?? null;
@@ -286,7 +290,10 @@ function buildGallery(entity, fields, photoFilename) {
   }
 
   if (Array.isArray(fields.gallery)) {
-    return fields.gallery.map((entry) => normalizePhotoEntry(entry)).filter((entry) => entry?.src);
+    const gallery = fields.gallery.map((entry) => normalizePhotoEntry(entry)).filter((entry) => entry?.src);
+    if (gallery.length > 0) {
+      return gallery;
+    }
   }
 
   const singlePhoto = buildPhoto(entity, fields, photoFilename);
@@ -315,6 +322,16 @@ function buildLinks(linkEntries) {
 
   const deduped = dedupeLinks(linkEntries);
   return Array.isArray(deduped) && deduped.length > 0 ? deduped : undefined;
+}
+
+function resolveMeetingsListVisibility(fields) {
+  if (typeof fields.showInMeetingsList === "boolean") {
+    return fields.showInMeetingsList;
+  }
+
+  return Array.isArray(fields.projectSlugs) && fields.projectSlugs.length > 0
+    ? false
+    : undefined;
 }
 
 function resolveAssetFolder(entity) {

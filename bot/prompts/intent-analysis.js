@@ -279,6 +279,7 @@ export function buildIntentAnalysisMessages({ turn }) {
         "If the user mentions multiple entities, choose the primary target and put other referenced entities into relatedEntities.",
         "For linking a news item to a project, the news item is normally the primary target and the project is a related entity with role 'project_link'.",
         "If the request is ambiguous or missing a required target, set needsClarification=true.",
+        "A message with a photo attachment, or an image document attachment with a stagedPath, counts as providing an image file. Do not ask for the image again when the user asks to add that image to an existing target.",
         "Return JSON only.",
         `Schema: ${JSON.stringify(IntentContractSchema)}`,
         `Examples: ${JSON.stringify(examples)}`,
@@ -295,6 +296,15 @@ export function buildIntentAnalysisMessages({ turn }) {
           formattedTextHtml: message.formattedTextHtml || null,
           attachmentKinds: Array.isArray(message.attachments)
             ? [...new Set(message.attachments.map((item) => item.kind).filter(Boolean))]
+            : [],
+          attachments: Array.isArray(message.attachments)
+            ? message.attachments.map((attachment) => ({
+                kind: attachment.kind || null,
+                originalKind: attachment.originalKind || null,
+                fileName: attachment.fileName || null,
+                stagedPath: attachment.stagedPath || null,
+                mimeType: attachment.mimeType || null,
+              }))
             : [],
           isForwarded: Boolean(message.isForwarded),
           hasQuote: Boolean(message.hasQuote),

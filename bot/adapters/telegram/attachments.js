@@ -37,14 +37,18 @@ export function extractTelegramAttachments(message) {
   }
 
   if (message.document) {
+    const mimeType = message.document.mime_type || "application/octet-stream";
+    const fileName =
+      message.document.file_name ||
+      `document-${message.document.file_unique_id || message.document.file_id}`;
+
     attachments.push({
-      kind: "document",
+      kind: isSupportedImageDocument(fileName, mimeType) ? "photo" : "document",
+      originalKind: "document",
       fileId: message.document.file_id,
       fileUniqueId: message.document.file_unique_id || null,
-      fileName:
-        message.document.file_name ||
-        `document-${message.document.file_unique_id || message.document.file_id}`,
-      mimeType: message.document.mime_type || "application/octet-stream",
+      fileName,
+      mimeType,
       size: message.document.file_size || null,
     });
   }
@@ -56,4 +60,13 @@ function buildPhotoName(message, photo) {
   const messageId = message.message_id || "photo";
   const uniqueId = photo.file_unique_id || photo.file_id || "photo";
   return `photo-${messageId}-${uniqueId}.jpg`;
+}
+
+function isSupportedImageDocument(fileName, mimeType) {
+  const normalizedMime = typeof mimeType === "string" ? mimeType.toLowerCase() : "";
+  if (["image/jpeg", "image/png", "image/webp"].includes(normalizedMime)) {
+    return true;
+  }
+
+  return /\.(jpe?g|png|webp)$/i.test(fileName || "");
 }
