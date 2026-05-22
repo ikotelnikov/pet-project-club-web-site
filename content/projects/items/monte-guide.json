@@ -18,5 +18,17 @@
     "svyatoslav"
   ],
   "slug": "monte-guide",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "Monte Guide",
+      "status": "active",
+      "stack": "Next.js 16, React 19, TypeScript, Mantine, Tailwind CSS, Supabase (PostgreSQL, RLS, Realtime), Mapbox, OpenAI GPT-4o",
+      "summary": "An interactive guide to Montenegro with 1,250+ service cards in 25+ categories covering 15+ cities. Full multilingual support with AI translations, review system, provider dashboard, premium subscriptions, booking, chat with auto-translation, and the MonteCar ridesharing service.",
+      "detailsHtml": "<p>Works as a web application, PWA, and Telegram Mini App.</p><p>The project is built with Next.js 16 + React 19 + TypeScript using Mantine and Tailwind CSS; the database is Supabase (PostgreSQL + RLS + Realtime), maps are Mapbox, AI assistant is OpenAI GPT-4o with web search.</p><p>The codebase includes 120+ API endpoints, 426+ E2E tests (Playwright), 45 accessibility tests, and a production roadmap until Q1 2027.</p>"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
