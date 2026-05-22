@@ -26,9 +26,17 @@
       "stack": "Next.js 16, React 19, TypeScript, Mantine, Tailwind CSS, Supabase (PostgreSQL, RLS, Realtime), Mapbox, OpenAI GPT-4o",
       "summary": "An interactive guide to Montenegro with 1,250+ service cards in 25+ categories covering 15+ cities. Full multilingual support with AI translations, review system, provider dashboard, premium subscriptions, booking, chat with auto-translation, and the MonteCar ridesharing service.",
       "detailsHtml": "<p>Works as a web application, PWA, and Telegram Mini App.</p><p>The project is built with Next.js 16 + React 19 + TypeScript using Mantine and Tailwind CSS; the database is Supabase (PostgreSQL + RLS + Realtime), maps are Mapbox, AI assistant is OpenAI GPT-4o with web search.</p><p>The codebase includes 120+ API endpoints, 426+ E2E tests (Playwright), 45 accessibility tests, and a production roadmap until Q1 2027.</p>"
+    },
+    "de": {
+      "title": "Monte Guide",
+      "status": "active",
+      "stack": "Next.js 16, React 19, TypeScript, Mantine, Tailwind CSS, Supabase (PostgreSQL, RLS, Realtime), Mapbox, OpenAI GPT-4o",
+      "summary": "Interaktiver Reiseführer für Montenegro mit über 1.250 Dienstleistungskarten in mehr als 25 Kategorien und Abdeckung von über 15 Städten. Vollständige Mehrsprachigkeit mit KI-Übersetzungen, Bewertungssystem, Anbieter-Dashboard, Premium-Abonnements, Buchung, Chat mit Auto-Übersetzung und MonteCar Ridesharing-Service.",
+      "detailsHtml": "<p>Funktioniert als Webanwendung, PWA und Telegram Mini App.</p><p>Das Projekt ist geschrieben mit Next.js 16 + React 19 + TypeScript unter Verwendung von Mantine und Tailwind CSS, die Datenbank ist Supabase (PostgreSQL + RLS + Realtime), Karten von Mapbox, KI-Assistent OpenAI GPT-4o mit Websuche.</p><p>Der Code umfasst über 120 API-Endpunkte, mehr als 426 E2E-Tests (Playwright), 45 Accessibility-Tests und einen Produktions-Roadmap bis Q1 2027.</p>"
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
