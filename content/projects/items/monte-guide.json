@@ -1,0 +1,22 @@
+{
+  "title": "Monte Guide",
+  "status": "active",
+  "stack": "Next.js 16, React 19, TypeScript, Mantine, Tailwind CSS, Supabase (PostgreSQL, RLS, Realtime), Mapbox, OpenAI GPT-4o",
+  "summary": "Интерактивный гид по Черногории с 1 250+ карточками услуг в 25+ категориях и охватом 15+ городов. Полная мультиязычность с AI-переводами, система отзывов, кабинет провайдера, премиум-подписки, букинг, чат с авто-переводом и ridesharing-сервис MonteCar.",
+  "detailsHtml": "<p>Работает как веб-приложение, PWA и Telegram Mini App.</p><p>Проект написан на Next.js 16 + React 19 + TypeScript с Mantine и Tailwind CSS, база данных — Supabase (PostgreSQL + RLS + Realtime), карты — Mapbox, AI-ассистент — OpenAI GPT-4o с web search.</p><p>Кодовая база включает 120+ API-эндпоинтов, 426+ E2E-тестов (Playwright), 45 accessibility-тестов и production-роадмап до Q1 2027.</p>",
+  "photo": {
+    "src": "assets/uploads/272981189/1021-monte-guide-logo.svg",
+    "alt": "Monte Guide"
+  },
+  "gallery": [
+    {
+      "src": "assets/uploads/272981189/1021-monte-guide-logo.svg",
+      "alt": "Monte Guide"
+    }
+  ],
+  "ownerSlugs": [
+    "svyatoslav"
+  ],
+  "slug": "monte-guide",
+  "sourceLocale": "ru"
+}
