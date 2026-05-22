@@ -95,11 +95,36 @@
           "external": true
         }
       ]
+    },
+    "es": {
+      "handle": "@katrixetto",
+      "name": "Ekaterina Ustinova",
+      "role": "Diseñadora gráfica y creadora de eventos",
+      "bio": "Creo identidades corporativas desde hace 6 años, y en eventos desde hace 8 años. Fundadora de la comunidad de diseñadores en Montenegro Designers.mne: diseñadores web, gráficos, de productos y otros especialistas. Con más de 50 eventos realizados en diferentes ciudades de Rusia, y ahora 20 encuentros de diseño y 1 festival de diseño en Montenegro. En mi tiempo libre, me gusta crear eventos reflexivos y centrados en las personas, que ayudan a crecer, encontrar personas afines y ganar confianza en el camino propio. Designers.mne es un proyecto que me apasiona. Desde hace 2 años, nos reunimos cada 3 semanas los domingos en encuentros temáticos dedicados a diferentes temas actuales del ámbito del diseño. En octubre de 2025 organizamos todo un festival, Design.mne.fest, que reunió a más de 50 participantes, fue rentable y nuestra comunidad creció a más de 195 diseñadores activos. Resultó que la demanda por eventos de este tipo es enorme.",
+      "detailsHtml": "<p>Creo identidades corporativas desde hace 6 años, y en eventos desde hace 8 años. Fundadora de la comunidad de diseñadores en Montenegro Designers.mne: diseñadores web, gráficos, de productos y otros especialistas.</p><p>Con más de 50 eventos realizados en diferentes ciudades de Rusia, y ahora 20 encuentros de diseño y 1 festival de diseño en Montenegro.</p><p>En mi tiempo libre, me gusta crear eventos reflexivos y centrados en las personas, que ayudan a crecer, encontrar personas afines y ganar confianza en el camino propio.</p><p>Designers.mne es un proyecto que me apasiona.</p><p>Desde hace 2 años, nos reunimos cada 3 semanas los domingos en encuentros temáticos dedicados a diferentes temas actuales del ámbito del diseño.</p><p>En octubre de 2025 organizamos todo un festival, Design.mne.fest, que reunió a más de 50 participantes, fue rentable y nuestra comunidad creció a más de 195 diseñadores activos. Resultó que la demanda por eventos de este tipo es enorme.</p><p>Cómo puede ser útil la comunidad:</p><ul><li>Búsqueda de diseñadores. Tenemos una sección especial llamada «Trabajo» donde puedes encontrar un especialista para tu proyecto.</li><li>Comunicación e ideas. Puedes asistir a un encuentro, conocer las tendencias y recibir asesoría sobre tu producto.</li><li>Promoción de proyectos. Si tienes un servicio o producto relevante para la audiencia de diseñadores, puedes presentarlo en el chat o en un evento.</li><li>Eventos conjuntos. Estamos abiertos a colaboraciones en la intersección del diseño y tu proyecto.</li></ul><p>Dónde seguirnos:</p><p>📱: @designers.mne</p><p>📱: @designersmne</p><p>Sitio web: <a href=\"https://www.designersmne.space/\">www.designersmne.space</a></p><p>Mi contacto: @katrixetto ⭐️</p>",
+      "links": [
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/designers.mne",
+          "external": true
+        },
+        {
+          "label": "Telegram",
+          "href": "https://t.me/designermne",
+          "external": true
+        },
+        {
+          "label": "designersmne.space",
+          "href": "https://www.designersmne.space/",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
