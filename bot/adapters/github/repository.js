@@ -3,6 +3,7 @@ import { mergeContentItems } from "../../core/content-localization.js";
 
 const GITHUB_API_ROOT = "https://api.github.com";
 const RETRYABLE_GITHUB_STATUSES = new Set([502, 503, 504]);
+const MAX_BRANCH_UPDATE_ATTEMPTS = 3;
 
 export class GitHubContentRepository {
   constructor({
@@ -210,6 +211,10 @@ export class GitHubContentRepository {
   }
 
   async applyCommand(parsedCommand, { item }) {
+    return this.withBranchUpdateRetry(() => this.applyCommandOnce(parsedCommand, { item }));
+  }
+
+  async applyCommandOnce(parsedCommand, { item }) {
     const preview = await this.previewCommand(parsedCommand, { item });
     const slug = parsedCommand.fields.slug;
     const { itemPath, indexPath } = preview.paths;
@@ -308,6 +313,10 @@ export class GitHubContentRepository {
   }
 
   async applyUndoLastChange(target = null) {
+    return this.withBranchUpdateRetry(() => this.applyUndoLastChangeOnce(target));
+  }
+
+  async applyUndoLastChangeOnce(target = null) {
     const undoTarget = target || (await this.findLatestContentCommit());
     const files = await this.buildUndoFiles(undoTarget);
     const head = await this.getBranchHead();
@@ -352,6 +361,25 @@ export class GitHubContentRepository {
         files: files.map((file) => file.path),
       },
     };
+  }
+
+  async withBranchUpdateRetry(writeFn) {
+    let lastError = null;
+
+    for (let attempt = 1; attempt <= MAX_BRANCH_UPDATE_ATTEMPTS; attempt += 1) {
+      try {
+        return await writeFn();
+      } catch (error) {
+        if (!isNonFastForwardError(error) || attempt === MAX_BRANCH_UPDATE_ATTEMPTS) {
+          throw error;
+        }
+
+        lastError = error;
+        await delay(attempt * 300);
+      }
+    }
+
+    throw lastError;
   }
 
   async getBranchHead() {
@@ -730,6 +758,11 @@ function decodeUtf8Bytes(bytes) {
   }
 
   return String.fromCharCode(...bytes);
+}
+
+function isNonFastForwardError(error) {
+  return error instanceof ContentRepositoryError &&
+    /not a fast forward|non-fast-forward/i.test(error.message || "");
 }
 
 function bytesToBase64(bytes) {
