@@ -1665,9 +1665,11 @@ body.lightbox-open {
 }
 
 .project-detail-gallery-main {
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  width: fit-content;
-  max-width: 100%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   margin-inline: auto;
   background: transparent;
   touch-action: pan-y pinch-zoom;
@@ -1682,9 +1684,9 @@ body.lightbox-open {
 }
 
 .project-detail-gallery-main img {
-  width: auto;
+  width: 100%;
   max-width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: contain;
   aspect-ratio: auto;
 }
