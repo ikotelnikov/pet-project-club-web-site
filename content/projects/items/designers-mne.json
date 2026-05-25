@@ -8,5 +8,17 @@
     "ekaterina-ustinova"
   ],
   "slug": "designers-mne",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "Designers.mne",
+      "status": "active",
+      "stack": "community events, design insights, collaboration",
+      "summary": "Designers.mne is a project I am passionate about.",
+      "detailsHtml": "Designers.mne is a project I am passionate about.<br><br>For 2 years now, we have been gathering every 3 weeks on Sundays for themed meetings dedicated to various relevant topics in the field of design.<br><br>In October 2025, we organized an entire festival, Design.mne.fest, which attracted 50+ participants, was profitable, and our community grew to over 195 active designers. It turned out that the demand for events of this kind is huge.<br><br>How the community can be useful:<br><br>Finding designers. We have a separate \"Work\" thread where you can find a specialist for your project.<br>Communication and insights. You can come to a meeting, learn about trends, and get advice on your product.<br>Project promotion. If you have a service or product relevant to the design audience, you can present it in the chat or at the event.<br>Joint events. We are open to collaborations at the intersection of design and your project.<br>Where to follow:<br><br>@designers.mne<br>@designersmne"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
