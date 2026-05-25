@@ -23,10 +23,18 @@
       "stack": "Community-Veranstaltungen, Design-Einblicke, Zusammenarbeit",
       "summary": "Designers.mne — ein Projekt, für das ich brenne.",
       "detailsHtml": "Designers.mne — ein Projekt, für das ich brenne.<br><br>Seit 2 Jahren treffen wir uns alle 3 Wochen sonntags zu thematischen Treffen, die sich mit verschiedenen aktuellen Fragen aus dem Bereich Design beschäftigen.<br><br>Im Oktober 2025 haben wir ein ganzes Festival, das Design.mne.fest, organisiert, das über 50 Teilnehmer versammelte, profitabel war und unsere Community auf über 195 aktive Designer anwachsen ließ. Es stellte sich heraus, dass der Bedarf an Veranstaltungen dieser Art sehr groß ist.<br><br>Wie die Community nützlich sein kann:<br><br>Designersuche. Wir haben einen eigenen Bereich „Arbeit“, in dem man einen Spezialisten für sein Projekt finden kann.<br>Kommunikation und Einblicke. Man kann zu einem Treffen kommen, Trends kennenlernen und eine Beratung für sein Produkt erhalten.<br>Projektpromotion. Wenn Sie einen Service oder ein Produkt haben, das für eine Design-Zielgruppe relevant ist, können Sie es im Chat oder bei einer Veranstaltung präsentieren.<br>Gemeinsame Events. Wir sind offen für Kollaborationen an der Schnittstelle von Design und Ihrem Projekt.<br>Wo man folgen kann:<br><br>@designers.mne<br>@designersmne"
+    },
+    "me": {
+      "title": "Designers.mne",
+      "status": "active",
+      "stack": "community events, design insights, collaboration",
+      "summary": "Designers.mne — projekat kojim gori.",
+      "detailsHtml": "Designers.mne — projekat kojim gori.<br><br>Već 2 godine zaredom okupljamo se svake 3 nedjelje nedjeljom na tematskim sastancima posvećenim raznim aktuelnim pitanjima iz oblasti dizajna.<br><br>U oktobru 2025. godine organizovali smo cijeli festival Design.mne.fest, koji je okupio više od 50 učesnika, završio u dobitku, a naša zajednica je porasla na preko 195 aktivnih dizajnera. Pokazalo se da je potreba za događajima takve vrste ogromna.<br><br>Kako zajednica može biti korisna:<br><br>Pronalaženje dizajnera. Imamo posebnu granu „Posao“ gdje možete pronaći stručnjaka za vaš projekat.<br>Komunikacija i uvidi. Možete doći na sastanak, informisati se o trendovima i dobiti konsultaciju za vaš proizvod.<br>Promocija projekata. Ako imate servis ili proizvod relevantan za dizajnersku publiku, možete ga predstaviti u četu ili na događaju.<br>Zajednički događaji. Otvoreni smo za saradnju na spoju dizajna i vašeg projekta.<br>Gdje pratiti:<br><br>@designers.mne<br>@designersmne"
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
