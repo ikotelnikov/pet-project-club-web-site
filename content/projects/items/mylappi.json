@@ -54,10 +54,25 @@
           "external": true
         }
       ]
+    },
+    "me": {
+      "title": "MyLappi",
+      "status": "active",
+      "stack": "Telegram bot, community platform",
+      "summary": "Telegram bot i zajednička platforma za ljubitelje životinja, sa servisima za negu, kinologiju i zoopsihologiju, okupljajući više od 3000 ljudi iz 14 zemalja.",
+      "detailsHtml": "MyLappi (ili drago mi je — Lappi) proistekao je iz moje lične boli.<br><br>Kao digitalni nomad, živeo sam u različitim zemljama. Imam mačku kojoj je potrebna veterinarska nega, i na svakom novom mestu bilo mi je izuzetno teško pronaći ljude sličnih interesa — one kojima mogu sa mirnim srcem poveriti svog ljubimca dok obavljam svoje stvari.<br><br>Tako je nastala ideja da se kreira Telegram bot koji okuplja one koji iskreno vole životinje.<br><br>Sada je moj servis zajednica od više od 3000 ljudi iz 14 zemalja. Aktivno rastemo: u ovoj fazi sam već dodao nove stručnjake na platformu — negovatelje, kinologe i zoopsihologe.<br><br>Moj glavni cilj je da stvorim najpažljiviji i najpouzdaniji servis za naše ljubimce.<br><br>Vebsajt: <a href=\"https://www.mylappi.com/\">https://www.mylappi.com/</a>",
+      "links": [
+        {
+          "label": "mylappi.com",
+          "href": "https://www.mylappi.com/",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
