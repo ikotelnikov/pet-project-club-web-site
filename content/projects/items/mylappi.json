@@ -40,9 +40,24 @@
           "external": true
         }
       ]
+    },
+    "de": {
+      "title": "MyLappi",
+      "status": "active",
+      "stack": "Telegram-Bot, Community-Plattform",
+      "summary": "Telegram-Bot und Community für Tierliebhaber mit Grooming-, Kynologie- und Zoopsychologie-Diensten, die über 3000 Menschen aus 14 Ländern vereint.",
+      "detailsHtml": "MyLappi (oder liebevoll – Lappi) ist aus meinem persönlichen Schmerz entstanden.<br><br>Als digitaler Nomade habe ich in verschiedenen Ländern gelebt. Ich habe eine Katze, die tierärztliche Versorgung benötigt, und an jedem neuen Ort fiel es mir unglaublich schwer, gleichgesinnte Menschen zu finden – solche, denen ich mein Haustier mit ruhigem Herzen anvertrauen kann, während ich meine Angelegenheiten erledige.<br><br>So entstand die Idee, einen Telegram-Bot zu schaffen, der diejenigen verbindet, die Tiere aufrichtig lieben.<br><br>Heute ist mein Service eine Community mit mehr als 3000 Menschen aus 14 Ländern. Wir wachsen aktiv: In dieser Phase habe ich bereits neue Fachleute – Groomer, Kynologen und Zoopsychologen – auf der Plattform hinzugefügt.<br><br>Mein Hauptziel ist es, den fürsorglichsten und zuverlässigsten Service für unsere Haustiere zu schaffen.<br><br>Website: <a href=\"https://www.mylappi.com/\">https://www.mylappi.com/</a>",
+      "links": [
+        {
+          "label": "mylappi.com",
+          "href": "https://www.mylappi.com/",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
