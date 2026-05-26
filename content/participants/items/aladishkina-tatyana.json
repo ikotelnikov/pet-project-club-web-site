@@ -24,7 +24,8 @@
     "me": {
       "name": "Аладышкина Татьяна",
       "role": "CEO MyLappi | CFO у IT",
-      "bio": "По струцији сам финансијски стручњак са преко 17 година искуства, а у души предузетник. Од детињства волим животиње, обожавам да креирам пројекте и окупљам људе."
+      "bio": "Po profesiji sam finansijer sa iskustvom dužim od 17 godina, a u duši — preduzetnik. Oduvijek volim životinje, obožavam stvarati projekte i povezivati ljude.",
+      "handle": "@Alad13"
     },
     "es": {
       "name": "Аладышкина Татьяна",
@@ -35,7 +36,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   },
   "handle": "@Alad13"
