@@ -25,5 +25,24 @@
     "aladishkina-tatyana"
   ],
   "slug": "mylappi",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "MyLappi",
+      "status": "active",
+      "stack": "Telegram bot, community platform",
+      "summary": "Telegram bot and community for animal lovers, with grooming, cynology, and zoopsychology services, uniting over 3000 people from 14 countries.",
+      "detailsHtml": "MyLappi (or affectionately — Lappi) grew out of my personal pain.<br><br>As a digital nomad, I have lived in various countries. I have a cat who needs veterinary care, and in every new place it was incredibly difficult for me to find like-minded people — those I could confidently entrust my pet to while I took care of my own affairs.<br><br>This is how the idea to create a Telegram bot that unites those who truly love animals came about.<br><br>Today my service is a community of more than 3000 people from 14 countries. We are actively growing: at this stage I have already added new specialists to the platform — groomers, cynologists, and zoopsychologists.<br><br>My main goal is to create the most caring and reliable service for our pets.<br><br>Website: <a href=\"https://www.mylappi.com/\">https://www.mylappi.com/</a>",
+      "links": [
+        {
+          "label": "mylappi.com",
+          "href": "https://www.mylappi.com/",
+          "external": true
+        }
+      ]
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
