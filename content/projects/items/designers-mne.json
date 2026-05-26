@@ -1,9 +1,9 @@
 {
   "title": "Designers.mne",
   "status": "active",
-  "stack": "community events, design insights, collaboration",
+  "stack": "дизайн-комьюнити, тематические встречи, коллаборации",
   "summary": "Designers.mne — проект, которым я горю.",
-  "detailsHtml": "<a href=\"https://designersmne.space/\">Designers.mne</a> — a project I am passionate about.<br><br>For 2 years now, we have been gathering every 3 weeks on Sundays for themed meetings dedicated to various current issues in the field of design.<br><br>In October 2025, we organized the entire Design.mne.fest festival, which gathered 50+ participants, turned a profit, and our community grew to over 195 active designers. It turned out that the demand for events of this kind is enormous.<br><br>How the community can be useful:<br><br>Finding designers. We have a separate “Work” thread where you can find a specialist for your project.<br>Communication and insights. You can come to a meeting, learn about trends, and get advice on your product.<br>Project promotion. If you have a service or product relevant to a design audience, you can present it in the chat or at an event.<br>Joint events. We are open to collaborations at the intersection of design and your project.<br>Where to follow:<br><br>Instagram page: <a href=\"https://www.instagram.com/designers.mne\">@designers.mne</a><br>Telegram chat: <a href=\"https://t.me/designersmne\">@designersmne</a>",
+  "detailsHtml": "<p><a href=\"https://designersmne.space/\">Designers.mne</a> — проект, которым я горю.</p><p>Уже 2 года подряд мы собираемся раз в 3 недели по воскресеньям на тематические встречи, посвященные разным актуальным вопросам из сферы дизайна.</p><p>В октябре 2025 года мы организовали целый фестиваль Design.mne.fest, который собрал 50+ участников, вышел в плюс, а наше комьюнити выросло до 195+ живых дизайнеров. Оказалось, что потребность в ивентах такого рода огромная.</p><p>Чем сообщество может быть полезно:</p><ul><li>Поиск дизайнеров. У нас есть отдельная ветка «Работа», где можно найти специалиста для вашего проекта.</li><li>Общение и инсайты. Можно прийти на встречу, узнать про тренды и получить консультацию по вашему продукту.</li><li>Продвижение проектов. Если у вас есть сервис или продукт, актуальный для дизайнерской аудитории, вы можете презентовать его в чате или на мероприятии.</li><li>Совместные ивенты. Мы открыты к коллаборациям на стыке дизайна и вашего проекта.</li></ul><p>Где следить:</p><p>Instagram: <a href=\"https://www.instagram.com/designers.mne\">@designers.mne</a><br>Telegram-чат: <a href=\"https://t.me/designersmne\">@designersmne</a></p>",
   "ownerSlugs": [
     "ekaterina-ustinova"
   ],
@@ -100,7 +100,7 @@
       "external": true
     },
     {
-      "label": "Telegram chat",
+      "label": "Telegram-чат",
       "href": "https://t.me/designersmne",
       "external": true
     }
