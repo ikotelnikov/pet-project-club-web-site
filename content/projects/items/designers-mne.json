@@ -42,8 +42,15 @@
       "title": "Designers.mne",
       "status": "active",
       "stack": "community events, design insights, collaboration",
-      "summary": "Designers.mne — projekat kojim gori.",
-      "detailsHtml": "Designers.mne — projekat kojim gori.<br><br>Već 2 godine zaredom okupljamo se svake 3 nedjelje nedjeljom na tematskim sastancima posvećenim raznim aktuelnim pitanjima iz oblasti dizajna.<br><br>U oktobru 2025. godine organizovali smo cijeli festival Design.mne.fest, koji je okupio više od 50 učesnika, završio u dobitku, a naša zajednica je porasla na preko 195 aktivnih dizajnera. Pokazalo se da je potreba za događajima takve vrste ogromna.<br><br>Kako zajednica može biti korisna:<br><br>Pronalaženje dizajnera. Imamo posebnu granu „Posao“ gdje možete pronaći stručnjaka za vaš projekat.<br>Komunikacija i uvidi. Možete doći na sastanak, informisati se o trendovima i dobiti konsultaciju za vaš proizvod.<br>Promocija projekata. Ako imate servis ili proizvod relevantan za dizajnersku publiku, možete ga predstaviti u četu ili na događaju.<br>Zajednički događaji. Otvoreni smo za saradnju na spoju dizajna i vašeg projekta.<br>Gdje pratiti:<br><br>@designers.mne<br>@designersmne"
+      "summary": "Designers.mne — projekat za kojim gorim.",
+      "detailsHtml": "Designers.mne — projekat za kojim gorim.<br><br>Već 2 godine zaredom okupljamo se na svake 3 nedjelje nedjeljom na tematske susrete posvećene različitim aktuelnim pitanjima iz oblasti dizajna.<br><br>U oktobru 2025. godine organizovali smo cijeli festival Design.mne.fest, koji je okupio 50+ učesnika, završio u plusu, a naša zajednica je narasla na 195+ živih dizajnera. Ispostavilo se da je potreba za ovakvim događajima ogromna.<br><br>Kako zajednica može biti korisna:<br><br>Traženje dizajnera. Imamo posebnu granu „Posao“, gdje možete pronaći stručnjaka za vaš projekat.<br>Komunikacija i uvide. Možete doći na sastanak, saznati o trendovima i dobiti konsultacije za vaš proizvod.<br>Promocija projekata. Ako imate servis ili proizvod aktuelan za dizajnersku publiku, možete ga predstaviti u chatu ili na događaju.<br>Zajednički događaji. Otvoreni smo za saradnju na sjecištu dizajna i vašeg projekta.<br>Gdje pratiti:<br><br>@designers.mne<br>@designersmne",
+      "links": [
+        {
+          "label": "Instagram",
+          "href": "https://www.instagram.com/designers.mne",
+          "external": true
+        }
+      ]
     },
     "es": {
       "title": "Designers.mne",
@@ -56,7 +63,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   },
   "links": [
