@@ -18,10 +18,16 @@
       "name": "Aladyschkina Tatjana",
       "role": "CEO MyLappi | CFO im IT-Bereich",
       "bio": "Beruflich bin ich Finanzexpertin mit über 17 Jahren Erfahrung, aber im Herzen Unternehmerin. Seit meiner Kindheit liebe ich Tiere, ich liebe es, Projekte zu schaffen und Menschen zu verbinden."
+    },
+    "me": {
+      "name": "Аладышкина Татьяна",
+      "role": "CEO MyLappi | CFO у IT",
+      "bio": "По струцији сам финансијски стручњак са преко 17 година искуства, а у души предузетник. Од детињства волим животиње, обожавам да креирам пројекте и окупљам људе."
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
