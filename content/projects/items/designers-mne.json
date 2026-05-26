@@ -32,13 +32,18 @@
     "de": {
       "title": "Designers.mne",
       "status": "active",
-      "stack": "Community-Veranstaltungen, Design-Einblicke, Zusammenarbeit",
-      "summary": "Designers.mne – ein Projekt, für das ich brenne.",
-      "detailsHtml": "Designers.mne – ein Projekt, für das ich brenne.<br><br>Seit 2 Jahren treffen wir uns alle 3 Wochen sonntags zu thematischen Treffen, die verschiedenen aktuellen Fragestellungen aus dem Bereich Design gewidmet sind.<br><br>Im Oktober 2025 haben wir das komplette Festival Design.mne.fest organisiert, das mehr als 50 Teilnehmer anzog, profitabel war und unsere Community auf über 195 aktive Designer wachsen ließ. Es hat sich gezeigt, dass ein großer Bedarf an Events dieser Art besteht.<br><br>Womit die Community nützlich sein kann:<br><br>Designer-Suche. Wir haben einen eigenen Bereich „Jobs“, in dem man Spezialisten für sein Projekt finden kann.<br>Kommunikation und Insights. Man kann zu einem Treffen kommen, Trends kennenlernen und Beratung zu seinem Produkt erhalten.<br>Projektförderung. Wenn Sie einen Service oder ein Produkt haben, das für das Design-Publikum relevant ist, können Sie es im Chat oder bei einer Veranstaltung präsentieren.<br>Gemeinsame Events. Wir sind offen für Kollaborationen an der Schnittstelle von Design und Ihrem Projekt.<br>Wo man folgen kann:<br><br>@designers.mne<br>@designersmne",
+      "stack": "Community-Events, Design-Einblicke, Zusammenarbeit",
+      "summary": "Designers.mne — ein Projekt, für das ich brenne.",
+      "detailsHtml": "Designers.mne — ein Projekt, für das ich brenne.<br><br>Seit bereits 2 Jahren treffen wir uns alle 3 Wochen sonntags zu thematischen Treffen, die sich mit verschiedenen aktuellen Fragen aus dem Bereich Design beschäftigen.<br><br>Im Oktober 2025 haben wir das komplette Festival Design.mne.fest organisiert, das über 50 Teilnehmer anzog, profitabel war und unsere Community auf über 195 aktive Designer anwachsen ließ. Es stellte sich heraus, dass ein großer Bedarf an Veranstaltungen dieser Art besteht.<br><br>Wie die Community nützlich sein kann:<br><br>Designer finden. Wir haben einen eigenen Bereich „Arbeit“, in dem man Fachkräfte für sein Projekt finden kann.<br>Kommunikation und Insights. Man kann zum Treffen kommen, Trends kennenlernen und Beratung zu seinem Produkt erhalten.<br>Projektförderung. Wenn Sie einen Service oder ein Produkt haben, das für die Design-Zielgruppe relevant ist, können Sie es im Chat oder auf Veranstaltungen präsentieren.<br>Gemeinsame Events. Wir sind offen für Kollaborationen an der Schnittstelle von Design und Ihrem Projekt.<br>Wo man uns verfolgen kann:<br><br>@designers.mne<br>@designersmne",
       "links": [
         {
           "label": "Instagram",
           "href": "https://www.instagram.com/designers.mne",
+          "external": true
+        },
+        {
+          "label": "Telegram-Chat",
+          "href": "https://t.me/designersmne",
           "external": true
         }
       ]
@@ -74,7 +79,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale",
+    "de": "machine",
     "me": "stale",
     "es": "stale"
   },
