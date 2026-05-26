@@ -72,11 +72,16 @@
       "status": "active",
       "stack": "eventos comunitarios, conocimientos de diseño, colaboración",
       "summary": "Designers.mne — un proyecto que me apasiona.",
-      "detailsHtml": "Designers.mne — un proyecto que me apasiona.<br><br>Durante 2 años consecutivos nos reunimos cada 3 semanas los domingos en encuentros temáticos dedicados a diversas cuestiones actuales en el ámbito del diseño.<br><br>En octubre de 2025 organizamos todo un festival Design.mne.fest, que reunió a más de 50 participantes, resultó rentable y nuestra comunidad creció a más de 195 diseñadores activos. Resultó que la demanda de eventos de este tipo es enorme.<br><br>Para qué puede ser útil la comunidad:<br><br>Búsqueda de diseñadores. Tenemos un hilo separado llamado \"Trabajo\", donde se puede encontrar un especialista para tu proyecto.<br>Comunicación e ideas. Puedes asistir a una reunión, conocer las tendencias y obtener asesoramiento sobre tu producto.<br>Promoción de proyectos. Si tienes un servicio o producto relevante para la audiencia de diseñadores, puedes presentarlo en el chat o en el evento.<br>Eventos conjuntos. Estamos abiertos a colaboraciones en la intersección del diseño y tu proyecto.<br>Dónde seguirnos:<br><br>@designers.mne<br>@designersmne",
+      "detailsHtml": "Designers.mne — un proyecto que me apasiona.<br><br>Durante 2 años consecutivos nos reunimos cada 3 semanas los domingos en encuentros temáticos dedicados a diferentes cuestiones actuales del ámbito del diseño.<br><br>En octubre de 2025 organizamos todo un festival Design.mne.fest, que reunió a más de 50 participantes, fue rentable y nuestra comunidad creció hasta más de 195 diseñadores activos. Resultó que la necesidad de eventos de este tipo es enorme.<br><br>Cómo la comunidad puede ser útil:<br><br>Búsqueda de diseñadores. Tenemos una sección aparte llamada «Trabajo», donde puedes encontrar un especialista para tu proyecto.<br>Comunicación e ideas. Puedes asistir a la reunión, aprender sobre las tendencias y recibir asesoramiento para tu producto.<br>Promoción de proyectos. Si tienes un servicio o producto relevante para la audiencia de diseñadores, puedes presentarlo en el chat o en el evento.<br>Eventos conjuntos. Estamos abiertos a colaboraciones en la intersección del diseño y tu proyecto.<br>Dónde seguirnos:<br><br>@designers.mne<br>@designersmne",
       "links": [
         {
           "label": "Instagram",
           "href": "https://www.instagram.com/designers.mne",
+          "external": true
+        },
+        {
+          "label": "Chat de Telegram",
+          "href": "https://t.me/designersmne",
           "external": true
         }
       ]
@@ -86,7 +91,7 @@
     "en": "machine",
     "de": "machine",
     "me": "machine",
-    "es": "stale"
+    "es": "machine"
   },
   "links": [
     {
