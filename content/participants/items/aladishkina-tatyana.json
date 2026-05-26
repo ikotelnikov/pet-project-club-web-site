@@ -7,5 +7,15 @@
     "alt": "Аладышкина Татьяна"
   },
   "slug": "aladishkina-tatyana",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "name": "Aladyshkina Tatyana",
+      "role": "CEO MyLappi | CFO in IT",
+      "bio": "By profession, I am a financier with over 17 years of experience, and at heart — an entrepreneur. I have loved animals since childhood, adore creating projects and bringing people together."
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
