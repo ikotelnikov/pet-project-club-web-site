@@ -2,29 +2,12 @@
   "handle": "@katrixetto",
   "name": "Екатерина Устинова",
   "role": "Графический дизайнер и ивент-креатор",
-  "bio": "Создаю фирменные стили уже 6 лет, в ивентах — 8 лет. Основательница сообщества дизайнеров в Черногории Designers.mne: веб-, графических, продуктовых дизайнеров и других специалистов. За плечами — более 50 мероприятий в разных городах России, а теперь еще 20 дизайн-встреч и 1 дизайн-фестиваль в Черногории. В свободное от работы дизайнером время люблю создавать вдумчивые и человеко-ориентированные события, которые помогают расти, находить единомышленников и становиться увереннее в своем пути. Designers.mne — проект, которым я горю. Уже 2 года подряд мы собираемся раз в 3 недели по воскресеньям на тематические встречи, посвященные разным актуальным вопросам из сферы дизайна. В октябре 2025 года мы организовали целый фестиваль Design.mne.fest, который собрал 50+ участников, вышел в плюс, а наше комьюнити выросло до 195+ живых дизайнеров. Оказалось, что потребность в ивентах такого рода огромная.",
-  "detailsHtml": "<p>Создаю фирменные стили уже 6 лет, в ивентах — 8 лет. Основательница сообщества дизайнеров в Черногории Designers.mne: веб-, графических, продуктовых дизайнеров и других специалистов.</p><p>За плечами — более 50 мероприятий в разных городах России, а теперь еще 20 дизайн-встреч и 1 дизайн-фестиваль в Черногории.</p><p>В свободное от работы дизайнером время люблю создавать вдумчивые и человеко-ориентированные события, которые помогают расти, находить единомышленников и становиться увереннее в своем пути.</p><p>Designers.mne — проект, которым я горю.</p><p>Уже 2 года подряд мы собираемся раз в 3 недели по воскресеньям на тематические встречи, посвященные разным актуальным вопросам из сферы дизайна.</p><p>В октябре 2025 года мы организовали целый фестиваль Design.mne.fest, который собрал 50+ участников, вышел в плюс, а наше комьюнити выросло до 195+ живых дизайнеров. Оказалось, что потребность в ивентах такого рода огромная.</p><p>Чем сообщество может быть полезно:</p><ul><li>Поиск дизайнеров. У нас есть отдельная ветка «Работа», где можно найти специалиста для вашего проекта.</li><li>Общение и инсайты. Можно прийти на встречу, узнать про тренды и получить консультацию по вашему продукту.</li><li>Продвижение проектов. Если у вас есть сервис или продукт, актуальный для дизайнерской аудитории, вы можете презентовать его в чате или на мероприятии.</li><li>Совместные ивенты. Мы открыты к коллаборациям на стыке дизайна и вашего проекта.</li></ul><p>Где следить:</p><p>📱: @designers.mne</p><p>📱: @designersmne</p><p>Сайт: <a href=\"https://www.designersmne.space/\">www.designersmne.space</a></p><p>Мой контакт: @katrixetto ⭐️</p>",
+  "bio": "Создаю фирменные стили уже 6 лет, в ивентах — 8 лет. Основательница сообщества дизайнеров в Черногории Designers.mne: веб-, графических, продуктовых дизайнеров и других специалистов. За плечами — более 50 мероприятий в разных городах России, а теперь еще 20 дизайн-встреч и 1 дизайн-фестиваль в Черногории. В свободное от работы дизайнером время люблю создавать вдумчивые и человеко-ориентированные события, которые помогают расти, находить единомышленников и становиться увереннее в своем пути.",
+  "detailsHtml": "<p>Создаю фирменные стили уже 6 лет, в ивентах — 8 лет. Основательница сообщества дизайнеров в Черногории Designers.mne: веб-, графических, продуктовых дизайнеров и других специалистов.</p><p>За плечами — более 50 мероприятий в разных городах России, а теперь еще 20 дизайн-встреч и 1 дизайн-фестиваль в Черногории.</p><p>В свободное от работы дизайнером время люблю создавать вдумчивые и человеко-ориентированные события, которые помогают расти, находить единомышленников и становиться увереннее в своем пути.</p>",
   "photo": {
     "src": "assets/participants/ekaterina-ustinova-01.jpg",
     "alt": "Екатерина Устинова выступает с микрофоном на встрече"
   },
-  "links": [
-    {
-      "label": "Instagram",
-      "href": "https://www.instagram.com/designers.mne",
-      "external": true
-    },
-    {
-      "label": "Telegram",
-      "href": "https://t.me/designermne",
-      "external": true
-    },
-    {
-      "label": "designersmne.space",
-      "href": "https://www.designersmne.space/",
-      "external": true
-    }
-  ],
   "slug": "ekaterina-ustinova",
   "sourceLocale": "ru",
   "translations": {
@@ -32,97 +15,29 @@
       "handle": "@katrixetto",
       "name": "Ekaterina Ustinova",
       "role": "Graphic Designer and Event Creator",
-      "bio": "I have been creating brand identities for 6 years and working in events for 8 years. Founder of the designers' community in Montenegro, Designers.mne: web, graphic, product designers, and other specialists. Over 50 events organized in various Russian cities, and now 20 design meetings and 1 design festival in Montenegro. In my free time from design work, I enjoy creating thoughtful and human-centered events that help people grow, find like-minded individuals, and become more confident in their path. Designers.mne is a project I am passionate about. For 2 years running, we gather every 3 weeks on Sundays for themed meetings focused on various current design topics. In October 2025, we organized a full festival, Design.mne.fest, which attracted over 50 participants, was profitable, and our community grew to over 195 active designers. It turned out the demand for events of this kind is huge.",
-      "detailsHtml": "<p>I have been creating brand identities for 6 years and working in events for 8 years. Founder of the designers' community in Montenegro, Designers.mne: web, graphic, product designers, and other specialists.</p><p>Over 50 events organized in various Russian cities, and now 20 design meetings and 1 design festival in Montenegro.</p><p>In my free time from design work, I enjoy creating thoughtful and human-centered events that help people grow, find like-minded individuals, and become more confident in their path.</p><p>Designers.mne is a project I am passionate about.</p><p>For 2 years running, we gather every 3 weeks on Sundays for themed meetings focused on various current design topics.</p><p>In October 2025, we organized a full festival, Design.mne.fest, which attracted over 50 participants, was profitable, and our community grew to over 195 active designers. It turned out the demand for events of this kind is huge.</p><p>How the community can be useful:</p><ul><li>Finding designers. We have a separate “Jobs” thread where you can find a specialist for your project.</li><li>Communication and insights. You can come to a meeting, learn about trends, and get advice on your product.</li><li>Project promotion. If you have a service or product relevant to a design audience, you can present it in the chat or at an event.</li><li>Joint events. We are open to collaborations at the intersection of design and your project.</li></ul><p>Where to follow:</p><p>📱: @designers.mne</p><p>📱: @designersmne</p><p>Website: <a href=\"https://www.designersmne.space/\">www.designersmne.space</a></p><p>My contact: @katrixetto ⭐️</p>",
-      "links": [
-        {
-          "label": "Instagram",
-          "href": "https://www.instagram.com/designers.mne",
-          "external": true
-        },
-        {
-          "label": "Telegram",
-          "href": "https://t.me/designermne",
-          "external": true
-        },
-        {
-          "label": "designersmne.space",
-          "href": "https://www.designersmne.space/",
-          "external": true
-        }
-      ]
+      "bio": "I have been creating brand identities for 6 years and working in events for 8 years. Founder of the designers' community in Montenegro, Designers.mne: web, graphic, product designers, and other specialists. Over 50 events organized in various Russian cities, and now 20 design meetings and 1 design festival in Montenegro. In my free time from design work, I enjoy creating thoughtful and human-centered events that help people grow, find like-minded individuals, and become more confident in their path.",
+      "detailsHtml": "<p>I have been creating brand identities for 6 years and working in events for 8 years. Founder of the designers' community in Montenegro, Designers.mne: web, graphic, product designers, and other specialists.</p><p>Over 50 events organized in various Russian cities, and now 20 design meetings and 1 design festival in Montenegro.</p><p>In my free time from design work, I enjoy creating thoughtful and human-centered events that help people grow, find like-minded individuals, and become more confident in their path.</p>"
     },
     "de": {
       "handle": "@katrixetto",
       "name": "Ekaterina Ustinova",
       "role": "Grafikdesignerin und Event-Kreatorin",
-      "bio": "Ich gestalte seit 6 Jahren Corporate Designs und bin seit 8 Jahren im Eventbereich tätig. Gründerin der Designer-Community in Montenegro Designers.mne: Web-, Grafik-, Produktdesigner und andere Fachkräfte. Ich habe mehr als 50 Veranstaltungen in verschiedenen Städten Russlands organisiert, dazu kommen 20 Design-Treffen und 1 Design-Festival in Montenegro. In meiner Freizeit als Designerin liebe ich es, durchdachte und menschenorientierte Events zu kreieren, die beim Wachstum helfen, Gleichgesinnte finden und das Selbstvertrauen in den eigenen Weg stärken. Designers.mne ist ein Herzensprojekt für mich. Seit 2 Jahren treffen wir uns alle 3 Wochen sonntags zu thematischen Treffen, die sich aktuellen Fragen des Designbereichs widmen. Im Oktober 2025 organiserten wir ein ganzes Festival, Design.mne.fest, das über 50 Teilnehmer anzog, erfolgreich war und unsere Community auf über 195 aktive Designer anwachsen ließ. Es zeigte sich, dass der Bedarf an solchen Events enorm ist.",
-      "detailsHtml": "<p>Ich gestalte seit 6 Jahren Corporate Designs und bin seit 8 Jahren im Eventbereich tätig. Gründerin der Designer-Community in Montenegro Designers.mne: Web-, Grafik-, Produktdesigner und andere Fachkräfte.</p><p>Ich habe mehr als 50 Veranstaltungen in verschiedenen Städten Russlands organisiert, dazu kommen 20 Design-Treffen und 1 Design-Festival in Montenegro.</p><p>In meiner Freizeit als Designerin liebe ich es, durchdachte und menschenorientierte Events zu kreieren, die beim Wachstum helfen, Gleichgesinnte finden und das Selbstvertrauen in den eigenen Weg stärken.</p><p>Designers.mne ist ein Herzensprojekt für mich.</p><p>Seit 2 Jahren treffen wir uns alle 3 Wochen sonntags zu thematischen Treffen, die sich aktuellen Fragen des Designbereichs widmen.</p><p>Im Oktober 2025 organisierten wir ein ganzes Festival, Design.mne.fest, das über 50 Teilnehmer anzog, erfolgreich war und unsere Community auf über 195 aktive Designer anwachsen ließ. Es zeigte sich, dass der Bedarf an solchen Events enorm ist.</p><p>Wobei die Community hilfreich sein kann:</p><ul><li>Designersuche. Wir haben einen eigenen Bereich „Job“, wo man Spezialisten für das eigene Projekt finden kann.</li><li>Austausch und Insights. Man kann zu Treffen kommen, sich über Trends informieren und Beratung für sein Produkt erhalten.</li><li>Projektförderung. Wenn man einen Service oder ein Produkt hat, das für die Design-Community relevant ist, kann man es im Chat oder bei Veranstaltungen präsentieren.</li><li>Gemeinsame Events. Wir sind offen für Kollaborationen an der Schnittstelle von Design und deinem Projekt.</li></ul><p>Wo man uns verfolgen kann:</p><p>📱: @designers.mne</p><p>📱: @designersmne</p><p>Webseite: <a href=\"https://www.designersmne.space/\">www.designersmne.space</a></p><p>Mein Kontakt: @katrixetto ⭐️</p>",
-      "links": [
-        {
-          "label": "Instagram",
-          "href": "https://www.instagram.com/designers.mne",
-          "external": true
-        },
-        {
-          "label": "Telegram",
-          "href": "https://t.me/designermne",
-          "external": true
-        },
-        {
-          "label": "designersmne.space",
-          "href": "https://www.designersmne.space/",
-          "external": true
-        }
-      ]
+      "bio": "Ich gestalte seit 6 Jahren Corporate Designs und bin seit 8 Jahren im Eventbereich tätig. Gründerin der Designer-Community in Montenegro Designers.mne: Web-, Grafik-, Produktdesigner und andere Fachkräfte. Ich habe mehr als 50 Veranstaltungen in verschiedenen Städten Russlands organisiert, dazu kommen 20 Design-Treffen und 1 Design-Festival in Montenegro. In meiner Freizeit als Designerin liebe ich es, durchdachte und menschenorientierte Events zu kreieren, die beim Wachstum helfen, Gleichgesinnte finden und das Selbstvertrauen in den eigenen Weg stärken.",
+      "detailsHtml": "<p>Ich gestalte seit 6 Jahren Corporate Designs und bin seit 8 Jahren im Eventbereich tätig. Gründerin der Designer-Community in Montenegro Designers.mne: Web-, Grafik-, Produktdesigner und andere Fachkräfte.</p><p>Ich habe mehr als 50 Veranstaltungen in verschiedenen Städten Russlands organisiert, dazu kommen 20 Design-Treffen und 1 Design-Festival in Montenegro.</p><p>In meiner Freizeit als Designerin liebe ich es, durchdachte und menschenorientierte Events zu kreieren, die beim Wachstum helfen, Gleichgesinnte finden und das Selbstvertrauen in den eigenen Weg stärken.</p>"
     },
     "me": {
       "handle": "@katrixetto",
       "name": "Jekaterina Ustinova",
       "role": "Grafička dizajnerka i kreatorka događaja",
-      "bio": "Već 6 godina kreiram korporativni identitet, a u događajima imam 8 godina iskustva. Osnivačica sam zajednice dizajnera u Crnoj Gori Designers.mne: veb, grafičkih, produkt dizajnera i drugih stručnjaka. Iza mene je više od 50 događaja u različitim gradovima Rusije, a sada i 20 dizajn susreta i jedan dizajn festival u Crnoj Gori. U slobodno vrijeme, volim da kreiram promišljene i na ljude usmjerene događaje koji pomažu rast, pronalaženje istomišljenika i sticanje veće sigurnosti na svom putu. Designers.mne je projekt za koji sam strastvena. Već 2 godine zaredom okupljamo se svake treće nedjelje na tematskim susretima posvećenim različitim aktuelnim pitanjima iz oblasti dizajna. U oktobru 2025. godine organizovali smo čitav festival Design.mne.fest, koji je okupio više od 50 učesnika, bio uspješan finansijski, a naša zajednica je narasla na preko 195 aktivnih dizajnera. Pokazalo se da je potreba za ovakvim događajima ogromna.",
-      "detailsHtml": "<p>Već 6 godina kreiram korporativni identitet, a u događajima imam 8 godina iskustva. Osnivačica sam zajednice dizajnera u Crnoj Gori Designers.mne: veb, grafičkih, produkt dizajnera i drugih stručnjaka.</p><p>Iza mene je više od 50 događaja u različitim gradovima Rusije, a sada i 20 dizajn susreta i jedan dizajn festival u Crnoj Gori.</p><p>U slobodno vrijeme, volim da kreiram promišljene i na ljude usmjerene događaje koji pomažu rast, pronalaženje istomišljenika i sticanje veće sigurnosti na svom putu.</p><p>Designers.mne je projekt za koji sam strastvena.</p><p>Već 2 godine zaredom okupljamo se svake treće nedjelje na tematskim susretima posvećenim različitim aktuelnim pitanjima iz oblasti dizajna.</p><p>U oktobru 2025. godine organizovali smo čitav festival Design.mne.fest, koji je okupio više od 50 učesnika, bio uspješan finansijski, a naša zajednica je narasla na preko 195 aktivnih dizajnera. Pokazalo se da je potreba za ovakvim događajima ogromna.</p><p>Kako zajednica može biti korisna:</p><ul><li>Pronalaženje dizajnera. Imamo posebnu temu „Posao“ u kojoj možete pronaći stručnjaka za vaš projekat.</li><li>Komunikacija i uvidi. Možete doći na susret, saznati o trendovima i dobiti savjet za vaš proizvod.</li><li>Promocija projekata. Ako imate servis ili proizvod koji je aktuelan za dizajnersku publiku, možete ga predstaviti u ćaskanju ili na događaju.</li><li>Zajednički događaji. Otvoreni smo za saradnju na spoju dizajna i vašeg projekta.</li></ul><p>Gdje pratiti:</p><p>📱: @designers.mne</p><p>📱: @designersmne</p><p>Saјt: <a href=\"https://www.designersmne.space/\">www.designersmne.space</a></p><p>Moj kontakt: @katrixetto ⭐️</p>",
-      "links": [
-        {
-          "label": "Instagram",
-          "href": "https://www.instagram.com/designers.mne",
-          "external": true
-        },
-        {
-          "label": "Telegram",
-          "href": "https://t.me/designermne",
-          "external": true
-        },
-        {
-          "label": "designersmne.space",
-          "href": "https://www.designersmne.space/",
-          "external": true
-        }
-      ]
+      "bio": "Već 6 godina kreiram korporativni identitet, a u događajima imam 8 godina iskustva. Osnivačica sam zajednice dizajnera u Crnoj Gori Designers.mne: veb, grafičkih, produkt dizajnera i drugih stručnjaka. Iza mene je više od 50 događaja u različitim gradovima Rusije, a sada i 20 dizajn susreta i jedan dizajn festival u Crnoj Gori. U slobodno vrijeme volim da kreiram promišljene i na ljude usmjerene događaje koji pomažu rast, pronalaženje istomišljenika i sticanje veće sigurnosti na svom putu.",
+      "detailsHtml": "<p>Već 6 godina kreiram korporativni identitet, a u događajima imam 8 godina iskustva. Osnivačica sam zajednice dizajnera u Crnoj Gori Designers.mne: veb, grafičkih, produkt dizajnera i drugih stručnjaka.</p><p>Iza mene je više od 50 događaja u različitim gradovima Rusije, a sada i 20 dizajn susreta i jedan dizajn festival u Crnoj Gori.</p><p>U slobodno vrijeme volim da kreiram promišljene i na ljude usmjerene događaje koji pomažu rast, pronalaženje istomišljenika i sticanje veće sigurnosti na svom putu.</p>"
     },
     "es": {
       "handle": "@katrixetto",
       "name": "Ekaterina Ustinova",
       "role": "Diseñadora gráfica y creadora de eventos",
-      "bio": "Creo identidades corporativas desde hace 6 años, y en eventos desde hace 8 años. Fundadora de la comunidad de diseñadores en Montenegro Designers.mne: diseñadores web, gráficos, de productos y otros especialistas. Con más de 50 eventos realizados en diferentes ciudades de Rusia, y ahora 20 encuentros de diseño y 1 festival de diseño en Montenegro. En mi tiempo libre, me gusta crear eventos reflexivos y centrados en las personas, que ayudan a crecer, encontrar personas afines y ganar confianza en el camino propio. Designers.mne es un proyecto que me apasiona. Desde hace 2 años, nos reunimos cada 3 semanas los domingos en encuentros temáticos dedicados a diferentes temas actuales del ámbito del diseño. En octubre de 2025 organizamos todo un festival, Design.mne.fest, que reunió a más de 50 participantes, fue rentable y nuestra comunidad creció a más de 195 diseñadores activos. Resultó que la demanda por eventos de este tipo es enorme.",
-      "detailsHtml": "<p>Creo identidades corporativas desde hace 6 años, y en eventos desde hace 8 años. Fundadora de la comunidad de diseñadores en Montenegro Designers.mne: diseñadores web, gráficos, de productos y otros especialistas.</p><p>Con más de 50 eventos realizados en diferentes ciudades de Rusia, y ahora 20 encuentros de diseño y 1 festival de diseño en Montenegro.</p><p>En mi tiempo libre, me gusta crear eventos reflexivos y centrados en las personas, que ayudan a crecer, encontrar personas afines y ganar confianza en el camino propio.</p><p>Designers.mne es un proyecto que me apasiona.</p><p>Desde hace 2 años, nos reunimos cada 3 semanas los domingos en encuentros temáticos dedicados a diferentes temas actuales del ámbito del diseño.</p><p>En octubre de 2025 organizamos todo un festival, Design.mne.fest, que reunió a más de 50 participantes, fue rentable y nuestra comunidad creció a más de 195 diseñadores activos. Resultó que la demanda por eventos de este tipo es enorme.</p><p>Cómo puede ser útil la comunidad:</p><ul><li>Búsqueda de diseñadores. Tenemos una sección especial llamada «Trabajo» donde puedes encontrar un especialista para tu proyecto.</li><li>Comunicación e ideas. Puedes asistir a un encuentro, conocer las tendencias y recibir asesoría sobre tu producto.</li><li>Promoción de proyectos. Si tienes un servicio o producto relevante para la audiencia de diseñadores, puedes presentarlo en el chat o en un evento.</li><li>Eventos conjuntos. Estamos abiertos a colaboraciones en la intersección del diseño y tu proyecto.</li></ul><p>Dónde seguirnos:</p><p>📱: @designers.mne</p><p>📱: @designersmne</p><p>Sitio web: <a href=\"https://www.designersmne.space/\">www.designersmne.space</a></p><p>Mi contacto: @katrixetto ⭐️</p>",
-      "links": [
-        {
-          "label": "Instagram",
-          "href": "https://www.instagram.com/designers.mne",
-          "external": true
-        },
-        {
-          "label": "Telegram",
-          "href": "https://t.me/designermne",
-          "external": true
-        },
-        {
-          "label": "designersmne.space",
-          "href": "https://www.designersmne.space/",
-          "external": true
-        }
-      ]
+      "bio": "Creo identidades corporativas desde hace 6 años y trabajo en eventos desde hace 8 años. Soy fundadora de la comunidad de diseñadores en Montenegro Designers.mne: diseñadores web, gráficos, de producto y otros especialistas. He organizado más de 50 eventos en diferentes ciudades de Rusia, y ahora 20 encuentros de diseño y 1 festival de diseño en Montenegro. En mi tiempo libre, me gusta crear eventos reflexivos y centrados en las personas, que ayudan a crecer, encontrar personas afines y ganar confianza en el propio camino.",
+      "detailsHtml": "<p>Creo identidades corporativas desde hace 6 años y trabajo en eventos desde hace 8 años. Soy fundadora de la comunidad de diseñadores en Montenegro Designers.mne: diseñadores web, gráficos, de producto y otros especialistas.</p><p>He organizado más de 50 eventos en diferentes ciudades de Rusia, y ahora 20 encuentros de diseño y 1 festival de diseño en Montenegro.</p><p>En mi tiempo libre, me gusta crear eventos reflexivos y centrados en las personas, que ayudan a crecer, encontrar personas afines y ganar confianza en el propio camino.</p>"
     }
   },
   "translationStatus": {
