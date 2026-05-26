@@ -103,8 +103,7 @@
       { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Встреча сообщества Pet Project Club", "caption": "Обсуждение проектов и обмен опытом" },
       { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Участники клуба во время оффлайн-встречи", "caption": "Сообщество, в котором делают вместе" },
       { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Фотография участников Pet Project Club", "caption": "Оффлайн-формат, который помогает не терять темп" },
-      { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Фото со встречи клуба в конце года", "caption": "Клуб продолжает собираться и расти" },
-      { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Недавняя фотография со встречи Pet Project Club", "caption": "Свежие встречи и новые участники" }
+      { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Фото со встречи клуба в конце года", "caption": "Клуб продолжает собираться и расти" }
     ]
   },
   "translations": {
@@ -180,8 +179,7 @@
           { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Pet Project Club community meetup", "caption": "Project discussions and exchange of experience" },
           { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Club members during an offline meetup", "caption": "A community that builds together" },
           { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Photo of Pet Project Club participants", "caption": "An offline format that helps keep momentum" },
-          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Photo from the club meetup at the end of the year", "caption": "The club keeps gathering and growing" },
-          { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Recent photo from a Pet Project Club meetup", "caption": "Fresh meetups and new members" }
+          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Photo from the club meetup at the end of the year", "caption": "The club keeps gathering and growing" }
         ]
       }
     },
@@ -257,8 +255,7 @@
           { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Treffen der Pet Project Club Community", "caption": "Projektgespraeche und Erfahrungsaustausch" },
           { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Clubmitglieder waehrend eines Offline-Treffens", "caption": "Eine Community, die gemeinsam baut" },
           { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Foto von Teilnehmern des Pet Project Club", "caption": "Ein Offline-Format, das den Schwung haelt" },
-          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Foto vom Club-Treffen am Jahresende", "caption": "Der Club trifft sich weiter und waechst" },
-          { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Aktuelles Foto von einem Pet Project Club Treffen", "caption": "Frische Treffen und neue Mitglieder" }
+          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Foto vom Club-Treffen am Jahresende", "caption": "Der Club trifft sich weiter und waechst" }
         ]
       }
     },
@@ -334,8 +331,7 @@
           { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Susret zajednice Pet Project Club", "caption": "Razgovor o projektima i razmjena iskustva" },
           { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Clanovi kluba tokom offline susreta", "caption": "Zajednica koja gradi zajedno" },
           { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Fotografija ucesnika Pet Project Cluba", "caption": "Offline format koji pomaze da se odrzi ritam" },
-          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Fotografija sa klupskog susreta na kraju godine", "caption": "Klub nastavlja da se okuplja i raste" },
-          { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Skorasnja fotografija sa susreta Pet Project Cluba", "caption": "Svjezi susreti i novi clanovi" }
+          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Fotografija sa klupskog susreta na kraju godine", "caption": "Klub nastavlja da se okuplja i raste" }
         ]
       }
     },
@@ -411,8 +407,7 @@
           { "src": "assets/meetings/photo_2025-11-11_13-35-42.jpg", "alt": "Encuentro de la comunidad Pet Project Club", "caption": "Conversaciones sobre proyectos e intercambio de experiencia" },
           { "src": "assets/meetings/photo_2025-11-14_17-53-35.jpg", "alt": "Miembros del club durante un encuentro presencial", "caption": "Una comunidad que construye junta" },
           { "src": "assets/meetings/photo_2025-11-14_17-53-37.jpg", "alt": "Foto de participantes de Pet Project Club", "caption": "Un formato presencial que ayuda a mantener el ritmo" },
-          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Foto del encuentro del club al final del ano", "caption": "El club sigue reuniendose y creciendo" },
-          { "src": "assets/meetings/photo_2026-03-19_19-59-37.jpg", "alt": "Foto reciente de un encuentro de Pet Project Club", "caption": "Encuentros recientes y nuevos miembros" }
+          { "src": "assets/meetings/photo_2025-12-25_21-10-42.jpg", "alt": "Foto del encuentro del club al final del ano", "caption": "El club sigue reuniendose y creciendo" }
         ]
       }
     }

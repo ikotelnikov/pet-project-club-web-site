@@ -230,6 +230,8 @@ function buildRoutesForLocale(locale, content, ui) {
       title: ui.meta?.main?.title || siteName,
       description: ui.meta?.main?.description || summarizePlainText(content.mainPage.hero?.lead),
       pageContent: renderMainPage(content.mainPage, locale),
+      fallbackPath: "main/page.json",
+      fallbackData: content.mainPage,
       schema: buildMainSchema(content.mainPage, siteName),
       alternates: buildAlternateUrls(""),
       lastmod: latestDateFromMeetings(content.meetingItems),
@@ -414,6 +416,8 @@ function createRoute({
   pageContent,
   schema,
   alternates,
+  fallbackPath = null,
+  fallbackData = null,
   robots = "index,follow",
   indexable = true,
   lastmod = null,
@@ -428,6 +432,8 @@ function createRoute({
     pageContent,
     schema,
     alternates,
+    fallbackPath,
+    fallbackData,
     robots,
     indexable,
     lastmod,
@@ -437,6 +443,7 @@ function createRoute({
 function buildPageHtml(sourceHtml, route) {
   let html = sourceHtml;
   html = replacePageContent(html, route.pageContent);
+  html = replaceFallbackContent(html, route.fallbackPath, route.fallbackData);
   html = stripManagedSeo(html);
   html = replaceTagContent(html, /<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(route.title)}</title>`);
   html = replaceMetaContent(html, "name", "description", route.description);
@@ -455,6 +462,19 @@ function buildPageHtml(sourceHtml, route) {
 
   html = html.replace(/(<meta[^>]*name="description"[^>]*>)/i, (match) => `${match}\n  ${seoBlock}`);
   return html;
+}
+
+function replaceFallbackContent(html, fallbackPath, fallbackData) {
+  if (!fallbackPath || !fallbackData) {
+    return html;
+  }
+
+  const pattern = new RegExp(
+    `(<script type="application/json" data-fallback-path="${escapeRegExp(fallbackPath)}">)[\\s\\S]*?(<\\/script>)`,
+    "i"
+  );
+
+  return html.replace(pattern, (_match, openTag, closeTag) => `${openTag}${JSON.stringify(fallbackData)}${closeTag}`);
 }
 
 function replacePageContent(html, pageContent) {

@@ -2886,14 +2886,18 @@ function initGallery() {
     const next = shell.querySelector(".gallery-nav.next");
     const slides = [...shell.querySelectorAll(".gallery-slide img")];
 
-    if (!viewport || !prev || !next) {
+    if (!viewport) {
       return;
     }
 
     if (slides.length <= 1) {
       shell.classList.add("gallery-shell-single");
-      prev.hidden = true;
-      next.hidden = true;
+      if (prev) {
+        prev.hidden = true;
+      }
+      if (next) {
+        next.hidden = true;
+      }
     }
 
     const scrollBySlide = (direction) => {
@@ -2906,8 +2910,8 @@ function initGallery() {
       });
     };
 
-    prev.addEventListener("click", () => scrollBySlide(-1));
-    next.addEventListener("click", () => scrollBySlide(1));
+    prev?.addEventListener("click", () => scrollBySlide(-1));
+    next?.addEventListener("click", () => scrollBySlide(1));
 
     slides.forEach((slide, index) => {
       let pointerStartX = null;
