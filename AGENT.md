@@ -5,6 +5,16 @@
 For this repository, default to pushing completed changes to the remote branch after implementation and basic verification, unless the user explicitly says not to push.
 The user checks changes on production, so "done" should normally include push, not only local edits.
 
+## Worker Logs
+
+Wrangler/Cloudflare Worker logs for the Telegram bot are accessed from a bot-enabled checkout of this same project, not from the static site alone.
+When investigating production bot errors, first look for a neighboring project checkout that contains `wrangler.toml` and `bot/` (for example `pet-project-club-web-site-live`), then use the bot log scripts there:
+
+- `npm run bot:logs`
+- `npm run bot:logs:env`
+
+Use `bot:logs:env` when local secrets are needed through `bot/run-with-env.ps1`.
+
 ## LLM-First Design Rule
 
 When building or refactoring any user-intent pipeline, default to an LLM-first architecture.
