@@ -2964,27 +2964,6 @@ function initGallery() {
       slide.addEventListener("pointercancel", resetPointerState);
     });
 
-    viewport.addEventListener(
-      "wheel",
-      (event) => {
-        event.preventDefault();
-
-        if (Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.shiftKey) {
-          viewport.scrollBy({
-            left: event.deltaX || event.deltaY,
-            behavior: "auto",
-          });
-          return;
-        }
-
-        window.scrollBy({
-          top: event.deltaY,
-          behavior: "auto",
-        });
-      },
-      { passive: false }
-    );
-
     shell.dataset.galleryReady = "true";
   });
 }
