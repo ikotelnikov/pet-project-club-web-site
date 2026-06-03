@@ -13,9 +13,13 @@
     "bot:webhook:register": "node bot/cli/register-webhook.js",
     "bot:webhook:simulate": "node bot/cli/simulate-webhook.js",
     "bot:test": "node --test bot/**/*.test.js",
-    "build:locales": "node tools/generate-localized-pages.mjs"
+    "build:locales": "node tools/generate-localized-pages.mjs",
+    "serve:e2e": "http-server . --host 127.0.0.1 --port 4173 --silent",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "http-server": "^14.1.1",
     "wrangler": "^4.78.0"
   }
 }

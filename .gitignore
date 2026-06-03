@@ -3,6 +3,8 @@
 Thumbs.db
 node_modules
 bot/local-env.ps1
+playwright-report/
+test-results/
 ru/
 en/
 de/
