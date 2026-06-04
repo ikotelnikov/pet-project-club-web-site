@@ -10,7 +10,7 @@ const STATUS = {
 const PROJECT_ID = Number.parseInt(process.env.TESTRAIL_PROJECT_ID || "3", 10);
 const SUITE_ID = Number.parseInt(process.env.TESTRAIL_SUITE_ID || "11", 10);
 const NODE_RESULTS_PATH = process.env.NODE_TEST_RESULTS || "ci-results/node-tests.xml";
-const PLAYWRIGHT_RESULTS_PATH = process.env.PLAYWRIGHT_TEST_RESULTS || "test-results/playwright-tests.json";
+const PLAYWRIGHT_RESULTS_PATH = process.env.PLAYWRIGHT_TEST_RESULTS || "ci-results/playwright-tests.json";
 
 const TITLE_OVERRIDES = new Map([
   ["renders generated detail pages", "renders generated detail pages for meetings, projects, and participants"],
@@ -294,7 +294,7 @@ function buildCaseResults(cases, nodeResults, playwrightResults) {
   }
 
   for (const aggregate of AGGREGATE_CASES) {
-    const testCase = caseByTitle.get(aggregate.caseTitle);
+    const testCase = caseByTitle.get(normalizeTitle(aggregate.caseTitle));
     if (!testCase) {
       continue;
     }
