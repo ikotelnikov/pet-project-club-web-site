@@ -66,7 +66,7 @@ jobs:
         run: |
           start=$(date +%s)
           set +e
-          npx playwright test --reporter=json > test-results/playwright-tests.json
+          npx playwright test --reporter=json > ci-results/playwright-tests.json
           status=$?
           end=$(date +%s)
           echo "PLAYWRIGHT_TEST_WALL_SECONDS=$((end - start))" >> "$GITHUB_ENV"
@@ -81,7 +81,7 @@ jobs:
           TESTRAIL_PROJECT_ID: "3"
           TESTRAIL_SUITE_ID: "11"
           NODE_TEST_RESULTS: ci-results/node-tests.xml
-          PLAYWRIGHT_TEST_RESULTS: test-results/playwright-tests.json
+          PLAYWRIGHT_TEST_RESULTS: ci-results/playwright-tests.json
         run: node tools/report-testrail-results.mjs
 
       - name: Fail if tests failed
