@@ -14,6 +14,42 @@ import { createPendingRecord } from "../core/confirmation-flow.js";
 import { extractCommandText, handleTelegramMessage } from "../adapters/telegram/message-handler.js";
 import { processTelegramUpdates } from "./telegram-update-processor.js";
 
+function createIntent(overrides = {}) {
+  return {
+    intent: "update",
+    entity: "participant",
+    target: {
+      mode: "existing",
+      ref: null,
+    },
+    relatedEntities: [],
+    requestedLocales: {
+      sourceLocale: null,
+      targetLocale: null,
+      targetLocales: [],
+    },
+    needsClarification: false,
+    clarificationReason: null,
+    clarificationQuestion: null,
+    confidence: "high",
+    ...overrides,
+  };
+}
+
+function createOperation(overrides = {}) {
+  return {
+    entity: "participant",
+    action: "update",
+    targetSlug: "ikotelnikov",
+    newObject: null,
+    patch: {},
+    translation: null,
+    assetActions: [],
+    warnings: [],
+    ...overrides,
+  };
+}
+
 test("extracts command text from message text or caption", () => {
   assert.equal(extractCommandText({ text: "/participant create" }), "/participant create");
   assert.equal(extractCommandText({ caption: "/participant create" }), "/participant create");
@@ -239,25 +275,32 @@ test("[C179] translation intent without locale defaults to all non-source locale
     },
     photoStore: null,
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: true,
-          usedModel: "test",
-          attempts: 1,
-          extraction: {
-            intent: "translation_operation",
-            entity: "participant",
-            action: "update",
-            slug: null,
-            targetRef: "ikotelnikov",
-            confidence: "medium",
-            needsConfirmation: true,
-            summary: "update translation for ikotelnikov",
-            fields: {},
-            questions: ["Which locale should I update: ru, en, de, me, or es?"],
-            warnings: [],
+      async analyzeIntent() {
+        return createIntent({
+          intent: "translate",
+          target: {
+            mode: "existing",
+            ref: "ikotelnikov",
           },
-        };
+          requestedLocales: {
+            sourceLocale: null,
+            targetLocale: null,
+            targetLocales: [],
+          },
+          confidence: "medium",
+        });
+      },
+      async generateOperation({ resolved }) {
+        return createOperation({
+          action: "translate",
+          targetSlug: resolved.target.slug,
+          patch: null,
+          translation: {
+            sourceLocale: null,
+            targetLocale: null,
+            targetLocales: [],
+          },
+        });
       },
     },
     dryRun: true,
@@ -321,39 +364,28 @@ test("[C180] translation intent with locale becomes a normal pending update", as
     repository,
     photoStore: null,
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: true,
-          usedModel: "test",
-          attempts: 1,
-          extraction: {
-            intent: "translation_operation",
-            entity: "participant",
-            action: "update",
-            slug: null,
-            targetRef: "ikotelnikov",
-            confidence: "high",
-            needsConfirmation: true,
-            summary: "update en translation for ikotelnikov",
-            fields: {
-              locale: "en",
-              bio: "Builds the club in English.",
-            },
-            questions: [],
-            warnings: [],
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "existing",
+            ref: "ikotelnikov",
           },
-        };
+          requestedLocales: {
+            sourceLocale: "ru",
+            targetLocale: "en",
+            targetLocales: ["en"],
+          },
+        });
       },
-      async resolveTarget() {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: "ikotelnikov",
-            confidence: "high",
-            question: null,
+      async generateOperation({ resolved }) {
+        return createOperation({
+          targetSlug: resolved.target.slug,
+          patch: {
+            locale: "en",
+            role: "Founder",
+            bio: "Builds the club in English.",
           },
-        };
+        });
       },
     },
     dryRun: true,
@@ -419,38 +451,20 @@ test("[C127] missing translation locale becomes a buffered clarification and res
     repository,
     photoStore: null,
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: true,
-          usedModel: "test",
-          attempts: 1,
-          extraction: {
-            intent: "translation_operation",
-            entity: "participant",
-            action: "update",
-            slug: null,
-            targetRef: "ikotelnikov",
-            confidence: "medium",
-            needsConfirmation: true,
-            summary: "update translation bio",
-            fields: {
-              bio: "Construye el club.",
-            },
-            questions: ["Which locale should I update: ru, en, de, me, or es?"],
-            warnings: [],
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "existing",
+            ref: "ikotelnikov",
           },
-        };
+          needsClarification: true,
+          clarificationReason: "locale_missing",
+          clarificationQuestion: "Which locale should I update: ru, en, de, me, or es?",
+          confidence: "medium",
+        });
       },
-      async resolveTarget() {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: "ikotelnikov",
-            confidence: "high",
-            question: null,
-          },
-        };
+      async generateOperation() {
+        throw new Error("locale clarification should not generate operation yet");
       },
     },
     dryRun: true,
@@ -458,7 +472,7 @@ test("[C127] missing translation locale becomes a buffered clarification and res
 
   assert.equal(clarification.status, "clarification");
   assert.match(clarification.question, /Which locale should I update/);
-  assert.equal(clarification.pendingState.operation.type, "translation_locale");
+  assert.equal(clarification.pendingState.operation.type, "v2_intent_clarification");
 
   const resumed = await handleTelegramMessage({
     message: {
@@ -472,19 +486,27 @@ test("[C127] missing translation locale becomes a buffered clarification and res
     repository,
     photoStore: null,
     extractionClient: {
-      async extractIntent() {
-        throw new Error("locale clarification reply should not call extraction");
-      },
-      async resolveTarget() {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: "ikotelnikov",
-            confidence: "high",
-            question: null,
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "existing",
+            ref: "ikotelnikov",
           },
-        };
+          requestedLocales: {
+            sourceLocale: "ru",
+            targetLocale: "es",
+            targetLocales: ["es"],
+          },
+        });
+      },
+      async generateOperation({ resolved }) {
+        return createOperation({
+          targetSlug: resolved.target.slug,
+          patch: {
+            locale: "es",
+            bio: "Construye el club.",
+          },
+        });
       },
     },
     dryRun: true,
