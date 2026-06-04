@@ -1,4 +1,4 @@
-name: Playwright
+name: CI
 
 on:
   push:
@@ -6,14 +6,12 @@ on:
     paths-ignore:
       - "content/**"
       - "assets/**"
-      - "**/*.json"
       - "robots.txt"
       - "sitemap.xml"
   pull_request:
     paths-ignore:
       - "content/**"
       - "assets/**"
-      - "**/*.json"
       - "robots.txt"
       - "sitemap.xml"
   workflow_dispatch:
@@ -22,7 +20,7 @@ permissions:
   contents: read
 
 jobs:
-  e2e:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,6 +36,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Prepare test result directory
+        run: mkdir -p test-results
+
+      - name: Run bot tests
+        id: bot_tests
+        continue-on-error: true
+        run: node --test --test-reporter=junit --test-reporter-destination=test-results/node-tests.xml bot/**/*.test.js
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
@@ -45,7 +51,25 @@ jobs:
         run: npm run build:locales
 
       - name: Run Playwright tests
-        run: npm run test:e2e
+        id: playwright_tests
+        continue-on-error: true
+        run: npx playwright test --reporter=json > test-results/playwright-tests.json
+
+      - name: Report results to TestRail
+        if: always()
+        env:
+          TESTRAIL_HOST: ${{ secrets.TESTRAIL_HOST }}
+          TESTRAIL_USERNAME: ${{ secrets.TESTRAIL_USERNAME }}
+          TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
+          TESTRAIL_PROJECT_ID: "3"
+          TESTRAIL_SUITE_ID: "11"
+          NODE_TEST_RESULTS: test-results/node-tests.xml
+          PLAYWRIGHT_TEST_RESULTS: test-results/playwright-tests.json
+        run: node tools/report-testrail-results.mjs
+
+      - name: Fail if tests failed
+        if: always() && (steps.bot_tests.outcome == 'failure' || steps.playwright_tests.outcome == 'failure')
+        run: exit 1
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
