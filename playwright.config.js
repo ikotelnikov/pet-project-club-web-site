@@ -11,6 +11,7 @@ export default defineConfig({
   reporter: process.env.CI ? [["github"], ["html", { open: "never" }]] : [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: `http://127.0.0.1:${port}`,
+    reducedMotion: "reduce",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
@@ -27,6 +28,14 @@ export default defineConfig({
     {
       name: "mobile-chromium",
       use: { ...devices["Pixel 5"] },
+    },
+    {
+      name: "desktop-webkit",
+      use: { ...devices["Desktop Safari"] },
+    },
+    {
+      name: "mobile-webkit",
+      use: { ...devices["iPhone 15"] },
     },
   ],
 });

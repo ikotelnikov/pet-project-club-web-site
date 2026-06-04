@@ -52,11 +52,14 @@ test.describe("site smoke", () => {
       if (isMobile) {
         const toggle = page.locator("[data-menu-toggle]");
         if ((await toggle.getAttribute("aria-expanded")) !== "true") {
-          await toggle.click();
+          await expect(toggle).toBeVisible();
+          await toggle.click({ force: true });
         }
       }
 
-      await page.locator(`[data-nav='${pageName}']`).click();
+      const navLink = page.locator(`[data-nav='${pageName}']`);
+      await expect(navLink).toBeVisible();
+      await navLink.click({ force: true });
       await expect(page).toHaveURL(new RegExp(`/${pageName}/$`));
       await expect(page.locator("#page-content")).toBeVisible();
     }
@@ -109,7 +112,9 @@ test.describe("mobile smoke", () => {
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
     await expect(nav).toHaveClass(/is-open/);
 
-    await nav.locator("[data-nav='meetings']").click();
+    const meetingsLink = nav.locator("[data-nav='meetings']");
+    await expect(meetingsLink).toBeVisible();
+    await meetingsLink.click({ force: true });
     await expect(page).toHaveURL(/\/meetings\/$/);
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
   });

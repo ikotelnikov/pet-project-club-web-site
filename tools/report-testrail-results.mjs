@@ -22,7 +22,7 @@ const AGGREGATE_CASES = [
     source: "playwright",
   },
   {
-    caseTitle: "website smoke regression passes on desktop chromium and mobile chromium",
+    caseTitle: "website smoke regression passes on Chromium and WebKit desktop/mobile projects",
     source: "playwright",
   },
 ];

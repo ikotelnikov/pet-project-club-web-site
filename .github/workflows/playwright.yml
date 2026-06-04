@@ -45,7 +45,7 @@ jobs:
         run: node --test --test-reporter=junit --test-reporter-destination=test-results/node-tests.xml bot/**/*.test.js
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Generate localized pages
         run: npm run build:locales
