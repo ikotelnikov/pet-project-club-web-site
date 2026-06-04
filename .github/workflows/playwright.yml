@@ -37,7 +37,7 @@ jobs:
         run: npm ci
 
       - name: Prepare test result directory
-        run: mkdir -p test-results
+        run: mkdir -p ci-results test-results
 
       - name: Start CI test timer
         run: echo "CI_TEST_STARTED_SECONDS=$(date +%s)" >> "$GITHUB_ENV"
@@ -48,7 +48,7 @@ jobs:
         run: |
           start=$(date +%s)
           set +e
-          node --test --test-reporter=junit --test-reporter-destination=test-results/node-tests.xml bot/**/*.test.js
+          npm run bot:test:junit
           status=$?
           end=$(date +%s)
           echo "NODE_TEST_WALL_SECONDS=$((end - start))" >> "$GITHUB_ENV"
@@ -80,7 +80,7 @@ jobs:
           TESTRAIL_API_KEY: ${{ secrets.TESTRAIL_API_KEY }}
           TESTRAIL_PROJECT_ID: "3"
           TESTRAIL_SUITE_ID: "11"
-          NODE_TEST_RESULTS: test-results/node-tests.xml
+          NODE_TEST_RESULTS: ci-results/node-tests.xml
           PLAYWRIGHT_TEST_RESULTS: test-results/playwright-tests.json
         run: node tools/report-testrail-results.mjs
 

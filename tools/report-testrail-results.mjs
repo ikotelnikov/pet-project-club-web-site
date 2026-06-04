@@ -9,7 +9,7 @@ const STATUS = {
 
 const PROJECT_ID = Number.parseInt(process.env.TESTRAIL_PROJECT_ID || "3", 10);
 const SUITE_ID = Number.parseInt(process.env.TESTRAIL_SUITE_ID || "11", 10);
-const NODE_RESULTS_PATH = process.env.NODE_TEST_RESULTS || "test-results/node-tests.xml";
+const NODE_RESULTS_PATH = process.env.NODE_TEST_RESULTS || "ci-results/node-tests.xml";
 const PLAYWRIGHT_RESULTS_PATH = process.env.PLAYWRIGHT_TEST_RESULTS || "test-results/playwright-tests.json";
 
 const TITLE_OVERRIDES = new Map([
@@ -175,9 +175,9 @@ async function readNodeResults(filePath) {
   const xml = await readOptionalText(filePath);
   const results = new Map();
 
-  for (const testcase of matchAll(xml, /<testcase\b([^>]*)>([\s\S]*?)<\/testcase>|<testcase\b([^>]*)\/>/g)) {
-    const attrs = parseXmlAttributes(testcase[1] || testcase[3] || "");
-    const body = testcase[2] || "";
+  for (const testcase of matchAll(xml, /<testcase\b([^>]*)\/>|<testcase\b([^>]*)>([\s\S]*?)<\/testcase>/g)) {
+    const attrs = parseXmlAttributes(testcase[1] || testcase[2] || "");
+    const body = testcase[3] || "";
     const title = attrs.name;
     if (!title) {
       continue;

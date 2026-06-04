@@ -4,6 +4,7 @@ Thumbs.db
 node_modules
 bot/local-env.ps1
 playwright-report/
+ci-results/
 test-results/
 tools/testrail.env
 ru/

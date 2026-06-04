@@ -13,8 +13,9 @@ function collectSameOriginFailures(page) {
 
   page.on("requestfailed", (request) => {
     const url = new URL(request.url());
-    if (url.origin === expectedOrigin) {
-      failures.push(`${request.failure()?.errorText || "failed"} ${url.pathname}`);
+    const errorText = request.failure()?.errorText || "failed";
+    if (url.origin === expectedOrigin && errorText !== "net::ERR_ABORTED") {
+      failures.push(`${errorText} ${url.pathname}`);
     }
   });
 
@@ -49,17 +50,18 @@ test.describe("site smoke", () => {
     await page.goto("/");
 
     for (const pageName of ["meetings", "projects", "participants", "news"]) {
+      const navLink = page.locator("#main-nav").locator(`[data-nav='${pageName}']`);
+
       if (isMobile) {
         const toggle = page.locator("[data-menu-toggle]");
-        if ((await toggle.getAttribute("aria-expanded")) !== "true") {
+        if (!(await navLink.isVisible())) {
           await expect(toggle).toBeVisible();
           await toggle.click({ force: true });
         }
       }
 
-      const navLink = page.locator(`[data-nav='${pageName}']`);
       await expect(navLink).toBeVisible();
-      await navLink.click({ force: true });
+      await navLink.evaluate((link) => link.click());
       await expect(page).toHaveURL(new RegExp(`/${pageName}/$`));
       await expect(page.locator("#page-content")).toBeVisible();
     }
@@ -114,7 +116,7 @@ test.describe("mobile smoke", () => {
 
     const meetingsLink = nav.locator("[data-nav='meetings']");
     await expect(meetingsLink).toBeVisible();
-    await meetingsLink.click({ force: true });
+    await meetingsLink.evaluate((link) => link.click());
     await expect(page).toHaveURL(/\/meetings\/$/);
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
   });

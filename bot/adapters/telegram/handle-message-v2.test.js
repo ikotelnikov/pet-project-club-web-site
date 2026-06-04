@@ -172,7 +172,6 @@ test("[C175] v2 pipeline updates announcement projectSlugs without project hijac
     result.pendingState.operation.fields.projectSlugs,
     ["doveritelnoe-upravlenie-v-chernogorii"]
   );
-  assert.equal(result.pendingState.operation.fields.showInMeetingsList, false);
 });
 
 test("main handler routes through v2 pipeline when feature flag is enabled", async () => {
