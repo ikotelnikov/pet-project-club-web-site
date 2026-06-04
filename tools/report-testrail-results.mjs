@@ -62,7 +62,17 @@ async function main() {
 
   const results = buildCaseResults(cases, nodeResults, playwrightResults);
   if (results.length > 0) {
-    await client.post(`add_results_for_cases/${run.id}`, { results });
+    try {
+      await client.post(`add_results_for_cases/${run.id}`, { results });
+    } catch (error) {
+      if (!isTestRailQualityStatsDuplicateError(error)) {
+        throw error;
+      }
+
+      console.warn(
+        `TestRail accepted results for run ${run.id} but failed while updating quality-field stats; continuing.`
+      );
+    }
   }
 
   console.log(`Created TestRail run ${run.id} and added ${results.length} result(s).`);
@@ -73,6 +83,13 @@ async function main() {
   if (unmatched.length > 0) {
     console.log(`Unmatched automated test titles: ${unmatched.slice(0, 20).join("; ")}${unmatched.length > 20 ? "; ..." : ""}`);
   }
+}
+
+function isTestRailQualityStatsDuplicateError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  return message.includes("500 Internal Server Error")
+    && message.includes("run_quality_field_stats")
+    && message.includes("Duplicate entry");
 }
 
 function createTestRailClient() {
