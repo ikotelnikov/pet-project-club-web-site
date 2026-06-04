@@ -120,7 +120,7 @@ test("marks malformed authorized commands as failed and advances offset", async 
   assert.match(result.results[0].error, /Field 'slug'/);
 });
 
-test("confirmation still succeeds when translation stalls", async () => {
+test("[C132] confirmation still succeeds when translation stalls", async () => {
   const pendingStore = new PendingMemoryStore();
   const applied = [];
   const repository = {
@@ -208,7 +208,7 @@ test("confirmation still succeeds when translation stalls", async () => {
   assert.equal((await pendingStore.getPending(555)).context.recentEntity.slug, "presentation-creometrix-0804");
 });
 
-test("translation intent without locale defaults to all non-source locales", async () => {
+test("[C179] translation intent without locale defaults to all non-source locales", async () => {
   const pendingStore = new PendingMemoryStore();
 
   const result = await handleTelegramMessage({
@@ -268,7 +268,7 @@ test("translation intent without locale defaults to all non-source locales", asy
   assert.deepEqual(result.pendingState.operation.targetLocales, ["en", "me", "es"]);
 });
 
-test("translation intent with locale becomes a normal pending update", async () => {
+test("[C180] translation intent with locale becomes a normal pending update", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async findEntityBySlug() {
@@ -366,7 +366,7 @@ test("translation intent with locale becomes a normal pending update", async () 
   assert.equal(result.pendingState.operation.fields.bio, "Builds the club in English.");
 });
 
-test("missing translation locale becomes a buffered clarification and resumes on reply", async () => {
+test("[C127] missing translation locale becomes a buffered clarification and resumes on reply", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async findEntityBySlug() {
@@ -950,7 +950,7 @@ test("active draft follow-up can object-edit the current draft to remove one lin
   assert.equal(second.pendingState.operation.fields.links[0].label, "Telegram");
 });
 
-test("photo-only message continues an active project draft", async () => {
+test("[C178] photo-only message continues an active project draft", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async findEntityBySlug() {
@@ -1663,7 +1663,7 @@ test("continuation selection accepts numeric reply and resumes the chosen projec
   assert.match(resumed.pendingState.operation.fields.gallery[0].src, /assets\/uploads\/555\/14-photo-14-uniq3\.jpg/);
 });
 
-test("generic operation clarification buffers attachments and resumes on later target reply", async () => {
+test("[C128] generic operation clarification buffers attachments and resumes on later target reply", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async listEntityCandidates() {
@@ -1839,7 +1839,7 @@ test("generic operation clarification buffers attachments and resumes on later t
   assert.match(resumed.pendingState.operation.requestText, /Татьяна Нирман/);
 });
 
-test("medium-confidence target resolution asks for explicit clarification instead of auto-selecting", async () => {
+test("[C129] medium-confidence target resolution asks for explicit clarification instead of auto-selecting", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async listEntityCandidates() {
@@ -2001,7 +2001,7 @@ test("medium-confidence continuation lookup asks clarification instead of auto-s
   assert.match(result.question, /Татьяна Шматко \(tatyana-shmatko\)/);
 });
 
-test("recent entity ranking prefers explicit text match over plain recency", async () => {
+test("[C135] recent entity ranking prefers explicit text match over plain recency", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async readItem(_entity, slug) {
@@ -2354,7 +2354,7 @@ test("continuation selection buffers extra text and photos until the final answe
   assert.doesNotMatch(resumed.pendingState.operation.requestText, /^2$/);
 });
 
-test("continuation lookup resolves a precise recent context entity by name via LLM", async () => {
+test("[C136] continuation lookup resolves a precise recent context entity by name via LLM", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async readItem(_entity, slug) {
@@ -2487,7 +2487,7 @@ test("continuation lookup resolves a precise recent context entity by name via L
   assert.match(result.pendingState.operation.fields.photoStagedPath, /assets\/uploads\/555\/16-photo-16-uniq4\.jpg/);
 });
 
-test("continuation lookup falls back to repository candidates via LLM", async () => {
+test("[C137] continuation lookup falls back to repository candidates via LLM", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async listEntityCandidates(entity) {
@@ -2590,7 +2590,7 @@ test("continuation lookup falls back to repository candidates via LLM", async ()
   assert.match(result.pendingState.operation.fields.photoStagedPath, /assets\/uploads\/555\/17-photo-17-uniq5\.jpg/);
 });
 
-test("text-only uncertain continuation resolves target via recent context and repository lookup", async () => {
+test("[C138] text-only uncertain continuation resolves target via recent context and repository lookup", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async listEntityCandidates(entity) {
@@ -2703,7 +2703,7 @@ test("text-only uncertain continuation resolves target via recent context and re
   assert.equal(result.pendingState.operation.slug, "tatyana-nirman");
 });
 
-test("project photo update can append an additional gallery image", async () => {
+test("[C177] project photo update can append an additional gallery image", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async findEntityBySlug() {

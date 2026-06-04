@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 import { buildTelegramReply, buildTelegramReplyText } from "./reply-text.js";
 
-test("buildConfirmedText renders per-locale translation links when available", () => {
+test("[C102] buildConfirmedText renders per-locale translation links when available", () => {
   const text = buildTelegramReplyText({
     status: "confirmed",
     writeResult: {
@@ -29,7 +29,7 @@ test("buildConfirmedText renders per-locale translation links when available", (
   assert.doesNotMatch(text, /\nLink:/);
 });
 
-test("processed preview offers confirm and cancel only", () => {
+test("[C103] processed preview offers confirm and cancel only", () => {
   const reply = buildTelegramReply({
     status: "processed",
     pendingState: {
@@ -61,7 +61,7 @@ test("processed preview offers confirm and cancel only", () => {
   });
 });
 
-test("processed preview mentions continued recent entity when present", () => {
+test("[C104] processed preview mentions continued recent entity when present", () => {
   const reply = buildTelegramReply({
     status: "processed",
     pendingState: {
@@ -89,7 +89,7 @@ test("processed preview mentions continued recent entity when present", () => {
   assert.match(reply.text, /Continuing: participant tatyana-nirman \(Татьяна Нирман\)/);
 });
 
-test("processed preview renders compact diff lines for removals and additions", () => {
+test("[C105] processed preview renders compact diff lines for removals and additions", () => {
   const reply = buildTelegramReply({
     status: "processed",
     pendingState: {
@@ -128,7 +128,7 @@ test("processed preview renders compact diff lines for removals and additions", 
   assert.match(reply.text, /summary: Old summary -> New summary/);
 });
 
-test("command state reply renders context summary", () => {
+test("[C106] command state reply renders context summary", () => {
   const text = buildTelegramReplyText({
     status: "command",
     command: "state",
@@ -158,7 +158,7 @@ test("command state reply renders context summary", () => {
   assert.match(text, /Doubt: target_missing: Which participant should be created\?/);
 });
 
-test("command help reply describes the new controls", () => {
+test("[C107] command help reply describes the new controls", () => {
   const text = buildTelegramReplyText({
     status: "command",
     command: "help",

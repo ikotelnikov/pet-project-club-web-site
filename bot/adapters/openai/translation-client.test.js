@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 import { TranslationClient } from "./translation-client.js";
 
-test("translateFields retries when the model changes the output shape", async () => {
+test("[C158] translateFields retries when the model changes the output shape", async () => {
   const requests = [];
   const responses = [
     {

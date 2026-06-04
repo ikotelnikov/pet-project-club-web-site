@@ -18,6 +18,10 @@ const TITLE_OVERRIDES = new Map([
 
 const AGGREGATE_CASES = [
   {
+    caseTitle: "same-origin site resources return no 4xx or request failures",
+    source: "playwright",
+  },
+  {
     caseTitle: "website smoke regression passes on desktop chromium and mobile chromium",
     source: "playwright",
   },
@@ -215,12 +219,14 @@ function collectPlaywrightSpecs(value, titlePath, results) {
 
 function buildCaseResults(cases, nodeResults, playwrightResults) {
   const allResults = new Map([...nodeResults, ...playwrightResults]);
+  const caseById = new Map(cases.map((testCase) => [testCase.id, testCase]));
   const caseByTitle = new Map(cases.map((testCase) => [normalizeTitle(testCase.title), testCase]));
   const results = [];
 
   for (const result of allResults.values()) {
-    const mappedTitle = TITLE_OVERRIDES.get(normalizeTitle(result.title)) || result.title;
-    const testCase = caseByTitle.get(normalizeTitle(mappedTitle));
+    const caseId = extractCaseId(result.title);
+    const mappedTitle = TITLE_OVERRIDES.get(normalizeTitle(result.title)) || stripCaseId(result.title);
+    const testCase = caseId ? caseById.get(caseId) : caseByTitle.get(normalizeTitle(mappedTitle));
     if (!testCase) {
       continue;
     }
@@ -261,7 +267,10 @@ function buildCaseResults(cases, nodeResults, playwrightResults) {
 }
 
 function addResult(results, title, result) {
-  const key = normalizeTitle(TITLE_OVERRIDES.get(normalizeTitle(title)) || title);
+  const caseId = extractCaseId(title);
+  const key = caseId
+    ? `case:${caseId}`
+    : normalizeTitle(TITLE_OVERRIDES.get(normalizeTitle(title)) || title);
   const existing = results.get(key);
 
   if (!existing) {
@@ -331,11 +340,20 @@ function decodeXml(text) {
 }
 
 function normalizeTitle(title) {
-  return String(title || "")
+  return stripCaseId(title)
     .replace(/([a-z])([A-Z])/g, "$1 $2")
     .replace(/[^a-zA-Z0-9]+/g, " ")
     .trim()
     .toLowerCase();
+}
+
+function extractCaseId(title) {
+  const match = String(title || "").match(/\[C(\d+)\]/i);
+  return match ? Number.parseInt(match[1], 10) : null;
+}
+
+function stripCaseId(title) {
+  return String(title || "").replace(/\[C\d+\]\s*/gi, "");
 }
 
 function buildRunName() {

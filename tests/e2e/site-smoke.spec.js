@@ -28,7 +28,7 @@ test.describe("site smoke", () => {
     });
   });
 
-  test("loads the home page without broken local resources", async ({ page }) => {
+  test("[C91] loads the home page without broken local resources", async ({ page }) => {
     const failures = collectSameOriginFailures(page);
 
     await page.goto("/");
@@ -43,7 +43,7 @@ test.describe("site smoke", () => {
     expect(failures).toEqual([]);
   });
 
-  test("opens primary navigation pages", async ({ page, isMobile }) => {
+  test("[C92] opens primary navigation pages", async ({ page, isMobile }) => {
     const failures = collectSameOriginFailures(page);
 
     await page.goto("/");
@@ -64,7 +64,7 @@ test.describe("site smoke", () => {
     expect(failures).toEqual([]);
   });
 
-  test("renders generated detail pages", async ({ page }) => {
+  test("[C93] renders generated detail pages", async ({ page }) => {
     const failures = collectSameOriginFailures(page);
 
     for (const path of [
@@ -80,7 +80,7 @@ test.describe("site smoke", () => {
     expect(failures).toEqual([]);
   });
 
-  test("supports generated locale entry points", async ({ page }) => {
+  test("[C94] supports generated locale entry points", async ({ page }) => {
     const failures = collectSameOriginFailures(page);
 
     for (const localePath of ["/en/", "/de/", "/es/", "/me/"]) {
@@ -94,7 +94,7 @@ test.describe("site smoke", () => {
 });
 
 test.describe("mobile smoke", () => {
-  test("opens and closes the mobile navigation", async ({ page, isMobile }) => {
+  test("[C95] opens and closes the mobile navigation", async ({ page, isMobile }) => {
     test.skip(!isMobile, "mobile-only behavior");
 
     await page.goto("/");

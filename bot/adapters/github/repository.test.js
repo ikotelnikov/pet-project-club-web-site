@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { GitHubContentRepository } from "./repository.js";
 
-test("applyCommand retries when GitHub branch ref update is not a fast forward", async () => {
+test("[C150] applyCommand retries when GitHub branch ref update is not a fast forward", async () => {
   const requests = [];
   let refReadCount = 0;
   let patchCount = 0;

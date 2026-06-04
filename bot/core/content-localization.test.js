@@ -6,7 +6,7 @@ import {
   mergeContentItems,
 } from "./content-localization.js";
 
-test("overlays translated locale fields onto source content", () => {
+test("[C151] overlays translated locale fields onto source content", () => {
   const localized = localizeContentNode({
     slug: "meeting-1",
     sourceLocale: "ru",
@@ -31,7 +31,7 @@ test("overlays translated locale fields onto source content", () => {
   assert.equal(localized.sourceLocale, "ru");
 });
 
-test("marks machine translations stale when source text changes", () => {
+test("[C156] marks machine translations stale when source text changes", () => {
   const merged = mergeContentItems(
     {
       slug: "project-1",
@@ -62,7 +62,7 @@ test("marks machine translations stale when source text changes", () => {
   assert.equal(merged.translationStatus.de, "edited");
 });
 
-test("merges translated object arrays by index instead of replacing whole arrays", () => {
+test("[C152] merges translated object arrays by index instead of replacing whole arrays", () => {
   const localized = localizeContentNode({
     sourceLocale: "ru",
     metrics: [
@@ -85,7 +85,7 @@ test("merges translated object arrays by index instead of replacing whole arrays
   ]);
 });
 
-test("still replaces primitive arrays during localization", () => {
+test("[C153] still replaces primitive arrays during localization", () => {
   const localized = localizeContentNode({
     sourceLocale: "ru",
     tags: ["один", "два", "три"],
@@ -99,7 +99,7 @@ test("still replaces primitive arrays during localization", () => {
   assert.deepEqual(localized.tags, ["one", "two"]);
 });
 
-test("tracks which top-level fields were localized", () => {
+test("[C154] tracks which top-level fields were localized", () => {
   const localized = localizeContentNode({
     sourceLocale: "ru",
     title: "Русский заголовок",
@@ -117,7 +117,7 @@ test("tracks which top-level fields were localized", () => {
   assert.deepEqual(localized.__localizedKeys, ["title", "detailsHtml"]);
 });
 
-test("overlays translated participant rich text fields", () => {
+test("[C155] overlays translated participant rich text fields", () => {
   const localized = localizeContentNode({
     sourceLocale: "ru",
     bio: "Русское краткое био",

@@ -6,7 +6,7 @@ import { mapOperationToContent } from "./content-mapper.js";
 import { applyTranslationToItem } from "./content-localization.js";
 import { validateOperation } from "./operation-validator.js";
 
-test("dedupeLinks keeps one canonical entry per URL and prefers a better label", () => {
+test("[C145] dedupeLinks keeps one canonical entry per URL and prefers a better label", () => {
   const deduped = dedupeLinks([
     { label: "instagram.com", href: "https://www.instagram.com/tatyana_nirman/", external: true },
     { label: "Instagram", href: "https://instagram.com/tatyana_nirman", external: true },
@@ -27,7 +27,7 @@ test("dedupeLinks keeps one canonical entry per URL and prefers a better label",
   });
 });
 
-test("validateOperation infers missing link labels and hrefs when the URL is present", () => {
+test("[C146] validateOperation infers missing link labels and hrefs when the URL is present", () => {
   const validated = validateOperation({
     entity: "project",
     action: "update",
@@ -61,7 +61,7 @@ test("validateOperation infers missing link labels and hrefs when the URL is pre
   ]);
 });
 
-test("dedupeLinks accepts plain URL strings", () => {
+test("[C147] dedupeLinks accepts plain URL strings", () => {
   const deduped = dedupeLinks([
     "https://github.com/ikotelnikov/pet-project-club-web-site",
   ]);
@@ -75,7 +75,7 @@ test("dedupeLinks accepts plain URL strings", () => {
   ]);
 });
 
-test("mapOperationToContent dedupes equivalent links before saving", () => {
+test("[C148] mapOperationToContent dedupes equivalent links before saving", () => {
   const mapped = mapOperationToContent({
     entity: "project",
     action: "update",
@@ -98,7 +98,7 @@ test("mapOperationToContent dedupes equivalent links before saving", () => {
   ]);
 });
 
-test("applyTranslationToItem dedupes translated links", () => {
+test("[C149] applyTranslationToItem dedupes translated links", () => {
   const nextItem = applyTranslationToItem(
     "project",
     {

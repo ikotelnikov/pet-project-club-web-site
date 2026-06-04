@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 import { extractTelegramAttachments } from "./attachments.js";
 
-test("extractTelegramAttachments treats supported image documents as photos", () => {
+test("[C100] extractTelegramAttachments treats supported image documents as photos", () => {
   const attachments = extractTelegramAttachments({
     message_id: 999,
     document: {
@@ -22,7 +22,7 @@ test("extractTelegramAttachments treats supported image documents as photos", ()
   assert.equal(attachments[0].mimeType, "image/png");
 });
 
-test("extractTelegramAttachments keeps non-image documents as documents", () => {
+test("[C101] extractTelegramAttachments keeps non-image documents as documents", () => {
   const attachments = extractTelegramAttachments({
     document: {
       file_id: "file-2",

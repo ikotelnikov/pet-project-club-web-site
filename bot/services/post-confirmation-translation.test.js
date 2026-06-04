@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 import { resolvePendingTranslationLocales, runPostConfirmationTranslations } from "./post-confirmation-translation.js";
 
-test("resolvePendingTranslationLocales skips manually edited locales", () => {
+test("[C157] resolvePendingTranslationLocales skips manually edited locales", () => {
   const locales = resolvePendingTranslationLocales(
     {
       translations: {
@@ -23,7 +23,7 @@ test("resolvePendingTranslationLocales skips manually edited locales", () => {
   assert.deepEqual(locales, ["me", "es"]);
 });
 
-test("resolvePendingTranslationLocales requeues locales with missing machine payloads", () => {
+test("[C159] resolvePendingTranslationLocales requeues locales with missing machine payloads", () => {
   const locales = resolvePendingTranslationLocales(
     {
       translationStatus: {
@@ -43,7 +43,7 @@ test("resolvePendingTranslationLocales requeues locales with missing machine pay
   assert.deepEqual(locales, ["de", "me"]);
 });
 
-test("runPostConfirmationTranslations sends one summary for all auto locales and reads item once", async () => {
+test("[C160] runPostConfirmationTranslations sends one summary for all auto locales and reads item once", async () => {
   const writes = [];
   const messages = [];
   let reads = 0;
@@ -118,7 +118,7 @@ test("runPostConfirmationTranslations sends one summary for all auto locales and
   assert.match(messages[0], /- es: https:\/\/example\.com\/es\/meetings\/presentation-creometrix-0804\//);
 });
 
-test("runPostConfirmationTranslations can process one locale and return the remaining queue", async () => {
+test("[C161] runPostConfirmationTranslations can process one locale and return the remaining queue", async () => {
   const writes = [];
   const logs = [];
   const messages = [];
@@ -181,7 +181,7 @@ test("runPostConfirmationTranslations can process one locale and return the rema
   assert.ok(logs.some((entry) => entry.event === "telegram_translation_update_succeeded"));
 });
 
-test("runPostConfirmationTranslations sends one combined failure summary", async () => {
+test("[C162] runPostConfirmationTranslations sends one combined failure summary", async () => {
   const writes = [];
   const messages = [];
   const item = {
@@ -245,7 +245,7 @@ test("runPostConfirmationTranslations sends one combined failure summary", async
   assert.equal(item.translationStatus.me, "machine");
 });
 
-test("runPostConfirmationTranslations reports failures in one summary message", async () => {
+test("[C163] runPostConfirmationTranslations reports failures in one summary message", async () => {
   const messages = [];
   const item = {
     slug: "presentation-creometrix-0804",

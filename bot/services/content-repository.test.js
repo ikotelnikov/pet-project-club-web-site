@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 
 import { FilesystemContentRepository } from "./content-repository.js";
 
-test("creates a participant item and updates the index", async () => {
+test("[C122] creates a participant item and updates the index", async () => {
   const fixture = await createFixture();
   const repository = new FilesystemContentRepository(fixture);
 
@@ -43,7 +43,7 @@ test("creates a participant item and updates the index", async () => {
   assert.equal(item.name, "New Person");
 });
 
-test("updates an existing project item without duplicating the index entry", async () => {
+test("[C123] updates an existing project item without duplicating the index entry", async () => {
   const fixture = await createFixture({
     entity: "project",
     slug: "project-existing",
@@ -85,7 +85,7 @@ test("updates an existing project item without duplicating the index entry", asy
   assert.equal(item.title, "New title");
 });
 
-test("preserves translations when updating source-locale fields", async () => {
+test("[C124] preserves translations when updating source-locale fields", async () => {
   const fixture = await createFixture({
     entity: "project",
     slug: "project-existing",
@@ -134,7 +134,7 @@ test("preserves translations when updating source-locale fields", async () => {
   assert.equal(item.translationStatus.en, "stale");
 });
 
-test("deletes an announcement and removes it from the index", async () => {
+test("[C125] deletes an announcement and removes it from the index", async () => {
   const fixture = await createFixture({
     entity: "announce",
     slug: "announce-existing",
@@ -173,7 +173,7 @@ test("deletes an announcement and removes it from the index", async () => {
   assert.deepEqual(index.items, []);
 });
 
-test("moves an announcement into the meetings archive when type changes to meeting", async () => {
+test("[C126] moves an announcement into the meetings archive when type changes to meeting", async () => {
   const fixture = await createFixture({
     entity: "announce",
     slug: "announce-existing",

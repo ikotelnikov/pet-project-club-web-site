@@ -146,7 +146,7 @@ function createExtractionClient() {
   };
 }
 
-test("v2 pipeline updates announcement projectSlugs without project hijack", async () => {
+test("[C175] v2 pipeline updates announcement projectSlugs without project hijack", async () => {
   const pendingStore = new PendingMemoryStore();
   const result = await handleTelegramMessageV2({
     message: {
@@ -544,7 +544,7 @@ test("v2 main handler drops legacy clarification state instead of resuming old f
   }
 });
 
-test("v2 pipeline resumes target clarification by numeric selection", async () => {
+test("[C130] v2 pipeline resumes target clarification by numeric selection", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     async listEntityCandidates(entity) {
@@ -744,7 +744,7 @@ test("v2 pipeline supports create participant", async () => {
   assert.equal(result.pendingState.operation.fields.name, "Ilya Kotelnikov");
 });
 
-test("v2 pipeline resumes incomplete-operation clarification inside v2", async () => {
+test("[C131] v2 pipeline resumes incomplete-operation clarification inside v2", async () => {
   const pendingStore = new PendingMemoryStore();
   let analyzeCount = 0;
 
@@ -884,7 +884,7 @@ test("v2 pipeline resumes incomplete-operation clarification inside v2", async (
   }
 });
 
-test("v2 awaiting-confirmation draft follow-up stays inside v2 pipeline", async () => {
+test("[C133] v2 awaiting-confirmation draft follow-up stays inside v2 pipeline", async () => {
   const pendingStore = new PendingMemoryStore();
   let analyzeCount = 0;
 
@@ -1083,7 +1083,7 @@ test("v2 pipeline supports update project", async () => {
   assert.equal(result.pendingState.operation.fields.summary, "Updated summary from v2 pipeline");
 });
 
-test("v2 pipeline supports project primary photo asset action", async () => {
+test("[C143] v2 pipeline supports project primary photo asset action", async () => {
   const pendingStore = new PendingMemoryStore();
   const result = await handleTelegramMessageV2({
     message: {
@@ -1332,7 +1332,7 @@ test("v2 pipeline preserves attached photo on project create without explicit as
   assert.equal(result.pendingState.operation.fields.gallery[0].src, "assets/uploads/555/71-photo.jpg");
 });
 
-test("v2 pipeline appends attached photo on project update without explicit asset actions", async () => {
+test("[C144] v2 pipeline appends attached photo on project update without explicit asset actions", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     ...createRepository(),
@@ -1670,7 +1670,7 @@ test("v2 pipeline supports locale-specific translation overlay update", async ()
   assert.equal(result.pendingState.operation.fields.bio, "Builds the club.");
 });
 
-test("v2 pipeline supports translation batch confirmation flow", async () => {
+test("[C134] v2 pipeline supports translation batch confirmation flow", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
     ...createRepository(),

@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { CommandParseError } from "../domain/errors.js";
 import { parseTelegramCommand } from "./telegram-command.js";
 
-test("parses participant create command with block and list fields", () => {
+test("[C108] parses participant create command with block and list fields", () => {
   const parsed = parseTelegramCommand(`
 /participant create
 slug: participant-ivan-kotelnikov
@@ -42,7 +42,7 @@ photoalt: Ivan Kotelnikov at a club meeting
   ]);
 });
 
-test("parses meeting create command with repeated sections", () => {
+test("[C109] parses meeting create command with repeated sections", () => {
   const parsed = parseTelegramCommand(`
 /meeting create
 slug: meeting-2026-03-open-circle
@@ -79,7 +79,7 @@ photoalt: Participants during the March meeting
   ]);
 });
 
-test("parses participant create command with detailshtml block", () => {
+test("[C110] parses participant create command with detailshtml block", () => {
   const parsed = parseTelegramCommand(`
 /participant create
 slug: participant-ivan-kotelnikov
@@ -97,7 +97,7 @@ points:
   assert.equal(parsed.fields.detailsHtml, "<p><strong>Builds</strong> the club.</p>");
 });
 
-test("rejects unknown field", () => {
+test("[C111] rejects unknown field", () => {
   assert.throws(
     () =>
       parseTelegramCommand(`
@@ -116,7 +116,7 @@ unknown: value
   );
 });
 
-test("rejects delete commands with extra fields", () => {
+test("[C112] rejects delete commands with extra fields", () => {
   assert.throws(
     () =>
       parseTelegramCommand(`
@@ -130,7 +130,7 @@ name: Ivan Kotelnikov
   );
 });
 
-test("rejects invalid slug", () => {
+test("[C113] rejects invalid slug", () => {
   assert.throws(
     () =>
       parseTelegramCommand(`

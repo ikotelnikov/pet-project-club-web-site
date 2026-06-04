@@ -8,7 +8,7 @@ import { ContentValidationError } from "../domain/errors.js";
 import { FilesystemContentRepository } from "./content-repository.js";
 import { LocalPhotoStore } from "./photo-store.js";
 
-test("plans a participant photo with a canonical filename", async () => {
+test("[C140] plans a participant photo with a canonical filename", async () => {
   const fixture = await createFixture();
   const repository = new FilesystemContentRepository(fixture);
   const store = new LocalPhotoStore(repository);
@@ -25,7 +25,7 @@ test("plans a participant photo with a canonical filename", async () => {
   );
 });
 
-test("copies a project photo into the canonical assets folder", async () => {
+test("[C141] copies a project photo into the canonical assets folder", async () => {
   const fixture = await createFixture();
   const repository = new FilesystemContentRepository(fixture);
   const store = new LocalPhotoStore(repository);
@@ -39,7 +39,7 @@ test("copies a project photo into the canonical assets folder", async () => {
   assert.equal(copied, "fake png bytes");
 });
 
-test("rejects unsupported photo extensions", async () => {
+test("[C142] rejects unsupported photo extensions", async () => {
   const fixture = await createFixture();
   const repository = new FilesystemContentRepository(fixture);
   const store = new LocalPhotoStore(repository);

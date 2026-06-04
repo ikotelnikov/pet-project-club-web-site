@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 import { mapCommandToContent } from "./content-mapper.js";
 
-test("maps participant command to canonical participant JSON", () => {
+test("[C114] maps participant command to canonical participant JSON", () => {
   const result = mapCommandToContent({
     entity: "participant",
     action: "create",
@@ -37,7 +37,7 @@ test("maps participant command to canonical participant JSON", () => {
   });
 });
 
-test("maps project owners to ownerSlugs", () => {
+test("[C115] maps project owners to ownerSlugs", () => {
   const result = mapCommandToContent({
     entity: "project",
     action: "create",
@@ -55,7 +55,7 @@ test("maps project owners to ownerSlugs", () => {
   assert.equal(result.item.sourceLocale, "ru");
 });
 
-test("maps project photoStagedPath when gallery is present but empty", () => {
+test("[C116] maps project photoStagedPath when gallery is present but empty", () => {
   const result = mapCommandToContent({
     entity: "project",
     action: "update",
@@ -81,7 +81,7 @@ test("maps project photoStagedPath when gallery is present but empty", () => {
   }]);
 });
 
-test("maps locale-specific translation edits into translations block", () => {
+test("[C117] maps locale-specific translation edits into translations block", () => {
   const result = mapCommandToContent({
     entity: "participant",
     action: "update",
@@ -108,7 +108,7 @@ test("maps locale-specific translation edits into translations block", () => {
   });
 });
 
-test("maps participant rich text into detailsHtml while keeping bio summary", () => {
+test("[C118] maps participant rich text into detailsHtml while keeping bio summary", () => {
   const result = mapCommandToContent({
     entity: "participant",
     action: "update",
@@ -127,7 +127,7 @@ test("maps participant rich text into detailsHtml while keeping bio summary", ()
   });
 });
 
-test("promotes multiline participant bio into detailsHtml automatically", () => {
+test("[C119] promotes multiline participant bio into detailsHtml automatically", () => {
   const result = mapCommandToContent({
     entity: "participant",
     action: "update",
@@ -141,7 +141,7 @@ test("promotes multiline participant bio into detailsHtml automatically", () => 
   assert.equal(result.item.detailsHtml, "<p>First paragraph.</p><p>Second paragraph with https://example.com</p>");
 });
 
-test("defaults project-linked announcement visibility out of meetings list", () => {
+test("[C120] defaults project-linked announcement visibility out of meetings list", () => {
   const result = mapCommandToContent({
     entity: "announce",
     action: "create",
@@ -159,7 +159,7 @@ test("defaults project-linked announcement visibility out of meetings list", () 
   assert.equal(result.item.showInMeetingsList, false);
 });
 
-test("keeps explicit meetings list visibility when provided", () => {
+test("[C121] keeps explicit meetings list visibility when provided", () => {
   const result = mapCommandToContent({
     entity: "announce",
     action: "update",
