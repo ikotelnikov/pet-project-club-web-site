@@ -39,10 +39,20 @@ jobs:
       - name: Prepare test result directory
         run: mkdir -p test-results
 
+      - name: Start CI test timer
+        run: echo "CI_TEST_STARTED_SECONDS=$(date +%s)" >> "$GITHUB_ENV"
+
       - name: Run bot tests
         id: bot_tests
         continue-on-error: true
-        run: node --test --test-reporter=junit --test-reporter-destination=test-results/node-tests.xml bot/**/*.test.js
+        run: |
+          start=$(date +%s)
+          set +e
+          node --test --test-reporter=junit --test-reporter-destination=test-results/node-tests.xml bot/**/*.test.js
+          status=$?
+          end=$(date +%s)
+          echo "NODE_TEST_WALL_SECONDS=$((end - start))" >> "$GITHUB_ENV"
+          exit "$status"
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium webkit
@@ -53,7 +63,14 @@ jobs:
       - name: Run Playwright tests
         id: playwright_tests
         continue-on-error: true
-        run: npx playwright test --reporter=json > test-results/playwright-tests.json
+        run: |
+          start=$(date +%s)
+          set +e
+          npx playwright test --reporter=json > test-results/playwright-tests.json
+          status=$?
+          end=$(date +%s)
+          echo "PLAYWRIGHT_TEST_WALL_SECONDS=$((end - start))" >> "$GITHUB_ENV"
+          exit "$status"
 
       - name: Report results to TestRail
         if: always()

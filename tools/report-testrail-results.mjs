@@ -369,9 +369,30 @@ function buildRunDescription() {
       ? `Workflow: ${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
       : null,
     process.env.GITHUB_SHA ? `Commit: ${process.env.GITHUB_SHA}` : null,
+    ...buildRunTimingLines(),
   ];
 
   return lines.filter(Boolean).join("\n");
+}
+
+function buildRunTimingLines() {
+  const lines = [];
+  const nodeSeconds = parsePositiveInteger(process.env.NODE_TEST_WALL_SECONDS);
+  const playwrightSeconds = parsePositiveInteger(process.env.PLAYWRIGHT_TEST_WALL_SECONDS);
+  const startedSeconds = parsePositiveInteger(process.env.CI_TEST_STARTED_SECONDS);
+
+  if (nodeSeconds !== null) {
+    lines.push(`Node test wall time: ${formatDuration(nodeSeconds)}`);
+  }
+  if (playwrightSeconds !== null) {
+    lines.push(`Playwright test wall time: ${formatDuration(playwrightSeconds)}`);
+  }
+  if (startedSeconds !== null) {
+    const totalSeconds = Math.max(0, Math.round(Date.now() / 1000) - startedSeconds);
+    lines.push(`Test phase wall time before TestRail report: ${formatDuration(totalSeconds)}`);
+  }
+
+  return lines;
 }
 
 function buildComment(source, status, message) {
@@ -418,6 +439,31 @@ function elapsedToSeconds(elapsed) {
     return value * 60;
   }
   return value;
+}
+
+function parsePositiveInteger(value) {
+  const parsed = Number.parseInt(String(value || ""), 10);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
+}
+
+function formatDuration(totalSeconds) {
+  const seconds = Math.max(0, Math.round(totalSeconds));
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+  const parts = [];
+
+  if (hours > 0) {
+    parts.push(`${hours}h`);
+  }
+  if (minutes > 0) {
+    parts.push(`${minutes}m`);
+  }
+  if (remainingSeconds > 0 || parts.length === 0) {
+    parts.push(`${remainingSeconds}s`);
+  }
+
+  return parts.join(" ");
 }
 
 function matchAll(text, regex) {
