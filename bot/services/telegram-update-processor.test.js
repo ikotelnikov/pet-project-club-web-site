@@ -988,7 +988,7 @@ test("[C178] photo-only message continues an active project draft", async () => 
         title: "Montenegro Jewish Home",
         status: "active",
         summary: "Community project",
-        gallery: [],
+        gallery: [{ src: "assets/projects/montenegro-jewish-home/existing.jpg", alt: "Montenegro Jewish Home" }],
       };
     },
     async stageAttachment({ chatId, messageId, attachment }) {
@@ -1014,50 +1014,24 @@ test("[C178] photo-only message continues an active project draft", async () => 
     },
   };
   const extractionClient = {
-    async extractIntent(input) {
-      if (input.pendingOperation) {
-        return {
-          ok: false,
-          usedModel: "test",
-          attempts: 1,
-          reason: "validation_failed",
-          error: "simulated vague photo follow-up",
-          rawText: null,
-        };
-      }
-
-      return {
-        ok: true,
-        usedModel: "test",
-        attempts: 1,
-        extraction: {
-          intent: "content_operation",
-          entity: "project",
-          action: "update",
-          slug: "montenegro-jewish-home",
-          targetRef: "montenegro-jewish-home",
-          confidence: "high",
-          needsConfirmation: true,
-          summary: "update project",
-          fields: {
-            title: "Montenegro Jewish Home",
-            summary: "Community project",
-          },
-          questions: [],
-          warnings: [],
+    async analyzeIntent() {
+      return createIntent({
+        entity: "project",
+        target: {
+          mode: "existing",
+          ref: "montenegro-jewish-home",
         },
-      };
+      });
     },
-    async resolveTarget() {
-      return {
-        ok: true,
-        usedModel: "test",
-        resolution: {
-          matchedSlug: "montenegro-jewish-home",
-          confidence: "high",
-          question: null,
+    async generateOperation({ resolved }) {
+      return createOperation({
+        entity: "project",
+        targetSlug: resolved.target.slug,
+        patch: {
+          title: "Montenegro Jewish Home",
+          summary: "Community project",
         },
-      };
+      });
     },
   };
   const photoStore = {
@@ -1108,8 +1082,8 @@ test("[C178] photo-only message continues an active project draft", async () => 
 
   assert.equal(followUp.status, "processed");
   assert.equal(followUp.pendingState.operation.fields.photoAction, "append");
-  assert.equal(followUp.pendingState.operation.fields.gallery.length, 1);
-  assert.match(followUp.pendingState.operation.fields.gallery[0].src, /assets\/uploads\/555\/12-photo-12-uniq1\.jpg/);
+  assert.equal(followUp.pendingState.operation.fields.gallery.length, 2);
+  assert.match(followUp.pendingState.operation.fields.gallery[1].src, /assets\/uploads\/555\/12-photo-12-uniq1\.jpg/);
 });
 
 test("confirmed entity stays in session and can seed a new follow-up draft", async () => {
@@ -2350,6 +2324,12 @@ test("continuation selection buffers extra text and photos until the final answe
 test("[C136] continuation lookup resolves a precise recent context entity by name via LLM", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
+    async listEntityCandidates() {
+      return [
+        { slug: "tatyana-nirman", label: "Татьяна Нирман", name: "Татьяна Нирман" },
+        { slug: "aleksey-popov", label: "Алексей Попов", name: "Алексей Попов" },
+      ];
+    },
     async readItem(_entity, slug) {
       return {
         sourceLocale: "ru",
@@ -2448,26 +2428,19 @@ test("[C136] continuation lookup resolves a precise recent context entity by nam
     repository,
     photoStore,
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: false,
-          usedModel: "test",
-          attempts: 1,
-          reason: "validation_failed",
-          error: "simulated continuation handoff",
-          rawText: null,
-        };
-      },
-      async resolveTarget({ candidates }) {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: candidates.find((candidate) => candidate.slug === "tatyana-nirman")?.slug || null,
-            confidence: "high",
-            question: null,
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "existing",
+            ref: "Татьяна Нирман",
           },
-        };
+        });
+      },
+      async generateOperation({ resolved }) {
+        return createOperation({
+          targetSlug: resolved.target.slug,
+          patch: {},
+        });
       },
     },
     telegramClient,
@@ -2551,26 +2524,19 @@ test("[C137] continuation lookup falls back to repository candidates via LLM", a
     repository,
     photoStore,
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: false,
-          usedModel: "test",
-          attempts: 1,
-          reason: "validation_failed",
-          error: "simulated continuation handoff",
-          rawText: null,
-        };
-      },
-      async resolveTarget({ candidates }) {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: candidates.find((candidate) => candidate.slug === "tatyana-nirman")?.slug || null,
-            confidence: "high",
-            question: null,
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "existing",
+            ref: "Татьяна Нирман",
           },
-        };
+        });
+      },
+      async generateOperation({ resolved }) {
+        return createOperation({
+          targetSlug: resolved.target.slug,
+          patch: {},
+        });
       },
     },
     telegramClient,
@@ -2666,26 +2632,23 @@ test("[C138] text-only uncertain continuation resolves target via recent context
     repository,
     photoStore: null,
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: false,
-          usedModel: "test",
-          attempts: 1,
-          reason: "validation_failed",
-          error: "simulated uncertain continuation",
-          rawText: null,
-        };
-      },
-      async resolveTarget({ candidates }) {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: candidates.find((candidate) => candidate.slug === "tatyana-nirman")?.slug || null,
-            confidence: "high",
-            question: null,
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "existing",
+            ref: "Татьяна Нирман",
           },
-        };
+        });
+      },
+      async generateOperation({ resolved }) {
+        return createOperation({
+          targetSlug: resolved.target.slug,
+          patch: {
+            links: [
+              { label: "Telegram", href: "https://t.me/tatyana", external: true },
+            ],
+          },
+        });
       },
     },
     dryRun: true,
