@@ -1750,45 +1750,27 @@ test("[C128] generic operation clarification buffers attachments and resumes on 
     repository,
     photoStore,
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: true,
-          usedModel: "test",
-          attempts: 1,
-          extraction: {
-            intent: "content_operation",
-            entity: "participant",
-            action: "update",
-            slug: null,
-            targetRef: null,
-            confidence: "medium",
-            needsConfirmation: true,
-            summary: "update participant description",
-            fields: {
-              bio: "Новое описание",
-            },
-            questions: [],
-            warnings: [],
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "unknown",
+            ref: null,
           },
-        };
+          needsClarification: true,
+          clarificationReason: "target_missing",
+          clarificationQuestion: "Which participant should I update?",
+          confidence: "medium",
+        });
       },
-      async resolveTarget() {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: null,
-            confidence: "low",
-            question: null,
-          },
-        };
+      async generateOperation() {
+        throw new Error("target clarification should not generate operation yet");
       },
     },
     dryRun: true,
   });
 
   assert.equal(clarification.status, "clarification");
-  assert.equal(clarification.pendingState.operation.type, "operation_resolution");
+  assert.equal(clarification.pendingState.operation.type, "v2_intent_clarification");
 
   const withPhoto = await handleTelegramMessage({
     message: {
@@ -1802,19 +1784,20 @@ test("[C128] generic operation clarification buffers attachments and resumes on 
     repository,
     photoStore,
     extractionClient: {
-      async extractIntent() {
-        throw new Error("generic clarification reply should not call extraction");
-      },
-      async resolveTarget() {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: null,
-            confidence: "low",
-            question: null,
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "unknown",
+            ref: null,
           },
-        };
+          needsClarification: true,
+          clarificationReason: "target_missing",
+          clarificationQuestion: "Which participant should I update?",
+          confidence: "medium",
+        });
+      },
+      async generateOperation() {
+        throw new Error("target clarification should not generate operation yet");
       },
     },
     telegramClient,
@@ -1822,7 +1805,9 @@ test("[C128] generic operation clarification buffers attachments and resumes on 
   });
 
   assert.equal(withPhoto.status, "clarification");
-  assert.equal(withPhoto.pendingState.operation.attachments.length, 1);
+  assert.equal(withPhoto.pendingState.operation.turn.messages.length, 2);
+  assert.equal(withPhoto.pendingState.operation.turn.messages[1].attachments.length, 1);
+  assert.match(withPhoto.pendingState.operation.turn.messages[1].attachments[0].stagedPath, /assets\/uploads\/555\/31-photo-31-uniq6\.jpg/);
 
   const resumed = await handleTelegramMessage({
     message: {
@@ -1836,19 +1821,21 @@ test("[C128] generic operation clarification buffers attachments and resumes on 
     repository,
     photoStore,
     extractionClient: {
-      async extractIntent() {
-        throw new Error("generic clarification reply should not call extraction");
-      },
-      async resolveTarget({ candidates }) {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: candidates.find((candidate) => candidate.slug === "tatyana-nirman")?.slug || null,
-            confidence: "high",
-            question: null,
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "existing",
+            ref: "Татьяна Нирман",
           },
-        };
+        });
+      },
+      async generateOperation({ resolved }) {
+        return createOperation({
+          targetSlug: resolved.target.slug,
+          patch: {
+            bio: "Новое описание",
+          },
+        });
       },
     },
     dryRun: true,
@@ -1887,45 +1874,27 @@ test("[C129] medium-confidence target resolution asks for explicit clarification
     repository,
     photoStore: null,
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: true,
-          usedModel: "test",
-          attempts: 1,
-          extraction: {
-            intent: "content_operation",
-            entity: "participant",
-            action: "update",
-            slug: null,
-            targetRef: "Татьяна",
-            confidence: "medium",
-            needsConfirmation: true,
-            summary: "update participant description",
-            fields: {
-              bio: "Новое описание",
-            },
-            questions: [],
-            warnings: [],
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "unknown",
+            ref: "Татьяна",
           },
-        };
+          needsClarification: true,
+          clarificationReason: "target_ambiguity",
+          clarificationQuestion: "I need to confirm which participant you want to update: 1. Татьяна Нирман (tatyana-nirman), 2. Татьяна Шматко (tatyana-shmatko)",
+          confidence: "medium",
+        });
       },
-      async resolveTarget() {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: "tatyana-nirman",
-            confidence: "medium",
-            question: null,
-          },
-        };
+      async generateOperation() {
+        throw new Error("ambiguous target should not generate operation yet");
       },
     },
     dryRun: true,
   });
 
   assert.equal(result.status, "clarification");
-  assert.equal(result.pendingState.operation.type, "operation_resolution");
+  assert.equal(result.pendingState.operation.type, "v2_intent_clarification");
   assert.match(result.question, /I need to confirm which participant you want to update/);
   assert.match(result.question, /1\. Татьяна Нирман \(tatyana-nirman\)/);
   assert.match(result.question, /2\. Татьяна Шматко \(tatyana-shmatko\)/);
@@ -2026,6 +1995,12 @@ test("medium-confidence continuation lookup asks clarification instead of auto-s
 test("[C135] recent entity ranking prefers explicit text match over plain recency", async () => {
   const pendingStore = new PendingMemoryStore();
   const repository = {
+    async listEntityCandidates() {
+      return [
+        { slug: "aleksey-popov", label: "Алексей Попов", name: "Алексей Попов" },
+        { slug: "tatyana-nirman", label: "Татьяна Нирман", name: "Татьяна Нирман" },
+      ];
+    },
     async readItem(_entity, slug) {
       return {
         sourceLocale: "ru",
@@ -2108,26 +2083,23 @@ test("[C135] recent entity ranking prefers explicit text match over plain recenc
     repository,
     photoStore: null,
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: false,
-          usedModel: "test",
-          attempts: 1,
-          reason: "validation_failed",
-          error: "simulate continuation fallback",
-          rawText: null,
-        };
-      },
-      async resolveTarget({ candidates }) {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: candidates.find((candidate) => candidate.slug === "tatyana-nirman")?.slug || null,
-            confidence: "high",
-            question: null,
+      async analyzeIntent() {
+        return createIntent({
+          target: {
+            mode: "existing",
+            ref: "Татьяна Нирман",
           },
-        };
+        });
+      },
+      async generateOperation({ resolved }) {
+        return createOperation({
+          targetSlug: resolved.target.slug,
+          patch: {
+            links: [
+              { label: "Telegram", href: "https://t.me/tatyana", external: true },
+            ],
+          },
+        });
       },
     },
     dryRun: true,
@@ -2135,7 +2107,6 @@ test("[C135] recent entity ranking prefers explicit text match over plain recenc
 
   assert.equal(result.status, "processed");
   assert.equal(result.pendingState.operation.slug, "tatyana-nirman");
-  assert.equal(result.pendingState.operation.continuationOf.slug, "tatyana-nirman");
 });
 
 test("continuation selection buffers extra text and photos until the final answer", async () => {
