@@ -33,6 +33,8 @@ main().catch((error) => {
 });
 
 async function main() {
+  await loadEnvFile(process.env.TESTRAIL_ENV_FILE || "tools/testrail.env");
+
   const client = createTestRailClient();
   if (!client) {
     console.log("Skipping TestRail reporting because TESTRAIL_HOST, TESTRAIL_USERNAME, or TESTRAIL_API_KEY is not set.");
@@ -102,6 +104,39 @@ function createTestRailClient() {
       });
     },
   };
+}
+
+async function loadEnvFile(filePath) {
+  const envText = await readOptionalText(filePath);
+  if (!envText.trim()) {
+    return;
+  }
+
+  for (const rawLine of envText.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) {
+      continue;
+    }
+
+    const separatorIndex = line.indexOf("=");
+    if (separatorIndex === -1) {
+      continue;
+    }
+
+    const key = line.slice(0, separatorIndex).trim();
+    const value = unwrapEnvValue(line.slice(separatorIndex + 1).trim());
+    if (key && process.env[key] === undefined) {
+      process.env[key] = value;
+    }
+  }
+}
+
+function unwrapEnvValue(value) {
+  const quote = value[0];
+  if ((quote === "\"" || quote === "'") && value.endsWith(quote)) {
+    return value.slice(1, -1);
+  }
+  return value;
 }
 
 async function requestTestRail(url, options) {

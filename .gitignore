@@ -5,6 +5,7 @@ node_modules
 bot/local-env.ps1
 playwright-report/
 test-results/
+tools/testrail.env
 ru/
 en/
 de/
