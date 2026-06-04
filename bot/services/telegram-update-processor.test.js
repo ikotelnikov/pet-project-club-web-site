@@ -2682,6 +2682,12 @@ test("[C177] project photo update can append an additional gallery image", async
         },
       };
     },
+    async stageAttachment({ chatId, messageId, attachment }) {
+      return {
+        ...attachment,
+        stagedPath: `assets/uploads/${chatId}/${messageId}-${attachment.fileName}`,
+      };
+    },
     async previewCommand(parsedCommand, mapped) {
       return {
         action: parsedCommand.action,
@@ -2724,39 +2730,23 @@ test("[C177] project photo update can append an additional gallery image", async
       },
     },
     extractionClient: {
-      async extractIntent() {
-        return {
-          ok: true,
-          usedModel: "test",
-          attempts: 1,
-          extraction: {
-            intent: "content_operation",
-            entity: "project",
-            action: "update",
-            slug: null,
-            targetRef: "project-existing",
-            confidence: "high",
-            needsConfirmation: true,
-            summary: "append project photo",
-            fields: {
-              photoStagedPath: "assets/uploads/555/11-photo.jpg",
-              photoAlt: "Second screenshot",
-            },
-            questions: [],
-            warnings: [],
+      async analyzeIntent() {
+        return createIntent({
+          entity: "project",
+          target: {
+            mode: "existing",
+            ref: "project-existing",
           },
-        };
+        });
       },
-      async resolveTarget() {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: "project-existing",
-            confidence: "high",
-            question: null,
+      async generateOperation({ resolved }) {
+        return createOperation({
+          entity: "project",
+          targetSlug: resolved.target.slug,
+          patch: {
+            photoAlt: "Second screenshot",
           },
-        };
+        });
       },
     },
     dryRun: true,
@@ -3503,7 +3493,7 @@ test("project-context news draft inherits projectSlugs", async () => {
 
 test("explicit news update does not get forced into recent project context", async () => {
   const pendingStore = new PendingMemoryStore();
-  const extractionInputs = [];
+  const analyzeInputs = [];
   const repository = {
     async previewCommand(parsedCommand, mapped) {
       return {
@@ -3599,47 +3589,32 @@ test("explicit news update does not get forced into recent project context", asy
     repository,
     photoStore: null,
     extractionClient: {
-      async extractIntent(input) {
-        extractionInputs.push(input);
-        return {
-          ok: true,
-          usedModel: "test",
-          attempts: 1,
-          extraction: {
-            intent: "content_operation",
-            entity: "announcement",
-            action: "update",
-            slug: null,
-            targetRef: "airbnb-moja-ljubov-skozi-goda",
-            confidence: "high",
-            needsConfirmation: true,
-            summary: "update announcement link to project",
-            fields: {
-              projectSlugs: ["doveritelnoe-upravlenie-v-chernogorii"],
-            },
-            questions: [],
-            warnings: [],
+      async analyzeIntent(input) {
+        analyzeInputs.push(input);
+        return createIntent({
+          intent: "update",
+          entity: "announcement",
+          target: {
+            mode: "existing",
+            ref: "airbnb-moja-ljubov-skozi-goda",
           },
-        };
+        });
       },
-      async resolveTarget() {
-        return {
-          ok: true,
-          usedModel: "test",
-          resolution: {
-            matchedSlug: "airbnb-moja-ljubov-skozi-goda",
-            confidence: "high",
-            question: null,
+      async generateOperation({ resolved }) {
+        return createOperation({
+          entity: "announcement",
+          targetSlug: resolved.target.slug,
+          patch: {
+            projectSlugs: ["doveritelnoe-upravlenie-v-chernogorii"],
           },
-        };
+        });
       },
     },
     dryRun: true,
   });
 
   assert.equal(result.status, "processed");
-  assert.equal(extractionInputs.length, 1);
-  assert.equal(extractionInputs[0].pendingOperation, null);
+  assert.equal(analyzeInputs.length, 1);
   assert.equal(result.pendingState.operation.entity, "announce");
   assert.equal(result.pendingState.operation.slug, "airbnb-moja-ljubov-skozi-goda");
   assert.deepEqual(result.pendingState.operation.fields.projectSlugs, ["doveritelnoe-upravlenie-v-chernogorii"]);
