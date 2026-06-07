@@ -104,5 +104,15 @@
       "href": "https://t.me/designersmne",
       "external": true
     }
+  ],
+  "photo": {
+    "src": "assets/uploads/272981189/1103-photo-1103-AQADeRxrG5yNMEl9.jpg",
+    "alt": "Designers.mne"
+  },
+  "gallery": [
+    {
+      "src": "assets/uploads/272981189/1103-photo-1103-AQADeRxrG5yNMEl9.jpg",
+      "alt": "Designers.mne"
+    }
   ]
 }
