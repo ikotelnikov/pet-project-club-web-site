@@ -45,9 +45,9 @@
     "de": {
       "handle": "@valdas2020",
       "name": "Valdas",
-      "role": "DeFi-Spezialist, Experte / Kurator der Trading- und Investment-Schule vCollege",
-      "bio": "Mein Name ist Valdas. Früher war ich im B2B-Vertrieb und Unternehmertum tätig, seit 2020 bin ich DeFi-Spezialist, Experte / Kurator der Trading- und Investment-Schule vCollege. Im Dezember letzten Jahres habe ich Claude Code ausprobiert. Seitdem ist Vibe-Coding Teil meines Alltags: Ich automatisiere alles, was sich bewegt, von Arbeitsaufgaben bis zu Hobbys. Ich bin kein Programmierer, deshalb kenne ich meine Grenzen – an welchem Punkt der Produktentwicklung ich stoppen und einen richtigen CTO einladen muss. Bisher mache ich entweder Dinge, die rein für den Eigengebrauch funktionieren, oder MVPs, wofür das Wissen ausreicht. Neben der Arbeit bin ich Kampfsport- und Gesundheitssystem-Praktiker und studiere im Master (Theologie). Ich lebe in Bar.",
-      "detailsHtml": "Mein Name ist Valdas. Früher war ich im B2B-Vertrieb und Unternehmertum tätig, seit 2020 bin ich DeFi-Spezialist, Experte / Kurator der Trading- und Investment-Schule vCollege.<br><br>Im Dezember letzten Jahres habe ich Claude Code ausprobiert. Seitdem ist Vibe-Coding Teil meines Alltags: Ich automatisiere alles, was sich bewegt, von Arbeitsaufgaben bis zu Hobbys. Ich bin kein Programmierer, deshalb kenne ich meine Grenzen – an welchem Punkt der Produktentwicklung ich stoppen und einen richtigen CTO einladen muss.<br><br>Bisher mache ich entweder Dinge, die rein für den Eigengebrauch funktionieren, oder MVPs, wofür das Wissen ausreicht.<br><br>Neben der Arbeit bin ich Kampfsport- und Gesundheitssystem-Praktiker und studiere im Master (Theologie). Ich lebe in Bar.<br><br>Telegram: @valdas2020<br><a href=\"https://valdas.online/\">https://valdas.online/</a><br><a href=\"https://kobudo.valdas.online\">https://kobudo.valdas.online</a>",
+      "role": "DeFi-Experte, Kurator der Trading- und Investment-Schule vCollege",
+      "bio": "Mein Name ist Valdas. Früher war ich im B2B-Vertrieb und Unternehmertum tätig, seit 2020 bin ich Spezialist für DeFi, Experte und Kurator der Trading- und Investment-Schule vCollege. Im Dezember letzten Jahres habe ich Claude Code ausprobiert. Seitdem ist Vibe-Coding Teil meines Alltags: Ich automatisiere alles, was sich bewegt, von Arbeitsaufgaben bis zu Hobbys. Ich bin kein Programmierer, daher kenne ich meine Grenzen – an welchem Punkt der Produktentwicklung ich aufhören und einen ordentlichen CTO hinzuziehen muss. Fürs Erste erstelle ich entweder Dinge, die strikt für den persönlichen Gebrauch oder ein MVP funktionieren, dafür reichen meine Kenntnisse aus. Neben der Arbeit praktiziere ich Kampfkünste und Gesundheitssysteme und studiere im Master (Theologie). Ich lebe in Bar.",
+      "detailsHtml": "<p>Mein Name ist Valdas. Früher war ich im B2B-Vertrieb und Unternehmertum tätig, seit 2020 bin ich Spezialist für DeFi, Experte und Kurator der Trading- und Investment-Schule vCollege. Im Dezember letzten Jahres habe ich Claude Code ausprobiert. Seitdem ist Vibe-Coding Teil meines Alltags: Ich automatisiere alles, was sich bewegt, von Arbeitsaufgaben bis zu Hobbys. Ich bin kein Programmierer, daher kenne ich meine Grenzen – an welchem Punkt der Produktentwicklung ich aufhören und einen ordentlichen CTO hinzuziehen muss. Fürs Erste erstelle ich entweder Dinge, die strikt für den persönlichen Gebrauch oder ein MVP funktionieren, dafür reichen meine Kenntnisse aus. Neben der Arbeit praktiziere ich Kampfkünste und Gesundheitssysteme und studiere im Master (Theologie). Ich lebe in Bar.</p>",
       "links": [
         {
           "label": "valdas.online",
@@ -102,7 +102,7 @@
   },
   "translationStatus": {
     "en": "machine",
-    "de": "stale",
+    "de": "machine",
     "me": "stale",
     "es": "stale"
   }
