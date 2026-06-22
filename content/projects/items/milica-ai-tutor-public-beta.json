@@ -26,9 +26,17 @@
       "stack": "",
       "summary": "A conversational bot for those who: - have no one to speak Serbian with - lack free language practice outside regular language lessons.",
       "detailsHtml": "A conversational bot for those who:<br>- have no one to speak Serbian with<br>- lack free language practice outside regular language lessons.<br><br><strong>Milica AI Tutor</strong> helps:<br>— Overcome the language barrier in communication with neighbors and government agencies.<br>— Practice live speech (by voice or text).<br>— Choose a dialect (ijekavica / ekavica) and alphabet (Cyrillic / Latin).<br>— Receive instant error corrections and grammar explanations.<br><br>The project is non-commercial, and the bot is free. No registration or ads (in the future there will be ads for humanitarian and charitable projects and organizations). You install the bot, send it voice messages, receive a Serbian voice response and a grammatical analysis of errors in text.<br><a href=\"https://t.me/milica_ai_tutor_bot\">https://t.me/milica_ai_tutor_bot</a>"
+    },
+    "de": {
+      "title": "Milica AI Tutor (Öffentliche Beta)",
+      "status": "öffentliche beta",
+      "stack": "",
+      "summary": "Ein Konversationsbot für diejenigen, die: - niemanden haben, mit dem sie auf Serbisch sprechen können - außerhalb des regulären Sprachunterrichts nicht genug freie Sprachpraxis haben.",
+      "detailsHtml": "Ein Konversationsbot für diejenigen, die:<br>- niemanden haben, mit dem sie auf Serbisch sprechen können<br>- außerhalb des regulären Sprachunterrichts nicht genug freie Sprachpraxis haben.<br><br><strong>Milica AI Tutor</strong> hilft dabei:<br>— Sprachbarrieren im Gespräch mit Nachbarn und Behörden zu überwinden.<br>— Lebendige Sprache zu üben (per Stimme oder Text).<br>— Dialekt (ijekavica / ekavica) und Alphabet (Kyrillisch / Lateinisch) auszuwählen.<br>— Sofortige Fehlerkorrekturen und Grammatik-Erklärungen zu erhalten.<br><br>Das Projekt ist gemeinnützig, der Bot kostenlos. Keine Registrierung und keine Werbung (zukünftig wird es Werbung für humanitäre und wohltätige Projekte und Organisationen geben). Installieren Sie den Bot, senden Sie ihm Sprachnachrichten, und erhalten Sie Antworten auf Serbisch per Stimme sowie eine grammatikalische Fehleranalyse im Text.<br><a href=\"https://t.me/milica_ai_tutor_bot\">https://t.me/milica_ai_tutor_bot</a>"
     }
   },
   "translationStatus": {
-    "en": "machine"
+    "en": "machine",
+    "de": "machine"
   }
 }
