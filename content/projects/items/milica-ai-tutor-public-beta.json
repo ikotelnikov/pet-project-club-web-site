@@ -33,10 +33,18 @@
       "stack": "",
       "summary": "Ein Konversationsbot für diejenigen, die: - niemanden haben, mit dem sie auf Serbisch sprechen können - außerhalb des regulären Sprachunterrichts nicht genug freie Sprachpraxis haben.",
       "detailsHtml": "Ein Konversationsbot für diejenigen, die:<br>- niemanden haben, mit dem sie auf Serbisch sprechen können<br>- außerhalb des regulären Sprachunterrichts nicht genug freie Sprachpraxis haben.<br><br><strong>Milica AI Tutor</strong> hilft dabei:<br>— Sprachbarrieren im Gespräch mit Nachbarn und Behörden zu überwinden.<br>— Lebendige Sprache zu üben (per Stimme oder Text).<br>— Dialekt (ijekavica / ekavica) und Alphabet (Kyrillisch / Lateinisch) auszuwählen.<br>— Sofortige Fehlerkorrekturen und Grammatik-Erklärungen zu erhalten.<br><br>Das Projekt ist gemeinnützig, der Bot kostenlos. Keine Registrierung und keine Werbung (zukünftig wird es Werbung für humanitäre und wohltätige Projekte und Organisationen geben). Installieren Sie den Bot, senden Sie ihm Sprachnachrichten, und erhalten Sie Antworten auf Serbisch per Stimme sowie eine grammatikalische Fehleranalyse im Text.<br><a href=\"https://t.me/milica_ai_tutor_bot\">https://t.me/milica_ai_tutor_bot</a>"
+    },
+    "me": {
+      "title": "Milica AI Tutor (Public Beta)",
+      "status": "public beta",
+      "stack": "",
+      "summary": "Razgovorni bot za one kojima: - niko nije za razgovor na srpskom jeziku - nedostaje slobodna jezička praksa van redovnih časova jezika.",
+      "detailsHtml": "Razgovorni bot za one kojima:<br>- niko nije za razgovor na srpskom jeziku <br>- nedostaje slobodna jezička praksa van redovnih časova jezika.<br><br><strong>Milica AI Tutor</strong> će pomoći:<br>— Prevazići jezičku barijeru u komunikaciji sa komšijama i državnim organima.<br>— Praktikovati živi govor (glasom ili tekstom).<br>— Izabrati dijalekt (ijekavica / ekavica) i alfabet (ćirilica / latinica).<br>— Dobijati trenutne ispravke grešaka i objašnjenja gramatike.<br><br>Projekat je nekomercijalan, bot je besplatan. Nema registracije ni reklama (u budućnosti će biti reklame humanitarnih i dobrotvornih projekata i organizacija). Instalirate bota, šaljete mu glasovne poruke, dobijate odgovor na srpskom glasom i gramatičku analizu grešaka tekstom.<br><a href=\"https://t.me/milica_ai_tutor_bot\">https://t.me/milica_ai_tutor_bot</a>"
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
