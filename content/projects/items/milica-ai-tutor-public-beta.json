@@ -40,11 +40,19 @@
       "stack": "",
       "summary": "Razgovorni bot za one kojima: - niko nije za razgovor na srpskom jeziku - nedostaje slobodna jezička praksa van redovnih časova jezika.",
       "detailsHtml": "Razgovorni bot za one kojima:<br>- niko nije za razgovor na srpskom jeziku <br>- nedostaje slobodna jezička praksa van redovnih časova jezika.<br><br><strong>Milica AI Tutor</strong> će pomoći:<br>— Prevazići jezičku barijeru u komunikaciji sa komšijama i državnim organima.<br>— Praktikovati živi govor (glasom ili tekstom).<br>— Izabrati dijalekt (ijekavica / ekavica) i alfabet (ćirilica / latinica).<br>— Dobijati trenutne ispravke grešaka i objašnjenja gramatike.<br><br>Projekat je nekomercijalan, bot je besplatan. Nema registracije ni reklama (u budućnosti će biti reklame humanitarnih i dobrotvornih projekata i organizacija). Instalirate bota, šaljete mu glasovne poruke, dobijate odgovor na srpskom glasom i gramatičku analizu grešaka tekstom.<br><a href=\"https://t.me/milica_ai_tutor_bot\">https://t.me/milica_ai_tutor_bot</a>"
+    },
+    "es": {
+      "title": "Milica AI Tutor (Beta Pública)",
+      "status": "beta pública",
+      "stack": "",
+      "summary": "Chatbot conversacional para quienes: - no tienen con quién hablar en serbio - les falta práctica libre del idioma fuera de las clases habituales.",
+      "detailsHtml": "Chatbot conversacional para quienes:<br>- no tienen con quién hablar en serbio<br>- les falta práctica libre del idioma fuera de las clases habituales.<br><br><strong>Milica AI Tutor</strong> ayudará a:<br>— Superar la barrera lingüística al comunicarse con vecinos y en organismos estatales.<br>— Practicar el habla viva (con voz o texto).<br>— Elegir dialecto (ijekavica / ekavica) y alfabeto (cirílico / latino).<br>— Recibir correcciones instantáneas de errores y explicaciones gramaticales.<br><br>El proyecto es sin ánimo de lucro, el bot es gratuito. Sin registro ni publicidad (en el futuro habrá anuncios de proyectos y organizaciones humanitarias y benéficas). Instalas el bot, le envías mensajes de voz, recibes respuestas en serbio por voz y análisis gramatical de errores por texto.<br><a href=\"https://t.me/milica_ai_tutor_bot\">https://t.me/milica_ai_tutor_bot</a>"
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
