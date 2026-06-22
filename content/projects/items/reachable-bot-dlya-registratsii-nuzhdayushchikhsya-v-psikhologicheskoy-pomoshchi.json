@@ -18,5 +18,17 @@
     "valdas"
   ],
   "slug": "reachable-bot-dlya-registratsii-nuzhdayushchikhsya-v-psikhologicheskoy-pomoshchi",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "Reachable - a bot for registering people in need of psychological help",
+      "status": "active",
+      "stack": "Telegram bot, Web-form",
+      "summary": "Some people cannot ask for help out loud.",
+      "detailsHtml": "<p><strong>Some people cannot ask for help out loud. Reachable gives them a quieter way — and instantly connects them to real support.</strong></p><h3>Problem</h3><p>Many refugees, people with traumatic experiences, and vulnerable groups do not seek help because a phone call is already too big a barrier.<br>Shame, fear, language difficulties, and emotional numbness build an invisible wall.<br>Hotline operators face overload, verbal aggression, and secondary traumatization.</p><h3>What I did</h3><p>An easy tool for initial intake and registration that replaces a call with a structured first step in chat.</p><ul><li>Works via Telegram bot or web form</li><li>No registration. No apps. No waiting on the line.</li></ul><h3>How it works</h3><ol><li>Start a chat — anonymously, from Telegram or browser</li><li>Choose language and basic context — the system adapts to the client</li><li>Answer a few unobtrusive questions — sorting: urgent or standard case</li><li>Instantly book an appointment — from the specialist’s available slots</li></ol><h3>Effortless reporting and real-time analytics</h3><p>After each session, the bot sends the psychologist a short confirmation form. In a few seconds, the specialist records: session held / duration / type / optional notes.</p><p>This enables:</p><ul><li>Statistics ready for donors and regulators</li><li>Operational control of worked hours (payroll calculation / resource planning)</li><li>Monitoring spikes and drops in requests in real time (granularity — 1 day)</li><li>Category analytics (teens, crisis cases, etc.) for any period</li></ul><h3>Privacy by Design (GDPR)</h3><p>Encrypted data storage in the database.<br>Exports for reporting contain no client names or aliases, only unique hashes.<br>Presentation in Google Sheets — anonymized but operationally useful.</p><h3>Current status</h3><p>Closed beta testing with an EU NGO working with refugees, PTSD sufferers, and domestic violence victims.</p>"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
