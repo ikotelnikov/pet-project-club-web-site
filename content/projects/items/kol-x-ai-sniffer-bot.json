@@ -23,10 +23,18 @@
       "stack": "Telegram-Bot, KI, Twitter-Stimmungsanalyse",
       "summary": "Ich habe einen Telegram-Bot für die superschnelle Analyse eines Projekts / Tokens anhand der Smart-Contract-Adresse erstellt.",
       "detailsHtml": "Ich habe einen Telegram-Bot für die superschnelle Analyse eines Projekts / Tokens anhand der Smart-Contract-Adresse erstellt.<br><br>Der Bot kann:<br>1. KOL / X - echte Erwähnungen auf Twitter: Influencer, Engagement, wer shillt, wer weniger, Publikum, Links zu Posts, Trust Score + allgemeines Fazit von Grok.<br>2. CLMM - die Top 5 Pools nach TVL/APR über die Krystal API;<br>3. Analyse von Clustern (Holder-Clusters) auf Bubblemaps und Holderscan.<br>4. Express-Audit des Smart Contracts.<br>5. Prediction Markets - zeigt relevante Pools auf Polymarket, falls vorhanden.<br><br>Das Hauptziel (den Bot habe ich vor allem für mich entwickelt): in Zeiten aktiver Operationen mit vielen Tokens eine schnelle Bewertung zu ermöglichen, um zügig Handelsentscheidungen zu treffen, ohne Zeit mit der manuellen Eingabe der Adresse auf all den oben genannten Ressourcen zu verlieren.<br>Das Wichtigste ist die <strong>Analyse der Stimmungen auf Twitter über einen definierten Zeitraum.</strong><br><br>🤖 Link zum Bot <a href=\"https://t.me/kol_tracker_ai_bot?start=ref_ru\">https://t.me/kol_tracker_ai_bot?start=ref_ru</a><br><br>Standardmäßig sind die ersten fünf Anfragen kostenlos (eine Anfrage = eine Adresse). Wenn jemand den Bot testen möchte, schreibt mir bitte - @valdas2020, ich stelle Zugangscodes zur Verfügung.<br><br>🙏 Für Anmerkungen und gefundene Bugs bin ich sehr dankbar."
+    },
+    "me": {
+      "title": "KOL X AI-Sniffer Bot",
+      "status": "active",
+      "stack": "Telegram bot, AI, Twitter sentiment analysis",
+      "summary": "Napravio sam TG bota za super-brzu analizu projekta / tokena po adresi pametnog ugovora.",
+      "detailsHtml": "Napravio sam TG bota za super-brzu analizu projekta / tokena po adresi pametnog ugovora.<br><br>Bot može:<br>1. KOL / X - stvarne spominjanja na Twitteru: influenseri, angažman, ko promovira, ko ne baš, publika, linkovi ka postovima, Trust Score + opšti zaključak od Groka.<br>2. CLMM - top 5 poolova po TVL/APR preko Krystal API-ja;<br>3. Analiza klastera (holder clusters) na Bubblemaps i Holderscan.<br>4. Ekspresni audit pametnog ugovora.<br>5. Prediction Markets - prikazuje relevantne poolove na Polymarketu ako postoje.<br><br>Glavni cilj (bota sam prvenstveno napravio za sebe): u periodima aktivnih operacija sa velikim brojem tokena - mogućnost brze procjene za operativno donošenje trgovinske odluke, bez gubljenja vremena na ručni unos adrese na svim navedenim resursima.<br>Najvažnije je - <strong>analiza raspoloženja na Twitteru za odabrani vremenski period.</strong><br><br>🤖 Link ka botu <a href=\"https://t.me/kol_tracker_ai_bot?start=ref_ru\">https://t.me/kol_tracker_ai_bot?start=ref_ru</a><br><br>Po defaultu prvih pet zahteva je besplatno (jedan zahtev = jedna adresa), ako neko želi testirati, molim pišite - @valdas2020, poslaću kodove za pristup.<br><br>🙏 Bio bih veoma zahvalan za primedbe i pronađene greške."
     }
   },
   "translationStatus": {
     "en": "machine",
-    "de": "machine"
+    "de": "machine",
+    "me": "machine"
   }
 }
