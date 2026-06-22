@@ -79,11 +79,31 @@
           "external": true
         }
       ]
+    },
+    "es": {
+      "handle": "@valdas2020",
+      "name": "Valdas",
+      "role": "especialista en DeFi, experto / curador de la Escuela de Trading e Inversión vCollege",
+      "bio": "Me llamo Valdas. Anteriormente trabajé en ventas B2B y emprendimiento, y desde 2020 soy especialista en DeFi, experto / curador de la Escuela de Trading e Inversión vCollege. En diciembre del año pasado probé Claude Code. Desde entonces, el vibecoding se ha convertido en parte de mi día a día: automatizo todo lo que se mueve, desde tareas laborales hasta hobbies. No soy programador, por lo que conozco mis limitaciones: en qué etapa del desarrollo del producto hay que detenerse y llamar a un CTO competente. Por ahora hago cosas que funcionan estrictamente para uso personal o MVP, para lo cual mis conocimientos son suficientes. Además del trabajo, practico artes marciales y sistemas de bienestar, y estudio una maestría (teología). Vivo en Bar.",
+      "detailsHtml": "Me llamo Valdas. Anteriormente trabajé en ventas B2B y emprendimiento, y desde 2020 soy especialista en DeFi, experto / curador de la Escuela de Trading e Inversión vCollege.<br><br>En diciembre del año pasado probé Claude Code. Desde entonces, el vibecoding se ha convertido en parte de mi día a día: automatizo todo lo que se mueve, desde tareas laborales hasta hobbies. No soy programador, por lo que conozco mis limitaciones: en qué etapa del desarrollo del producto hay que detenerse y llamar a un CTO competente.<br><br>Por ahora hago cosas que funcionan estrictamente para uso personal o MVP, para lo cual mis conocimientos son suficientes.<br><br>Además del trabajo, practico artes marciales y sistemas de bienestar, y estudio una maestría (teología). Vivo en Bar.<br><br>Telegram: @valdas2020<br><a href=\"https://valdas.online/\">https://valdas.online/</a><br><a href=\"https://kobudo.valdas.online\">https://kobudo.valdas.online</a>",
+      "links": [
+        {
+          "label": "valdas.online",
+          "href": "https://valdas.online/",
+          "external": true
+        },
+        {
+          "label": "kobudo.valdas.online",
+          "href": "https://kobudo.valdas.online",
+          "external": true
+        }
+      ]
     }
   },
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "machine"
+    "me": "machine",
+    "es": "machine"
   }
 }
