@@ -26,9 +26,9 @@
     "en": {
       "handle": "@valdas2020",
       "name": "Valdas",
-      "role": "DeFi specialist, expert / curator of the vCollege Trading and Investment School",
-      "bio": "My name is Valdas. Previously, I worked in B2B sales and entrepreneurship. Since 2020, I have been a DeFi specialist, expert / curator of the vCollege Trading and Investment School. In December last year, I tried Claude Code. Since then, vibe coding has become part of everyday life: I automate everything that moves, from work tasks to hobbies. I'm not a programmer, so I understand my limitations — at some stage of product development, I will have to stop and invite a proper CTO. For now, I either do things strictly for personal use or MVPs, for which my knowledge is sufficient. Besides work, I practice martial arts and wellness systems and am studying in graduate school (theology). I live in Bar.",
-      "detailsHtml": "My name is Valdas. Previously, I worked in B2B sales and entrepreneurship. Since 2020, I have been a DeFi specialist, expert / curator of the vCollege Trading and Investment School.<br><br>In December last year, I tried Claude Code. Since then, vibe coding has become part of everyday life: I automate everything that moves, from work tasks to hobbies. I'm not a programmer, so I understand my limitations — at some stage of product development, I will have to stop and invite a proper CTO.<br><br>For now, I either do things strictly for personal use or MVPs, for which my knowledge is sufficient.<br><br>Besides work, I practice martial arts and wellness systems and am studying in graduate school (theology). I live in Bar.<br><br>Telegram: @valdas2020<br><a href=\"https://valdas.online/\">https://valdas.online/</a><br><a href=\"https://kobudo.valdas.online\">https://kobudo.valdas.online</a>",
+      "role": "DeFi expert, curator of the vCollege Trading and Investing School",
+      "bio": "My name is Valdas. Previously, I worked in B2B sales and entrepreneurship. Since 2020, I have been a DeFi specialist and an expert/curator of the vCollege Trading and Investing School. In December last year, I tried Claude Code. Since then, vibe coding has become part of my daily routine: I automate everything that moves, from work tasks to hobbies. I am not a programmer, so I understand my limits—at what stage of product development I will have to stop and invite a proper CTO. For now, I do either strictly personal use projects or MVPs, and I have enough knowledge for that. Besides work, I practice martial arts and wellness systems, and I am studying for a master's degree (theology). I live in Bar.",
+      "detailsHtml": "<p>My name is Valdas. Previously, I worked in B2B sales and entrepreneurship. Since 2020, I have been a DeFi specialist and an expert/curator of the vCollege Trading and Investing School. In December last year, I tried Claude Code. Since then, vibe coding has become part of my daily routine: I automate everything that moves, from work tasks to hobbies. I am not a programmer, so I understand my limits—at what stage of product development I will have to stop and invite a proper CTO. For now, I do either strictly personal use projects or MVPs, and I have enough knowledge for that. Besides work, I practice martial arts and wellness systems, and I am studying for a master's degree (theology). I live in Bar.</p>",
       "links": [
         {
           "label": "valdas.online",
@@ -101,7 +101,7 @@
     }
   },
   "translationStatus": {
-    "en": "stale",
+    "en": "machine",
     "de": "stale",
     "me": "stale",
     "es": "stale"
