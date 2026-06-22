@@ -18,5 +18,17 @@
     "valdas"
   ],
   "slug": "milica-ai-tutor-public-beta",
-  "sourceLocale": "ru"
+  "sourceLocale": "ru",
+  "translations": {
+    "en": {
+      "title": "Milica AI Tutor (Public Beta)",
+      "status": "public beta",
+      "stack": "",
+      "summary": "A conversational bot for those who: - have no one to speak Serbian with - lack free language practice outside regular language lessons.",
+      "detailsHtml": "A conversational bot for those who:<br>- have no one to speak Serbian with<br>- lack free language practice outside regular language lessons.<br><br><strong>Milica AI Tutor</strong> helps:<br>— Overcome the language barrier in communication with neighbors and government agencies.<br>— Practice live speech (by voice or text).<br>— Choose a dialect (ijekavica / ekavica) and alphabet (Cyrillic / Latin).<br>— Receive instant error corrections and grammar explanations.<br><br>The project is non-commercial, and the bot is free. No registration or ads (in the future there will be ads for humanitarian and charitable projects and organizations). You install the bot, send it voice messages, receive a Serbian voice response and a grammatical analysis of errors in text.<br><a href=\"https://t.me/milica_ai_tutor_bot\">https://t.me/milica_ai_tutor_bot</a>"
+    }
+  },
+  "translationStatus": {
+    "en": "machine"
+  }
 }
