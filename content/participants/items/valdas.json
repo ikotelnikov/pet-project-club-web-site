@@ -63,10 +63,10 @@
     },
     "me": {
       "handle": "@valdas2020",
-      "name": "Valdas",
-      "role": "stručnjak za DeFi, ekspert / kurator Škole trgovanja i investiranja vCollege",
-      "bio": "Zovem se Valdas. U prošlosti sam radio u B2B prodaji i poduzetništvu, a od 2020. godine sam stručnjak za DeFi, ekspert / kurator Škole trgovanja i investiranja vCollege. Prošlog decembra sam probao Claude Code. Otkad tada, veybkodiranje je postalo dio moje svakodnevice: automatizujem sve što se može, od radnih zadataka do hobija. Nisam programer, pa razumijem svoja ograničenja - u kojoj fazi razvoja proizvoda treba stati i pozvati pravog CTO-a. Za sada radim stvari koje funkcionišu isključivo za ličnu upotrebu ili MVP, za to imam dovoljno znanja. Pored posla, praktikant sam borilačkih vještina i sistema za zdravlje, studiram na master studijama (teologija). Živim u Baru.",
-      "detailsHtml": "Zovem se Valdas. U prošlosti sam radio u B2B prodaji i poduzetništvu, a od 2020. godine sam stručnjak za DeFi, ekspert / kurator Škole trgovanja i investiranja vCollege.<br><br>Prošlog decembra sam probao Claude Code. Otkad tada, veybkodiranje je postalo dio moje svakodnevice: automatizujem sve što se može, od radnih zadataka do hobija. Nisam programer, pa razumijem svoja ograničenja - u kojoj fazi razvoja proizvoda treba stati i pozvati pravog CTO-a.<br><br>Za sada radim stvari koje funkcionišu isključivo za ličnu upotrebu ili MVP, za to imam dovoljno znanja.<br><br>Pored posla, praktikant sam borilačkih vještina i sistema za zdravlje, studiram na master studijama (teologija). Živim u Baru.<br><br>Telegram: @valdas2020<br><a href=\"https://valdas.online/\">https://valdas.online/</a><br><a href=\"https://kobudo.valdas.online\">https://kobudo.valdas.online</a>",
+      "name": "Валдас",
+      "role": "stručni za DeFi, kustos Škole trgovine i investiranja vCollege",
+      "bio": "Zovem se Valdas. U prošlosti sam se bavio B2B prodajom i preduzetništvom, od 2020. godine specijalista sam za DeFi, ekspert i kustos Škole trgovine i investiranja vCollege. U decembru prošle godine sam probao Claude Code. Od tada je vibkoding postao deo moje svakodnevice: automatizujem sve što se pomera, od radnih zadataka do hobija. Nisam programer, pa razumem svoja ograničenja - u kojoj fazi razvoja proizvoda treba stati i pozvati normalnog CTO. Za sada radim ili ono što funkcioniše striktno za ličnu upotrebu ili MVP, za to imam dovoljno znanja. Osim posla, praktikujem borilačke veštine i sisteme za poboljšanje zdravlja, studiram master teologiju. Živim u Baru.",
+      "detailsHtml": "<p>Zovem se Valdas. U prošlosti sam se bavio B2B prodajom i preduzetništvom, od 2020. godine specijalista sam za DeFi, ekspert i kustos Škole trgovine i investiranja vCollege. U decembru prošle godine sam probao Claude Code. Od tada je vibkoding postao deo moje svakodnevice: automatizujem sve što se pomera, od radnih zadataka do hobija. Nisam programer, pa razumem svoja ograničenja - u kojoj fazi razvoja proizvoda treba stati i pozvati normalnog CTO. Za sada radim ili ono što funkcioniše striktno za ličnu upotrebu ili MVP, za to imam dovoljno znanja. Osim posla, praktikujem borilačke veštine i sisteme za poboljšanje zdravlja, studiram master teologiju. Živim u Baru.</p>",
       "links": [
         {
           "label": "valdas.online",
@@ -103,7 +103,7 @@
   "translationStatus": {
     "en": "machine",
     "de": "machine",
-    "me": "stale",
+    "me": "machine",
     "es": "stale"
   }
 }
